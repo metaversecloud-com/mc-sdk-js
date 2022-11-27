@@ -34,7 +34,7 @@
     "build": "tsc && lerna run build --no-private",
     "lint": "lerna run lint --parallel",
     "test": "lerna run test",
-    "publish-all": "yarn build && lerna publish --no-verify-access --no-private",
+    "publish-all": "yarn build && lerna publish --no-private",
     "update-configs": "node updateConfigFiles.js"
   },
   "type": "module",

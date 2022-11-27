@@ -22,11 +22,11 @@
     "ts-jest": "^29.0.3",
     "typescript": "^4.9.3"
   },
-  "gitHead": "4ef93e5cf6d4a81c7f31e5b0adc2a35a91125497",
+  "gitHead": "842f514763176ce10ca3a4035c9f70570b16b62c",
   "homepage": "https://github.com/metaversecloud-com/mc-sdk-js#readme",
   "license": "ISC",
   "keywords": [],
-  "name": "topia-client-library",
+  "name": "@mc-sdk-js/topia",
   "main": "dist/index.js",
   "publishConfig": {
     "access": "public",
@@ -38,12 +38,11 @@
     "url": "git+https://github.com/metaversecloud-com/mc-sdk-js.git"
   },
   "scripts": {
-    "prepare": "npm run build",
     "build": "tsc && rollup -c",
     "test": "ENV=testing jest --watchAll=false",
     "lint": "eslint \"src/**\"",
     "publish": "npm publish"
   },
   "type": "module",
-  "version": "0.0.2"
+  "version": "0.0.3"
 }

@@ -38,12 +38,11 @@
     "url": "git+https://github.com/metaversecloud-com/mc-sdk-js.git"
   },
   "scripts": {
-    "prepare": "npm run build",
     "build": "tsc && rollup -c",
     "test": "ENV=testing jest --watchAll=false",
     "lint": "eslint \"src/**\"",
     "publish": "npm publish"
   },
   "type": "module",
-  "version": "1.0.0"
+  "version": "0.0.1"
 }
