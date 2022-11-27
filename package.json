@@ -19,9 +19,6 @@
     "prettier": "^2.7.1",
     "typescript": "^4.9.3"
   },
-  "engines": {
-    "node": "16.4.0"
-  },
   "homepage": "https://github.com/metaversecloud-com/mc-sdk-js#readme",
   "keywords": [],
   "license": "ISC",
@@ -37,7 +34,7 @@
     "build": "tsc && lerna run build --no-private",
     "lint": "lerna run lint --parallel",
     "test": "lerna run test",
-    "publish-all": "yarn build && lerna publish --yes --no-verify-access --no-private",
+    "publish-all": "yarn build && lerna publish --no-verify-access --no-private",
     "update-configs": "node updateConfigFiles.js"
   },
   "type": "module",
