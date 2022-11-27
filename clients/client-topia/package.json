@@ -25,7 +25,7 @@
   "files": [
     "dist/*"
   ],
-  "gitHead": "8a6d11a4783f016a8120879a3e11c6c4baf17825",
+  "gitHead": "69d40bacabdddb61f753a133ea5204e8c92d0170",
   "homepage": "https://github.com/metaversecloud-com/mc-sdk-js/tree/main/clients/client-topia",
   "license": "ISC",
   "keywords": [],
@@ -47,5 +47,5 @@
     "publish": "npm publish"
   },
   "type": "module",
-  "version": "0.0.5"
+  "version": "0.0.6"
 }

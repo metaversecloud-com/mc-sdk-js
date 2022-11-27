@@ -12,4 +12,4 @@ export function getWorldDetails(urlSlug: string): Promise<object> {
       .catch(reject);
   });
 }
-export default { getWorldDetails };
+export default getWorldDetails;
