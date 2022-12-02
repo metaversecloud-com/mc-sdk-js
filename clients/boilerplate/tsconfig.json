@@ -7,9 +7,6 @@
     "module": "es2020",
     "moduleResolution": "node",
     "outDir": "./dist",
-    "paths": {
-      "controllers/*": ["./controllers/*"]
-    },
     "skipLibCheck": true,
     "strict": true
   },

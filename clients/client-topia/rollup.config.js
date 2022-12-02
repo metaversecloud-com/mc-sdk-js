@@ -1,7 +1,14 @@
+import alias from "@rollup/plugin-alias";
 import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import resolve, { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "rollup-plugin-typescript2";
+
+const generateAlias = (name) => {
+  return { find: name, replacement: `src/${name}/index.ts` };
+};
+
+const aliases = [generateAlias("__mocks__"), generateAlias("controllers"), generateAlias("types")];
 
 export default {
   input: ["src/index.ts"],
@@ -15,12 +22,13 @@ export default {
     },
   ],
   plugins: [
+    alias({ entries: aliases }),
     commonjs({
       exclude: "node_modules",
     }),
     nodeResolve({ preferBuiltins: true, extensions: [".svg", ".js", ".ts"] }),
     json(),
     resolve(),
-    typescript(),
+    typescript({ useTsconfigDeclarationDir: true, tsconfig: "tsconfig.json" }),
   ],
 };

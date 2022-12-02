@@ -1,6 +1,6 @@
-import axios from "axios";
-import { World } from "../..";
-import { visitors, worlds } from "../../../__mocks__";
+import { visitors, worlds } from "../../__mocks__";
+import { World } from "../../controllers";
+import { VisitorType } from "../../types";
 
 afterEach(() => {
   jest.resetAllMocks();
@@ -26,16 +26,26 @@ describe("get and move visitors", () => {
   });
 
   it("should move a visitor to specified coordinates", async () => {
+    // TODO: mock axios and spy on times called
     const testWorld = await new World("key", "lina");
-    testWorld.moveVisitor = jest.fn();
-    const visitor = {
-      visitorId: "798",
-      coordinates: {
-        x: 100,
-        y: 100,
+    testWorld.moveVisitors = jest.fn();
+    const visitors: Array<VisitorType> = [
+      {
+        id: "1",
+        coordinates: {
+          x: 100,
+          y: 100,
+        },
       },
-    };
-    await testWorld.moveVisitor(visitor);
-    expect(testWorld.moveVisitor).toHaveBeenCalled();
+      {
+        id: "2",
+        coordinates: {
+          x: 200,
+          y: 200,
+        },
+      },
+    ];
+    await testWorld.moveVisitors(visitors);
+    expect(testWorld.moveVisitors).toHaveBeenCalled();
   });
 });

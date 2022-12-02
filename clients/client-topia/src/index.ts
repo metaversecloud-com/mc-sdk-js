@@ -1,1 +1,1 @@
-export { World } from "controllers/World";
+export { World } from "controllers";
