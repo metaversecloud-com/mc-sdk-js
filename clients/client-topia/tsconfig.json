@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
+    "module": "es2020",
     "moduleResolution": "node",
     "outDir": "./dist",
+    "paths": {
+      "controllers/*": ["./controllers/*"]
+    },
     "skipLibCheck": true,
-    "strict": true,
-    "target": "es2016"
+    "strict": true
   },
-  "include": ["src/**/*"],
+  "include": ["./src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

@@ -8,9 +8,10 @@ export default {
   output: [
     {
       dir: "dist",
+      esModule: true,
       entryFileNames: "[name].js",
-      format: "cjs",
-      exports: "named",
+      format: "esm",
+      exports: "auto",
     },
   ],
   plugins: [

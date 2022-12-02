@@ -14,7 +14,7 @@ module.exports = {
     "~/(.*)": "<rootDir>/src/$1",
   },
   testEnvironment: "node",
-  testPathIgnorePatterns: ["./node_modules/", "./build/"],
+  testPathIgnorePatterns: ["./node_modules/", "./dist/"],
   testRegex: "(/tests/.*|(\\.|/)(test|spec))\\.(js?|ts?)$",
   transform: {
     "^.+.(ts|js)$": "ts-jest",

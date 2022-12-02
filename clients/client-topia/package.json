@@ -20,12 +20,13 @@
     "rollup": "^3.4.0",
     "rollup-plugin-typescript2": "^0.34.1",
     "ts-jest": "^29.0.3",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.3",
+    "yalc": "^1.0.0-pre.53"
   },
   "files": [
     "dist/*"
   ],
-  "gitHead": "69d40bacabdddb61f753a133ea5204e8c92d0170",
+  "gitHead": "7eef1f7fd9b3b0af395f95cb908add3011abf808",
   "homepage": "https://github.com/metaversecloud-com/mc-sdk-js/tree/main/clients/client-topia",
   "license": "ISC",
   "keywords": [],
@@ -44,8 +45,9 @@
     "build": "tsc && rollup -c",
     "test": "ENV=testing jest --watchAll=false",
     "lint": "eslint \"src/**\"",
-    "publish": "npm publish"
+    "pkg": "npm publish",
+    "local-publish": "yarn build && yalc publish --push --no-scripts"
   },
   "type": "module",
-  "version": "0.0.6"
+  "version": "0.0.7"
 }

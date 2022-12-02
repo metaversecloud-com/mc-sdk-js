@@ -42,7 +42,7 @@
   },
   "scripts": {
     "build": "tsc && rollup -c",
-    "test": "ENV=testing jest --watchAll=false",
+    "test": "ENV=testing jest --watchAll=false --passWithNoTests",
     "lint": "eslint \"src/**\"",
     "publish": "npm publish"
   },
