@@ -36,7 +36,7 @@
     "build": "tsc && lerna run build --no-private",
     "lint": "lerna run lint --parallel",
     "test": "lerna run test",
-    "publish-all": "yarn build && lerna run pkg --no-private",
+    "publish-all": "lerna run pkg --no-private",
     "update-configs": "node updateConfigFiles.js"
   },
   "version": "1.0.0",
