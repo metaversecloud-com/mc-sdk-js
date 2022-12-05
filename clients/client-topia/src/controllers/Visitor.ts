@@ -23,6 +23,7 @@ export class Visitor {
         },
       };
 
+      // TODO does this actually make sense here given it only works in the context of a world?
       axios
         .put(`https://api.topia.io/api/world/${this.urlSlug}/visitors/${visitor.id}/move`, requestOptions)
         .then((response: any) => {
