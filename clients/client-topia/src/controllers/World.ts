@@ -1,5 +1,6 @@
 import axios from "axios";
 import { VisitorType } from "types";
+import Visitor from "./Visitor";
 
 const API_URL = "https://api.topia.io/api";
 
@@ -40,32 +41,11 @@ export class World {
 
   async moveVisitors(visitors: Array<VisitorType>): Promise<object> {
     const allPromises: any[] = [];
-    visitors.map(async (visitor) => {
-      const promise = new Promise((resolve, reject) => {
-        const requestOptions = {
-          headers: { Authorization: this.apiKey },
-          body: {
-            moveTo: {
-              x: visitor.coordinates.x,
-              y: visitor.coordinates.y,
-            },
-            teleport: true,
-          },
-        };
-
-        axios
-          .put(`${API_URL}/world/${this.urlSlug}/visitors/${visitor.id}/move`, requestOptions)
-          .then((response: any) => {
-            resolve(response.data);
-          })
-          .catch(reject);
-      });
-      allPromises.push(promise);
+    visitors.map(async (v) => {
+      const visitor = await new Visitor(this.apiKey, this.urlSlug);
+      allPromises.push(visitor.moveVisitor(v));
     });
-
     const outcomes = await Promise.allSettled(allPromises);
-    // const succeeded = outcomes.filter((o) => o.status === "fulfilled");
-    // const failed = outcomes.filter((o) => o.status === "rejected");
     return outcomes;
   }
 }
