@@ -1,6 +1,34 @@
+export const visitor = {
+  playerId: 1,
+  color: "0x7AD3BA",
+  moveTo: {
+    x: -1458,
+    y: -351,
+  },
+  moveFrom: null,
+  username: "Test",
+  sitting: false,
+  gestureType: 0,
+  performer: false,
+  performerNear: false,
+  shareScreen: false,
+  isBackground: false,
+  muted: true,
+  hidden: true,
+  newId: null,
+  displayName: "test",
+  movedOn: null,
+  lastUpdate: 1669915215216,
+  isMobile: false,
+  token: "a92863e4-c21c-4270-a7ed-cdee2574e3ec",
+  isAdmin: false,
+  isRecording: false,
+  isRecordingBot: false,
+};
+
 export const visitors = {
-  "798": {
-    playerId: 798,
+  "1": {
+    playerId: 1,
     color: "0x7AD3BA",
     moveTo: {
       x: -1458,
@@ -26,8 +54,8 @@ export const visitors = {
     isRecording: false,
     isRecordingBot: false,
   },
-  "799": {
-    playerId: 799,
+  "2": {
+    playerId: 2,
     color: "0xA0D2A7",
     moveTo: {
       x: -1504,

@@ -1,4 +1,4 @@
-export var scenes = [
+export const scenes = [
   {
     description: 'For that, "It was a dark and stormy night..."vibe...',
     height: 4000,

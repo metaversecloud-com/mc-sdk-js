@@ -1,5 +1,4 @@
 export type VisitorType = {
-  apiKey: string;
   color: string;
   displayName: string;
   gestureType: number;
@@ -19,6 +18,5 @@ export type VisitorType = {
   playerId: number;
   shareScreen: boolean;
   sitting: boolean;
-  urlSlug: string;
   username: string;
 };

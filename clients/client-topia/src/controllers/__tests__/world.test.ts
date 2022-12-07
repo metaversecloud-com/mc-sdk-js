@@ -28,7 +28,7 @@ describe("World Class", () => {
     // TODO: mock axios and spy on times called
     const testWorld = await new World("key", "lina");
     testWorld.moveVisitors = jest.fn();
-    await testWorld.moveVisitors(true, 100, 100);
+    await testWorld.moveVisitors(true, true, 100, 100);
     expect(testWorld.moveVisitors).toHaveBeenCalled();
   });
 });

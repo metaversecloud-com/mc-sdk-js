@@ -28,7 +28,7 @@ export class Visitor {
     this.moveVisitor;
   }
 
-  moveVisitor(x: number, y: number): Promise<string> {
+  moveVisitor(shouldTeleportVisitor: boolean, x: number, y: number): Promise<string> {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
         .put(`/world/${this.urlSlug}/visitors/${this.playerId}/move`, {
@@ -36,13 +36,10 @@ export class Visitor {
             x,
             y,
           },
-          teleport: true,
+          teleport: shouldTeleportVisitor,
         })
-        .then((response: any) => {
-          console.log("🚀 ~ file: Visitor.ts:68 ~ Visitor ~ .then ~ response", response);
-          // should this update world._visitorsMap?
-          this.moveTo.x = response.data.moveTo.x;
-          this.moveTo.y = response.data.moveTo.y;
+        .then(() => {
+          this.moveTo = { x, y };
           resolve("Success!");
         })
         .catch(reject);

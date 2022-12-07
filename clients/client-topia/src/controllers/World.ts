@@ -1,7 +1,9 @@
-import { publicAPI } from "utils";
-import Visitor from "./Visitor";
+import { createVisitor, publicAPI } from "utils";
+import { DroppedAsset } from "./DroppedAsset";
+import { Visitor } from "./Visitor";
 
 export class World {
+  #droppedAssetsMap!: { [key: string]: DroppedAsset };
   #visitorsMap!: { [key: string]: Visitor };
   apiKey: string;
   background!: string;
@@ -21,6 +23,10 @@ export class World {
   useTopiaPassword!: boolean;
   width!: number;
 
+  get droppedAssets() {
+    return this.#droppedAssetsMap;
+  }
+
   get visitors() {
     return this.#visitorsMap;
   }
@@ -30,84 +36,40 @@ export class World {
     this.urlSlug = urlSlug;
   }
 
-  async fetchDetails(): Promise<string> {
+  // world details
+  fetchDetails(): Promise<string> {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
-        .get(`/world/${this.urlSlug}/world-details`, {
-          headers: { Authorization: this.apiKey },
-        })
+        .get(`/world/${this.urlSlug}/world-details`)
         .then((response: any) => {
-          const data = response.data;
-          this.background = data.background;
-          this.controls = data.controls;
-          this.created = data.created;
-          this.description = data.description;
-          this.enforceWhitelistOnLogin = data.enforceWhitelistOnLogin;
-          this.forceAuthOnLogin = data.forceAuthOnLogin;
-          this.height = data.height;
-          this.heroImage = data.heroImage;
-          this.mapExists = data.mapExists;
-          this.name = data.name;
-          this.redirectTo = data.redirectTo;
-          this.spawnPosition = data.spawnPosition;
-          this.tileBackgroundEverywhere = data.tileBackgroundEverywhere;
-          this.useTopiaPassword = data.useTopiaPassword;
-          this.width = data.width;
+          Object.assign(this, response.data);
           resolve("Success!");
         })
         .catch(reject);
     });
   }
 
-  async updateDetails(): Promise<object> {
+  updateDetails(): Promise<string> {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
-        .get(`/world/${this.urlSlug}/world-details`, {
-          headers: { Authorization: this.apiKey },
-        })
-        .then((response: any) => {
-          resolve(response.data);
+        .get(`/world/${this.urlSlug}/world-details`)
+        .then(() => {
+          resolve("Success!");
         })
         .catch(reject);
     });
   }
 
-  async fetchVisitors(): Promise<string> {
+  // visitors
+  fetchVisitors(): Promise<string> {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
-        .get(`/world/${this.urlSlug}/visitors`, {
-          headers: { Authorization: this.apiKey },
-        })
+        .get(`/world/${this.urlSlug}/visitors`)
         .then((response: any) => {
           // create temp map and then update private property only once
           const tempVisitorsMap: { [key: string]: Visitor } = {};
           for (const playerId in response.data) {
-            const data = response.data[playerId];
-            const visitor = new Visitor(
-              this.apiKey,
-              data.color,
-              data.displayName,
-              data.gestureType,
-              data.hidden,
-              data.isAdmin,
-              data.isBackground,
-              data.isMobile,
-              data.isRecording,
-              data.isRecordingBot,
-              data.lastUpdate,
-              data.moveFrom,
-              data.movedOn,
-              data.moveTo,
-              data.muted,
-              data.performer,
-              data.performerNear,
-              data.playerId,
-              data.shareScreen,
-              data.sitting,
-              this.urlSlug,
-              data.username,
-            );
-            tempVisitorsMap[playerId] = visitor;
+            tempVisitorsMap[playerId] = createVisitor(this.apiKey, response.data[playerId], this.urlSlug);
           }
           this.#visitorsMap = tempVisitorsMap;
           resolve("Success!");
@@ -123,13 +85,48 @@ export class World {
     });
   }
 
-  async moveVisitors(shouldFetchVisitors: boolean = true, x: number, y: number): Promise<object> {
+  async moveVisitors(
+    shouldFetchVisitors: boolean = true,
+    shouldTeleportVisitors: boolean = true,
+    x: number,
+    y: number,
+  ): Promise<object> {
     if (shouldFetchVisitors) await this.fetchVisitors();
     const allPromises: any[] = [];
     const objectKeys = Object.keys(this.visitors);
-    objectKeys.forEach((key) => allPromises.push(this.#visitorsMap[key].moveVisitor(x, y)));
+    objectKeys.forEach((key) => allPromises.push(this.#visitorsMap[key].moveVisitor(shouldTeleportVisitors, x, y)));
     const outcomes = await Promise.allSettled(allPromises);
     return outcomes;
+  }
+
+  // dropped assets
+  fetchDroppedAssets(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      publicAPI(this.apiKey)
+        .get(`/world/${this.urlSlug}/assets`)
+        .then((response: any) => {
+          // create temp map and then update private property only once
+          const tempDroppedAssetsMap: { [key: string]: DroppedAsset } = {};
+          for (const id in response.data) {
+            // tempDroppedAssetsMap[id] = createDroppedAsset(this.apiKey, response.data[id], this.urlSlug);
+            tempDroppedAssetsMap[id] = new DroppedAsset(this.apiKey, response.data[id], this.urlSlug);
+          }
+          this.#droppedAssetsMap = tempDroppedAssetsMap;
+          resolve("Success!");
+        })
+        .catch(reject);
+    });
+  }
+
+  updateDroppedAssetCustomText(droppedAsset: DroppedAsset, style: object, text: string): Promise<string> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await droppedAsset.updateCustomText(style, text);
+        resolve("Success!");
+      } catch (error) {
+        reject();
+      }
+    });
   }
 }
 
