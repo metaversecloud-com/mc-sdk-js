@@ -1,22 +1,21 @@
 import { visitors, worlds } from "../../__mocks__";
 import { World } from "../../controllers";
-import { VisitorType } from "../../types";
 
 afterEach(() => {
   jest.resetAllMocks();
 });
 
-describe("get world details", () => {
+describe("World Class", () => {
   it("should return details of a world", async () => {
     const testWorld = await new World("key", "lina");
+    expect(testWorld.urlSlug).toEqual("lina");
+
     testWorld.fetchDetails = jest.fn().mockReturnValue(worlds[1]);
     const mockDetails = await testWorld.fetchDetails();
     expect(testWorld.fetchDetails).toHaveBeenCalled();
     expect(mockDetails).toBeDefined();
   });
-});
 
-describe("get and move visitors", () => {
   it("should return a list of current visitors for a given world", async () => {
     const testWorld = await new World("key", "lina");
     testWorld.fetchVisitors = jest.fn().mockReturnValue(visitors);
@@ -25,27 +24,11 @@ describe("get and move visitors", () => {
     expect(mockVisitors).toBeDefined();
   });
 
-  it("should move a visitor to specified coordinates", async () => {
+  it("should move a list of visitors to specified coordinates", async () => {
     // TODO: mock axios and spy on times called
     const testWorld = await new World("key", "lina");
     testWorld.moveVisitors = jest.fn();
-    const visitors: Array<VisitorType> = [
-      {
-        id: "1",
-        coordinates: {
-          x: 100,
-          y: 100,
-        },
-      },
-      {
-        id: "2",
-        coordinates: {
-          x: 200,
-          y: 200,
-        },
-      },
-    ];
-    await testWorld.moveVisitors(visitors);
+    await testWorld.moveVisitors(true, 100, 100);
     expect(testWorld.moveVisitors).toHaveBeenCalled();
   });
 });

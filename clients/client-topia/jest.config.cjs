@@ -13,6 +13,8 @@ module.exports = {
   moduleNameMapper: {
     "~/(.*)": "<rootDir>/src/$1",
   },
+  modulePaths: ["node_modules", "<rootDir>/src"],
+  roots: ["<rootDir>/src"],
   testEnvironment: "node",
   testPathIgnorePatterns: ["./node_modules/", "./dist/"],
   testRegex: "(/tests/.*|(\\.|/)(test|spec))\\.(js?|ts?)$",

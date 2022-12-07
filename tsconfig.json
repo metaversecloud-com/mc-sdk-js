@@ -9,7 +9,7 @@
     "outDir": "./dist",
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2016"
+    "target": "esnext"
   },
   "include": ["clients/**/*"],
   "exclude": ["node_modules", "dist"]

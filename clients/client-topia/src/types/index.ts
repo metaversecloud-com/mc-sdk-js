@@ -1,1 +1,1 @@
-export { VisitorType } from "./Visitor";
+export { VisitorType } from "./VisitorType";

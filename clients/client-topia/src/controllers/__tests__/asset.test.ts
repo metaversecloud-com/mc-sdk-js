@@ -5,12 +5,12 @@ afterEach(() => {
   jest.resetAllMocks();
 });
 
-describe("get my assets", () => {
+describe("Asset Class", () => {
   it("should return an array of assets owned by specific email address", async () => {
     const testAsset = await new Asset("key", "lina@topia.io");
-    testAsset.fetchMyAssets = jest.fn().mockReturnValue(assets);
-    const mockAssets = await testAsset.fetchMyAssets();
-    expect(testAsset.fetchMyAssets).toHaveBeenCalled();
+    testAsset.fetchAssetsByEmail = jest.fn().mockReturnValue(assets);
+    const mockAssets = await testAsset.fetchAssetsByEmail();
+    expect(testAsset.fetchAssetsByEmail).toHaveBeenCalled();
     expect(mockAssets).toBeDefined();
   });
 });

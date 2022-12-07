@@ -8,7 +8,7 @@ const generateAlias = (name) => {
   return { find: name, replacement: `src/${name}/index.ts` };
 };
 
-const aliases = [generateAlias("__mocks__"), generateAlias("controllers"), generateAlias("types")];
+const aliases = [generateAlias("controllers"), generateAlias("types"), generateAlias("utils")];
 
 export default {
   input: ["src/index.ts"],

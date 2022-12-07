@@ -1,6 +1,6 @@
 import { publicAPI } from "utils";
 
-export class Asset {
+export class Scene {
   apiKey: string;
   email: string;
 
@@ -9,10 +9,10 @@ export class Asset {
     this.email = email;
   }
 
-  async fetchAssetsByEmail(): Promise<object> {
+  async fetchScenesByEmail(): Promise<object> {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
-        .get(`/assets/my-assets?email=${this.email}`)
+        .get(`/scenes/my-scenes?email=${this.email}`)
         .then((response: any) => {
           resolve(response.data);
         })
@@ -21,4 +21,4 @@ export class Asset {
   }
 }
 
-export default Asset;
+export default Scene;

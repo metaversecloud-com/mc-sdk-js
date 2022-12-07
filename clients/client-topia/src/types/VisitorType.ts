@@ -1,0 +1,24 @@
+export type VisitorType = {
+  apiKey: string;
+  color: string;
+  displayName: string;
+  gestureType: number;
+  hidden: boolean;
+  isAdmin: boolean;
+  isBackground: boolean;
+  isMobile: boolean;
+  isRecording: boolean;
+  isRecordingBot: boolean;
+  lastUpdate: number;
+  moveFrom: object;
+  movedOn: number;
+  moveTo: { x: number; y: number };
+  muted: boolean;
+  performer: boolean;
+  performerNear: boolean;
+  playerId: number;
+  shareScreen: boolean;
+  sitting: boolean;
+  urlSlug: string;
+  username: string;
+};
