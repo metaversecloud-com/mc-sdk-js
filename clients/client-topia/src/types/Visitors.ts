@@ -1,3 +1,5 @@
+import Visitor from "../controllers/Visitor";
+
 export type VisitorType = {
   color: string;
   displayName: string;
@@ -20,3 +22,12 @@ export type VisitorType = {
   sitting: boolean;
   username: string;
 };
+
+type VisitorsToMoveType = {
+  visitorObj: Visitor;
+  shouldTeleportVisitor: boolean;
+  x: number;
+  y: number;
+};
+
+export type VisitorsToMoveArrayType = Array<VisitorsToMoveType>;

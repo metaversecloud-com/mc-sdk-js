@@ -1,6 +1,8 @@
 import { createVisitor, publicAPI } from "utils";
 import { DroppedAsset } from "./DroppedAsset";
 import { Visitor } from "./Visitor";
+import { VisitorsToMoveArrayType } from "types";
+import { scatterVisitors } from "../utils/scatterVisitors";
 
 export class World {
   #droppedAssetsMap!: { [key: string]: DroppedAsset };
@@ -85,16 +87,34 @@ export class World {
     });
   }
 
-  async moveVisitors(
+  async moveAllVisitors(
     shouldFetchVisitors: boolean = true,
     shouldTeleportVisitors: boolean = true,
+    scatterVisitorsBy: number = 0,
     x: number,
     y: number,
   ): Promise<object> {
     if (shouldFetchVisitors) await this.fetchVisitors();
     const allPromises: any[] = [];
     const objectKeys = Object.keys(this.visitors);
-    objectKeys.forEach((key) => allPromises.push(this.#visitorsMap[key].moveVisitor(shouldTeleportVisitors, x, y)));
+    objectKeys.forEach((key) =>
+      allPromises.push(
+        this.#visitorsMap[key].moveVisitor(
+          shouldTeleportVisitors,
+          scatterVisitors(x, scatterVisitorsBy),
+          scatterVisitors(y, scatterVisitorsBy),
+        ),
+      ),
+    );
+    const outcomes = await Promise.allSettled(allPromises);
+    return outcomes;
+  }
+
+  async moveVisitors(visitorsToMove: VisitorsToMoveArrayType): Promise<object> {
+    const allPromises: any[] = [];
+    visitorsToMove.forEach((v) => {
+      allPromises.push(v.visitorObj.moveVisitor(v.shouldTeleportVisitor, v.x, v.y));
+    });
     const outcomes = await Promise.allSettled(allPromises);
     return outcomes;
   }
@@ -108,7 +128,6 @@ export class World {
           // create temp map and then update private property only once
           const tempDroppedAssetsMap: { [key: string]: DroppedAsset } = {};
           for (const id in response.data) {
-            // tempDroppedAssetsMap[id] = createDroppedAsset(this.apiKey, response.data[id], this.urlSlug);
             tempDroppedAssetsMap[id] = new DroppedAsset(this.apiKey, response.data[id], this.urlSlug);
           }
           this.#droppedAssetsMap = tempDroppedAssetsMap;

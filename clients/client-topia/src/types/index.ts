@@ -1,2 +1,2 @@
 export { DroppedAssetType } from "./DroppedAssetType";
-export { VisitorType } from "./VisitorType";
+export { VisitorType, VisitorsToMoveArrayType } from "./Visitors";

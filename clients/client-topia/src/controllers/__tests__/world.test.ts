@@ -1,5 +1,5 @@
 import { visitors, worlds } from "../../__mocks__";
-import { World } from "../../controllers";
+import { Visitor, World } from "../../controllers";
 
 afterEach(() => {
   jest.resetAllMocks();
@@ -24,11 +24,22 @@ describe("World Class", () => {
     expect(mockVisitors).toBeDefined();
   });
 
-  it("should move a list of visitors to specified coordinates", async () => {
+  it("should move all visitors within a world to a single set of coordinates", async () => {
     // TODO: mock axios and spy on times called
     const testWorld = await new World("key", "lina");
-    testWorld.moveVisitors = jest.fn();
-    await testWorld.moveVisitors(true, true, 100, 100);
-    expect(testWorld.moveVisitors).toHaveBeenCalled();
+    testWorld.moveAllVisitors = jest.fn();
+    await testWorld.moveAllVisitors(true, true, 100, 20, 40);
+    expect(testWorld.moveAllVisitors).toHaveBeenCalled();
   });
+
+  // it("should move a list of visitors to uniquely specified coordinates", async () => {
+  //   const testWorld = await new World("key", "lina");
+  //   testWorld.moveVisitors = jest.fn();
+  //   const testVisitors = [
+  //     { visitorObj: Visitor, shouldTeleportVisitor: true, x: 0, y: 0 },
+  //     { visitorObj: Visitor, shouldTeleportVisitor: false, x: 100, y: 100 },
+  //   ];
+  //   await testWorld.moveVisitors(testVisitors);
+  //   expect(testWorld.moveVisitors).toHaveBeenCalled();
+  // });
 });
