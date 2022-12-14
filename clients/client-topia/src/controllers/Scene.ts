@@ -9,7 +9,7 @@ export class Scene {
     this.email = email;
   }
 
-  async fetchScenesByEmail(): Promise<object> {
+  fetchScenesByEmail(): Promise<object> {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
         .get(`/scenes/my-scenes?email=${this.email}`)

@@ -80,20 +80,22 @@ export class World {
     });
   }
 
-  currentVisitors(): Promise<object> {
-    return new Promise(async (resolve, reject) => {
+  async currentVisitors() {
+    try {
       await this.fetchVisitors();
-      resolve(this.visitors);
-    });
+      return this.visitors;
+    } catch (error) {
+      return error;
+    }
   }
 
   async moveAllVisitors(
-    shouldFetchVisitors: boolean = true,
-    shouldTeleportVisitors: boolean = true,
-    scatterVisitorsBy: number = 0,
+    shouldFetchVisitors = true,
+    shouldTeleportVisitors = true,
+    scatterVisitorsBy = 0,
     x: number,
     y: number,
-  ): Promise<object> {
+  ) {
     if (shouldFetchVisitors) await this.fetchVisitors();
     const allPromises: any[] = [];
     const objectKeys = Object.keys(this.visitors);
@@ -110,7 +112,7 @@ export class World {
     return outcomes;
   }
 
-  async moveVisitors(visitorsToMove: VisitorsToMoveArrayType): Promise<object> {
+  async moveVisitors(visitorsToMove: VisitorsToMoveArrayType) {
     const allPromises: any[] = [];
     visitorsToMove.forEach((v) => {
       allPromises.push(v.visitorObj.moveVisitor(v.shouldTeleportVisitor, v.x, v.y));
@@ -128,7 +130,8 @@ export class World {
           // create temp map and then update private property only once
           const tempDroppedAssetsMap: { [key: string]: DroppedAsset } = {};
           for (const id in response.data) {
-            tempDroppedAssetsMap[id] = new DroppedAsset(this.apiKey, response.data[id], this.urlSlug);
+            // tempDroppedAssetsMap[id] = createDroppedAsset(this.apiKey, response.data[id], this.urlSlug);
+            tempDroppedAssetsMap[id] = new DroppedAsset(this.apiKey, response.data[id], "", this.urlSlug);
           }
           this.#droppedAssetsMap = tempDroppedAssetsMap;
           resolve("Success!");
@@ -137,15 +140,14 @@ export class World {
     });
   }
 
-  updateDroppedAssetCustomText(droppedAsset: DroppedAsset, style: object, text: string): Promise<string> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        await droppedAsset.updateCustomText(style, text);
-        resolve("Success!");
-      } catch (error) {
-        reject();
-      }
+  async updateCustomTextDroppedAssets(droppedAssetsToUpdate: Array<DroppedAsset>, style: object): Promise<object> {
+    // adds ability to update any styles for specified dropped assets only while preserving text
+    const allPromises: any[] = [];
+    droppedAssetsToUpdate.forEach((a) => {
+      allPromises.push(a.updateCustomText(style, a.text));
     });
+    const outcomes = await Promise.allSettled(allPromises);
+    return outcomes;
   }
 }
 

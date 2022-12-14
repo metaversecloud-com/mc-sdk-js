@@ -1,10 +1,10 @@
+import Asset from "./Asset";
 import { DroppedAssetType } from "types";
 import { publicAPI } from "utils";
-import Asset from "./Asset";
 
 export class DroppedAsset extends Asset {
   // TODO: should we explicitly declare each or simplify with Object.assign for all optional properties? (kinda breaks the ts rules but looks so much nicer!)
-  constructor(public apiKey: string, args: DroppedAssetType, public urlSlug: string) {
+  constructor(public apiKey: string, args: DroppedAssetType, public text: string, public urlSlug: string) {
     super(
       args.addedOn,
       apiKey,
@@ -33,6 +33,7 @@ export class DroppedAsset extends Asset {
     this.updateCustomText;
   }
 
+  // get dropped asset
   fetchDroppedAssetById(): Promise<string> {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
@@ -45,17 +46,47 @@ export class DroppedAsset extends Asset {
     });
   }
 
-  updateCustomText(style: object, text: string): Promise<string> {
+  // delete dropped asset
+  deleteDroppedAsset(): Promise<string> {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
-        .put(`/world/${this.urlSlug}/assets/${this.id}/set-custom-text`, {
-          style,
-          text,
+        .delete(`/world/${this.urlSlug}/assets/${this.id}`)
+        .then(() => {
+          resolve("Success!");
+        })
+        .catch(reject);
+    });
+  }
+
+  // update dropped assets
+  #updateDroppedAsset = (payload: object, updateType: string): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      publicAPI(this.apiKey)
+        .put(`/world/${this.urlSlug}/assets/${this.id}/${updateType}`, {
+          ...payload,
         })
         .then(() => {
           resolve("Success!");
         })
         .catch(reject);
+    });
+  };
+
+  changeScale(assetScale: number): Promise<string> {
+    return new Promise((resolve, reject) => {
+      return this.#updateDroppedAsset({ assetScale }, "change-scale").then(resolve).catch(reject);
+    });
+  }
+
+  setPosition(x: number, y: number): Promise<string> {
+    return new Promise((resolve, reject) => {
+      return this.#updateDroppedAsset({ x, y }, "set-position").then(resolve).catch(reject);
+    });
+  }
+
+  updateCustomText(style: object, text: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      return this.#updateDroppedAsset({ style, text }, "set-custom-text").then(resolve).catch(reject);
     });
   }
 }

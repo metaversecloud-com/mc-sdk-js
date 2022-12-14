@@ -1,5 +1,5 @@
 import { visitors, worlds } from "../../__mocks__";
-import { Visitor, World } from "../../controllers";
+import { World } from "../../controllers";
 
 afterEach(() => {
   jest.resetAllMocks();

@@ -26,7 +26,7 @@ export class Asset {
     public urlSlug: string = "",
   ) {}
 
-  async fetchAssetsByEmail(ownerEmail: string): Promise<object> {
+  fetchAssetsByEmail(ownerEmail: string): Promise<object> {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
         .get(`/assets/my-assets?email=${ownerEmail}`)
