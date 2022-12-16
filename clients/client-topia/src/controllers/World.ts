@@ -1,4 +1,4 @@
-import { createVisitor, publicAPI } from "utils";
+import { createVisitor, getErrorMessage, publicAPI } from "utils";
 import { DroppedAsset } from "./DroppedAsset";
 import { Visitor } from "./Visitor";
 import { VisitorsToMoveArrayType } from "types";
@@ -47,7 +47,9 @@ export class World {
           Object.assign(this, response.data);
           resolve("Success!");
         })
-        .catch(reject);
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
     });
   }
 
@@ -58,7 +60,9 @@ export class World {
         .then(() => {
           resolve("Success!");
         })
-        .catch(reject);
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
     });
   }
 
@@ -76,7 +80,9 @@ export class World {
           this.#visitorsMap = tempVisitorsMap;
           resolve("Success!");
         })
-        .catch(reject);
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
     });
   }
 
@@ -136,7 +142,9 @@ export class World {
           this.#droppedAssetsMap = tempDroppedAssetsMap;
           resolve("Success!");
         })
-        .catch(reject);
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
     });
   }
 

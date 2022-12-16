@@ -1,4 +1,4 @@
-import { publicAPI } from "utils";
+import { getErrorMessage, publicAPI } from "utils";
 
 export class Scene {
   apiKey: string;
@@ -16,7 +16,9 @@ export class Scene {
         .then((response: any) => {
           resolve(response.data);
         })
-        .catch(reject);
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
     });
   }
 }

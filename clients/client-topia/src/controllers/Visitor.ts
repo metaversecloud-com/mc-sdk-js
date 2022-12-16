@@ -1,4 +1,4 @@
-import { publicAPI } from "utils";
+import { getErrorMessage, publicAPI } from "utils";
 
 export class Visitor {
   constructor(
@@ -42,7 +42,9 @@ export class Visitor {
           this.moveTo = { x, y };
           resolve("Success!");
         })
-        .catch(reject);
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
     });
   }
 }

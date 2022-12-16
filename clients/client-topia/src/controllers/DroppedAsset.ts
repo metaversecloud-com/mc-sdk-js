@@ -1,6 +1,6 @@
 import Asset from "./Asset";
 import { DroppedAssetType } from "types";
-import { publicAPI } from "utils";
+import { getErrorMessage, publicAPI } from "utils";
 
 export class DroppedAsset extends Asset {
   // TODO: should we explicitly declare each or simplify with Object.assign for all optional properties? (kinda breaks the ts rules but looks so much nicer!)
@@ -42,7 +42,9 @@ export class DroppedAsset extends Asset {
           Object.assign(this, response.data);
           resolve("Success!");
         })
-        .catch(reject);
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
     });
   }
 
@@ -54,7 +56,9 @@ export class DroppedAsset extends Asset {
         .then(() => {
           resolve("Success!");
         })
-        .catch(reject);
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
     });
   }
 
@@ -68,25 +72,39 @@ export class DroppedAsset extends Asset {
         .then(() => {
           resolve("Success!");
         })
-        .catch(reject);
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
     });
   };
 
   changeScale(assetScale: number): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset({ assetScale }, "change-scale").then(resolve).catch(reject);
+      return this.#updateDroppedAsset({ assetScale }, "change-scale")
+        .then(resolve)
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
     });
   }
 
   setPosition(x: number, y: number): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset({ x, y }, "set-position").then(resolve).catch(reject);
+      return this.#updateDroppedAsset({ x, y }, "set-position")
+        .then(resolve)
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
     });
   }
 
   updateCustomText(style: object, text: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset({ style, text }, "set-custom-text").then(resolve).catch(reject);
+      return this.#updateDroppedAsset({ style, text }, "set-custom-text")
+        .then(resolve)
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
     });
   }
 }

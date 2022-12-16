@@ -1,4 +1,4 @@
-import { publicAPI } from "utils";
+import { getErrorMessage, publicAPI } from "utils";
 
 export class Asset {
   constructor(
@@ -33,7 +33,9 @@ export class Asset {
         .then((response: any) => {
           resolve(response.data);
         })
-        .catch(reject);
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
     });
   }
 }
