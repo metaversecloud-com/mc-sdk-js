@@ -1,6 +1,4 @@
-import { Visitor } from "controllers";
-
-export const createVisitor = (apiKey: string, data: any, urlSlug: string) => {
+export const createVisitor = (Visitor: any, apiKey: string, data: any, urlSlug: string) => {
   return new Visitor(
     apiKey,
     data.color,

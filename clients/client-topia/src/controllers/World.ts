@@ -75,7 +75,7 @@ export class World {
           // create temp map and then update private property only once
           const tempVisitorsMap: { [key: string]: Visitor } = {};
           for (const playerId in response.data) {
-            tempVisitorsMap[playerId] = createVisitor(this.apiKey, response.data[playerId], this.urlSlug);
+            tempVisitorsMap[playerId] = createVisitor(Visitor, this.apiKey, response.data[playerId], this.urlSlug);
           }
           this.#visitorsMap = tempVisitorsMap;
           resolve("Success!");
