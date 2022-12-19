@@ -3,6 +3,7 @@ import { DroppedAsset } from "./DroppedAsset";
 import { Visitor } from "./Visitor";
 import { VisitorsToMoveArrayType } from "types";
 import { scatterVisitors } from "../utils/scatterVisitors";
+import { AxiosResponse } from "axios";
 
 export class World {
   #droppedAssetsMap!: { [key: string]: DroppedAsset };
@@ -43,7 +44,7 @@ export class World {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
         .get(`/world/${this.urlSlug}/world-details`)
-        .then((response: any) => {
+        .then((response: AxiosResponse) => {
           Object.assign(this, response.data);
           resolve("Success!");
         })
@@ -71,7 +72,7 @@ export class World {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
         .get(`/world/${this.urlSlug}/visitors`)
-        .then((response: any) => {
+        .then((response: AxiosResponse) => {
           // create temp map and then update private property only once
           const tempVisitorsMap: { [key: string]: Visitor } = {};
           for (const playerId in response.data) {
@@ -103,7 +104,8 @@ export class World {
     y: number,
   ) {
     if (shouldFetchVisitors) await this.fetchVisitors();
-    const allPromises: any[] = [];
+    const allPromises: Array<Promise<string>> = [];
+    if (!this.visitors) return;
     const objectKeys = Object.keys(this.visitors);
     objectKeys.forEach((key) =>
       allPromises.push(
@@ -119,7 +121,7 @@ export class World {
   }
 
   async moveVisitors(visitorsToMove: VisitorsToMoveArrayType) {
-    const allPromises: any[] = [];
+    const allPromises: Array<Promise<string>> = [];
     visitorsToMove.forEach((v) => {
       allPromises.push(v.visitorObj.moveVisitor(v.shouldTeleportVisitor, v.x, v.y));
     });
@@ -132,7 +134,7 @@ export class World {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
         .get(`/world/${this.urlSlug}/assets`)
-        .then((response: any) => {
+        .then((response: AxiosResponse) => {
           // create temp map and then update private property only once
           const tempDroppedAssetsMap: { [key: string]: DroppedAsset } = {};
           for (const id in response.data) {
@@ -150,7 +152,7 @@ export class World {
 
   async updateCustomTextDroppedAssets(droppedAssetsToUpdate: Array<DroppedAsset>, style: object): Promise<object> {
     // adds ability to update any styles for specified dropped assets only while preserving text
-    const allPromises: any[] = [];
+    const allPromises: Array<Promise<string>> = [];
     droppedAssetsToUpdate.forEach((a) => {
       allPromises.push(a.updateCustomText(style, a.text));
     });

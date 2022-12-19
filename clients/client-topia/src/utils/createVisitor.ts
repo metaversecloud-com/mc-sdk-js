@@ -1,4 +1,6 @@
-export const createVisitor = (Visitor: any, apiKey: string, data: any, urlSlug: string) => {
+import { VisitorType } from "types";
+
+export const createVisitor = (Visitor: any, apiKey: string, data: VisitorType, urlSlug: string) => {
   return new Visitor(
     apiKey,
     data.color,

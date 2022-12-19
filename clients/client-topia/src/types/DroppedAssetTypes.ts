@@ -69,3 +69,10 @@ export type DroppedAssetType = {
   walletAddress?: string;
   yOrderAdjust?: number;
 };
+
+export enum DroppedAssetClickType {
+  NONE = "none",
+  LINK = "link",
+  PORTAL = "portal",
+  TELEPORT = "teleport",
+}

@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { getErrorMessage, publicAPI } from "utils";
 
 export class Scene {
@@ -13,7 +14,7 @@ export class Scene {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
         .get(`/scenes/my-scenes?email=${this.email}`)
-        .then((response: any) => {
+        .then((response: AxiosResponse) => {
           resolve(response.data);
         })
         .catch((error) => {

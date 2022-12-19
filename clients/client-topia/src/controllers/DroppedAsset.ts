@@ -1,6 +1,7 @@
 import Asset from "./Asset";
-import { DroppedAssetType } from "types";
+import { DroppedAssetClickType, DroppedAssetType } from "types";
 import { getErrorMessage, publicAPI } from "utils";
+import { AxiosResponse } from "axios";
 
 export class DroppedAsset extends Asset {
   // TODO: should we explicitly declare each or simplify with Object.assign for all optional properties? (kinda breaks the ts rules but looks so much nicer!)
@@ -38,7 +39,7 @@ export class DroppedAsset extends Asset {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
         .get(`/world/${this.urlSlug}/assets/${this.id}`)
-        .then((response: any) => {
+        .then((response: AxiosResponse) => {
           Object.assign(this, response.data);
           resolve("Success!");
         })
@@ -77,6 +78,25 @@ export class DroppedAsset extends Asset {
         });
     });
   };
+
+  changeClickType(
+    clickType: DroppedAssetClickType,
+    clickableLink: string,
+    clickableLinkTitle: string,
+    portalName: string,
+    position: { x: number; y: number },
+  ): Promise<string> {
+    return new Promise((resolve, reject) => {
+      return this.#updateDroppedAsset(
+        { clickType, clickableLink, clickableLinkTitle, portalName, position },
+        "change-click-type",
+      )
+        .then(resolve)
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
+    });
+  }
 
   changeScale(assetScale: number): Promise<string> {
     return new Promise((resolve, reject) => {

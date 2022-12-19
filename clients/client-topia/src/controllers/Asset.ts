@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { getErrorMessage, publicAPI } from "utils";
 
 export class Asset {
@@ -30,7 +31,7 @@ export class Asset {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
         .get(`/assets/my-assets?email=${ownerEmail}`)
-        .then((response: any) => {
+        .then((response: AxiosResponse) => {
           resolve(response.data);
         })
         .catch((error) => {

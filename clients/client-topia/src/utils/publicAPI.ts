@@ -8,15 +8,5 @@ export const publicAPI = (apiKey: string) => {
       "Authorization": apiKey,
       "Content-Type": "application/json",
     },
-    // transformRequest: [
-    //   (data) => {
-    //     return JSON.stringify(data);
-    //   },
-    // ],
-    // transformResponse: [
-    //   (data) => {
-    //     return JSON.parse(data);
-    //   },
-    // ],
   });
 };
