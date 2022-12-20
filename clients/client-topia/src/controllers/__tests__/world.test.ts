@@ -33,13 +33,15 @@ describe("World Class", () => {
     mock.onGet(`${BASE_URL}/visitors`).reply(200, visitors);
     mock.onPut(`${BASE_URL}/visitors/1/move`).reply(200, "Success!");
     const testWorld = await new World("key", "magic");
-    await testWorld.moveAllVisitors(true, true, 100, 20, 40);
+    const args = { shouldFetchVisitors: true, shouldTeleportVisitors: true, scatterVisitorsBy: 100, x: 20, y: 40 };
+    await testWorld.moveAllVisitors(args);
     expect(mock.history.put.length).toBe(Object.keys(visitors).length);
   });
 
   it("should return success if world doesn't have visitors", async () => {
     const testWorld = await new World("key", "magic");
-    await testWorld.moveAllVisitors(false, true, 100, 20, 40);
+    const args = { shouldFetchVisitors: false, scatterVisitorsBy: 100, x: 20, y: 40 };
+    await testWorld.moveAllVisitors(args);
     expect(mock.history.put.length).toBe(0);
   });
 

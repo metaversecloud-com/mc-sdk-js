@@ -1,7 +1,13 @@
-import Asset from "./Asset";
-import { DroppedAssetClickType, DroppedAssetType } from "types";
-import { getErrorMessage, publicAPI } from "utils";
 import { AxiosResponse } from "axios";
+import { getErrorMessage, publicAPI } from "utils";
+import { DroppedAssetType } from "types";
+import {
+  UpdateBroadcastInterface,
+  UpdateClickTypeInterface,
+  UpdateMediaTypeInterface,
+  UpdatePrivateZoneInterface,
+} from "interfaces";
+import Asset from "./Asset";
 
 export class DroppedAsset extends Asset {
   // TODO: should we explicitly declare each or simplify with Object.assign for all optional properties? (kinda breaks the ts rules but looks so much nicer!)
@@ -65,6 +71,7 @@ export class DroppedAsset extends Asset {
 
   // update dropped assets
   #updateDroppedAsset = (payload: object, updateType: string): Promise<string> => {
+    console.log("apiKey", this.apiKey);
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
         .put(`/world/${this.urlSlug}/assets/${this.id}/${updateType}`, {
@@ -79,13 +86,23 @@ export class DroppedAsset extends Asset {
     });
   };
 
-  changeClickType(
-    clickType: DroppedAssetClickType,
-    clickableLink: string,
-    clickableLinkTitle: string,
-    portalName: string,
-    position: { x: number; y: number },
-  ): Promise<string> {
+  updateBroadcast({ assetBroadcast, assetBroadcastAll, broadcasterEmail }: UpdateBroadcastInterface): Promise<string> {
+    return new Promise((resolve, reject) => {
+      return this.#updateDroppedAsset({ assetBroadcast, assetBroadcastAll, broadcasterEmail }, "set-asset-broadcast")
+        .then(resolve)
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
+    });
+  }
+
+  updateClickType({
+    clickType,
+    clickableLink,
+    clickableLinkTitle,
+    portalName,
+    position,
+  }: UpdateClickTypeInterface): Promise<string> {
     return new Promise((resolve, reject) => {
       return this.#updateDroppedAsset(
         { clickType, clickableLink, clickableLinkTitle, portalName, position },
@@ -98,9 +115,9 @@ export class DroppedAsset extends Asset {
     });
   }
 
-  changeScale(assetScale: number): Promise<string> {
+  updateCustomText(style: object, text: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset({ assetScale }, "change-scale")
+      return this.#updateDroppedAsset({ style, text }, "set-custom-text")
         .then(resolve)
         .catch((error) => {
           reject(new Error(getErrorMessage(error)));
@@ -108,7 +125,39 @@ export class DroppedAsset extends Asset {
     });
   }
 
-  setPosition(x: number, y: number): Promise<string> {
+  updateMediaType({
+    audioRadius,
+    audioVolume,
+    isVideo,
+    mediaLink,
+    mediaName,
+    mediaType,
+    portalName,
+    syncUserMedia,
+  }: UpdateMediaTypeInterface): Promise<string> {
+    return new Promise((resolve, reject) => {
+      return this.#updateDroppedAsset(
+        { audioRadius, audioVolume, isVideo, mediaLink, mediaName, mediaType, portalName, syncUserMedia },
+        "change-media-type",
+      )
+        .then(resolve)
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
+    });
+  }
+
+  updateMuteZone(isMutezone: boolean): Promise<string> {
+    return new Promise((resolve, reject) => {
+      return this.#updateDroppedAsset({ isMutezone }, "set-mute-zone")
+        .then(resolve)
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
+    });
+  }
+
+  updatePosition(x: number, y: number): Promise<string> {
     return new Promise((resolve, reject) => {
       return this.#updateDroppedAsset({ x, y }, "set-position")
         .then(resolve)
@@ -118,9 +167,46 @@ export class DroppedAsset extends Asset {
     });
   }
 
-  updateCustomText(style: object, text: string): Promise<string> {
+  updatePrivateZone({
+    isPrivateZone,
+    isPrivateZoneChatDisabled,
+    privateZoneUserCap,
+  }: UpdatePrivateZoneInterface): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset({ style, text }, "set-custom-text")
+      return this.#updateDroppedAsset(
+        { isPrivateZone, isPrivateZoneChatDisabled, privateZoneUserCap },
+        "set-private-zone",
+      )
+        .then(resolve)
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
+    });
+  }
+
+  updateScale(assetScale: number): Promise<string> {
+    return new Promise((resolve, reject) => {
+      return this.#updateDroppedAsset({ assetScale }, "change-scale")
+        .then(resolve)
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
+    });
+  }
+
+  updateUploadedMediaSelected(mediaId: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      return this.#updateDroppedAsset({ mediaId }, "change-uploaded-media-selected")
+        .then(resolve)
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
+    });
+  }
+
+  updateWebImageLayers(bottom: string, top: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      return this.#updateDroppedAsset({ bottom, top }, "set-webimage-layers")
         .then(resolve)
         .catch((error) => {
           reject(new Error(getErrorMessage(error)));

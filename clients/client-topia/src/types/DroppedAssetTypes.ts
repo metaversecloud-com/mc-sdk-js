@@ -76,3 +76,8 @@ export enum DroppedAssetClickType {
   PORTAL = "portal",
   TELEPORT = "teleport",
 }
+
+export enum DroppedAssetMediaType {
+  NONE = "none",
+  LINK = "link",
+}

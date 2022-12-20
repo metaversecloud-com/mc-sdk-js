@@ -1,9 +1,9 @@
-import { createVisitor, getErrorMessage, publicAPI } from "utils";
-import { DroppedAsset } from "./DroppedAsset";
-import { Visitor } from "./Visitor";
-import { VisitorsToMoveArrayType } from "types";
-import { scatterVisitors } from "../utils/scatterVisitors";
 import { AxiosResponse } from "axios";
+import { createVisitor, getErrorMessage, publicAPI, scatterVisitors } from "utils";
+import { DroppedAsset } from "controllers/DroppedAsset";
+import { Visitor } from "controllers/Visitor";
+import { VisitorsToMoveArrayType } from "types";
+import { MoveAllVisitorsInterface } from "interfaces";
 
 export class World {
   #droppedAssetsMap!: { [key: string]: DroppedAsset };
@@ -96,13 +96,13 @@ export class World {
     }
   }
 
-  async moveAllVisitors(
+  async moveAllVisitors({
     shouldFetchVisitors = true,
     shouldTeleportVisitors = true,
     scatterVisitorsBy = 0,
-    x: number,
-    y: number,
-  ) {
+    x,
+    y,
+  }: MoveAllVisitorsInterface) {
     if (shouldFetchVisitors) await this.fetchVisitors();
     const allPromises: Array<Promise<string>> = [];
     if (!this.visitors) return;
