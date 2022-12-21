@@ -52,5 +52,5 @@
     "local-publish": "yarn build && yalc publish --push --no-scripts"
   },
   "type": "module",
-  "version": "0.0.8"
+  "version": "0.0.9"
 }
