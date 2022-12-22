@@ -139,7 +139,13 @@ export class World {
           const tempDroppedAssetsMap: { [key: string]: DroppedAsset } = {};
           for (const id in response.data) {
             // tempDroppedAssetsMap[id] = createDroppedAsset(this.apiKey, response.data[id], this.urlSlug);
-            tempDroppedAssetsMap[id] = new DroppedAsset(this.apiKey, response.data[id], "", this.urlSlug);
+            tempDroppedAssetsMap[id] = new DroppedAsset({
+              apiKey: this.apiKey,
+              id,
+              args: response.data[id],
+              text: "",
+              urlSlug: this.urlSlug,
+            });
           }
           this.#droppedAssetsMap = tempDroppedAssetsMap;
           resolve("Success!");

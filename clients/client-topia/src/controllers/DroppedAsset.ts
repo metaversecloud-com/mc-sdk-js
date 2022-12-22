@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { getErrorMessage, publicAPI } from "utils";
-import { DroppedAssetType } from "types";
 import {
+  DroppedAssetInterface,
   UpdateBroadcastInterface,
   UpdateClickTypeInterface,
   UpdateMediaTypeInterface,
@@ -9,34 +9,30 @@ import {
 } from "interfaces";
 import Asset from "./Asset";
 
-export class DroppedAsset extends Asset {
-  // TODO: should we explicitly declare each or simplify with Object.assign for all optional properties? (kinda breaks the ts rules but looks so much nicer!)
-  constructor(public apiKey: string, args: DroppedAssetType, public text: string, public urlSlug: string) {
-    super(
-      args.addedOn,
-      apiKey,
-      args.assetName,
-      args.creatorTags,
-      args.id,
-      args.isPublic,
-      args.kitId,
-      args.layer0,
-      args.layer1,
-      args.library,
-      args.originalAssetId,
-      args.originalKit,
-      args.ownerId,
-      args.ownerName,
-      args.platformAsset,
-      args.purchased,
-      args.purchaseDate,
-      args.purchasedFrom,
-      args.specialType,
-      args.transactionId,
-      args.type,
-      urlSlug,
-    );
+export class DroppedAsset extends Asset implements DroppedAssetInterface {
+  readonly id: string;
+  text: string;
+  urlSlug: string;
+
+  constructor({
+    apiKey,
+    id,
+    args,
+    text,
+    urlSlug,
+  }: {
+    apiKey: string;
+    id: string;
+    args: DroppedAssetInterface;
+    text: string;
+    urlSlug: string;
+  }) {
+    super({ apiKey, args });
     Object.assign(this, args);
+    this.apiKey = apiKey;
+    this.id = id;
+    this.text = text;
+    this.urlSlug = urlSlug;
     this.updateCustomText;
   }
 
@@ -71,7 +67,6 @@ export class DroppedAsset extends Asset {
 
   // update dropped assets
   #updateDroppedAsset = (payload: object, updateType: string): Promise<string> => {
-    console.log("apiKey", this.apiKey);
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
         .put(`/world/${this.urlSlug}/assets/${this.id}/${updateType}`, {
@@ -215,4 +210,4 @@ export class DroppedAsset extends Asset {
   }
 }
 
-export default Asset;
+export default DroppedAsset;
