@@ -8,19 +8,18 @@ const BASE_URL = `https://api.topia.io/api/world/magic/assets/${droppedAssets[0]
 const apiKey = "key";
 const args = droppedAssets[0];
 const id = droppedAssets[0].id;
-const text = "";
 const urlSlug = "magic";
 
 describe("DroppedAsset Class", () => {
   let mock: MockAdapter, testDroppedAsset: DroppedAsset;
 
-  beforeAll(() => {
+  beforeEach(() => {
     mock = new MockAdapter(axios);
-    testDroppedAsset = new DroppedAsset({ apiKey, id, args, text, urlSlug });
+    testDroppedAsset = new DroppedAsset({ apiKey, id, args, urlSlug });
   });
 
   afterEach(() => {
-    mock.reset();
+    mock.restore();
     jest.resetAllMocks();
   });
 

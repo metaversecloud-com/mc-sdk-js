@@ -1,30 +1,23 @@
 import { AxiosResponse } from "axios";
-import { createVisitor, getErrorMessage, publicAPI, scatterVisitors } from "utils";
+import { getErrorMessage, publicAPI, removeUndefined, scatterVisitors } from "utils";
 import { DroppedAsset } from "controllers/DroppedAsset";
 import { Visitor } from "controllers/Visitor";
 import { VisitorsToMoveArrayType } from "types";
-import { MoveAllVisitorsInterface } from "interfaces";
+import { MoveAllVisitorsInterface, WorldDetailsInterface } from "interfaces";
 
-export class World {
-  #droppedAssetsMap!: { [key: string]: DroppedAsset };
-  #visitorsMap!: { [key: string]: Visitor };
+export class World implements WorldDetailsInterface {
+  #droppedAssetsMap: { [key: string]: DroppedAsset };
+  #visitorsMap: { [key: string]: Visitor };
   apiKey: string;
-  background!: string;
-  controls!: object;
-  created!: object;
-  description!: string;
-  enforceWhitelistOnLogin!: boolean;
-  forceAuthOnLogin!: boolean;
-  height!: number;
-  heroImage!: string;
-  mapExists!: boolean;
-  name!: string;
-  redirectTo!: string;
-  spawnPosition!: object;
-  tileBackgroundEverywhere!: boolean;
   urlSlug: string;
-  useTopiaPassword!: boolean;
-  width!: number;
+
+  constructor({ apiKey, args, urlSlug }: { apiKey: string; args: WorldDetailsInterface; urlSlug: string }) {
+    Object.assign(this, args);
+    this.apiKey = apiKey;
+    this.urlSlug = urlSlug;
+    this.#droppedAssetsMap = {};
+    this.#visitorsMap = {};
+  }
 
   get droppedAssets() {
     return this.#droppedAssetsMap;
@@ -32,11 +25,6 @@ export class World {
 
   get visitors() {
     return this.#visitorsMap;
-  }
-
-  constructor(apiKey: string, urlSlug: string) {
-    this.apiKey = apiKey;
-    this.urlSlug = urlSlug;
   }
 
   // world details
@@ -54,11 +42,30 @@ export class World {
     });
   }
 
-  updateDetails(): Promise<string> {
+  updateDetails({
+    controls,
+    description,
+    forceAuthOnLogin,
+    height,
+    name,
+    spawnPosition,
+    width,
+  }: WorldDetailsInterface): Promise<string> {
+    const payload: any = {
+      controls,
+      description,
+      forceAuthOnLogin,
+      height,
+      name,
+      spawnPosition,
+      width,
+    };
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
-        .get(`/world/${this.urlSlug}/world-details`)
+        .put(`/world/${this.urlSlug}/world-details`, payload)
         .then(() => {
+          const cleanPayload = removeUndefined(payload);
+          Object.assign(this, cleanPayload);
           resolve("Success!");
         })
         .catch((error) => {
@@ -76,7 +83,11 @@ export class World {
           // create temp map and then update private property only once
           const tempVisitorsMap: { [key: string]: Visitor } = {};
           for (const playerId in response.data) {
-            tempVisitorsMap[playerId] = createVisitor(Visitor, this.apiKey, response.data[playerId], this.urlSlug);
+            tempVisitorsMap[playerId] = new Visitor({
+              apiKey: this.apiKey,
+              args: response.data[playerId],
+              urlSlug: this.urlSlug,
+            });
           }
           this.#visitorsMap = tempVisitorsMap;
           resolve("Success!");
@@ -143,7 +154,6 @@ export class World {
               apiKey: this.apiKey,
               id,
               args: response.data[id],
-              text: "",
               urlSlug: this.urlSlug,
             });
           }
@@ -164,6 +174,20 @@ export class World {
     });
     const outcomes = await Promise.allSettled(allPromises);
     return outcomes;
+  }
+
+  // scenes
+  replaceScene(sceneId: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      publicAPI(this.apiKey)
+        .put(`/world/${this.urlSlug}/change-scene`, { sceneId })
+        .then(() => {
+          resolve("Success!");
+        })
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
+    });
   }
 }
 

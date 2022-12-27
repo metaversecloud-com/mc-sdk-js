@@ -11,27 +11,25 @@ import Asset from "./Asset";
 
 export class DroppedAsset extends Asset implements DroppedAssetInterface {
   readonly id: string;
-  text: string;
+  text: string | null | undefined;
   urlSlug: string;
 
   constructor({
     apiKey,
     id,
     args,
-    text,
     urlSlug,
   }: {
     apiKey: string;
     id: string;
     args: DroppedAssetInterface;
-    text: string;
     urlSlug: string;
   }) {
     super({ apiKey, args });
     Object.assign(this, args);
     this.apiKey = apiKey;
     this.id = id;
-    this.text = text;
+    this.text = args.text;
     this.urlSlug = urlSlug;
     this.updateCustomText;
   }
@@ -110,7 +108,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     });
   }
 
-  updateCustomText(style: object, text: string): Promise<string> {
+  updateCustomText(style: object, text: string | null | undefined): Promise<string> {
     return new Promise((resolve, reject) => {
       return this.#updateDroppedAsset({ style, text }, "set-custom-text")
         .then(resolve)

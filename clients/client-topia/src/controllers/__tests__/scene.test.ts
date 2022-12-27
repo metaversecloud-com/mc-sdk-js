@@ -7,9 +7,9 @@ afterEach(() => {
 
 describe("Scene Class", () => {
   it("should return an array of scenes owned by specific email address", async () => {
-    const testScene = await new Scene("key", "lina@topia.io");
+    const testScene = await new Scene({ apiKey: "key" });
     testScene.fetchScenesByEmail = jest.fn().mockReturnValue(scenes);
-    const mockScenes = await testScene.fetchScenesByEmail();
+    const mockScenes = await testScene.fetchScenesByEmail("lina@topia.io");
     expect(testScene.fetchScenesByEmail).toHaveBeenCalled();
     expect(mockScenes).toBeDefined();
   });

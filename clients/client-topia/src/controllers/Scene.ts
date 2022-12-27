@@ -3,17 +3,15 @@ import { getErrorMessage, publicAPI } from "utils";
 
 export class Scene {
   apiKey: string;
-  email: string;
 
-  constructor(apiKey: string, email: string) {
+  constructor({ apiKey }: { apiKey: string }) {
     this.apiKey = apiKey;
-    this.email = email;
   }
 
-  fetchScenesByEmail(): Promise<object> {
+  fetchScenesByEmail(email: string): Promise<object> {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
-        .get(`/scenes/my-scenes?email=${this.email}`)
+        .get(`/scenes/my-scenes?email=${email}`)
         .then((response: AxiosResponse) => {
           resolve(response.data);
         })

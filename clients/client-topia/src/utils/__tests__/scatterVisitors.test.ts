@@ -4,10 +4,10 @@ afterEach(() => {
   jest.resetAllMocks();
 });
 
-describe("Visitor Class", () => {
-  it("should create an instance of Visitor", () => {
+describe("scatter visitors util", () => {
+  it("should scatter visitors by 50", () => {
     const testScatter = scatterVisitors(10, 50);
-    expect(testScatter).toBeGreaterThan(-40);
-    expect(testScatter).toBeLessThan(60);
+    expect(testScatter).toBeGreaterThanOrEqual(-40);
+    expect(testScatter).toBeLessThanOrEqual(60);
   });
 });
