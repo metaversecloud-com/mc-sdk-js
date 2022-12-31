@@ -1,1 +1,1 @@
-export { Asset, DroppedAsset, Scene, Visitor, World } from "controllers";
+export { Asset, DroppedAsset, User, Visitor, World } from "controllers";

@@ -13,10 +13,10 @@ export class World implements WorldDetailsInterface {
 
   constructor({ apiKey, args, urlSlug }: { apiKey: string; args: WorldDetailsInterface; urlSlug: string }) {
     Object.assign(this, args);
-    this.apiKey = apiKey;
-    this.urlSlug = urlSlug;
     this.#droppedAssetsMap = {};
     this.#visitorsMap = {};
+    this.apiKey = apiKey;
+    this.urlSlug = urlSlug;
   }
 
   get droppedAssets() {
