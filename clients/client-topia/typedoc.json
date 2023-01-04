@@ -1,0 +1,14 @@
+{
+  "cleanOutputDir": true,
+  "entryPoints": ["src/controllers/index.ts", "src/interfaces/index.ts", "src/types/index.ts", "src/utils/index.ts"],
+  "excludePrivate": true,
+  "hideGenerator": true,
+  "name": "RTSDK",
+  "navigationLinks": {
+    "Readme": "https://www.npmjs.com/package/@rtsdk/topia",
+    "Examples": "https://sdk-examples.metaversecloud.com/"
+  },
+  "out": "docs",
+  "readme": "https://www.npmjs.com/package/@rtsdk/topia",
+  "tsconfig": "./tsconfig.json"
+}

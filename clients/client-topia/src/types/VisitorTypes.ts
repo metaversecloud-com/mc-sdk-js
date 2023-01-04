@@ -23,7 +23,7 @@ export type VisitorType = {
   username: string;
 };
 
-type VisitorsToMoveType = {
+export type VisitorsToMoveType = {
   visitorObj: Visitor;
   shouldTeleportVisitor: boolean;
   x: number;

@@ -4,11 +4,12 @@
     "baseUrl": "./src",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "es2020",
+    "module": "es6",
     "moduleResolution": "node",
     "outDir": "./dist",
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "target": "es6"
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules", "dist"]

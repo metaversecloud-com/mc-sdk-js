@@ -22,7 +22,7 @@ export default {
     nodeResolve({ preferBuiltins: true, extensions: [".svg", ".js", ".ts"] }),
     json(),
     resolve(),
-    // terser(),// temp comment out terser (minifier) for local testing
+    terser(),
     typescript({ useTsconfigDeclarationDir: true, tsconfig: "tsconfig.json" }),
   ],
 };
