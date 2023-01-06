@@ -3,13 +3,12 @@ import { World } from "controllers/World";
 import { getErrorMessage, publicAPI } from "utils";
 
 /**
- * Create an instance of User class with a given apiKey
+ * Create an instance of User class with a given apiKey.
  *
  * ```ts
- * await new User({ apiKey: API_KEY, email: "example@email.io" })
+ * await new User({ apiKey: API_KEY, email: "example@email.io" });
  * ```
  */
-
 export class User {
   #worldsMap: { [key: string]: World };
   apiKey: string;
@@ -27,7 +26,24 @@ export class User {
 
   /**
    * @summary
-   * Returns all scenes owned by User when an email address is provided
+   * Returns all assets owned by User when an email address is provided.
+   */
+  fetchAssetsByEmail(ownerEmail: string): Promise<object> {
+    return new Promise((resolve, reject) => {
+      publicAPI(this.apiKey)
+        .get(`/assets/my-assets?email=${ownerEmail}`)
+        .then((response: AxiosResponse) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
+    });
+  }
+
+  /**
+   * @summary
+   * Returns all scenes owned by User when an email address is provided.
    */
   fetchScenesByEmail(): Promise<object> {
     return new Promise((resolve, reject) => {
@@ -47,7 +63,7 @@ export class User {
    * @summary
    * Retrieves all worlds owned by user with matching API Key,
    * creates a new World object for each,
-   * and creates new map of Worlds accessible via user.worlds
+   * and creates new map of Worlds accessible via user.worlds.
    *
    * @usage
    * ```ts

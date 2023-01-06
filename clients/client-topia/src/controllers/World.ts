@@ -5,6 +5,13 @@ import { Visitor } from "controllers/Visitor";
 import { VisitorsToMoveArrayType } from "types";
 import { MoveAllVisitorsInterface, WorldDetailsInterface } from "interfaces";
 
+/**
+ * Create an instance of World class with a given apiKey and optional arguments.
+ *
+ * ```ts
+ * await new World({ apiKey: API_KEY, urlSlug: "magic" });
+ * ```
+ */
 export class World implements WorldDetailsInterface {
   #droppedAssetsMap: { [key: string]: DroppedAsset };
   #visitorsMap: { [key: string]: Visitor };
@@ -27,6 +34,16 @@ export class World implements WorldDetailsInterface {
     return this.#visitorsMap;
   }
 
+  /**
+   * @summary
+   * Retrieves details of a world.
+   *
+   * @usage
+   * ```ts
+   * await world.fetchDetails();
+   * const { name } = world;
+   * ```
+   */
   // world details
   fetchDetails(): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -42,6 +59,28 @@ export class World implements WorldDetailsInterface {
     });
   }
 
+  /**
+   * @summary
+   * Update details of a world.
+   *
+   * @usage
+   * ```ts
+   * await world.updateDetails({
+   *   controls: {
+   *     allowMuteAll: true,
+   *     disableHideVideo: true,
+   *     isMobileDisabled: false,
+   *     isShowingCurrentGuests: false,
+   *   },
+   *   description: 'Welcome to my world.',
+   *   forceAuthOnLogin: false,
+   *   height: 2000,
+   *   name: 'Example',
+   *   spawnPosition: { x: 100, y: 100 },
+   *   width: 2000
+   * });
+   * ```
+   */
   updateDetails({
     controls,
     description,
@@ -75,7 +114,7 @@ export class World implements WorldDetailsInterface {
   }
 
   // visitors
-  fetchVisitors(): Promise<string> {
+  private fetchVisitors(): Promise<string> {
     return new Promise((resolve, reject) => {
       publicAPI(this.apiKey)
         .get(`/world/${this.urlSlug}/visitors`)
@@ -98,6 +137,15 @@ export class World implements WorldDetailsInterface {
     });
   }
 
+  /**
+   * @summary
+   * Retrieve all visitors currently in a world.
+   *
+   * @usage
+   * ```ts
+   * const visitors = await world.currentVisitors();
+   * ```
+   */
   async currentVisitors() {
     try {
       await this.fetchVisitors();
@@ -107,6 +155,26 @@ export class World implements WorldDetailsInterface {
     }
   }
 
+  /**
+   * @summary
+   * Move all visitors currently in a world to a single set of coordinates.
+   * Optionally refetch visitors, teleport or walk visitors to new location,
+   * and scatter visitors by any number so that they don't all move to the exact same location.
+   *
+   * @usage
+   * ```ts
+   * await world.moveAllVisitors({
+   *   shouldFetchVisitors: true,
+   *   shouldTeleportVisitors: true,
+   *   scatterVisitorsBy: 40,
+   *   x: 100,
+   *   y: 100,
+   * });
+   * ```
+   *
+   * @result
+   * Updates each Visitor instance and world.visitors map.
+   */
   async moveAllVisitors({
     shouldFetchVisitors = true,
     shouldTeleportVisitors = true,
@@ -131,6 +199,31 @@ export class World implements WorldDetailsInterface {
     return outcomes;
   }
 
+  /**
+   * @summary
+   * Teleport or walk a list of visitors currently in a world to various coordinates.
+   *
+   * @usage
+   * ```ts
+   * const visitorsToMove = [
+   *   {
+   *     visitorObj: world.visitors["1"],
+   *     shouldTeleportVisitor: true,
+   *     x: 100,
+   *     y: 100
+   *   }, {
+   *     visitorObj: world.visitors["2"],
+   *     shouldTeleportVisitor: false,
+   *     x: 100,
+   *     y: 100
+   *   }
+   * ];
+   * await world.moveVisitors(visitorsToMove);
+   * ```
+   *
+   * @result
+   * Updates each Visitor instance and world.visitors map.
+   */
   async moveVisitors(visitorsToMove: VisitorsToMoveArrayType) {
     const allPromises: Array<Promise<string>> = [];
     visitorsToMove.forEach((v) => {
@@ -140,6 +233,16 @@ export class World implements WorldDetailsInterface {
     return outcomes;
   }
 
+  /**
+   * @summary
+   * Retrieve all assets dropped in a world.
+   *
+   * @usage
+   * ```ts
+   * await world.fetchDroppedAssets();
+   * const assets = world.droppedAssets;
+   * ```
+   */
   // dropped assets
   fetchDroppedAssets(): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -166,8 +269,27 @@ export class World implements WorldDetailsInterface {
     });
   }
 
+  /**
+   * @summary
+   * Update multiple custom text dropped assets with a single style while preserving text for specified dropped assets only.
+   *
+   * @usage
+   * ```ts
+   * const droppedAssetsToUpdate = [world.droppedAssets["6"], world.droppedAssets["12"]];
+   * const style = {
+   *   "textColor": "#abc123",
+   *   "textFontFamily": "Arial",
+   *   "textSize": 40,
+   *   "textWeight": "normal",
+   *   "textWidth": 200
+   * };
+   * await world.moveVisitors(droppedAssetsToUpdate, style);
+   * ```
+   *
+   * @result
+   * Updates each DroppedAsset instance and world.droppedAssets map.
+   */
   async updateCustomTextDroppedAssets(droppedAssetsToUpdate: Array<DroppedAsset>, style: object): Promise<object> {
-    // adds ability to update any styles for specified dropped assets only while preserving text
     const allPromises: Array<Promise<string>> = [];
     droppedAssetsToUpdate.forEach((a) => {
       allPromises.push(a.updateCustomText(style, a.text));
@@ -176,6 +298,23 @@ export class World implements WorldDetailsInterface {
     return outcomes;
   }
 
+  /**
+   * @summary
+   * Replace the current scene of a world.
+   *
+   * @usage
+   * ```ts
+   * const droppedAssetsToUpdate = [world.droppedAssets["6"], world.droppedAssets["12"]]
+   * const style = {
+   *   "textColor": "#abc123",
+   *   "textFontFamily": "Arial",
+   *   "textSize": 40,
+   *   "textWeight": "normal",
+   *   "textWidth": 200
+   * }
+   * await world.replaceScene(SCENE_ID);
+   * ```
+   */
   // scenes
   replaceScene(sceneId: string): Promise<string> {
     return new Promise((resolve, reject) => {
