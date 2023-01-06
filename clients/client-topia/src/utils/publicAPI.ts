@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const publicAPI = (apiKey: string) => {
-  if (typeof process !== "object") {
+  if (typeof window !== "undefined") {
     console.warn(
       "Please use extreme caution when passing sensitive information such as API keys from a client side application.",
     );
