@@ -1,6 +1,11 @@
 import axios from "axios";
 
 export const publicAPI = (apiKey: string) => {
+  if (typeof process !== "object") {
+    console.warn(
+      "Please use extreme caution when passing sensitive information such as API keys from a client side application.",
+    );
+  }
   return axios.create({
     baseURL: "https://api.topia.io/api",
     headers: {

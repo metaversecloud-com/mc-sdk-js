@@ -17,6 +17,7 @@ import Asset from "./Asset";
  * ```
  */
 export class DroppedAsset extends Asset implements DroppedAssetInterface {
+  dataObject: object | null | undefined;
   readonly id: string;
   text: string | null | undefined;
   urlSlug: string;
@@ -35,6 +36,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     super({ apiKey, args });
     Object.assign(this, args);
     this.apiKey = apiKey;
+    this.dataObject = args.dataObject;
     this.id = id;
     this.text = args.text;
     this.urlSlug = urlSlug;
@@ -72,6 +74,58 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       publicAPI(this.apiKey)
         .delete(`/world/${this.urlSlug}/assets/${this.id}`)
         .then(() => {
+          resolve("Success!");
+        })
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
+    });
+  }
+
+  /**
+   * @summary
+   * Retrieves the data object for a dropped asset.
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.fetchDroppedAssetDataObject();
+   * const { dataObject } = droppedAsset;
+   * ```
+   */
+  // get dropped asset
+  fetchDroppedAssetDataObject(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      publicAPI(this.apiKey)
+        .get(`/world/${this.urlSlug}/assets/${this.id}/data-object`)
+        .then((response: AxiosResponse) => {
+          this.dataObject = response.data;
+          resolve("Success!");
+        })
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
+    });
+  }
+
+  /**
+   * @summary
+   * Updates the data object for a dropped asset.
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.updateDroppedAssetDataObject({
+   *   "exampleKey": "exampleValue",
+   * });
+   * const { dataObject } = droppedAsset;
+   * ```
+   */
+  // get dropped asset
+  updateDroppedAssetDataObject(dataObject: object): Promise<string> {
+    return new Promise((resolve, reject) => {
+      publicAPI(this.apiKey)
+        .put(`/world/${this.urlSlug}/assets/${this.id}/set-data-object`, dataObject)
+        .then(() => {
+          this.dataObject = dataObject;
           resolve("Success!");
         })
         .catch((error) => {

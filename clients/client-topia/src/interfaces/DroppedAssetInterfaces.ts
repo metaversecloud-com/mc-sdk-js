@@ -18,6 +18,7 @@ export interface DroppedAssetInterface extends AssetInterface {
   clickablePortal?: string | null;
   creationDatetime?: number;
   contractAddress?: string | null;
+  dataObject?: object | null;
   existingKey?: string | null;
   isVideoPlayer?: boolean | null;
   kitId?: string | null;
