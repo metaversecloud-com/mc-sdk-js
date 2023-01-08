@@ -56,6 +56,6 @@
   "type": "module",
   "version": "0.0.12",
   "dependencies": {
-    "@rtsdk/topia": "^0.0.11"
+    "@rtsdk/topia": "^0.0.12"
   }
 }
