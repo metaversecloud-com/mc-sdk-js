@@ -251,14 +251,13 @@ export class World implements WorldDetailsInterface {
         .then((response: AxiosResponse) => {
           // create temp map and then update private property only once
           const tempDroppedAssetsMap: { [key: string]: DroppedAsset } = {};
-          for (const id in response.data) {
-            console.log("Data response", response.data);
+          for (const index in response.data) {
             // tempDroppedAssetsMap[id] = createDroppedAsset(this.apiKey, response.data[id], this.urlSlug);
-            tempDroppedAssetsMap[id] = new DroppedAsset({
+            tempDroppedAssetsMap[index] = new DroppedAsset({
               //TODO: Move API Key out of here and make so set api key for all classes created by sdk. Otherwise devs will accidentally send this object to frontend and expose their API Key.
               apiKey: this.apiKey,
-              id: response.data[id].id,
-              args: response.data[id],
+              id: response.data[index].id,
+              args: response.data[index],
               urlSlug: this.urlSlug,
             });
           }
@@ -266,7 +265,8 @@ export class World implements WorldDetailsInterface {
           resolve("Success!");
         })
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          reject(getErrorMessage(error));
+          // reject(new Error(getErrorMessage(error)));
         });
     });
   }
