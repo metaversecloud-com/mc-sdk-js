@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { getErrorMessage, publicAPI } from "utils";
+import { getErrorMessage } from "utils";
 import {
   DroppedAssetInterface,
   UpdateBroadcastInterface,
@@ -56,7 +56,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // get dropped asset
   fetchDroppedAssetById(): Promise<string> {
     return new Promise((resolve, reject) => {
-      publicAPI(this.apiKey)
+      this.axios
         .get(`/world/${this.urlSlug}/assets/${this.id}`)
         .then((response: AxiosResponse) => {
           Object.assign(this, response.data);
@@ -71,7 +71,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // delete dropped asset
   deleteDroppedAsset(): Promise<string> {
     return new Promise((resolve, reject) => {
-      publicAPI(this.apiKey)
+      this.axios
         .delete(`/world/${this.urlSlug}/assets/${this.id}`)
         .then(() => {
           resolve("Success!");
@@ -95,7 +95,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // get dropped asset
   fetchDroppedAssetDataObject(): Promise<string> {
     return new Promise((resolve, reject) => {
-      publicAPI(this.apiKey)
+      this.axios
         .get(`/world/${this.urlSlug}/assets/${this.id}/data-object`)
         .then((response: AxiosResponse) => {
           this.dataObject = response.data;
@@ -122,7 +122,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // get dropped asset
   updateDroppedAssetDataObject(dataObject: object): Promise<string> {
     return new Promise((resolve, reject) => {
-      publicAPI(this.apiKey)
+      this.axios
         .put(`/world/${this.urlSlug}/assets/${this.id}/set-data-object`, dataObject)
         .then(() => {
           this.dataObject = dataObject;
@@ -137,7 +137,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // update dropped assets
   #updateDroppedAsset = (payload: object, updateType: string): Promise<string> => {
     return new Promise((resolve, reject) => {
-      publicAPI(this.apiKey)
+      this.axios
         .put(`/world/${this.urlSlug}/assets/${this.id}/${updateType}`, {
           ...payload,
         })
