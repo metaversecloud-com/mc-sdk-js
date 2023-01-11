@@ -285,7 +285,7 @@ export class World implements WorldDetailsInterface {
    *   "textWeight": "normal",
    *   "textWidth": 200
    * };
-   * await world.moveVisitors(droppedAssetsToUpdate, style);
+   * await world.updateCustomText(droppedAssetsToUpdate, style);
    * ```
    *
    * @result
