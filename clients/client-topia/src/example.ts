@@ -1,3 +1,5 @@
+// Initialization... on backend
+
 import { Topia, DroppedAssetFactory, TopiaWorldFactory } from "@rtsdk/topia";
 
 const myTopiaInstance = new Topia({
@@ -19,6 +21,8 @@ export default { myTopiaInstance, DroppedAsset, TopiaWorld };
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
+
+// route definition for setTextOnAsset
 
 import { DroppedAsset } from "./";
 
