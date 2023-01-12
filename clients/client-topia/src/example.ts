@@ -8,9 +8,9 @@ const myTopiaInstance = new Topia({
 });
 
 const DroppedAsset = new DroppedAssetFactory(myTopiaInstance);
-const World = new TopiaWorldFactory(myTopiaInstance);
+const TopiaWorld = new TopiaWorldFactory(myTopiaInstance);
 
-export default { myTopiaInstance, DroppedAsset };
+export default { myTopiaInstance, DroppedAsset, TopiaWorld };
 
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
