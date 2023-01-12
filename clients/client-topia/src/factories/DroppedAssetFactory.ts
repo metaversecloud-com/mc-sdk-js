@@ -23,6 +23,8 @@ export class DroppedAssetFactory {
   async get(id: string, urlSlug: string, options?: DroppedAssetOptions): Promise<DroppedAssetInterface> {
     const droppedAsset = new DroppedAsset(this.topia, id, urlSlug, options);
 
+    await droppedAsset.fetchDroppedAssetById();
+
     return droppedAsset;
   }
 }

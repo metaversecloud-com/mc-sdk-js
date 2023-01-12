@@ -1,4 +1,4 @@
-import { Topia, DroppedAssetFactory } from "@rtsdk/topia";
+import { Topia, DroppedAssetFactory, TopiaWorldFactory } from "@rtsdk/topia";
 
 const myTopiaInstance = new Topia({
   domain: process.env.INSTANCE_DOMAIN || "https://api.topia.io/",
@@ -8,13 +8,22 @@ const myTopiaInstance = new Topia({
 });
 
 const DroppedAsset = new DroppedAssetFactory(myTopiaInstance);
+const World = new TopiaWorldFactory(myTopiaInstance);
 
 export default { myTopiaInstance, DroppedAsset };
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
 import { DroppedAsset } from "./";
 
 const setTextOnAsset = async (req: any, res: any) => {
-  const asset = await DroppedAsset.get(req.body.assetId, { interactiveCredentials: req.body });
+  const asset = await DroppedAsset.get(req.body.assetId, req.body.urlSlug, { creds: req.body });
 
   await asset.setAssetText(req.body.text);
 };
