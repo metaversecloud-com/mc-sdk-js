@@ -2,6 +2,7 @@ import { DroppedAssetClickType, DroppedAssetMediaType } from "types";
 import { AssetInterface } from "./AssetInterfaces";
 
 export interface DroppedAssetInterface extends AssetInterface {
+  id?: string;
   assetId?: string;
   assetScale?: number | null;
   assetPodium?: boolean | null;
@@ -40,6 +41,7 @@ export interface DroppedAssetInterface extends AssetInterface {
   portalCoordsY?: number | null;
   showMediaAsIfPeer?: boolean | null;
   syncUserMedia?: boolean | null;
+  urlSlug?: string;
   tagJson?: string | null;
   text?: string | null;
   textColor?: string | null;

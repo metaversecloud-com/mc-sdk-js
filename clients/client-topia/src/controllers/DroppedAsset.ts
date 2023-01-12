@@ -6,7 +6,9 @@ import {
   UpdateClickTypeInterface,
   UpdateMediaTypeInterface,
   UpdatePrivateZoneInterface,
+  TopiaInterface,
 } from "interfaces";
+import { DroppedAssetOptions } from "types";
 import Asset from "./Asset";
 
 /**
@@ -17,30 +19,16 @@ import Asset from "./Asset";
  * ```
  */
 export class DroppedAsset extends Asset implements DroppedAssetInterface {
-  dataObject: object | null | undefined;
   readonly id: string;
-  text: string | null | undefined;
   urlSlug: string;
+  dataObject?: object;
 
-  constructor({
-    apiKey,
-    id,
-    args,
-    urlSlug,
-  }: {
-    apiKey: string;
-    id: string;
-    args: DroppedAssetInterface;
-    urlSlug: string;
-  }) {
-    super({ apiKey, args });
-    Object.assign(this, args);
-    this.apiKey = apiKey;
-    this.dataObject = args.dataObject;
+  constructor(topia: TopiaInterface, id: string, urlSlug: string, options: DroppedAssetOptions = {}) {
+    const { args, creds } = options;
+    super(topia, { args, creds });
     this.id = id;
-    this.text = args.text;
     this.urlSlug = urlSlug;
-    this.updateCustomText;
+    Object.assign(this, args);
   }
 
   /**
@@ -56,8 +44,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // get dropped asset
   fetchDroppedAssetById(): Promise<string> {
     return new Promise((resolve, reject) => {
-      this.axios
-        .get(`/world/${this.urlSlug}/assets/${this.id}`)
+      this.topia.axios
+        .get(`/world/${this.urlSlug}/assets/${this.id}`, this.requestOptions)
         .then((response: AxiosResponse) => {
           Object.assign(this, response.data);
           resolve("Success!");
@@ -71,8 +59,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // delete dropped asset
   deleteDroppedAsset(): Promise<string> {
     return new Promise((resolve, reject) => {
-      this.axios
-        .delete(`/world/${this.urlSlug}/assets/${this.id}`)
+      this.topia.axios
+        .delete(`/world/${this.urlSlug}/assets/${this.id}`, this.requestOptions)
         .then(() => {
           resolve("Success!");
         })
@@ -95,8 +83,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // get dropped asset
   fetchDroppedAssetDataObject(): Promise<string> {
     return new Promise((resolve, reject) => {
-      this.axios
-        .get(`/world/${this.urlSlug}/assets/${this.id}/data-object`)
+      this.topia.axios
+        .get(`/world/${this.urlSlug}/assets/${this.id}/data-object`, this.requestOptions)
         .then((response: AxiosResponse) => {
           this.dataObject = response.data;
           resolve("Success!");
@@ -122,8 +110,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // get dropped asset
   updateDroppedAssetDataObject(dataObject: object): Promise<string> {
     return new Promise((resolve, reject) => {
-      this.axios
-        .put(`/world/${this.urlSlug}/assets/${this.id}/set-data-object`, dataObject)
+      this.topia.axios
+        .put(`/world/${this.urlSlug}/assets/${this.id}/set-data-object`, dataObject, this.requestOptions)
         .then(() => {
           this.dataObject = dataObject;
           resolve("Success!");
@@ -137,10 +125,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // update dropped assets
   #updateDroppedAsset = (payload: object, updateType: string): Promise<string> => {
     return new Promise((resolve, reject) => {
-      this.axios
-        .put(`/world/${this.urlSlug}/assets/${this.id}/${updateType}`, {
-          ...payload,
-        })
+      this.topia.axios
+        .put(
+          `/world/${this.urlSlug}/assets/${this.id}/${updateType}`,
+          {
+            ...payload,
+          },
+          this.requestOptions,
+        )
         .then(() => {
           resolve("Success!");
         })

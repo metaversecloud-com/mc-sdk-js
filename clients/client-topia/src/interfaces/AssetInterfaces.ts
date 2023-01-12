@@ -1,8 +1,11 @@
+import { TopiaInterface } from "./TopiaInterfaces";
+
 export interface AssetInterface {
+  topia: TopiaInterface;
   addedOn?: string;
   assetName?: string;
   creatorTags?: object;
-  readonly id: string;
+  readonly id?: string;
   isPublic?: boolean;
   library?: string;
   originalAssetId?: string;
