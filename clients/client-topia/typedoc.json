@@ -1,6 +1,12 @@
 {
   "cleanOutputDir": true,
-  "entryPoints": ["src/controllers/index.ts", "src/interfaces/index.ts", "src/types/index.ts", "src/utils/index.ts"],
+  "entryPoints": [
+    "src/controllers/index.ts",
+    "src/factories/index.ts",
+    "src/interfaces/index.ts",
+    "src/types/index.ts",
+    "src/utils/index.ts"
+  ],
   "excludePrivate": true,
   "hideGenerator": true,
   "name": "RTSDK",

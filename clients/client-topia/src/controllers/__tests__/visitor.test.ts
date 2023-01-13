@@ -17,7 +17,7 @@ describe("Visitor Class", () => {
       apiKey: "key",
     });
     Visitor = new VisitorFactory(topia);
-    testVisitor = Visitor.create(id, "magic");
+    testVisitor = Visitor.create(id, "exampleWorld");
   });
 
   afterEach(() => {
@@ -26,7 +26,7 @@ describe("Visitor Class", () => {
   });
 
   it("should move a list of visitors to uniquely specified coordinates", async () => {
-    mock.onPut(`https://${apiDomain}/api/world/magic/visitors/${id}/move`).reply(200, "Success!");
+    mock.onPut(`https://${apiDomain}/api/world/exampleWorld/visitors/${id}/move`).reply(200, "Success!");
     await testVisitor.moveVisitor({
       shouldTeleportVisitor: true,
       x: 100,

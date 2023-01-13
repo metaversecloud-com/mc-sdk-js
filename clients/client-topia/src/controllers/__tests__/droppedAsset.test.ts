@@ -6,8 +6,8 @@ import MockAdapter from "axios-mock-adapter";
 import { DroppedAssetFactory } from "factories";
 
 const apiDomain = "api.topia.io";
-const args = droppedAssets[0];
-const BASE_URL = `https://api.topia.io/api/world/magic/assets/${droppedAssets[0].id}`;
+const attributes = droppedAssets[0];
+const BASE_URL = `https://api.topia.io/api/world/exampleWorld/assets/${droppedAssets[0].id}`;
 const id = droppedAssets[0].id;
 
 describe("DroppedAsset Class", () => {
@@ -20,7 +20,7 @@ describe("DroppedAsset Class", () => {
       apiKey: "key",
     });
     DroppedAsset = new DroppedAssetFactory(topia);
-    testDroppedAsset = await DroppedAsset.create(id, "magic");
+    testDroppedAsset = await DroppedAsset.create(id, "exampleWorld");
   });
 
   afterEach(() => {
@@ -38,7 +38,7 @@ describe("DroppedAsset Class", () => {
   it("should update dropped asset broadcast zone", async () => {
     mock.onPut(`${BASE_URL}/set-asset-broadcast`).reply(200, "Success!");
     const broadcastArgs = {
-      ...args,
+      ...attributes,
       assetBroadcast: true,
       assetBroadcastAll: false,
       broadcasterEmail: "test@test.com",
@@ -50,7 +50,7 @@ describe("DroppedAsset Class", () => {
   it("should update dropped asset click type", async () => {
     mock.onPut(`${BASE_URL}/change-click-type`).reply(200, "Success!");
     const clickTypeArgs = {
-      ...args,
+      ...attributes,
       clickType: DroppedAssetClickType.LINK,
       clickableLink: "www.test.com",
       clickableLinkTitle: "Test",
@@ -73,7 +73,7 @@ describe("DroppedAsset Class", () => {
   it("should update dropped asset media type", async () => {
     mock.onPut(`${BASE_URL}/change-media-type`).reply(200, "Success!");
     const mediaTypeArgs = {
-      ...args,
+      ...attributes,
       audioRadius: 0,
       audioVolume: -1,
       isVideo: true,
@@ -102,7 +102,7 @@ describe("DroppedAsset Class", () => {
   it("should update dropped asset private zone", async () => {
     mock.onPut(`${BASE_URL}/set-private-zone`).reply(200, "Success!");
     const privateZoneArgs = {
-      ...args,
+      ...attributes,
       isPrivateZone: true,
       isPrivateZoneChatDisabled: false,
       privateZoneUserCap: 10,

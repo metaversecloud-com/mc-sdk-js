@@ -16,10 +16,10 @@ import { VisitorsToMoveArrayType } from "types";
 import { getErrorMessage, removeUndefined, scatterVisitors } from "utils";
 
 /**
- * Create an instance of World class with a given apiKey and optional arguments.
+ * Create an instance of World class with a given url slug and optional attributes and session credentials.
  *
  * ```ts
- * await new World({ urlSlug: "magic" });
+ * await new World(topia, "exampleWorld", { attributes: { name: "Example World" } });
  * ```
  */
 export class World extends SDKController implements WorldInterface {
@@ -27,9 +27,9 @@ export class World extends SDKController implements WorldInterface {
   #visitorsMap: { [key: string]: Visitor };
   urlSlug: string;
 
-  constructor(topia: Topia, urlSlug: string, options: WorldOptionalInterface = { args: {}, creds: {} }) {
-    super(topia, options.creds);
-    Object.assign(this, options.args);
+  constructor(topia: Topia, urlSlug: string, options: WorldOptionalInterface = { attributes: {}, credentials: {} }) {
+    super(topia, options.credentials);
+    Object.assign(this, options.attributes);
     this.#droppedAssetsMap = {};
     this.#visitorsMap = {};
     this.urlSlug = urlSlug;
@@ -99,7 +99,7 @@ export class World extends SDKController implements WorldInterface {
     spawnPosition,
     width,
   }: WorldInterface): Promise<string> {
-    const payload: any = {
+    const payload = {
       controls,
       description,
       forceAuthOnLogin,
@@ -132,7 +132,7 @@ export class World extends SDKController implements WorldInterface {
           const tempVisitorsMap: { [key: string]: Visitor } = {};
           for (const id in response.data) {
             tempVisitorsMap[id] = new Visitor(this.topia, response.data[id].playerId, this.urlSlug, {
-              args: response.data[id],
+              attributes: response.data[id],
             });
           }
           this.#visitorsMap = tempVisitorsMap;
@@ -261,7 +261,7 @@ export class World extends SDKController implements WorldInterface {
           for (const index in response.data) {
             // tempDroppedAssetsMap[id] = createDroppedAsset(this.apiKey, response.data[id], this.urlSlug);
             tempDroppedAssetsMap[index] = new DroppedAsset(this.topia, response.data[index].id, this.urlSlug, {
-              args: response.data[index],
+              attributes: response.data[index],
             });
           }
           this.#droppedAssetsMap = tempDroppedAssetsMap;

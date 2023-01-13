@@ -1,5 +1,5 @@
-import { SDKInterface } from "./SDKInterfaces";
 import { InteractiveCredentials } from "types";
+import { SDKInterface } from "interfaces/SDKInterfaces";
 
 export interface WorldInterface extends SDKInterface {
   background?: string | null;
@@ -29,8 +29,8 @@ export interface WorldInterface extends SDKInterface {
 }
 
 export interface WorldOptionalInterface {
-  args?: WorldInterface | object;
-  creds?: InteractiveCredentials | object;
+  attributes?: WorldInterface | object;
+  credentials?: InteractiveCredentials | object;
 }
 
 export interface MoveAllVisitorsInterface {

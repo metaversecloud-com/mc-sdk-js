@@ -1,5 +1,5 @@
 import { InteractiveCredentials } from "types";
-import { SDKInterface } from "./SDKInterfaces";
+import { SDKInterface } from "interfaces/SDKInterfaces";
 
 export interface AssetInterface extends SDKInterface {
   fetchPlatformAssets(): Promise<object>;
@@ -23,6 +23,6 @@ export interface AssetInterface extends SDKInterface {
 }
 
 export type AssetOptionalInterface = {
-  args?: AssetInterface | object;
-  creds?: InteractiveCredentials | object;
+  attributes?: AssetInterface | object;
+  credentials?: InteractiveCredentials | object;
 };

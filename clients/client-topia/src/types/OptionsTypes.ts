@@ -2,25 +2,25 @@ import { AssetInterface, DroppedAssetInterface, VisitorInterface, WorldInterface
 import { InteractiveCredentials } from "./InteractiveCredentialsTypes";
 
 export type AssetOptions = {
-  args?: AssetInterface | object;
-  creds?: InteractiveCredentials | object;
+  attributes?: AssetInterface | object;
+  credentials?: InteractiveCredentials | object;
 };
 
 export type DroppedAssetOptions = {
-  args?: DroppedAssetInterface | undefined;
-  creds?: InteractiveCredentials | undefined;
+  attributes?: DroppedAssetInterface | undefined;
+  credentials?: InteractiveCredentials | undefined;
 };
 
 export type UserOptions = {
-  creds?: InteractiveCredentials | undefined;
+  credentials?: InteractiveCredentials | undefined;
 };
 
 export type VisitorOptions = {
-  args?: VisitorInterface | undefined;
-  creds?: InteractiveCredentials | undefined;
+  attributes?: VisitorInterface | undefined;
+  credentials?: InteractiveCredentials | undefined;
 };
 
 export type WorldOptions = {
-  args?: WorldInterface | undefined;
-  creds?: InteractiveCredentials | undefined;
+  attributes?: WorldInterface | undefined;
+  credentials?: InteractiveCredentials | undefined;
 };
