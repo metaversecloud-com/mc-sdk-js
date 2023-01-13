@@ -1,14 +1,14 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { visitors } from "../../__mocks__";
-import { Visitor, Topia } from "controllers";
+import { Visitor as VisitorClass, Topia } from "controllers";
 import { VisitorFactory } from "factories";
 
 const BASE_URL = "https://api.topia.io/api/world/magic";
 const id = visitors["1"].playerId;
 
 describe("World Class", () => {
-  let mock: MockAdapter, testVisitor: Visitor;
+  let mock: MockAdapter, testVisitor: VisitorClass;
   const myTopiaInstance = new Topia({
     apiDomain: "api.topia.io",
     apiKey: "key",

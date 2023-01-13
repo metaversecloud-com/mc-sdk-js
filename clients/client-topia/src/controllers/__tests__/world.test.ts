@@ -1,7 +1,7 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { visitors, worlds } from "../../__mocks__";
-import { Visitor, World, Topia } from "controllers";
+import { Visitor, World as WorldClass, Topia } from "controllers";
 import { VisitorType } from "types";
 import { WorldFactory } from "factories";
 
@@ -11,7 +11,7 @@ const args = worlds[1];
 const urlSlug = worlds[1].urlSlug;
 
 describe("World Class", () => {
-  let mock: MockAdapter, testWorld: World;
+  let mock: MockAdapter, testWorld: WorldClass;
   const myTopiaInstance = new Topia({
     apiDomain: "api.topia.io",
     apiKey: "key",

@@ -1,5 +1,5 @@
 import { droppedAssets } from "__mocks__";
-import { DroppedAsset, Topia } from "controllers";
+import { DroppedAsset as DroppedAssetClass, Topia } from "controllers";
 import { DroppedAssetClickType, DroppedAssetMediaType } from "types/DroppedAssetTypes";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -10,7 +10,7 @@ const args = droppedAssets[0];
 const id = droppedAssets[0].id;
 
 describe("DroppedAsset Class", () => {
-  let mock: MockAdapter, testDroppedAsset: DroppedAsset;
+  let mock: MockAdapter, testDroppedAsset: DroppedAssetClass;
   const myTopiaInstance = new Topia({
     apiDomain: "api.topia.io",
     apiKey: "key",
