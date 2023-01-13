@@ -1,27 +1,43 @@
-import { DroppedAsset } from "controllers";
-import { DroppedAssetInterface, TopiaInterface } from "interfaces";
+import { DroppedAsset, Topia } from "controllers";
 import { DroppedAssetOptions } from "types";
 
-/**
- * Create an instance of Asset class with a given apiKey and optional arguments.
- *
- * ```ts
- * await new Asset({ apiKey: API_KEY, args: { assetName: "My Asset", isPublic: false } });
- * ```
- */
 export class DroppedAssetFactory {
-  topia: TopiaInterface;
+  topia: Topia;
 
-  constructor(topia: TopiaInterface) {
+  constructor(topia: Topia) {
     this.topia = topia;
   }
 
-  create(id: string, urlSlug: string, options?: DroppedAssetOptions): DroppedAssetInterface {
-    return new DroppedAsset(this.topia, id, urlSlug, options);
+  create(
+    id: string,
+    {
+      options,
+      urlSlug,
+    }: {
+      options: DroppedAssetOptions;
+      urlSlug: string;
+    },
+  ): DroppedAsset {
+    return new DroppedAsset(this.topia, id, {
+      options,
+      urlSlug,
+    });
   }
 
-  async get(id: string, urlSlug: string, options?: DroppedAssetOptions): Promise<DroppedAssetInterface> {
-    const droppedAsset = new DroppedAsset(this.topia, id, urlSlug, options);
+  async get(
+    id: string,
+    {
+      options,
+      urlSlug,
+    }: {
+      options: DroppedAssetOptions;
+      urlSlug: string;
+    },
+  ): Promise<DroppedAsset> {
+    const droppedAsset = new DroppedAsset(this.topia, id, {
+      options,
+      urlSlug,
+    });
 
     await droppedAsset.fetchDroppedAssetById();
 

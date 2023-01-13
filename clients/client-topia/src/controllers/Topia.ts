@@ -1,11 +1,17 @@
 import axios, { AxiosInstance } from "axios";
 import { TopiaInterface } from "interfaces";
+import jwt from "jsonwebtoken";
 
 /**
- * Create an instance of Asset class with a given apiKey and optional arguments.
+ * Create a single instance of Topia axios used for all calls to the public API in all classes
  *
  * ```ts
- * await new Asset({ apiKey: API_KEY, args: { assetName: "My Asset", isPublic: false } });
+ * const topia = await new Topia({
+ *   apiDomain: "api.topia.io",
+ *   apiKey: "exampleKey",
+ *   interactiveKey: "key",
+ *   interactiveSecret: "secret",
+ * });
  * ```
  */
 export class Topia implements TopiaInterface {
@@ -13,7 +19,7 @@ export class Topia implements TopiaInterface {
   apiDomain: string;
   apiKey?: string;
   interactiveKey?: string;
-  interactiveSecret?: string;
+  interactiveSecret?: jwt.Secret;
 
   constructor({
     apiKey,
@@ -24,7 +30,7 @@ export class Topia implements TopiaInterface {
     apiKey?: string;
     apiDomain?: string;
     interactiveKey?: string;
-    interactiveSecret?: string;
+    interactiveSecret?: jwt.Secret;
   }) {
     this.apiKey = apiKey;
     this.apiDomain = apiDomain || "api.topia.io";

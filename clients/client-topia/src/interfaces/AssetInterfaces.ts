@@ -1,7 +1,7 @@
-import { TopiaInterface } from "./TopiaInterfaces";
+import { SDKInterface } from "./SDKInterfaces";
 
-export interface AssetInterface {
-  topia: TopiaInterface;
+export interface AssetInterface extends SDKInterface {
+  fetchPlatformAssets(): Promise<object>;
   addedOn?: string;
   assetName?: string;
   creatorTags?: object;

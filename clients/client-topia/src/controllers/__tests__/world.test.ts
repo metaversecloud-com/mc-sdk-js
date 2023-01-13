@@ -1,8 +1,9 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { visitors, worlds } from "../../__mocks__";
-import { Visitor, World } from "controllers";
+import { Visitor, World, Topia } from "controllers";
 import { VisitorType } from "types";
+import { WorldFactory } from "factories";
 
 const BASE_URL = "https://api.topia.io/api/world/magic";
 const apiKey = "key";
@@ -11,10 +12,15 @@ const urlSlug = worlds[1].urlSlug;
 
 describe("World Class", () => {
   let mock: MockAdapter, testWorld: World;
+  const myTopiaInstance = new Topia({
+    apiDomain: "api.topia.io",
+    apiKey: "key",
+  });
+  const World = new WorldFactory(myTopiaInstance);
 
   beforeEach(() => {
     mock = new MockAdapter(axios);
-    testWorld = new World({ apiKey, args, urlSlug });
+    testWorld = World.get(urlSlug, { options: {} });
   });
 
   afterEach(() => {

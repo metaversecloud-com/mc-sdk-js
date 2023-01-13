@@ -1,18 +1,23 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { droppedAssets, scenes, worlds } from "__mocks__";
-import { User } from "controllers";
+import { User, Topia } from "controllers";
+import { UserFactory } from "factories";
 
 const BASE_URL = "https://api.topia.io/api/user";
-const apiKey = "key";
 const email = "test@email.com";
 
 describe("User Class", () => {
   let mock: MockAdapter, testUser: User;
+  const myTopiaInstance = new Topia({
+    apiDomain: "api.topia.io",
+    apiKey: "key",
+  });
+  const User = new UserFactory(myTopiaInstance);
 
   beforeEach(() => {
     mock = new MockAdapter(axios);
-    testUser = new User({ apiKey, email });
+    testUser = User.create({ email, options: {} });
   });
 
   afterEach(() => {

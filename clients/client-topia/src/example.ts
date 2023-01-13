@@ -3,7 +3,7 @@
 import { Topia, DroppedAssetFactory, TopiaWorldFactory } from "@rtsdk/topia";
 
 const myTopiaInstance = new Topia({
-  domain: process.env.INSTANCE_DOMAIN || "https://api.topia.io/",
+  domain: process.env.INSTANCE_DOMAIN || "api.topia.io/",
   apiKey: process.env.API_KEY,
   interactiveKey: process.env.INTERACTIVE_KEY,
   interactiveSecret: process.env.INTERACTIVE_SECRET,

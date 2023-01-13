@@ -1,36 +1,33 @@
 import { AxiosResponse } from "axios";
+
+// controllers
+import { SDKController } from "controllers/SDKController";
+import Topia from "controllers/Topia";
+
+// interfaces
+import { AssetInterface } from "interfaces";
+
+// types
+import { AssetOptions } from "types";
+
+// utils
 import { getErrorMessage } from "utils";
-import { AssetInterface, TopiaInterface } from "interfaces";
-import { AssetOptions, InteractiveCredentials } from "types";
-import jwt from "jsonwebtoken";
 
 /**
  * Create an instance of Asset class with a given apiKey and optional arguments.
  *
  * ```ts
- * await new Asset({ apiKey: API_KEY, args: { assetName: "My Asset", isPublic: false } });
+ * await new Asset({ args: { assetName: "My Asset", isPublic: false } });
  * ```
  */
-export class Asset implements AssetInterface {
-  topia: TopiaInterface;
-  creds?: InteractiveCredentials;
+export class Asset extends SDKController implements AssetInterface {
   readonly id?: string;
   jwt?: string;
-  requestOptions: object;
 
-  constructor(topia: TopiaInterface, options: AssetOptions = {}) {
-    const { args = {}, creds } = options;
-    this.topia = topia;
-    this.creds = creds;
-
-    if (creds) {
-      this.jwt = jwt.sign(creds, topia.interactiveSecret);
-      this.requestOptions = { headers: { Interactivejwt: this.jwt } };
-    } else {
-      this.requestOptions = {};
-    }
-
-    Object.assign(this, args);
+  constructor(topia: Topia, id: string, { options }: { options: AssetOptions }) {
+    super(topia, { creds: options.creds });
+    this.id = id;
+    Object.assign(this, options.args);
   }
 
   fetchPlatformAssets(): Promise<object> {

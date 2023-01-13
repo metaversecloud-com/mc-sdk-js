@@ -1,34 +1,53 @@
 import { AxiosResponse } from "axios";
-import { getErrorMessage } from "utils";
+
+// controllers
+import Asset from "./Asset";
+import Topia from "controllers/Topia";
+
+// interfaces
 import {
   DroppedAssetInterface,
   UpdateBroadcastInterface,
   UpdateClickTypeInterface,
   UpdateMediaTypeInterface,
   UpdatePrivateZoneInterface,
-  TopiaInterface,
 } from "interfaces";
+
+// types
 import { DroppedAssetOptions } from "types";
-import Asset from "./Asset";
+
+// utils
+import { getErrorMessage } from "utils";
 
 /**
  * Create an instance of Dropped Asset class with a given apiKey and optional arguments.
  *
  * ```ts
- * await new DroppedAsset({ apiKey: API_KEY, id: "1giFZb0sQ3X27L7uGyQX", urlSlug: "magic" });
+ * await new DroppedAsset({ id: "1giFZb0sQ3X27L7uGyQX", urlSlug: "magic" });
  * ```
  */
 export class DroppedAsset extends Asset implements DroppedAssetInterface {
-  readonly id: string;
+  dataObject?: object | null;
+  readonly id?: string | undefined;
+  text?: string | null | undefined;
   urlSlug: string;
-  dataObject?: object;
 
-  constructor(topia: TopiaInterface, id: string, urlSlug: string, options: DroppedAssetOptions = {}) {
-    const { args, creds } = options;
-    super(topia, { args, creds });
+  constructor(
+    topia: Topia,
+    id: string,
+    {
+      options,
+      urlSlug,
+    }: {
+      options: DroppedAssetOptions;
+      urlSlug: string;
+    },
+  ) {
+    super(topia, id, { options });
     this.id = id;
+    this.text = options.args?.text;
     this.urlSlug = urlSlug;
-    Object.assign(this, args);
+    Object.assign(this, options.args);
   }
 
   /**
@@ -123,7 +142,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   // update dropped assets
-  #updateDroppedAsset = (payload: object, updateType: string): Promise<string> => {
+  updateDroppedAsset = (payload: object, updateType: string): Promise<string> => {
     return new Promise((resolve, reject) => {
       this.topia.axios
         .put(
@@ -157,7 +176,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    */
   updateBroadcast({ assetBroadcast, assetBroadcastAll, broadcasterEmail }: UpdateBroadcastInterface): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset({ assetBroadcast, assetBroadcastAll, broadcasterEmail }, "set-asset-broadcast")
+      return this.updateDroppedAsset({ assetBroadcast, assetBroadcastAll, broadcasterEmail }, "set-asset-broadcast")
         .then(resolve)
         .catch((error) => {
           reject(new Error(getErrorMessage(error)));
@@ -191,7 +210,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     position,
   }: UpdateClickTypeInterface): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset(
+      return this.updateDroppedAsset(
         { clickType, clickableLink, clickableLinkTitle, portalName, position },
         "change-click-type",
       )
@@ -220,7 +239,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    */
   updateCustomText(style: object, text: string | null | undefined): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset({ style, text }, "set-custom-text")
+      return this.updateDroppedAsset({ style, text }, "set-custom-text")
         .then(resolve)
         .catch((error) => {
           reject(new Error(getErrorMessage(error)));
@@ -257,7 +276,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     syncUserMedia,
   }: UpdateMediaTypeInterface): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset(
+      return this.updateDroppedAsset(
         { audioRadius, audioVolume, isVideo, mediaLink, mediaName, mediaType, portalName, syncUserMedia },
         "change-media-type",
       )
@@ -279,7 +298,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    */
   updateMuteZone(isMutezone: boolean): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset({ isMutezone }, "set-mute-zone")
+      return this.updateDroppedAsset({ isMutezone }, "set-mute-zone")
         .then(resolve)
         .catch((error) => {
           reject(new Error(getErrorMessage(error)));
@@ -298,7 +317,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    */
   updatePosition(x: number, y: number): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset({ x, y }, "set-position")
+      return this.updateDroppedAsset({ x, y }, "set-position")
         .then(resolve)
         .catch((error) => {
           reject(new Error(getErrorMessage(error)));
@@ -325,7 +344,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     privateZoneUserCap,
   }: UpdatePrivateZoneInterface): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset(
+      return this.updateDroppedAsset(
         { isPrivateZone, isPrivateZoneChatDisabled, privateZoneUserCap },
         "set-private-zone",
       )
@@ -347,7 +366,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    */
   updateScale(assetScale: number): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset({ assetScale }, "change-scale")
+      return this.updateDroppedAsset({ assetScale }, "change-scale")
         .then(resolve)
         .catch((error) => {
           reject(new Error(getErrorMessage(error)));
@@ -366,7 +385,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    */
   updateUploadedMediaSelected(mediaId: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset({ mediaId }, "change-uploaded-media-selected")
+      return this.updateDroppedAsset({ mediaId }, "change-uploaded-media-selected")
         .then(resolve)
         .catch((error) => {
           reject(new Error(getErrorMessage(error)));
@@ -385,7 +404,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    */
   updateWebImageLayers(bottom: string, top: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      return this.#updateDroppedAsset({ bottom, top }, "set-webimage-layers")
+      return this.updateDroppedAsset({ bottom, top }, "set-webimage-layers")
         .then(resolve)
         .catch((error) => {
           reject(new Error(getErrorMessage(error)));

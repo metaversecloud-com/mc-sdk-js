@@ -1,21 +1,25 @@
 import { droppedAssets } from "__mocks__";
-import { DroppedAsset } from "..";
-import { DroppedAssetClickType, DroppedAssetMediaType } from "../../types/DroppedAssetTypes";
+import { DroppedAsset, Topia } from "controllers";
+import { DroppedAssetClickType, DroppedAssetMediaType } from "types/DroppedAssetTypes";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
+import { DroppedAssetFactory } from "factories";
 
 const BASE_URL = `https://api.topia.io/api/world/magic/assets/${droppedAssets[0].id}`;
-const apiKey = "key";
 const args = droppedAssets[0];
 const id = droppedAssets[0].id;
-const urlSlug = "magic";
 
 describe("DroppedAsset Class", () => {
   let mock: MockAdapter, testDroppedAsset: DroppedAsset;
+  const myTopiaInstance = new Topia({
+    apiDomain: "api.topia.io",
+    apiKey: "key",
+  });
+  const DroppedAsset = new DroppedAssetFactory(myTopiaInstance);
 
-  beforeEach(() => {
+  beforeEach(async () => {
     mock = new MockAdapter(axios);
-    testDroppedAsset = new DroppedAsset({ apiKey, id, args, urlSlug });
+    testDroppedAsset = await DroppedAsset.get(id, { options: {}, urlSlug: "magic" });
   });
 
   afterEach(() => {

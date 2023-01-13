@@ -1,4 +1,6 @@
-export interface WorldDetailsInterface {
+import { SDKInterface } from "./SDKInterfaces";
+
+export interface WorldDetailsInterface extends SDKInterface {
   background?: string | null;
   controls?: {
     allowMuteAll?: boolean;

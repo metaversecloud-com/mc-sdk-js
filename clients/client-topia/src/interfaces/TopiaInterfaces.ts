@@ -1,9 +1,10 @@
 import { AxiosInstance } from "axios";
+import jwt from "jsonwebtoken";
 
 export interface TopiaInterface {
-  axios: AxiosInstance;
   apiDomain: string;
   apiKey?: string;
+  axios: AxiosInstance;
   interactiveKey?: string;
-  interactiveSecret?: string;
+  interactiveSecret?: jwt.Secret;
 }
