@@ -1,5 +1,5 @@
+// @ts-nocheck
 // Initialization... on backend
-
 import { Topia, DroppedAssetFactory, TopiaWorldFactory } from "@rtsdk/topia";
 
 const myTopiaInstance = new Topia({

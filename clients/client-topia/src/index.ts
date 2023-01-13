@@ -1,1 +1,2 @@
-export { Asset, DroppedAsset, User, Visitor, World } from "controllers";
+export { Topia } from "controllers";
+export { AssetFactory, DroppedAssetFactory, UserFactory, VisitorFactory, WorldFactory } from "factories";
