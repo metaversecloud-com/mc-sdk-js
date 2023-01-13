@@ -7,10 +7,10 @@ import { Topia } from "controllers/Topia";
 import { Visitor } from "controllers/Visitor";
 
 // interfaces
-import { MoveAllVisitorsInterface, WorldDetailsInterface } from "interfaces";
+import { MoveAllVisitorsInterface, WorldInterface, WorldOptionalInterface } from "interfaces";
 
 // types
-import { VisitorsToMoveArrayType, WorldOptions } from "types";
+import { VisitorsToMoveArrayType } from "types";
 
 // utils
 import { getErrorMessage, removeUndefined, scatterVisitors } from "utils";
@@ -22,13 +22,13 @@ import { getErrorMessage, removeUndefined, scatterVisitors } from "utils";
  * await new World({ urlSlug: "magic" });
  * ```
  */
-export class World extends SDKController implements WorldDetailsInterface {
+export class World extends SDKController implements WorldInterface {
   #droppedAssetsMap: { [key: string]: DroppedAsset };
   #visitorsMap: { [key: string]: Visitor };
   urlSlug: string;
 
-  constructor(topia: Topia, urlSlug: string, { options }: { options: WorldOptions }) {
-    super(topia, { creds: options.creds });
+  constructor(topia: Topia, urlSlug: string, options: WorldOptionalInterface = { args: {}, creds: {} }) {
+    super(topia, options.creds);
     Object.assign(this, options.args);
     this.#droppedAssetsMap = {};
     this.#visitorsMap = {};
@@ -98,7 +98,7 @@ export class World extends SDKController implements WorldDetailsInterface {
     name,
     spawnPosition,
     width,
-  }: WorldDetailsInterface): Promise<string> {
+  }: WorldInterface): Promise<string> {
     const payload: any = {
       controls,
       description,
@@ -132,7 +132,7 @@ export class World extends SDKController implements WorldDetailsInterface {
           const tempVisitorsMap: { [key: string]: Visitor } = {};
           for (const id in response.data) {
             tempVisitorsMap[id] = new Visitor(this.topia, response.data[id].playerId, this.urlSlug, {
-              options: { args: response.data[id] },
+              args: response.data[id],
             });
           }
           this.#visitorsMap = tempVisitorsMap;
@@ -260,9 +260,8 @@ export class World extends SDKController implements WorldDetailsInterface {
           const tempDroppedAssetsMap: { [key: string]: DroppedAsset } = {};
           for (const index in response.data) {
             // tempDroppedAssetsMap[id] = createDroppedAsset(this.apiKey, response.data[id], this.urlSlug);
-            tempDroppedAssetsMap[index] = new DroppedAsset(this.topia, response.data[index].id, {
-              options: { args: response.data[index] },
-              urlSlug: this.urlSlug,
+            tempDroppedAssetsMap[index] = new DroppedAsset(this.topia, response.data[index].id, this.urlSlug, {
+              args: response.data[index],
             });
           }
           this.#droppedAssetsMap = tempDroppedAssetsMap;

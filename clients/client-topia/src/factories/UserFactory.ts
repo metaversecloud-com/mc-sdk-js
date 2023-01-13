@@ -1,5 +1,5 @@
 import { Topia, User } from "controllers";
-import { UserOptions } from "types";
+import { UserOptionalInterface } from "interfaces";
 
 export class UserFactory {
   topia: Topia;
@@ -8,11 +8,8 @@ export class UserFactory {
     this.topia = topia;
   }
 
-  create({ email, options }: { email: string; options: UserOptions }): User {
-    return new User(this.topia, {
-      email,
-      options,
-    });
+  create(email: string, options?: UserOptionalInterface): User {
+    return new User(this.topia, email, options);
   }
 }
 

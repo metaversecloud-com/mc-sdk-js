@@ -1,20 +1,18 @@
 import { AxiosResponse } from "axios";
 
 // controllers
-import Asset from "./Asset";
-import Topia from "controllers/Topia";
+import { Asset } from "controllers/Asset";
+import { Topia } from "controllers/Topia";
 
 // interfaces
 import {
   DroppedAssetInterface,
+  DroppedAssetOptionalInterface,
   UpdateBroadcastInterface,
   UpdateClickTypeInterface,
   UpdateMediaTypeInterface,
   UpdatePrivateZoneInterface,
 } from "interfaces";
-
-// types
-import { DroppedAssetOptions } from "types";
 
 // utils
 import { getErrorMessage } from "utils";
@@ -35,15 +33,10 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   constructor(
     topia: Topia,
     id: string,
-    {
-      options,
-      urlSlug,
-    }: {
-      options: DroppedAssetOptions;
-      urlSlug: string;
-    },
+    urlSlug: string,
+    options: DroppedAssetOptionalInterface = { args: { text: "" }, creds: {} },
   ) {
-    super(topia, id, { options });
+    super(topia, id, options);
     this.id = id;
     this.text = options.args?.text;
     this.urlSlug = urlSlug;

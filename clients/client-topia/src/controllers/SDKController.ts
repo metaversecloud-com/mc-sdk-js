@@ -1,5 +1,5 @@
 // controllers
-import Topia from "controllers/Topia";
+import { Topia } from "controllers/Topia";
 
 // interfaces
 import { SDKInterface } from "interfaces";
@@ -31,12 +31,12 @@ import jwt from "jsonwebtoken";
  * ```
  */
 export class SDKController implements SDKInterface {
-  creds?: InteractiveCredentials;
+  creds: InteractiveCredentials | undefined;
   jwt?: string;
   requestOptions: object;
   topia: Topia;
 
-  constructor(topia: Topia, { creds }: { creds: InteractiveCredentials | undefined }) {
+  constructor(topia: Topia, creds: InteractiveCredentials | undefined) {
     this.creds = creds;
     this.topia = topia;
 

@@ -1,5 +1,5 @@
 import { Asset, Topia } from "controllers";
-import { AssetOptions } from "types";
+import { AssetOptionalInterface } from "interfaces";
 
 export class AssetFactory {
   topia: Topia;
@@ -9,10 +9,8 @@ export class AssetFactory {
     this.create;
   }
 
-  create(id: string, { options }: { options: AssetOptions }): Asset {
-    return new Asset(this.topia, id, {
-      options,
-    });
+  create(id: string, options?: { args: AssetOptionalInterface }): Asset {
+    return new Asset(this.topia, id, options);
   }
 }
 

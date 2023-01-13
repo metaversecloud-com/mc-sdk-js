@@ -36,7 +36,7 @@ export class Topia implements TopiaInterface {
     this.apiDomain = apiDomain || "api.topia.io";
     this.interactiveSecret = interactiveSecret;
 
-    const headers: any = {
+    const headers: { "Authorization"?: string; "Content-Type": string; "Publickey"?: string } = {
       "Content-Type": "application/json",
     };
 

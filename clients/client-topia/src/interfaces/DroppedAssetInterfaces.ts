@@ -1,4 +1,4 @@
-import { DroppedAssetClickType, DroppedAssetMediaType } from "types";
+import { DroppedAssetClickType, DroppedAssetMediaType, InteractiveCredentials } from "types";
 import { AssetInterface } from "interfaces";
 
 export interface DroppedAssetInterface extends AssetInterface {
@@ -92,6 +92,11 @@ export interface DroppedAssetInterface extends AssetInterface {
   worldId?: string | null;
   walletAddress?: string | null;
   yOrderAdjust?: number | null;
+}
+
+export interface DroppedAssetOptionalInterface {
+  args?: DroppedAssetInterface | { text: string };
+  creds?: InteractiveCredentials | object;
 }
 
 export interface UpdateBroadcastInterface {

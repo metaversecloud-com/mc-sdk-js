@@ -1,3 +1,4 @@
+import { InteractiveCredentials } from "types";
 import { SDKInterface } from "./SDKInterfaces";
 
 export interface AssetInterface extends SDKInterface {
@@ -20,3 +21,8 @@ export interface AssetInterface extends SDKInterface {
   transactionId?: string;
   type?: string;
 }
+
+export type AssetOptionalInterface = {
+  args?: AssetInterface | object;
+  creds?: InteractiveCredentials | object;
+};

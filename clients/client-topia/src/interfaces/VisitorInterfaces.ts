@@ -1,4 +1,5 @@
 import { SDKInterface } from "./SDKInterfaces";
+import { InteractiveCredentials } from "types";
 
 export interface VisitorInterface extends SDKInterface {
   moveVisitor({ shouldTeleportVisitor, x, y }: MoveVisitorInterface): Promise<string>;
@@ -23,6 +24,11 @@ export interface VisitorInterface extends SDKInterface {
   sitting?: boolean;
   urlSlug: string;
   username?: string | undefined;
+}
+
+export interface VisitorOptionalInterface {
+  args?: VisitorInterface | object;
+  creds?: InteractiveCredentials | object;
 }
 
 export interface MoveVisitorInterface {

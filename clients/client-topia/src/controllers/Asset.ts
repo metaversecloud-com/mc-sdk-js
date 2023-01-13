@@ -2,13 +2,10 @@ import { AxiosResponse } from "axios";
 
 // controllers
 import { SDKController } from "controllers/SDKController";
-import Topia from "controllers/Topia";
+import { Topia } from "controllers/Topia";
 
 // interfaces
-import { AssetInterface } from "interfaces";
-
-// types
-import { AssetOptions } from "types";
+import { AssetInterface, AssetOptionalInterface } from "interfaces";
 
 // utils
 import { getErrorMessage } from "utils";
@@ -24,8 +21,8 @@ export class Asset extends SDKController implements AssetInterface {
   readonly id?: string;
   jwt?: string;
 
-  constructor(topia: Topia, id: string, { options }: { options: AssetOptions }) {
-    super(topia, { creds: options.creds });
+  constructor(topia: Topia, id: string, options: AssetOptionalInterface = { args: {}, creds: {} }) {
+    super(topia, options.creds);
     this.id = id;
     Object.assign(this, options.args);
   }

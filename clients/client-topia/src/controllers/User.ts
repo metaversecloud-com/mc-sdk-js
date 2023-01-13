@@ -1,9 +1,15 @@
 import { AxiosResponse } from "axios";
-import { World } from "controllers/World";
-import { getErrorMessage } from "utils";
+
+// controllers
 import { SDKController } from "controllers/SDKController";
+import { World } from "controllers/World";
 import { Topia } from "controllers/Topia";
-import { UserOptions } from "types";
+
+// interfaces
+import { UserOptionalInterface } from "interfaces";
+
+// utils
+import { getErrorMessage } from "utils";
 
 /**
  * Create an instance of User class with a given apiKey.
@@ -16,8 +22,8 @@ export class User extends SDKController {
   #worldsMap: { [key: string]: World };
   email: string;
 
-  constructor(topia: Topia, { email, options }: { email: string; options: UserOptions }) {
-    super(topia, { creds: options.creds });
+  constructor(topia: Topia, email: string, options: UserOptionalInterface = { creds: {} }) {
+    super(topia, options.creds);
     this.#worldsMap = {};
     this.email = email;
   }
@@ -86,9 +92,7 @@ export class User extends SDKController {
           const tempWorldsMap: { [key: string]: World } = {};
           for (const i in response.data) {
             const worldDetails = response.data[i];
-            tempWorldsMap[worldDetails.urlSlug] = new World(this.topia, worldDetails.urlSlug, {
-              options: { args: worldDetails },
-            });
+            tempWorldsMap[worldDetails.urlSlug] = new World(this.topia, worldDetails.urlSlug, { args: worldDetails });
           }
           this.#worldsMap = tempWorldsMap;
           resolve("Success!");

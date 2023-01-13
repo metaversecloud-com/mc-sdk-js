@@ -4,20 +4,20 @@ import { visitors } from "../../__mocks__";
 import { Visitor as VisitorClass, Topia } from "controllers";
 import { VisitorFactory } from "factories";
 
-const BASE_URL = "https://api.topia.io/api/world/magic";
+const apiDomain = "api.topia.io";
 const id = visitors["1"].playerId;
 
-describe("World Class", () => {
-  let mock: MockAdapter, testVisitor: VisitorClass;
-  const myTopiaInstance = new Topia({
-    apiDomain: "api.topia.io",
-    apiKey: "key",
-  });
-  const Visitor = new VisitorFactory(myTopiaInstance);
+describe("Visitor Class", () => {
+  let mock: MockAdapter, testVisitor: VisitorClass, topia: Topia, Visitor: VisitorFactory;
 
   beforeEach(() => {
     mock = new MockAdapter(axios);
-    testVisitor = Visitor.create(id, { options: {}, urlSlug: "magic" });
+    topia = new Topia({
+      apiDomain,
+      apiKey: "key",
+    });
+    Visitor = new VisitorFactory(topia);
+    testVisitor = Visitor.create(id, "magic");
   });
 
   afterEach(() => {
@@ -26,12 +26,12 @@ describe("World Class", () => {
   });
 
   it("should move a list of visitors to uniquely specified coordinates", async () => {
-    mock.onPut(`${BASE_URL}/world/magic/visitors/${id}/move`).reply(200, "Success!");
+    mock.onPut(`https://${apiDomain}/api/world/magic/visitors/${id}/move`).reply(200, "Success!");
     await testVisitor.moveVisitor({
       shouldTeleportVisitor: true,
       x: 100,
       y: 100,
     });
-    expect(mock.history.put.length).toBe(2);
+    expect(mock.history.put.length).toBe(1);
   });
 });

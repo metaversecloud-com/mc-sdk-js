@@ -24,7 +24,7 @@ export default { myTopiaInstance, DroppedAsset, TopiaWorld };
 
 // route definition for setTextOnAsset
 
-import { DroppedAsset } from "./";
+import { DroppedAsset } from "./src";
 
 const setTextOnAsset = async (req: any, res: any) => {
   const asset = await DroppedAsset.get(req.body.assetId, req.body.urlSlug, { creds: req.body });
@@ -41,7 +41,7 @@ const setTextOnAsset = async (req: any, res: any) => {
 /////////////////////////////////////////////////////////////////////
 
 import { DroppedAssetFactory } from "@rtsdk/topia";
-import { myTopiaInterface } from "./";
+import { myTopiaInterface } from "./src";
 
 const setTextOnAsset = async (req: any, res: any) => {
   const asset = await new DroppedAssetFactory(myTopiaInterface).get(req.body.assetId, req.body.urlSlug, {

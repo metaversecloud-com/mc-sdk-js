@@ -1,12 +1,9 @@
 // controllers
 import { SDKController } from "controllers/SDKController";
-import Topia from "controllers/Topia";
+import { Topia } from "controllers/Topia";
 
 // interfaces
-import { MoveVisitorInterface, VisitorInterface } from "interfaces";
-
-// types
-import { VisitorOptions } from "types";
+import { MoveVisitorInterface, VisitorInterface, VisitorOptionalInterface } from "interfaces";
 
 // utils
 import { getErrorMessage } from "utils";
@@ -22,8 +19,8 @@ export class Visitor extends SDKController implements VisitorInterface {
   readonly id: number;
   urlSlug: string;
 
-  constructor(topia: Topia, id: number, urlSlug: string, { options }: { options: VisitorOptions }) {
-    super(topia, { creds: options.creds });
+  constructor(topia: Topia, id: number, urlSlug: string, options: VisitorOptionalInterface = { args: {}, creds: {} }) {
+    super(topia, options.creds);
     Object.assign(this, options.args);
     this.id = id;
     this.urlSlug = urlSlug;

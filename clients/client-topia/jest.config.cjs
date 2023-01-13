@@ -1,6 +1,6 @@
 module.exports = {
   clearMocks: true,
-  collectCoverageFrom: ["./src/**", "!./src/example.ts"],
+  collectCoverageFrom: ["./src/**"],
   coverageThreshold: {
     global: {
       statements: 1,
@@ -16,7 +16,7 @@ module.exports = {
   modulePaths: ["node_modules", "<rootDir>/src"],
   roots: ["<rootDir>/src"],
   testEnvironment: "node",
-  testPathIgnorePatterns: ["./node_modules/", "./dist/", "./src/example.ts"],
+  testPathIgnorePatterns: ["./node_modules/", "./dist/"],
   testRegex: "(/tests/.*|(\\.|/)(test|spec))\\.(js?|ts?)$",
   transform: {
     "^.+.(ts|js)$": "ts-jest",

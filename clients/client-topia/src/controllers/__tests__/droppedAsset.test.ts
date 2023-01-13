@@ -5,21 +5,22 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { DroppedAssetFactory } from "factories";
 
-const BASE_URL = `https://api.topia.io/api/world/magic/assets/${droppedAssets[0].id}`;
+const apiDomain = "api.topia.io";
 const args = droppedAssets[0];
+const BASE_URL = `https://api.topia.io/api/world/magic/assets/${droppedAssets[0].id}`;
 const id = droppedAssets[0].id;
 
 describe("DroppedAsset Class", () => {
-  let mock: MockAdapter, testDroppedAsset: DroppedAssetClass;
-  const myTopiaInstance = new Topia({
-    apiDomain: "api.topia.io",
-    apiKey: "key",
-  });
-  const DroppedAsset = new DroppedAssetFactory(myTopiaInstance);
+  let DroppedAsset: DroppedAssetFactory, mock: MockAdapter, testDroppedAsset: DroppedAssetClass, topia: Topia;
 
   beforeEach(async () => {
     mock = new MockAdapter(axios);
-    testDroppedAsset = await DroppedAsset.get(id, { options: {}, urlSlug: "magic" });
+    topia = new Topia({
+      apiDomain,
+      apiKey: "key",
+    });
+    DroppedAsset = new DroppedAssetFactory(topia);
+    testDroppedAsset = await DroppedAsset.create(id, "magic");
   });
 
   afterEach(() => {
@@ -28,10 +29,10 @@ describe("DroppedAsset Class", () => {
   });
 
   it("should fetch dropped asset by id", async () => {
-    testDroppedAsset.fetchDroppedAssetById = jest.fn().mockReturnValue(droppedAssets[0]);
-    const mockDroppedAssets = await testDroppedAsset.fetchDroppedAssetById();
-    expect(testDroppedAsset.fetchDroppedAssetById).toHaveBeenCalled();
-    expect(mockDroppedAssets).toBeDefined();
+    mock.onGet(BASE_URL).reply(200, droppedAssets[0]);
+    await testDroppedAsset.fetchDroppedAssetById();
+    expect(mock.history.get.length).toBe(1);
+    expect(testDroppedAsset.urlSlug).toBeDefined();
   });
 
   it("should update dropped asset broadcast zone", async () => {

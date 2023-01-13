@@ -1,5 +1,5 @@
 import { Topia, Visitor } from "controllers";
-import { VisitorOptions } from "types";
+import { VisitorOptionalInterface } from "interfaces";
 
 export class VisitorFactory {
   topia: Topia;
@@ -8,8 +8,8 @@ export class VisitorFactory {
     this.topia = topia;
   }
 
-  create(id: number, { options, urlSlug }: { options: VisitorOptions; urlSlug: string }): Visitor {
-    return new Visitor(this.topia, id, urlSlug, { options });
+  create(id: number, urlSlug: string, options?: VisitorOptionalInterface): Visitor {
+    return new Visitor(this.topia, id, urlSlug, options);
   }
 }
 

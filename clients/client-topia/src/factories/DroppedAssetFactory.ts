@@ -1,5 +1,5 @@
 import { DroppedAsset, Topia } from "controllers";
-import { DroppedAssetOptions } from "types";
+import { DroppedAssetOptionalInterface } from "interfaces";
 
 export class DroppedAssetFactory {
   topia: Topia;
@@ -8,36 +8,12 @@ export class DroppedAssetFactory {
     this.topia = topia;
   }
 
-  create(
-    id: string,
-    {
-      options,
-      urlSlug,
-    }: {
-      options: DroppedAssetOptions;
-      urlSlug: string;
-    },
-  ): DroppedAsset {
-    return new DroppedAsset(this.topia, id, {
-      options,
-      urlSlug,
-    });
+  create(id: string, urlSlug: string, options?: DroppedAssetOptionalInterface): DroppedAsset {
+    return new DroppedAsset(this.topia, id, urlSlug, options);
   }
 
-  async get(
-    id: string,
-    {
-      options,
-      urlSlug,
-    }: {
-      options: DroppedAssetOptions;
-      urlSlug: string;
-    },
-  ): Promise<DroppedAsset> {
-    const droppedAsset = new DroppedAsset(this.topia, id, {
-      options,
-      urlSlug,
-    });
+  async get(id: string, urlSlug: string, options?: DroppedAssetOptionalInterface): Promise<DroppedAsset> {
+    const droppedAsset = new DroppedAsset(this.topia, id, urlSlug, options);
 
     await droppedAsset.fetchDroppedAssetById();
 
