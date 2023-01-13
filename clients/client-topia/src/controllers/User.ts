@@ -12,18 +12,18 @@ import { UserOptionalInterface } from "interfaces";
 import { getErrorMessage } from "utils";
 
 /**
- * Create an instance of User class with a given apiKey.
+ * Create an instance of User class with email and optional session credentials.
  *
  * ```ts
- * await new User({ email: "example@email.io" });
+ * await new User(topia, "example@email.io", { interactiveNonce: "exampleNonce", interactivePublicKey: "examplePublicKey", playerId: 1 });
  * ```
  */
 export class User extends SDKController {
   #worldsMap: { [key: string]: World };
   email: string;
 
-  constructor(topia: Topia, email: string, options: UserOptionalInterface = { creds: {} }) {
-    super(topia, options.creds);
+  constructor(topia: Topia, email: string, options: UserOptionalInterface = { credentials: {} }) {
+    super(topia, options.credentials);
     this.#worldsMap = {};
     this.email = email;
   }
@@ -92,7 +92,9 @@ export class User extends SDKController {
           const tempWorldsMap: { [key: string]: World } = {};
           for (const i in response.data) {
             const worldDetails = response.data[i];
-            tempWorldsMap[worldDetails.urlSlug] = new World(this.topia, worldDetails.urlSlug, { args: worldDetails });
+            tempWorldsMap[worldDetails.urlSlug] = new World(this.topia, worldDetails.urlSlug, {
+              attributes: worldDetails,
+            });
           }
           this.#worldsMap = tempWorldsMap;
           resolve("Success!");

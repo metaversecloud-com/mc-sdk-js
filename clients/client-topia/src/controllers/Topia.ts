@@ -1,5 +1,10 @@
 import axios, { AxiosInstance } from "axios";
+
+// interfaces
 import { TopiaInterface } from "interfaces";
+
+// utils
+import { getBrowserWarning } from "utils";
 import jwt from "jsonwebtoken";
 
 /**
@@ -32,6 +37,8 @@ export class Topia implements TopiaInterface {
     interactiveKey?: string;
     interactiveSecret?: jwt.Secret;
   }) {
+    getBrowserWarning();
+
     this.apiKey = apiKey;
     this.apiDomain = apiDomain || "api.topia.io";
     this.interactiveSecret = interactiveSecret;

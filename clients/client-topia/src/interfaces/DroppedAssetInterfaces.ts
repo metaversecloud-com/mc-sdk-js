@@ -95,8 +95,8 @@ export interface DroppedAssetInterface extends AssetInterface {
 }
 
 export interface DroppedAssetOptionalInterface {
-  args?: DroppedAssetInterface | { text: string };
-  creds?: InteractiveCredentials | object;
+  attributes?: DroppedAssetInterface | { text: string };
+  credentials?: InteractiveCredentials | object;
 }
 
 export interface UpdateBroadcastInterface {

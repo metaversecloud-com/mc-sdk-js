@@ -18,10 +18,10 @@ import {
 import { getErrorMessage } from "utils";
 
 /**
- * Create an instance of Dropped Asset class with a given apiKey and optional arguments.
+ * Create an instance of Dropped Asset class with a given dropped asset id, url slug, and optional attributes and session credentials.
  *
  * ```ts
- * await new DroppedAsset({ id: "1giFZb0sQ3X27L7uGyQX", urlSlug: "magic" });
+ * await new DroppedAsset(topia, "1giFZb0sQ3X27L7uGyQX", "example", { attributes: { text: "" }, credentials: { assetId: "1giFZb0sQ3X27L7uGyQX" } } });
  * ```
  */
 export class DroppedAsset extends Asset implements DroppedAssetInterface {
@@ -34,13 +34,13 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     topia: Topia,
     id: string,
     urlSlug: string,
-    options: DroppedAssetOptionalInterface = { args: { text: "" }, creds: {} },
+    options: DroppedAssetOptionalInterface = { attributes: { text: "" }, credentials: {} },
   ) {
     super(topia, id, options);
     this.id = id;
-    this.text = options.args?.text;
+    this.text = options.attributes?.text;
     this.urlSlug = urlSlug;
-    Object.assign(this, options.args);
+    Object.assign(this, options.attributes);
   }
 
   /**

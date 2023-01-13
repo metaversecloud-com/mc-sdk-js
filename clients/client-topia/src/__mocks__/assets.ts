@@ -25,7 +25,7 @@ export const assets = [
     specialType: null,
     topLayerURL: "",
     bottomLayerURL:
-      "https://storage.googleapis.com/topia-ba1c8.appspot.com/layers/2OB4pQL4b6ReyRfh6TOVJlx8vDz2-magic-1644304293033_layer0.png?GoogleAccessId=firebase-adminsdk-f60ic%40topia-ba1c8.iam.gserviceaccount.com&Expires=1670268565&Signature=yNh3QQpTwL6X%2BYUY6wijtDHy7QOGgkOu4hyQK8WMx1wwQQJ0zHDXOwPvRUBMT9skAjTejInsQOoBrDQSc7oxBoEKjk3Gklcf1MQN15zHEpdHHFZczX534LRxvt2ObxGFJkmSBFdH2sP0h22QjwWl2ERmzRfRYicBJcZZfBUxqlDz62IsBwhUgIfIRjtX6U8XWHQ%2BD3PgOJHQZlt%2BYhGKIPzSi5B289YHDN6xAgtQLGzSfps3f%2F4hl9fAhN0QPi%2BFSaNk0dko08hYCWqQAk75xurj0X6VPFAPb1FVggzTG0bzmQw%2Bm2%2BPbThH70Zqgw0VWSiBta9ojATAAuvnHJU0Jg%3D%3D",
+      "https://storage.googleapis.com/topia-ba1c8.appspot.com/layers/2OB4pQL4b6ReyRfh6TOVJlx8vDz2-exampleWorld-1644304293033_layer0.png?GoogleAccessId=firebase-adminsdk-f60ic%40topia-ba1c8.iam.gserviceaccount.com&Expires=1670268565&Signature=yNh3QQpTwL6X%2BYUY6wijtDHy7QOGgkOu4hyQK8WMx1wwQQJ0zHDXOwPvRUBMT9skAjTejInsQOoBrDQSc7oxBoEKjk3Gklcf1MQN15zHEpdHHFZczX534LRxvt2ObxGFJkmSBFdH2sP0h22QjwWl2ERmzRfRYicBJcZZfBUxqlDz62IsBwhUgIfIRjtX6U8XWHQ%2BD3PgOJHQZlt%2BYhGKIPzSi5B289YHDN6xAgtQLGzSfps3f%2F4hl9fAhN0QPi%2BFSaNk0dko08hYCWqQAk75xurj0X6VPFAPb1FVggzTG0bzmQw%2Bm2%2BPbThH70Zqgw0VWSiBta9ojATAAuvnHJU0Jg%3D%3D",
   },
   {
     addedOn: "May 25, 2021 at 2:21:16 PM UTC-7",

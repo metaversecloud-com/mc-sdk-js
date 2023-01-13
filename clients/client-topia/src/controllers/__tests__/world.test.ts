@@ -5,8 +5,8 @@ import { Visitor, World as WorldClass, Topia } from "controllers";
 import { VisitorType } from "types";
 import { WorldFactory } from "factories";
 
-// const args = worlds[1];
-const BASE_URL = "https://api.topia.io/api/world/magic";
+// const attributes = worlds[1];
+const BASE_URL = "https://api.topia.io/api/world/exampleWorld";
 const urlSlug = worlds[1].urlSlug;
 
 describe("World Class", () => {
@@ -28,7 +28,7 @@ describe("World Class", () => {
   });
 
   it("should return details of a world", async () => {
-    expect(testWorld.urlSlug).toEqual("magic");
+    expect(testWorld.urlSlug).toEqual("exampleWorld");
     testWorld.fetchDetails = jest.fn().mockReturnValue(worlds[1]);
     const mockDetails = await testWorld.fetchDetails();
     expect(testWorld.fetchDetails).toHaveBeenCalled();
@@ -38,36 +38,42 @@ describe("World Class", () => {
   // it("should update details of a world", async () => {
   //   mock.onPut(`${BASE_URL}/world-details`).reply(200, "Success!");
   //   const worldArgs = {
-  //     ...args,
+  //     ...attributes,
   //     controls: {
   //       allowMuteAll: false,
   //     },
   //     description: "testing update details",
-  //     name: "magic",
+  //     name: "exampleWorld",
   //   };
   //   await testWorld.updateDetails(worldArgs);
   //   expect(mock.history.put.length).toBe(1);
-  //   expect(testWorld.urlSlug).toEqual("magic");
+  //   expect(testWorld.urlSlug).toEqual("exampleWorld");
   // });
 
   it("should move all visitors within a world to a single set of coordinates", async () => {
     mock.onGet(`${BASE_URL}/visitors`).reply(200, visitors);
     mock.onPut(`${BASE_URL}/visitors/1/move`).reply(200, "Success!");
-    const args = { shouldFetchVisitors: true, shouldTeleportVisitors: true, scatterVisitorsBy: 100, x: 20, y: 40 };
-    await testWorld.moveAllVisitors(args);
+    const attributes = {
+      shouldFetchVisitors: true,
+      shouldTeleportVisitors: true,
+      scatterVisitorsBy: 100,
+      x: 20,
+      y: 40,
+    };
+    await testWorld.moveAllVisitors(attributes);
     expect(mock.history.put.length).toBe(Object.keys(visitors).length);
   });
 
   it("should return success if world doesn't have visitors", async () => {
-    const args = { shouldFetchVisitors: false, scatterVisitorsBy: 100, x: 20, y: 40 };
-    await testWorld.moveAllVisitors(args);
+    const attributes = { shouldFetchVisitors: false, scatterVisitorsBy: 100, x: 20, y: 40 };
+    await testWorld.moveAllVisitors(attributes);
     expect(mock.history.put.length).toBe(0);
   });
 
   it("should move a list of visitors to uniquely specified coordinates", async () => {
     mock.onPut(`${BASE_URL}/visitors/1/move`).reply(200, "Success!");
-    const v1 = new Visitor(topia, visitors["1"].playerId, urlSlug, { args: visitors["1"] as VisitorType });
-    const v2 = new Visitor(topia, visitors["2"].playerId, urlSlug, { args: visitors["2"] as VisitorType });
+    const v1 = new Visitor(topia, visitors["1"].playerId, urlSlug, { attributes: visitors["1"] as VisitorType });
+    const v2 = new Visitor(topia, visitors["2"].playerId, urlSlug, { attributes: visitors["2"] as VisitorType });
     const testVisitors = [
       { visitorObj: v1, shouldTeleportVisitor: true, x: 0, y: 0 },
       { visitorObj: v2, shouldTeleportVisitor: false, x: 100, y: 100 },

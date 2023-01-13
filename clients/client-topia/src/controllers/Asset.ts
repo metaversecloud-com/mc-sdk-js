@@ -11,20 +11,20 @@ import { AssetInterface, AssetOptionalInterface } from "interfaces";
 import { getErrorMessage } from "utils";
 
 /**
- * Create an instance of Asset class with a given apiKey and optional arguments.
+ * Create an instance of Asset class with a given asset id and optional attributes and session credentials.
  *
  * ```ts
- * await new Asset({ args: { assetName: "My Asset", isPublic: false } });
+ * await new Asset(topia, "assetId", { attributes: { assetName: "My Asset", isPublic: false } });
  * ```
  */
 export class Asset extends SDKController implements AssetInterface {
   readonly id?: string;
   jwt?: string;
 
-  constructor(topia: Topia, id: string, options: AssetOptionalInterface = { args: {}, creds: {} }) {
-    super(topia, options.creds);
+  constructor(topia: Topia, id: string, options: AssetOptionalInterface = { attributes: {}, credentials: {} }) {
+    super(topia, options.credentials);
     this.id = id;
-    Object.assign(this, options.args);
+    Object.assign(this, options.attributes);
   }
 
   fetchPlatformAssets(): Promise<object> {

@@ -9,19 +9,24 @@ import { MoveVisitorInterface, VisitorInterface, VisitorOptionalInterface } from
 import { getErrorMessage } from "utils";
 
 /**
- * Create an instance of Visitor class with a given apiKey and optional arguments.
+ * Create an instance of Visitor class with a given id and optional attributes and session credentials.
  *
  * ```ts
- * await new Visitor(this.topia, id, urlSlug, { options });
+ * await new Visitor(topia, id, urlSlug, { attributes: { moveTo: { x: 0, y: 0 } } });
  * ```
  */
 export class Visitor extends SDKController implements VisitorInterface {
   readonly id: number;
   urlSlug: string;
 
-  constructor(topia: Topia, id: number, urlSlug: string, options: VisitorOptionalInterface = { args: {}, creds: {} }) {
-    super(topia, options.creds);
-    Object.assign(this, options.args);
+  constructor(
+    topia: Topia,
+    id: number,
+    urlSlug: string,
+    options: VisitorOptionalInterface = { attributes: {}, credentials: {} },
+  ) {
+    super(topia, options.credentials);
+    Object.assign(this, options.attributes);
     this.id = id;
     this.urlSlug = urlSlug;
     this.moveVisitor;

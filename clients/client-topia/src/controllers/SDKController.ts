@@ -14,7 +14,7 @@ import jwt from "jsonwebtoken";
  * Create an instance of SDKController class with credentials.
  *
  * ```ts
- * const creds = {
+ * const credentials = {
  *   assetId: "exampleAsset",
  *   interactiveNonce: "exampleNonce"
  *   interactivePublicKey: "examplePublicKey",
@@ -27,21 +27,21 @@ import jwt from "jsonwebtoken";
  *   interactiveKey: "key",
  *   interactiveSecret: "secret",
  * }
- * await new SDKController({ creds, topia });
+ * await new SDKController({ credentials, topia });
  * ```
  */
 export class SDKController implements SDKInterface {
-  creds: InteractiveCredentials | undefined;
+  credentials: InteractiveCredentials | undefined;
   jwt?: string;
   requestOptions: object;
   topia: Topia;
 
-  constructor(topia: Topia, creds: InteractiveCredentials | undefined) {
-    this.creds = creds;
+  constructor(topia: Topia, credentials: InteractiveCredentials | undefined) {
+    this.credentials = credentials;
     this.topia = topia;
 
-    if (creds && topia.interactiveSecret) {
-      this.jwt = jwt.sign(creds, topia.interactiveSecret);
+    if (credentials && topia.interactiveSecret) {
+      this.jwt = jwt.sign(credentials, topia.interactiveSecret);
       this.requestOptions = { headers: { Interactivejwt: this.jwt } };
     } else {
       this.requestOptions = {};
