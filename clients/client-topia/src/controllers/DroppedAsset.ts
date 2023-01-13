@@ -63,6 +63,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
           resolve("Success!");
         })
         .catch((error) => {
+          console.log(error);
           reject(new Error(getErrorMessage(error)));
         });
     });

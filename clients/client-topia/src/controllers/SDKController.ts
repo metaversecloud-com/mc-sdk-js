@@ -36,12 +36,18 @@ export class SDKController implements SDKInterface {
   requestOptions: object;
   topia: Topia;
 
-  constructor(topia: Topia, creds: InteractiveCredentials | undefined) {
-    this.creds = creds;
+  constructor(topia: Topia, creds: InteractiveCredentials = {}) {
     this.topia = topia;
+    const { assetId, interactiveNonce, playerId } = creds;
 
-    if (creds && topia.interactiveSecret) {
-      this.jwt = jwt.sign(creds, topia.interactiveSecret);
+    let payload = {};
+    if (playerId && assetId && interactiveNonce) {
+      payload = {
+        interactiveNonce,
+        playerId,
+        assetId,
+      };
+      this.jwt = jwt.sign(payload, topia.interactiveSecret as string);
       this.requestOptions = { headers: { Interactivejwt: this.jwt } };
     } else {
       this.requestOptions = {};
