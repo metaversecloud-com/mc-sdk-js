@@ -1,7 +1,43 @@
-import { DroppedAssetClickType, DroppedAssetMediaType } from "types";
-import { AssetInterface } from "./AssetInterfaces";
+import { DroppedAssetClickType, DroppedAssetMediaType, InteractiveCredentials } from "types";
+import { AssetInterface } from "interfaces";
 
 export interface DroppedAssetInterface extends AssetInterface {
+  fetchDroppedAssetById(): Promise<string>;
+  deleteDroppedAsset(): Promise<string>;
+  fetchDroppedAssetDataObject(): Promise<string>;
+  updateDroppedAssetDataObject(dataObject: object): Promise<string>;
+  updateDroppedAsset(payload: object, updateType: string): Promise<string>;
+  updateBroadcast({ assetBroadcast, assetBroadcastAll, broadcasterEmail }: UpdateBroadcastInterface): Promise<string>;
+  updateClickType({
+    clickType,
+    clickableLink,
+    clickableLinkTitle,
+    portalName,
+    position,
+  }: UpdateClickTypeInterface): Promise<string>;
+  updateCustomText(style: object, text: string): Promise<string>;
+  updateMediaType({
+    audioRadius,
+    audioVolume,
+    isVideo,
+    mediaLink,
+    mediaName,
+    mediaType,
+    portalName,
+    syncUserMedia,
+  }: UpdateMediaTypeInterface): Promise<string>;
+  updateMuteZone(isMutezone: boolean): Promise<string>;
+  updatePosition(x: number, y: number): Promise<string>;
+  updatePrivateZone({
+    isPrivateZone,
+    isPrivateZoneChatDisabled,
+    privateZoneUserCap,
+  }: UpdatePrivateZoneInterface): Promise<string>;
+  updateScale(assetScale: number): Promise<string>;
+  updateUploadedMediaSelected(mediaId: string): Promise<string>;
+  updateWebImageLayers(bottom: string, top: string): Promise<string>;
+  fetchPlatformAssets(): Promise<object>;
+  id?: string;
   assetId?: string;
   assetScale?: number | null;
   assetPodium?: boolean | null;
@@ -40,6 +76,7 @@ export interface DroppedAssetInterface extends AssetInterface {
   portalCoordsY?: number | null;
   showMediaAsIfPeer?: boolean | null;
   syncUserMedia?: boolean | null;
+  urlSlug: string;
   tagJson?: string | null;
   text?: string | null;
   textColor?: string | null;
@@ -55,6 +92,11 @@ export interface DroppedAssetInterface extends AssetInterface {
   worldId?: string | null;
   walletAddress?: string | null;
   yOrderAdjust?: number | null;
+}
+
+export interface DroppedAssetOptionalInterface {
+  args?: DroppedAssetInterface | { text: string };
+  creds?: InteractiveCredentials | object;
 }
 
 export interface UpdateBroadcastInterface {

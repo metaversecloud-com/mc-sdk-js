@@ -1,26 +1,36 @@
 import { AxiosResponse } from "axios";
-import { getErrorMessage, publicAPI } from "utils";
-import { AssetInterface } from "interfaces";
+
+// controllers
+import { SDKController } from "controllers/SDKController";
+import { Topia } from "controllers/Topia";
+
+// interfaces
+import { AssetInterface, AssetOptionalInterface } from "interfaces";
+
+// utils
+import { getErrorMessage } from "utils";
 
 /**
  * Create an instance of Asset class with a given apiKey and optional arguments.
  *
  * ```ts
- * await new Asset({ apiKey: API_KEY, args: { assetName: "My Asset", isPublic: false } });
+ * await new Asset({ args: { assetName: "My Asset", isPublic: false } });
  * ```
  */
-export class Asset {
-  apiKey: string;
+export class Asset extends SDKController implements AssetInterface {
+  readonly id?: string;
+  jwt?: string;
 
-  constructor({ apiKey, args }: { apiKey: string; args: AssetInterface }) {
-    this.apiKey = apiKey;
-    Object.assign(this, args);
+  constructor(topia: Topia, id: string, options: AssetOptionalInterface = { args: {}, creds: {} }) {
+    super(topia, options.creds);
+    this.id = id;
+    Object.assign(this, options.args);
   }
 
   fetchPlatformAssets(): Promise<object> {
     return new Promise((resolve, reject) => {
-      publicAPI(this.apiKey)
-        .get("/assets/topia-assets")
+      this.topia.axios
+        .get("/assets/topia-assets", this.requestOptions)
         .then((response: AxiosResponse) => {
           resolve(response.data);
         })

@@ -1,18 +1,23 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { droppedAssets, scenes, worlds } from "__mocks__";
-import { User } from "controllers";
+import { User as UserClass, Topia } from "controllers";
+import { UserFactory } from "factories";
 
-const BASE_URL = "https://api.topia.io/api/user";
-const apiKey = "key";
+const apiDomain = "api.topia.io";
 const email = "test@email.com";
 
 describe("User Class", () => {
-  let mock: MockAdapter, testUser: User;
+  let mock: MockAdapter, testUser: UserClass, topia: Topia, User: UserFactory;
 
   beforeEach(() => {
     mock = new MockAdapter(axios);
-    testUser = new User({ apiKey, email });
+    topia = new Topia({
+      apiDomain,
+      apiKey: "key",
+    });
+    User = new UserFactory(topia);
+    testUser = User.create(email);
   });
 
   afterEach(() => {
@@ -21,7 +26,7 @@ describe("User Class", () => {
   });
 
   it("should update user.worlds", async () => {
-    mock.onGet(`${BASE_URL}/worlds`).reply(200, worlds);
+    mock.onGet(`https://${apiDomain}/api/user/worlds`).reply(200, worlds);
     await testUser.fetchWorldsByKey();
     expect(mock.history.get.length).toBe(1);
     expect(Object.keys(testUser.worlds).length).toBe(Object.keys(worlds).length);

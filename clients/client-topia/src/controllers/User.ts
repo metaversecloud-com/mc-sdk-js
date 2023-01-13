@@ -1,22 +1,30 @@
 import { AxiosResponse } from "axios";
+
+// controllers
+import { SDKController } from "controllers/SDKController";
 import { World } from "controllers/World";
-import { getErrorMessage, publicAPI } from "utils";
+import { Topia } from "controllers/Topia";
+
+// interfaces
+import { UserOptionalInterface } from "interfaces";
+
+// utils
+import { getErrorMessage } from "utils";
 
 /**
  * Create an instance of User class with a given apiKey.
  *
  * ```ts
- * await new User({ apiKey: API_KEY, email: "example@email.io" });
+ * await new User({ email: "example@email.io" });
  * ```
  */
-export class User {
+export class User extends SDKController {
   #worldsMap: { [key: string]: World };
-  apiKey: string;
   email: string;
 
-  constructor({ apiKey, email }: { apiKey: string; email: string }) {
+  constructor(topia: Topia, email: string, options: UserOptionalInterface = { creds: {} }) {
+    super(topia, options.creds);
     this.#worldsMap = {};
-    this.apiKey = apiKey;
     this.email = email;
   }
 
@@ -30,8 +38,8 @@ export class User {
    */
   fetchAssetsByEmail(ownerEmail: string): Promise<object> {
     return new Promise((resolve, reject) => {
-      publicAPI(this.apiKey)
-        .get(`/assets/my-assets?email=${ownerEmail}`)
+      this.topia.axios
+        .get(`/assets/my-assets?email=${ownerEmail}`, this.requestOptions)
         .then((response: AxiosResponse) => {
           resolve(response.data);
         })
@@ -48,8 +56,8 @@ export class User {
   fetchScenesByEmail(): Promise<object> {
     return new Promise((resolve, reject) => {
       if (!this.email) reject("There is no email associated with this user.");
-      publicAPI(this.apiKey)
-        .get(`/scenes/my-scenes?email=${this.email}`)
+      this.topia.axios
+        .get(`/scenes/my-scenes?email=${this.email}`, this.requestOptions)
         .then((response: AxiosResponse) => {
           resolve(response.data);
         })
@@ -78,17 +86,13 @@ export class User {
    */
   fetchWorldsByKey(): Promise<string> {
     return new Promise((resolve, reject) => {
-      publicAPI(this.apiKey)
-        .get("/user/worlds")
+      this.topia.axios
+        .get("/user/worlds", this.requestOptions)
         .then((response: AxiosResponse) => {
           const tempWorldsMap: { [key: string]: World } = {};
           for (const i in response.data) {
             const worldDetails = response.data[i];
-            tempWorldsMap[worldDetails.urlSlug] = new World({
-              apiKey: this.apiKey,
-              args: worldDetails,
-              urlSlug: worldDetails.urlSlug,
-            });
+            tempWorldsMap[worldDetails.urlSlug] = new World(this.topia, worldDetails.urlSlug, { args: worldDetails });
           }
           this.#worldsMap = tempWorldsMap;
           resolve("Success!");

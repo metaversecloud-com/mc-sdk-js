@@ -1,24 +1,28 @@
-import { getErrorMessage, publicAPI } from "utils";
-import { VisitorInterface } from "interfaces";
+// controllers
+import { SDKController } from "controllers/SDKController";
+import { Topia } from "controllers/Topia";
+
+// interfaces
+import { MoveVisitorInterface, VisitorInterface, VisitorOptionalInterface } from "interfaces";
+
+// utils
+import { getErrorMessage } from "utils";
 
 /**
  * Create an instance of Visitor class with a given apiKey and optional arguments.
  *
  * ```ts
- * await new World({ apiKey: API_KEY, urlSlug: "magic" });
+ * await new Visitor(this.topia, id, urlSlug, { options });
  * ```
  */
-export class Visitor {
-  apiKey: string;
-  moveTo: { x: number; y: number };
-  playerId: number;
+export class Visitor extends SDKController implements VisitorInterface {
+  readonly id: number;
   urlSlug: string;
 
-  constructor({ apiKey, args, urlSlug }: { apiKey: string; args: VisitorInterface; urlSlug: string }) {
-    Object.assign(this, args);
-    this.apiKey = apiKey;
-    this.moveTo = args.moveTo;
-    this.playerId = args.playerId;
+  constructor(topia: Topia, id: number, urlSlug: string, options: VisitorOptionalInterface = { args: {}, creds: {} }) {
+    super(topia, options.creds);
+    Object.assign(this, options.args);
+    this.id = id;
     this.urlSlug = urlSlug;
     this.moveVisitor;
   }
@@ -39,18 +43,21 @@ export class Visitor {
    * @result
    * Updates each Visitor instance and world.visitors map.
    */
-  moveVisitor(shouldTeleportVisitor: boolean, x: number, y: number): Promise<string> {
+  moveVisitor({ shouldTeleportVisitor, x, y }: MoveVisitorInterface): Promise<string> {
     return new Promise((resolve, reject) => {
-      publicAPI(this.apiKey)
-        .put(`/world/${this.urlSlug}/visitors/${this.playerId}/move`, {
-          moveTo: {
-            x,
-            y,
+      this.topia.axios
+        .put(
+          `/world/${this.urlSlug}/visitors/${this.id}/move`,
+          {
+            moveTo: {
+              x,
+              y,
+            },
+            teleport: shouldTeleportVisitor,
           },
-          teleport: shouldTeleportVisitor,
-        })
+          this.requestOptions,
+        )
         .then(() => {
-          this.moveTo = { x, y };
           resolve("Success!");
         })
         .catch((error) => {

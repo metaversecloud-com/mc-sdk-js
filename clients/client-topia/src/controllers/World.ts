@@ -1,28 +1,37 @@
 import { AxiosResponse } from "axios";
-import { getErrorMessage, publicAPI, removeUndefined, scatterVisitors } from "utils";
+
+// controllers
 import { DroppedAsset } from "controllers/DroppedAsset";
+import { SDKController } from "controllers/SDKController";
+import { Topia } from "controllers/Topia";
 import { Visitor } from "controllers/Visitor";
+
+// interfaces
+import { MoveAllVisitorsInterface, WorldInterface, WorldOptionalInterface } from "interfaces";
+
+// types
 import { VisitorsToMoveArrayType } from "types";
-import { MoveAllVisitorsInterface, WorldDetailsInterface } from "interfaces";
+
+// utils
+import { getErrorMessage, removeUndefined, scatterVisitors } from "utils";
 
 /**
  * Create an instance of World class with a given apiKey and optional arguments.
  *
  * ```ts
- * await new World({ apiKey: API_KEY, urlSlug: "magic" });
+ * await new World({ urlSlug: "magic" });
  * ```
  */
-export class World implements WorldDetailsInterface {
+export class World extends SDKController implements WorldInterface {
   #droppedAssetsMap: { [key: string]: DroppedAsset };
   #visitorsMap: { [key: string]: Visitor };
-  apiKey: string;
   urlSlug: string;
 
-  constructor({ apiKey, args, urlSlug }: { apiKey: string; args: WorldDetailsInterface; urlSlug: string }) {
-    Object.assign(this, args);
+  constructor(topia: Topia, urlSlug: string, options: WorldOptionalInterface = { args: {}, creds: {} }) {
+    super(topia, options.creds);
+    Object.assign(this, options.args);
     this.#droppedAssetsMap = {};
     this.#visitorsMap = {};
-    this.apiKey = apiKey;
     this.urlSlug = urlSlug;
   }
 
@@ -47,8 +56,8 @@ export class World implements WorldDetailsInterface {
   // world details
   fetchDetails(): Promise<string> {
     return new Promise((resolve, reject) => {
-      publicAPI(this.apiKey)
-        .get(`/world/${this.urlSlug}/world-details`)
+      this.topia.axios
+        .get(`/world/${this.urlSlug}/world-details`, this.requestOptions)
         .then((response: AxiosResponse) => {
           Object.assign(this, response.data);
           resolve("Success!");
@@ -89,7 +98,7 @@ export class World implements WorldDetailsInterface {
     name,
     spawnPosition,
     width,
-  }: WorldDetailsInterface): Promise<string> {
+  }: WorldInterface): Promise<string> {
     const payload: any = {
       controls,
       description,
@@ -100,8 +109,8 @@ export class World implements WorldDetailsInterface {
       width,
     };
     return new Promise((resolve, reject) => {
-      publicAPI(this.apiKey)
-        .put(`/world/${this.urlSlug}/world-details`, payload)
+      this.topia.axios
+        .put(`/world/${this.urlSlug}/world-details`, payload, this.requestOptions)
         .then(() => {
           const cleanPayload = removeUndefined(payload);
           Object.assign(this, cleanPayload);
@@ -116,16 +125,14 @@ export class World implements WorldDetailsInterface {
   // visitors
   private fetchVisitors(): Promise<string> {
     return new Promise((resolve, reject) => {
-      publicAPI(this.apiKey)
-        .get(`/world/${this.urlSlug}/visitors`)
+      this.topia.axios
+        .get(`/world/${this.urlSlug}/visitors`, this.requestOptions)
         .then((response: AxiosResponse) => {
           // create temp map and then update private property only once
           const tempVisitorsMap: { [key: string]: Visitor } = {};
-          for (const playerId in response.data) {
-            tempVisitorsMap[playerId] = new Visitor({
-              apiKey: this.apiKey,
-              args: response.data[playerId],
-              urlSlug: this.urlSlug,
+          for (const id in response.data) {
+            tempVisitorsMap[id] = new Visitor(this.topia, response.data[id].playerId, this.urlSlug, {
+              args: response.data[id],
             });
           }
           this.#visitorsMap = tempVisitorsMap;
@@ -188,11 +195,11 @@ export class World implements WorldDetailsInterface {
     const objectKeys = Object.keys(this.visitors);
     objectKeys.forEach((key) =>
       allPromises.push(
-        this.#visitorsMap[key].moveVisitor(
-          shouldTeleportVisitors,
-          scatterVisitors(x, scatterVisitorsBy),
-          scatterVisitors(y, scatterVisitorsBy),
-        ),
+        this.#visitorsMap[key].moveVisitor({
+          shouldTeleportVisitor: shouldTeleportVisitors,
+          x: scatterVisitors(x, scatterVisitorsBy),
+          y: scatterVisitors(y, scatterVisitorsBy),
+        }),
       ),
     );
     const outcomes = await Promise.allSettled(allPromises);
@@ -227,7 +234,7 @@ export class World implements WorldDetailsInterface {
   async moveVisitors(visitorsToMove: VisitorsToMoveArrayType) {
     const allPromises: Array<Promise<string>> = [];
     visitorsToMove.forEach((v) => {
-      allPromises.push(v.visitorObj.moveVisitor(v.shouldTeleportVisitor, v.x, v.y));
+      allPromises.push(v.visitorObj.moveVisitor({ shouldTeleportVisitor: v.shouldTeleportVisitor, x: v.x, y: v.y }));
     });
     const outcomes = await Promise.allSettled(allPromises);
     return outcomes;
@@ -246,19 +253,15 @@ export class World implements WorldDetailsInterface {
   // dropped assets
   fetchDroppedAssets(): Promise<string> {
     return new Promise((resolve, reject) => {
-      publicAPI(this.apiKey)
-        .get(`/world/${this.urlSlug}/assets`)
+      this.topia.axios
+        .get(`/world/${this.urlSlug}/assets`, this.requestOptions)
         .then((response: AxiosResponse) => {
           // create temp map and then update private property only once
           const tempDroppedAssetsMap: { [key: string]: DroppedAsset } = {};
           for (const index in response.data) {
             // tempDroppedAssetsMap[id] = createDroppedAsset(this.apiKey, response.data[id], this.urlSlug);
-            tempDroppedAssetsMap[index] = new DroppedAsset({
-              //TODO: Move API Key out of here and make so set api key for all classes created by sdk. Otherwise devs will accidentally send this object to frontend and expose their API Key.
-              apiKey: this.apiKey,
-              id: response.data[index].id,
+            tempDroppedAssetsMap[index] = new DroppedAsset(this.topia, response.data[index].id, this.urlSlug, {
               args: response.data[index],
-              urlSlug: this.urlSlug,
             });
           }
           this.#droppedAssetsMap = tempDroppedAssetsMap;
@@ -320,8 +323,8 @@ export class World implements WorldDetailsInterface {
   // scenes
   replaceScene(sceneId: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      publicAPI(this.apiKey)
-        .put(`/world/${this.urlSlug}/change-scene`, { sceneId })
+      this.topia.axios
+        .put(`/world/${this.urlSlug}/change-scene`, { sceneId }, this.requestOptions)
         .then(() => {
           resolve("Success!");
         })

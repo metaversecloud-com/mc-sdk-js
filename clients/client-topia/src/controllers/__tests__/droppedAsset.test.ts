@@ -1,21 +1,26 @@
 import { droppedAssets } from "__mocks__";
-import { DroppedAsset } from "..";
-import { DroppedAssetClickType, DroppedAssetMediaType } from "../../types/DroppedAssetTypes";
+import { DroppedAsset as DroppedAssetClass, Topia } from "controllers";
+import { DroppedAssetClickType, DroppedAssetMediaType } from "types/DroppedAssetTypes";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
+import { DroppedAssetFactory } from "factories";
 
-const BASE_URL = `https://api.topia.io/api/world/magic/assets/${droppedAssets[0].id}`;
-const apiKey = "key";
+const apiDomain = "api.topia.io";
 const args = droppedAssets[0];
+const BASE_URL = `https://api.topia.io/api/world/magic/assets/${droppedAssets[0].id}`;
 const id = droppedAssets[0].id;
-const urlSlug = "magic";
 
 describe("DroppedAsset Class", () => {
-  let mock: MockAdapter, testDroppedAsset: DroppedAsset;
+  let DroppedAsset: DroppedAssetFactory, mock: MockAdapter, testDroppedAsset: DroppedAssetClass, topia: Topia;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     mock = new MockAdapter(axios);
-    testDroppedAsset = new DroppedAsset({ apiKey, id, args, urlSlug });
+    topia = new Topia({
+      apiDomain,
+      apiKey: "key",
+    });
+    DroppedAsset = new DroppedAssetFactory(topia);
+    testDroppedAsset = await DroppedAsset.create(id, "magic");
   });
 
   afterEach(() => {
@@ -24,10 +29,10 @@ describe("DroppedAsset Class", () => {
   });
 
   it("should fetch dropped asset by id", async () => {
-    testDroppedAsset.fetchDroppedAssetById = jest.fn().mockReturnValue(droppedAssets[0]);
-    const mockDroppedAssets = await testDroppedAsset.fetchDroppedAssetById();
-    expect(testDroppedAsset.fetchDroppedAssetById).toHaveBeenCalled();
-    expect(mockDroppedAssets).toBeDefined();
+    mock.onGet(BASE_URL).reply(200, droppedAssets[0]);
+    await testDroppedAsset.fetchDroppedAssetById();
+    expect(mock.history.get.length).toBe(1);
+    expect(testDroppedAsset.urlSlug).toBeDefined();
   });
 
   it("should update dropped asset broadcast zone", async () => {

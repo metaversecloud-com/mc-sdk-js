@@ -1,4 +1,7 @@
-export interface WorldDetailsInterface {
+import { SDKInterface } from "./SDKInterfaces";
+import { InteractiveCredentials } from "types";
+
+export interface WorldInterface extends SDKInterface {
   background?: string | null;
   controls?: {
     allowMuteAll?: boolean;
@@ -23,6 +26,11 @@ export interface WorldDetailsInterface {
   urlSlug: string;
   useTopiaPassword?: boolean;
   width?: number;
+}
+
+export interface WorldOptionalInterface {
+  args?: WorldInterface | object;
+  creds?: InteractiveCredentials | object;
 }
 
 export interface MoveAllVisitorsInterface {
