@@ -2,8 +2,8 @@ import { AssetInterface, DroppedAssetInterface, VisitorInterface, WorldInterface
 import { InteractiveCredentials } from "./InteractiveCredentialsTypes";
 
 export type AssetOptions = {
-  attributes?: AssetInterface | object;
-  credentials?: InteractiveCredentials | object;
+  attributes?: AssetInterface | undefined;
+  credentials?: InteractiveCredentials | undefined;
 };
 
 export type DroppedAssetOptions = {

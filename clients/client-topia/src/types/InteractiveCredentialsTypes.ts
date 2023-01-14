@@ -3,5 +3,5 @@ export type InteractiveCredentials = {
   interactiveNonce?: string;
   interactivePublicKey?: string;
   playerId?: number;
-  url?: string;
+  urlSlug?: string;
 };
