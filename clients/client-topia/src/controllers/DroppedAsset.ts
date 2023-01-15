@@ -110,7 +110,42 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * @summary
+   * Setss the data object for a dropped asset.
+   *
+   * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.setDroppedAssetDataObject({
+   *   "exampleKey": "exampleValue",
+   * });
+   * const { dataObject } = droppedAsset;
+   * ```
+   */
+  // get dropped asset
+  setDroppedAssetDataObject(
+    dataObject: object,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const { lock = {} } = options;
+      this.topia.axios
+        .put(`/world/${this.urlSlug}/assets/${this.id}/set-data-object`, { dataObject, lock }, this.requestOptions)
+        .then(() => {
+          this.dataObject = dataObject;
+          resolve("Success!");
+        })
+        .catch((error) => {
+          reject(new Error(getErrorMessage(error)));
+        });
+    });
+  }
+
+  /**
+   * @summary
    * Updates the data object for a dropped asset.
+   *
+   * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
    * @usage
    * ```ts
@@ -121,10 +156,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * ```
    */
   // get dropped asset
-  updateDroppedAssetDataObject(dataObject: object): Promise<string> {
+  updateDroppedAssetDataObject(
+    dataObject: object,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<string> {
     return new Promise((resolve, reject) => {
+      const { lock = {} } = options;
       this.topia.axios
-        .put(`/world/${this.urlSlug}/assets/${this.id}/set-data-object`, dataObject, this.requestOptions)
+        .put(`/world/${this.urlSlug}/assets/${this.id}/update-data-object`, { dataObject, lock }, this.requestOptions)
         .then(() => {
           this.dataObject = dataObject;
           resolve("Success!");
