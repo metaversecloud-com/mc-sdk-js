@@ -39,13 +39,13 @@ export class SDKController implements SDKInterface {
   constructor(topia: Topia, credentials: InteractiveCredentials = {}) {
     this.credentials = credentials;
     this.topia = topia;
-    const { assetId, interactiveNonce, playerId } = credentials;
+    const { assetId, interactiveNonce, visitorId } = credentials;
 
     let payload = {};
-    if (playerId && assetId && interactiveNonce) {
+    if (visitorId && assetId && interactiveNonce) {
       payload = {
         interactiveNonce,
-        playerId,
+        visitorId,
         assetId,
       };
       this.jwt = jwt.sign(payload, topia.interactiveSecret as string);
