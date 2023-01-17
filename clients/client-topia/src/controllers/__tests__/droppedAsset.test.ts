@@ -1,6 +1,6 @@
 import { droppedAssets } from "__mocks__";
 import { DroppedAsset as DroppedAssetClass, Topia } from "controllers";
-import { DroppedAssetClickType, DroppedAssetMediaType } from "types/DroppedAssetTypes";
+import { DroppedAssetClickType, DroppedAssetMediaType } from "types";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { DroppedAssetFactory } from "factories";

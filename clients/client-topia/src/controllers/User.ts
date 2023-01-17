@@ -8,8 +8,11 @@ import { Topia } from "controllers/Topia";
 // interfaces
 import { UserOptionalInterface } from "interfaces";
 
+// types
+import { ResponseType } from "types";
+
 // utils
-import { getErrorMessage } from "utils";
+import { getErrorResponse, getSuccessResponse } from "utils";
 
 /**
  * Create an instance of User class with email and optional session credentials.
@@ -37,14 +40,14 @@ export class User extends SDKController {
    * Returns all assets owned by User when an email address is provided.
    */
   fetchAssetsByEmail(ownerEmail: string): Promise<object> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.topia.axios
         .get(`/assets/my-assets?email=${ownerEmail}`, this.requestOptions)
         .then((response: AxiosResponse) => {
           resolve(response.data);
         })
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
@@ -54,15 +57,15 @@ export class User extends SDKController {
    * Returns all scenes owned by User when an email address is provided.
    */
   fetchScenesByEmail(): Promise<object> {
-    return new Promise((resolve, reject) => {
-      if (!this.email) reject("There is no email associated with this user.");
+    return new Promise((resolve) => {
+      if (!this.email) resolve(getErrorResponse({ message: "There is no email associated with this user." }));
       this.topia.axios
         .get(`/scenes/my-scenes?email=${this.email}`, this.requestOptions)
         .then((response: AxiosResponse) => {
           resolve(response.data);
         })
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
@@ -84,8 +87,8 @@ export class User extends SDKController {
    * { urlSlug: new World({ apiKey, worldArgs, urlSlug }) }
    * ```
    */
-  fetchWorldsByKey(): Promise<string> {
-    return new Promise((resolve, reject) => {
+  fetchWorldsByKey(): Promise<ResponseType> {
+    return new Promise((resolve) => {
       this.topia.axios
         .get("/user/worlds", this.requestOptions)
         .then((response: AxiosResponse) => {
@@ -97,10 +100,10 @@ export class User extends SDKController {
             });
           }
           this.#worldsMap = tempWorldsMap;
-          resolve("Success!");
+          resolve(getSuccessResponse());
         })
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }

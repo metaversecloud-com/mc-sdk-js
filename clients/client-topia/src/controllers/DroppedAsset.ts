@@ -14,8 +14,11 @@ import {
   UpdatePrivateZoneInterface,
 } from "interfaces";
 
+// types
+import { ResponseType } from "types";
+
 // utils
-import { getErrorMessage } from "utils";
+import { getErrorResponse, getSuccessResponse } from "utils";
 
 /**
  * Create an instance of Dropped Asset class with a given dropped asset id, url slug, and optional attributes and session credentials.
@@ -54,31 +57,31 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * ```
    */
   // get dropped asset
-  fetchDroppedAssetById(): Promise<string> {
-    return new Promise((resolve, reject) => {
+  fetchDroppedAssetById(): Promise<ResponseType> {
+    return new Promise((resolve) => {
       this.topia.axios
         .get(`/world/${this.urlSlug}/assets/${this.id}`, this.requestOptions)
         .then((response: AxiosResponse) => {
           Object.assign(this, response.data);
-          resolve("Success!");
+          resolve(getSuccessResponse());
         })
         .catch((error) => {
           console.log(error);
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
 
   // delete dropped asset
-  deleteDroppedAsset(): Promise<string> {
-    return new Promise((resolve, reject) => {
+  deleteDroppedAsset(): Promise<ResponseType> {
+    return new Promise((resolve) => {
       this.topia.axios
         .delete(`/world/${this.urlSlug}/assets/${this.id}`, this.requestOptions)
         .then(() => {
-          resolve("Success!");
+          resolve(getSuccessResponse());
         })
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
@@ -94,16 +97,16 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * ```
    */
   // get dropped asset
-  fetchDroppedAssetDataObject(): Promise<string> {
-    return new Promise((resolve, reject) => {
+  fetchDroppedAssetDataObject(): Promise<ResponseType> {
+    return new Promise((resolve) => {
       this.topia.axios
         .get(`/world/${this.urlSlug}/assets/${this.id}/data-object`, this.requestOptions)
         .then((response: AxiosResponse) => {
           this.dataObject = response.data;
-          resolve("Success!");
+          resolve(getSuccessResponse());
         })
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
@@ -126,17 +129,17 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   setDroppedAssetDataObject(
     dataObject: object,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
-  ): Promise<string> {
-    return new Promise((resolve, reject) => {
+  ): Promise<ResponseType> {
+    return new Promise((resolve) => {
       const { lock = {} } = options;
       this.topia.axios
         .put(`/world/${this.urlSlug}/assets/${this.id}/set-data-object`, { dataObject, lock }, this.requestOptions)
         .then(() => {
           this.dataObject = dataObject;
-          resolve("Success!");
+          resolve(getSuccessResponse());
         })
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
@@ -159,24 +162,24 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   updateDroppedAssetDataObject(
     dataObject: object,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
-  ): Promise<string> {
-    return new Promise((resolve, reject) => {
+  ): Promise<ResponseType> {
+    return new Promise((resolve) => {
       const { lock = {} } = options;
       this.topia.axios
         .put(`/world/${this.urlSlug}/assets/${this.id}/update-data-object`, { dataObject, lock }, this.requestOptions)
         .then(() => {
           this.dataObject = dataObject;
-          resolve("Success!");
+          resolve(getSuccessResponse());
         })
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
 
   // update dropped assets
-  updateDroppedAsset = (payload: object, updateType: string): Promise<string> => {
-    return new Promise((resolve, reject) => {
+  updateDroppedAsset = (payload: object, updateType: string): Promise<ResponseType> => {
+    return new Promise((resolve) => {
       this.topia.axios
         .put(
           `/world/${this.urlSlug}/assets/${this.id}/${updateType}`,
@@ -186,10 +189,10 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
           this.requestOptions,
         )
         .then(() => {
-          resolve("Success!");
+          resolve(getSuccessResponse());
         })
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   };
@@ -207,12 +210,16 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * });
    * ```
    */
-  updateBroadcast({ assetBroadcast, assetBroadcastAll, broadcasterEmail }: UpdateBroadcastInterface): Promise<string> {
-    return new Promise((resolve, reject) => {
+  updateBroadcast({
+    assetBroadcast,
+    assetBroadcastAll,
+    broadcasterEmail,
+  }: UpdateBroadcastInterface): Promise<ResponseType> {
+    return new Promise((resolve) => {
       return this.updateDroppedAsset({ assetBroadcast, assetBroadcastAll, broadcasterEmail }, "set-asset-broadcast")
         .then(resolve)
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
@@ -241,15 +248,15 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     clickableLinkTitle,
     portalName,
     position,
-  }: UpdateClickTypeInterface): Promise<string> {
-    return new Promise((resolve, reject) => {
+  }: UpdateClickTypeInterface): Promise<ResponseType> {
+    return new Promise((resolve) => {
       return this.updateDroppedAsset(
         { clickType, clickableLink, clickableLinkTitle, portalName, position },
         "change-click-type",
       )
         .then(resolve)
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
@@ -270,12 +277,12 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * await droppedAsset.updateCustomText(style, "hello world");
    * ```
    */
-  updateCustomText(style: object, text: string | null | undefined): Promise<string> {
-    return new Promise((resolve, reject) => {
+  updateCustomText(style: object, text: string | null | undefined): Promise<ResponseType> {
+    return new Promise((resolve) => {
       return this.updateDroppedAsset({ style, text }, "set-custom-text")
         .then(resolve)
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
@@ -307,15 +314,15 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     mediaType,
     portalName,
     syncUserMedia,
-  }: UpdateMediaTypeInterface): Promise<string> {
-    return new Promise((resolve, reject) => {
+  }: UpdateMediaTypeInterface): Promise<ResponseType> {
+    return new Promise((resolve) => {
       return this.updateDroppedAsset(
         { audioRadius, audioVolume, isVideo, mediaLink, mediaName, mediaType, portalName, syncUserMedia },
         "change-media-type",
       )
         .then(resolve)
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
@@ -329,12 +336,12 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * await droppedAsset.updateMuteZone(true);
    * ```
    */
-  updateMuteZone(isMutezone: boolean): Promise<string> {
-    return new Promise((resolve, reject) => {
+  updateMuteZone(isMutezone: boolean): Promise<ResponseType> {
+    return new Promise((resolve) => {
       return this.updateDroppedAsset({ isMutezone }, "set-mute-zone")
         .then(resolve)
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
@@ -348,12 +355,12 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * await droppedAsset.updatePosition(100,200);
    * ```
    */
-  updatePosition(x: number, y: number): Promise<string> {
-    return new Promise((resolve, reject) => {
+  updatePosition(x: number, y: number): Promise<ResponseType> {
+    return new Promise((resolve) => {
       return this.updateDroppedAsset({ x, y }, "set-position")
         .then(resolve)
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
@@ -375,15 +382,15 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     isPrivateZone,
     isPrivateZoneChatDisabled,
     privateZoneUserCap,
-  }: UpdatePrivateZoneInterface): Promise<string> {
-    return new Promise((resolve, reject) => {
+  }: UpdatePrivateZoneInterface): Promise<ResponseType> {
+    return new Promise((resolve) => {
       return this.updateDroppedAsset(
         { isPrivateZone, isPrivateZoneChatDisabled, privateZoneUserCap },
         "set-private-zone",
       )
         .then(resolve)
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
@@ -397,12 +404,12 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * await droppedAsset.assetScale(.5);
    * ```
    */
-  updateScale(assetScale: number): Promise<string> {
-    return new Promise((resolve, reject) => {
+  updateScale(assetScale: number): Promise<ResponseType> {
+    return new Promise((resolve) => {
       return this.updateDroppedAsset({ assetScale }, "change-scale")
         .then(resolve)
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
@@ -416,12 +423,12 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * await droppedAsset.updateUploadedMediaSelected("LVWyxwNxI96eLjnXWwYO");
    * ```
    */
-  updateUploadedMediaSelected(mediaId: string): Promise<string> {
-    return new Promise((resolve, reject) => {
+  updateUploadedMediaSelected(mediaId: string): Promise<ResponseType> {
+    return new Promise((resolve) => {
       return this.updateDroppedAsset({ mediaId }, "change-uploaded-media-selected")
         .then(resolve)
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
@@ -435,12 +442,12 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * await droppedAsset.updateWebImageLayers("","https://www.shutterstock.com/image-vector/colorful-illustration-test-word-260nw-1438324490.jpg");
    * ```
    */
-  updateWebImageLayers(bottom: string, top: string): Promise<string> {
-    return new Promise((resolve, reject) => {
+  updateWebImageLayers(bottom: string, top: string): Promise<ResponseType> {
+    return new Promise((resolve) => {
       return this.updateDroppedAsset({ bottom, top }, "set-webimage-layers")
         .then(resolve)
         .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+          resolve(getErrorResponse({ error }));
         });
     });
   }
