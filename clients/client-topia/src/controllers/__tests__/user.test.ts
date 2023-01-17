@@ -1,4 +1,3 @@
-import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { droppedAssets, scenes, worlds } from "__mocks__";
 import { User as UserClass, Topia } from "controllers";
@@ -11,11 +10,11 @@ describe("User Class", () => {
   let mock: MockAdapter, testUser: UserClass, topia: Topia, User: UserFactory;
 
   beforeEach(() => {
-    mock = new MockAdapter(axios);
     topia = new Topia({
       apiDomain,
       apiKey: "key",
     });
+    mock = new MockAdapter(topia.axios);
     User = new UserFactory(topia);
     testUser = User.create(email);
   });

@@ -1,7 +1,6 @@
 import { droppedAssets } from "__mocks__";
 import { DroppedAsset as DroppedAssetClass, Topia } from "controllers";
 import { DroppedAssetClickType, DroppedAssetMediaType } from "types";
-import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { DroppedAssetFactory } from "factories";
 
@@ -14,11 +13,11 @@ describe("DroppedAsset Class", () => {
   let DroppedAsset: DroppedAssetFactory, mock: MockAdapter, testDroppedAsset: DroppedAssetClass, topia: Topia;
 
   beforeEach(async () => {
-    mock = new MockAdapter(axios);
     topia = new Topia({
       apiDomain,
       apiKey: "key",
     });
+    mock = new MockAdapter(topia.axios);
     DroppedAsset = new DroppedAssetFactory(topia);
     testDroppedAsset = await DroppedAsset.create(id, "exampleWorld");
   });
@@ -36,7 +35,7 @@ describe("DroppedAsset Class", () => {
   });
 
   it("should update dropped asset broadcast zone", async () => {
-    mock.onPut(`${BASE_URL}/set-asset-broadcast`).reply(200, "Success!");
+    mock.onPut(`${BASE_URL}/set-asset-broadcast`).reply(200);
     const broadcastArgs = {
       ...attributes,
       assetBroadcast: true,
@@ -48,7 +47,7 @@ describe("DroppedAsset Class", () => {
   });
 
   it("should update dropped asset click type", async () => {
-    mock.onPut(`${BASE_URL}/change-click-type`).reply(200, "Success!");
+    mock.onPut(`${BASE_URL}/change-click-type`).reply(200);
     const clickTypeArgs = {
       ...attributes,
       clickType: DroppedAssetClickType.LINK,
@@ -65,13 +64,13 @@ describe("DroppedAsset Class", () => {
   });
 
   it("should update dropped asset custom text", async () => {
-    mock.onPut(`${BASE_URL}/set-custom-text`).reply(200, "Success!");
+    mock.onPut(`${BASE_URL}/set-custom-text`).reply(200);
     await testDroppedAsset.updateCustomTextAsset({ textColor: "#abc123" }, "hello world");
     expect(mock.history.put.length).toBe(1);
   });
 
   it("should update dropped asset media type", async () => {
-    mock.onPut(`${BASE_URL}/change-media-type`).reply(200, "Success!");
+    mock.onPut(`${BASE_URL}/change-media-type`).reply(200);
     const mediaTypeArgs = {
       ...attributes,
       audioRadius: 0,
@@ -88,19 +87,19 @@ describe("DroppedAsset Class", () => {
   });
 
   it("should update dropped asset mute zone", async () => {
-    mock.onPut(`${BASE_URL}/set-mute-zone`).reply(200, "Success!");
+    mock.onPut(`${BASE_URL}/set-mute-zone`).reply(200);
     await testDroppedAsset.updateMuteZone(true);
     expect(mock.history.put.length).toBe(1);
   });
 
   it("should update dropped asset position", async () => {
-    mock.onPut(`${BASE_URL}/set-position`).reply(200, "Success!");
+    mock.onPut(`${BASE_URL}/set-position`).reply(200);
     await testDroppedAsset.updatePosition(100, 100);
     expect(mock.history.put.length).toBe(1);
   });
 
   it("should update dropped asset private zone", async () => {
-    mock.onPut(`${BASE_URL}/set-private-zone`).reply(200, "Success!");
+    mock.onPut(`${BASE_URL}/set-private-zone`).reply(200);
     const privateZoneArgs = {
       ...attributes,
       isPrivateZone: true,
@@ -112,19 +111,19 @@ describe("DroppedAsset Class", () => {
   });
 
   it("should update dropped asset scale", async () => {
-    mock.onPut(`${BASE_URL}/change-scale`).reply(200, "Success!");
+    mock.onPut(`${BASE_URL}/change-scale`).reply(200);
     await testDroppedAsset.updateScale(75);
     expect(mock.history.put.length).toBe(1);
   });
 
   it("should update dropped asset uploaded media selected", async () => {
-    mock.onPut(`${BASE_URL}/change-uploaded-media-selected`).reply(200, "Success!");
+    mock.onPut(`${BASE_URL}/change-uploaded-media-selected`).reply(200);
     await testDroppedAsset.updateUploadedMediaSelected("abc123");
     expect(mock.history.put.length).toBe(1);
   });
 
   it("should update dropped asset web image layers", async () => {
-    mock.onPut(`${BASE_URL}/set-webimage-layers`).reply(200, "Success!");
+    mock.onPut(`${BASE_URL}/set-webimage-layers`).reply(200);
     await testDroppedAsset.updateWebImageLayers("test", "test");
     expect(mock.history.put.length).toBe(1);
   });
