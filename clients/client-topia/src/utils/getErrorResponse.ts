@@ -27,10 +27,11 @@ export const getNewErrorResponse = ({
 }) => {
   if (error instanceof Error) {
     const errorMessage = error?.message || message;
-    errorMessage && console.log(errorMessage);
+    errorMessage && console.error(errorMessage);
   } else if (error instanceof AxiosError) {
     const errorMessage = error?.message || message;
     const status = error?.response?.status || "unknown";
-    errorMessage && console.log(status, errorMessage);
+    errorMessage && console.error(status, errorMessage);
   }
+  console.error("Please surround your use of the RTSDK with a try/catch block.");
 };
