@@ -11,5 +11,6 @@ export const getErrorResponse = ({
   message?: string;
 }) => {
   const errorMessage = error?.response?.data?.errors[0]?.message;
+  errorMessage && console.log(errorMessage);
   return { success: false, message: errorMessage || message };
 };
