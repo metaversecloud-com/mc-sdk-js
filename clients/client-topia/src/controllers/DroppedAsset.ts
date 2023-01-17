@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import { AxiosResponse, AxiosError } from "axios";
 
 // controllers
 import { Asset } from "controllers/Asset";
@@ -18,7 +18,7 @@ import {
 import { ResponseType } from "types";
 
 // utils
-import { getErrorResponse, getSuccessResponse } from "utils";
+import { getErrorResponse, getNewErrorResponse, getSuccessResponse } from "utils";
 
 /**
  * Create an instance of Dropped Asset class with a given dropped asset id, url slug, and optional attributes and session credentials.
@@ -57,19 +57,31 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * ```
    */
   // get dropped asset
-  fetchDroppedAssetById(): Promise<ResponseType> {
-    return new Promise((resolve) => {
-      this.topia.axios
-        .get(`/world/${this.urlSlug}/assets/${this.id}`, this.requestOptions)
-        .then((response: AxiosResponse) => {
-          Object.assign(this, response.data);
-          resolve(getSuccessResponse());
-        })
-        .catch((error) => {
-          console.log(error);
-          resolve(getErrorResponse({ error }));
-        });
-    });
+  // fetchDroppedAssetById(): Promise<ResponseType> {
+  //   return new Promise((resolve) => {
+  //     this.topia.axios
+  //       .get(`/world/${this.urlSlug}/assets/${this.id}`, this.requestOptions)
+  //       .then((response: AxiosResponse) => {
+  //         Object.assign(this, response.data);
+  //         resolve(getSuccessResponse());
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //         resolve(getErrorResponse({ error }));
+  //       });
+  //   });
+  // }
+
+  async fetchDroppedAssetById(): Promise<void | Error> {
+    try {
+      const response: AxiosResponse = await this.topia.axios.get(
+        `/world/${this.urlSlug}/assets/${this.id}`,
+        this.requestOptions,
+      );
+      Object.assign(this, response.data);
+    } catch (error: unknown) {
+      throw getNewErrorResponse({ error });
+    }
   }
 
   // delete dropped asset
