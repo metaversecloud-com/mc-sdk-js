@@ -66,7 +66,7 @@ describe("DroppedAsset Class", () => {
 
   it("should update dropped asset custom text", async () => {
     mock.onPut(`${BASE_URL}/set-custom-text`).reply(200, "Success!");
-    await testDroppedAsset.updateCustomText({ textColor: "#abc123" }, "hello world");
+    await testDroppedAsset.updateCustomTextAsset({ textColor: "#abc123" }, "hello world");
     expect(mock.history.put.length).toBe(1);
   });
 

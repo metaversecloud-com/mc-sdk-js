@@ -9,7 +9,7 @@ import { MoveVisitorInterface, VisitorInterface, VisitorOptionalInterface } from
 import { ResponseType } from "types";
 
 // utils
-import { getErrorResponse, getSuccessResponse } from "utils";
+import { getErrorResponse } from "utils";
 
 /**
  * Create an instance of Visitor class with a given id and optional attributes and session credentials.
@@ -51,27 +51,22 @@ export class Visitor extends SDKController implements VisitorInterface {
    * @result
    * Updates each Visitor instance and world.visitors map.
    */
-  moveVisitor({ shouldTeleportVisitor, x, y }: MoveVisitorInterface): Promise<ResponseType> {
-    return new Promise((resolve) => {
-      this.topia.axios
-        .put(
-          `/world/${this.urlSlug}/visitors/${this.id}/move`,
-          {
-            moveTo: {
-              x,
-              y,
-            },
-            teleport: shouldTeleportVisitor,
+  async moveVisitor({ shouldTeleportVisitor, x, y }: MoveVisitorInterface): Promise<void | ResponseType> {
+    try {
+      await this.topia.axios.put(
+        `/world/${this.urlSlug}/visitors/${this.id}/move`,
+        {
+          moveTo: {
+            x,
+            y,
           },
-          this.requestOptions,
-        )
-        .then(() => {
-          resolve(getSuccessResponse());
-        })
-        .catch((error) => {
-          resolve(getErrorResponse({ error }));
-        });
-    });
+          teleport: shouldTeleportVisitor,
+        },
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw getErrorResponse({ error });
+    }
   }
 }
 

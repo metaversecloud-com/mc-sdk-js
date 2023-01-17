@@ -12,7 +12,7 @@ import { UserOptionalInterface } from "interfaces";
 import { ResponseType } from "types";
 
 // utils
-import { getErrorResponse, getSuccessResponse } from "utils";
+import { getErrorResponse } from "utils";
 
 /**
  * Create an instance of User class with email and optional session credentials.
@@ -39,35 +39,33 @@ export class User extends SDKController {
    * @summary
    * Returns all assets owned by User when an email address is provided.
    */
-  fetchAssetsByEmail(ownerEmail: string): Promise<object> {
-    return new Promise((resolve) => {
-      this.topia.axios
-        .get(`/assets/my-assets?email=${ownerEmail}`, this.requestOptions)
-        .then((response: AxiosResponse) => {
-          resolve(response.data);
-        })
-        .catch((error) => {
-          resolve(getErrorResponse({ error }));
-        });
-    });
+  async fetchAssetsByEmail(ownerEmail: string): Promise<object | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topia.axios.get(
+        `/assets/my-assets?email=${ownerEmail}`,
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw getErrorResponse({ error });
+    }
   }
 
   /**
    * @summary
    * Returns all scenes owned by User when an email address is provided.
    */
-  fetchScenesByEmail(): Promise<object> {
-    return new Promise((resolve) => {
-      if (!this.email) resolve(getErrorResponse({ message: "There is no email associated with this user." }));
-      this.topia.axios
-        .get(`/scenes/my-scenes?email=${this.email}`, this.requestOptions)
-        .then((response: AxiosResponse) => {
-          resolve(response.data);
-        })
-        .catch((error) => {
-          resolve(getErrorResponse({ error }));
-        });
-    });
+  async fetchScenesByEmail(): Promise<object | ResponseType> {
+    try {
+      if (!this.email) throw getErrorResponse({ message: "There is no email associated with this user." });
+      const response: AxiosResponse = await this.topia.axios.get(
+        `/scenes/my-scenes?email=${this.email}`,
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw getErrorResponse({ error });
+    }
   }
 
   /**
@@ -87,25 +85,20 @@ export class User extends SDKController {
    * { urlSlug: new World({ apiKey, worldArgs, urlSlug }) }
    * ```
    */
-  fetchWorldsByKey(): Promise<ResponseType> {
-    return new Promise((resolve) => {
-      this.topia.axios
-        .get("/user/worlds", this.requestOptions)
-        .then((response: AxiosResponse) => {
-          const tempWorldsMap: { [key: string]: World } = {};
-          for (const i in response.data) {
-            const worldDetails = response.data[i];
-            tempWorldsMap[worldDetails.urlSlug] = new World(this.topia, worldDetails.urlSlug, {
-              attributes: worldDetails,
-            });
-          }
-          this.#worldsMap = tempWorldsMap;
-          resolve(getSuccessResponse());
-        })
-        .catch((error) => {
-          resolve(getErrorResponse({ error }));
+  async fetchWorldsByKey(): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topia.axios.get("/user/worlds", this.requestOptions);
+      const tempWorldsMap: { [key: string]: World } = {};
+      for (const i in response.data) {
+        const worldDetails = response.data[i];
+        tempWorldsMap[worldDetails.urlSlug] = new World(this.topia, worldDetails.urlSlug, {
+          attributes: worldDetails,
         });
-    });
+      }
+      this.#worldsMap = tempWorldsMap;
+    } catch (error) {
+      throw getErrorResponse({ error });
+    }
   }
 }
 

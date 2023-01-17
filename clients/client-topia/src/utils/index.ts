@@ -1,5 +1,4 @@
 export { getBrowserWarning } from "./getBrowserWarning";
-export { getErrorResponse, getNewErrorResponse } from "./getErrorResponse";
-export { getSuccessResponse } from "./getSuccessResponse";
+export { getErrorResponse } from "./getErrorResponse";
 export { removeUndefined } from "./removeUndefined";
 export { scatterVisitors } from "./scatterVisitors";
