@@ -230,12 +230,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     clickType,
     clickableLink,
     clickableLinkTitle,
+    description,
+    headline,
     portalName,
     position,
   }: UpdateClickTypeInterface): Promise<void | ResponseType> {
     try {
       return this.#updateDroppedAsset(
-        { clickType, clickableLink, clickableLinkTitle, portalName, position },
+        { clickType, clickableLink, clickableLinkTitle, description, headline, portalName, position },
         "change-click-type",
       );
     } catch (error) {
