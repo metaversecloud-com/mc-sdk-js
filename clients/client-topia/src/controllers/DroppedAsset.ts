@@ -415,6 +415,65 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       throw getErrorResponse({ error });
     }
   }
+
+  /**
+   * @summary
+   * Add a webhook to a dropped asset
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.addWebhook({
+   *   active: true,
+   *   assetId: "id",
+   *   dataObject: {},
+   *   description: "Webhook desc",
+   *   enteredBy: "you",
+   *   isUniqueOnly: false,
+   *   title: "title",
+   *   type: "type",
+   *   url: "https://url.com",
+   *   urlSlug: "world",
+   * });
+   * ```
+   */
+  async addWebhook({
+    assetId,
+    dataObject,
+    description,
+    isUniqueOnly,
+    title,
+    type,
+    url,
+  }: {
+    assetId: string;
+    dataObject: object;
+    description: string;
+    isUniqueOnly: boolean;
+    title: string;
+    type: string;
+    url: string;
+  }): Promise<void | ResponseType> {
+    try {
+      await this.topia.axios.post(
+        `/world/${this.urlSlug}/webhooks`,
+        {
+          active: true,
+          assetId,
+          dataObject,
+          description,
+          enteredBy: "",
+          isUniqueOnly,
+          title,
+          type,
+          url,
+          urlSlug: this.urlSlug,
+        },
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw getErrorResponse({ error });
+    }
+  }
 }
 
 export default DroppedAsset;
