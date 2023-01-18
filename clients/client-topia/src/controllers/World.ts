@@ -195,7 +195,7 @@ export class World extends SDKController implements WorldInterface {
         }),
       ),
     );
-    const outcomes = await Promise.allSettled(allPromises);
+    const outcomes = await Promise.all(allPromises);
     return outcomes;
   }
 
@@ -229,7 +229,7 @@ export class World extends SDKController implements WorldInterface {
     visitorsToMove.forEach((v) => {
       allPromises.push(v.visitorObj.moveVisitor({ shouldTeleportVisitor: v.shouldTeleportVisitor, x: v.x, y: v.y }));
     });
-    const outcomes = await Promise.allSettled(allPromises);
+    const outcomes = await Promise.all(allPromises);
     return outcomes;
   }
 
@@ -286,7 +286,7 @@ export class World extends SDKController implements WorldInterface {
     droppedAssetsToUpdate.forEach((a) => {
       allPromises.push(a.updateCustomTextAsset(style, a.text));
     });
-    const outcomes = await Promise.allSettled(allPromises);
+    const outcomes = await Promise.all(allPromises);
     return outcomes;
   }
 

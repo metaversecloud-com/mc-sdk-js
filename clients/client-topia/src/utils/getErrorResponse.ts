@@ -16,11 +16,12 @@ export const getErrorResponse = ({
   if (error instanceof AxiosError) {
     errorMessage = error?.message || message;
     const status = error?.response?.status || "unknown";
-    errorMessage && console.error(status, errorMessage, error.config);
+    errorMessage && console.error(status, errorMessage);
   } else if (error instanceof Error) {
     errorMessage = error?.message || message;
     errorMessage && console.error(errorMessage);
   }
-  console.error("Please surround your use of the RTSDK with a try/catch block.");
+  console.log("Please surround your use of the RTSDK with a try/catch block.");
+  console.trace();
   return { success: false, message: errorMessage };
 };
