@@ -61,9 +61,7 @@ export class World extends SDKController implements WorldInterface {
         this.requestOptions,
       );
       Object.assign(this, response.data);
-      console.log("🚀 ~ file: World.ts:64 ~ World ~ fetchDetails ~ response.data", response.data);
     } catch (error) {
-      console.log("🚀 ~ file: World.ts:65 ~ World ~ fetchDetails ~ error", error);
       throw getErrorResponse({ error });
     }
   }
