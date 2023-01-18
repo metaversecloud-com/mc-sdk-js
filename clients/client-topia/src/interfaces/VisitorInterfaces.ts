@@ -2,7 +2,6 @@ import { InteractiveCredentials } from "types";
 import { SDKInterface } from "interfaces/SDKInterfaces";
 
 export interface VisitorInterface extends SDKInterface {
-  moveVisitor({ shouldTeleportVisitor, x, y }: MoveVisitorInterface): Promise<string>;
   color?: string;
   displayName?: string;
   gestureType?: number;

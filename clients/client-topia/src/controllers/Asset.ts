@@ -7,8 +7,11 @@ import { Topia } from "controllers/Topia";
 // interfaces
 import { AssetInterface, AssetOptionalInterface } from "interfaces";
 
+// types
+import { ResponseType } from "types";
+
 // utils
-import { getErrorMessage } from "utils";
+import { getErrorResponse } from "utils";
 
 /**
  * Create an instance of Asset class with a given asset id and optional attributes and session credentials.
@@ -27,17 +30,13 @@ export class Asset extends SDKController implements AssetInterface {
     Object.assign(this, options.attributes);
   }
 
-  fetchPlatformAssets(): Promise<object> {
-    return new Promise((resolve, reject) => {
-      this.topia.axios
-        .get("/assets/topia-assets", this.requestOptions)
-        .then((response: AxiosResponse) => {
-          resolve(response.data);
-        })
-        .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
-        });
-    });
+  async fetchPlatformAssets(): Promise<object | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topia.axios.get("/assets/topia-assets", this.requestOptions);
+      return response.data;
+    } catch (error) {
+      throw getErrorResponse({ error });
+    }
   }
 }
 

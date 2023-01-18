@@ -5,8 +5,11 @@ import { Topia } from "controllers/Topia";
 // interfaces
 import { MoveVisitorInterface, VisitorInterface, VisitorOptionalInterface } from "interfaces";
 
+// types
+import { ResponseType } from "types";
+
 // utils
-import { getErrorMessage } from "utils";
+import { getErrorResponse } from "utils";
 
 /**
  * Create an instance of Visitor class with a given id and optional attributes and session credentials.
@@ -48,27 +51,22 @@ export class Visitor extends SDKController implements VisitorInterface {
    * @result
    * Updates each Visitor instance and world.visitors map.
    */
-  moveVisitor({ shouldTeleportVisitor, x, y }: MoveVisitorInterface): Promise<string> {
-    return new Promise((resolve, reject) => {
-      this.topia.axios
-        .put(
-          `/world/${this.urlSlug}/visitors/${this.id}/move`,
-          {
-            moveTo: {
-              x,
-              y,
-            },
-            teleport: shouldTeleportVisitor,
+  async moveVisitor({ shouldTeleportVisitor, x, y }: MoveVisitorInterface): Promise<void | ResponseType> {
+    try {
+      await this.topia.axios.put(
+        `/world/${this.urlSlug}/visitors/${this.id}/move`,
+        {
+          moveTo: {
+            x,
+            y,
           },
-          this.requestOptions,
-        )
-        .then(() => {
-          resolve("Success!");
-        })
-        .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
-        });
-    });
+          teleport: shouldTeleportVisitor,
+        },
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw getErrorResponse({ error });
+    }
   }
 }
 

@@ -10,10 +10,10 @@ import { Visitor } from "controllers/Visitor";
 import { MoveAllVisitorsInterface, WorldInterface, WorldOptionalInterface } from "interfaces";
 
 // types
-import { VisitorsToMoveArrayType } from "types";
+import { ResponseType, VisitorsToMoveArrayType } from "types";
 
 // utils
-import { getErrorMessage, removeUndefined, scatterVisitors } from "utils";
+import { getErrorResponse, removeUndefined, scatterVisitors } from "utils";
 
 /**
  * Create an instance of World class with a given url slug and optional attributes and session credentials.
@@ -54,18 +54,18 @@ export class World extends SDKController implements WorldInterface {
    * ```
    */
   // world details
-  fetchDetails(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      this.topia.axios
-        .get(`/world/${this.urlSlug}/world-details`, this.requestOptions)
-        .then((response: AxiosResponse) => {
-          Object.assign(this, response.data);
-          resolve("Success!");
-        })
-        .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
-        });
-    });
+  async fetchDetails(): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topia.axios.get(
+        `/world/${this.urlSlug}/world-details`,
+        this.requestOptions,
+      );
+      Object.assign(this, response.data);
+      console.log("🚀 ~ file: World.ts:64 ~ World ~ fetchDetails ~ response.data", response.data);
+    } catch (error) {
+      console.log("🚀 ~ file: World.ts:65 ~ World ~ fetchDetails ~ error", error);
+      throw getErrorResponse({ error });
+    }
   }
 
   /**
@@ -90,7 +90,7 @@ export class World extends SDKController implements WorldInterface {
    * });
    * ```
    */
-  updateDetails({
+  async updateDetails({
     controls,
     description,
     forceAuthOnLogin,
@@ -98,7 +98,7 @@ export class World extends SDKController implements WorldInterface {
     name,
     spawnPosition,
     width,
-  }: WorldInterface): Promise<string> {
+  }: WorldInterface): Promise<void | ResponseType> {
     const payload = {
       controls,
       description,
@@ -108,40 +108,33 @@ export class World extends SDKController implements WorldInterface {
       spawnPosition,
       width,
     };
-    return new Promise((resolve, reject) => {
-      this.topia.axios
-        .put(`/world/${this.urlSlug}/world-details`, payload, this.requestOptions)
-        .then(() => {
-          const cleanPayload = removeUndefined(payload);
-          Object.assign(this, cleanPayload);
-          resolve("Success!");
-        })
-        .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
-        });
-    });
+    try {
+      await this.topia.axios.put(`/world/${this.urlSlug}/world-details`, payload, this.requestOptions);
+      const cleanPayload = removeUndefined(payload);
+      Object.assign(this, cleanPayload);
+    } catch (error) {
+      throw getErrorResponse({ error });
+    }
   }
 
   // visitors
-  private fetchVisitors(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      this.topia.axios
-        .get(`/world/${this.urlSlug}/visitors`, this.requestOptions)
-        .then((response: AxiosResponse) => {
-          // create temp map and then update private property only once
-          const tempVisitorsMap: { [key: string]: Visitor } = {};
-          for (const id in response.data) {
-            tempVisitorsMap[id] = new Visitor(this.topia, response.data[id].playerId, this.urlSlug, {
-              attributes: response.data[id],
-            });
-          }
-          this.#visitorsMap = tempVisitorsMap;
-          resolve("Success!");
-        })
-        .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
+  private async fetchVisitors(): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topia.axios.get(
+        `/world/${this.urlSlug}/visitors`,
+        this.requestOptions,
+      );
+      // create temp map and then update private property only once
+      const tempVisitorsMap: { [key: string]: Visitor } = {};
+      for (const id in response.data) {
+        tempVisitorsMap[id] = new Visitor(this.topia, response.data[id].playerId, this.urlSlug, {
+          attributes: response.data[id],
         });
-    });
+      }
+      this.#visitorsMap = tempVisitorsMap;
+    } catch (error) {
+      throw getErrorResponse({ error });
+    }
   }
 
   /**
@@ -190,7 +183,7 @@ export class World extends SDKController implements WorldInterface {
     y,
   }: MoveAllVisitorsInterface) {
     if (shouldFetchVisitors) await this.fetchVisitors();
-    const allPromises: Array<Promise<string>> = [];
+    const allPromises: Array<Promise<void | ResponseType>> = [];
     if (!this.visitors) return;
     const objectKeys = Object.keys(this.visitors);
     objectKeys.forEach((key) =>
@@ -232,7 +225,7 @@ export class World extends SDKController implements WorldInterface {
    * Updates each Visitor instance and world.visitors map.
    */
   async moveVisitors(visitorsToMove: VisitorsToMoveArrayType) {
-    const allPromises: Array<Promise<string>> = [];
+    const allPromises: Array<Promise<void | ResponseType>> = [];
     visitorsToMove.forEach((v) => {
       allPromises.push(v.visitorObj.moveVisitor({ shouldTeleportVisitor: v.shouldTeleportVisitor, x: v.x, y: v.y }));
     });
@@ -251,27 +244,21 @@ export class World extends SDKController implements WorldInterface {
    * ```
    */
   // dropped assets
-  fetchDroppedAssets(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      this.topia.axios
-        .get(`/world/${this.urlSlug}/assets`, this.requestOptions)
-        .then((response: AxiosResponse) => {
-          // create temp map and then update private property only once
-          const tempDroppedAssetsMap: { [key: string]: DroppedAsset } = {};
-          for (const index in response.data) {
-            // tempDroppedAssetsMap[id] = createDroppedAsset(this.apiKey, response.data[id], this.urlSlug);
-            tempDroppedAssetsMap[index] = new DroppedAsset(this.topia, response.data[index].id, this.urlSlug, {
-              attributes: response.data[index],
-            });
-          }
-          this.#droppedAssetsMap = tempDroppedAssetsMap;
-          resolve("Success!");
-        })
-        .catch((error) => {
-          reject(getErrorMessage(error));
-          // reject(new Error(getErrorMessage(error)));
+  async fetchDroppedAssets(): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topia.axios.get(`/world/${this.urlSlug}/assets`, this.requestOptions);
+      // create temp map and then update private property only once
+      const tempDroppedAssetsMap: { [key: string]: DroppedAsset } = {};
+      for (const index in response.data) {
+        // tempDroppedAssetsMap[id] = createDroppedAsset(this.apiKey, response.data[id], this.urlSlug);
+        tempDroppedAssetsMap[index] = new DroppedAsset(this.topia, response.data[index].id, this.urlSlug, {
+          attributes: response.data[index],
         });
-    });
+      }
+      this.#droppedAssetsMap = tempDroppedAssetsMap;
+    } catch (error) {
+      throw getErrorResponse({ error });
+    }
   }
 
   /**
@@ -295,9 +282,9 @@ export class World extends SDKController implements WorldInterface {
    * Updates each DroppedAsset instance and world.droppedAssets map.
    */
   async updateCustomTextDroppedAssets(droppedAssetsToUpdate: Array<DroppedAsset>, style: object): Promise<object> {
-    const allPromises: Array<Promise<string>> = [];
+    const allPromises: Array<Promise<void | ResponseType>> = [];
     droppedAssetsToUpdate.forEach((a) => {
-      allPromises.push(a.updateCustomText(style, a.text));
+      allPromises.push(a.updateCustomTextAsset(style, a.text));
     });
     const outcomes = await Promise.allSettled(allPromises);
     return outcomes;
@@ -321,17 +308,12 @@ export class World extends SDKController implements WorldInterface {
    * ```
    */
   // scenes
-  replaceScene(sceneId: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      this.topia.axios
-        .put(`/world/${this.urlSlug}/change-scene`, { sceneId }, this.requestOptions)
-        .then(() => {
-          resolve("Success!");
-        })
-        .catch((error) => {
-          reject(new Error(getErrorMessage(error)));
-        });
-    });
+  async replaceScene(sceneId: string): Promise<void | ResponseType> {
+    try {
+      await this.topia.axios.put(`/world/${this.urlSlug}/change-scene`, { sceneId }, this.requestOptions);
+    } catch (error) {
+      throw getErrorResponse({ error });
+    }
   }
 }
 
