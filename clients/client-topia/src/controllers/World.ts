@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 
 // controllers
-import { DroppedAsset } from "controllers/DroppedAsset";
+import { DroppedAsset } from "controllers";
 import { SDKController } from "controllers/SDKController";
 import { Topia } from "controllers/Topia";
 import { Visitor } from "controllers/Visitor";
@@ -309,6 +309,48 @@ export class World extends SDKController implements WorldInterface {
   async replaceScene(sceneId: string): Promise<void | ResponseType> {
     try {
       await this.topia.axios.put(`/world/${this.urlSlug}/change-scene`, { sceneId }, this.requestOptions);
+    } catch (error) {
+      throw getErrorResponse({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Retrieve all assets dropped in a world matching uniqueName.
+   *
+   * @usage
+   * ```ts
+   * await world.fetchDroppedAssets();
+   * const assets = world.droppedAssets;
+   * ```
+   */
+  // dropped assets
+  async fetchDroppedAssetsWithUniqueName({
+    uniqueName,
+    isPartial = false,
+    isReversed = false,
+  }: {
+    uniqueName: string;
+    isPartial?: boolean;
+    isReversed?: boolean;
+  }): Promise<DroppedAsset[]> {
+    try {
+      const response: AxiosResponse = await this.topia.axios.get(
+        `/world/${this.urlSlug}/assets-with-unique-name/${uniqueName}?${isPartial ? `partial=${isPartial}&` : ""}${
+          isReversed ? `reversed=${isReversed}` : ""
+        }`,
+        this.requestOptions,
+      );
+      // create temp map and then update private property only once
+      const droppedAssets: DroppedAsset[] = [];
+      for (const asset of response.data.assets) {
+        droppedAssets.push(
+          new DroppedAsset(this.topia, asset.id, this.urlSlug, {
+            attributes: asset,
+          }),
+        );
+      }
+      return droppedAssets;
     } catch (error) {
       throw getErrorResponse({ error });
     }
