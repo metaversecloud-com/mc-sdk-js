@@ -21,6 +21,8 @@ export interface DroppedAssetInterface extends AssetInterface {
   contractAddress?: string | null;
   dataObject?: object | null;
   existingKey?: string | null;
+  interactivePublicKey?: string | null;
+  isInteractive?: boolean | null;
   isVideoPlayer?: boolean | null;
   kitId?: string | null;
   layer0?: string | null;

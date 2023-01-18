@@ -32,7 +32,31 @@ export class Visitor extends SDKController implements VisitorInterface {
     Object.assign(this, options.attributes);
     this.id = id;
     this.urlSlug = urlSlug;
-    this.moveVisitor;
+  }
+
+  /**
+   * @summary
+   * Get a single visitor from a world
+   *
+   * @usage
+   * ```ts
+   * await visitor.fetchVisitor();
+   * ```
+   *
+   * @result
+   * Updates each Visitor instance and world.visitors map.
+   */
+  async fetchVisitor(): Promise<void | ResponseType> {
+    try {
+      const response = await this.topia.axios.get(`/world/${this.urlSlug}/visitors/${this.id}`, this.requestOptions);
+      if (response.data.success) {
+        Object.assign(this, response.data).players[0];
+      } else {
+        throw "This visitor is not active";
+      }
+    } catch (error) {
+      throw getErrorResponse({ error });
+    }
   }
 
   /**
