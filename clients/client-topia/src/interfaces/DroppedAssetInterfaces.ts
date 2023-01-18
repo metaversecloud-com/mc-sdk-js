@@ -76,6 +76,8 @@ export interface UpdateClickTypeInterface {
   clickType: DroppedAssetClickType;
   clickableLink: string;
   clickableLinkTitle: string;
+  description: string;
+  headline: string;
   portalName: string;
   position: { x: number; y: number };
 }
