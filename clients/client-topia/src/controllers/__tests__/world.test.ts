@@ -50,6 +50,7 @@ describe("World Class", () => {
   it("should move all visitors within a world to a single set of coordinates", async () => {
     mock.onGet(`${BASE_URL}/visitors`).reply(200, visitors);
     mock.onPut(`${BASE_URL}/visitors/1/move`).reply(200);
+    mock.onPut(`${BASE_URL}/visitors/2/move`).reply(200);
     const attributes = {
       shouldFetchVisitors: true,
       shouldTeleportVisitors: true,
@@ -69,6 +70,7 @@ describe("World Class", () => {
 
   it("should move a list of visitors to uniquely specified coordinates", async () => {
     mock.onPut(`${BASE_URL}/visitors/1/move`).reply(200);
+    mock.onPut(`${BASE_URL}/visitors/2/move`).reply(200);
     const v1 = new Visitor(topia, visitors["1"].playerId, urlSlug, { attributes: visitors["1"] as VisitorType });
     const v2 = new Visitor(topia, visitors["2"].playerId, urlSlug, { attributes: visitors["2"] as VisitorType });
     const testVisitors = [
