@@ -218,6 +218,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *   "clickType": "portal",
    *   "clickableLink": "https://topia.io",
    *   "clickableLinkTitle": "My awesome link!",
+   *  "description": "Description",
+      "headline": "Title",
    *   "position": {
    *     "x": 0,
    *     "y": 0

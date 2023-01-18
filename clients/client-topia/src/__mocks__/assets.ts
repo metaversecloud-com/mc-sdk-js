@@ -69,6 +69,8 @@ export const droppedAssets = [
     clickableLinkTitle: null,
     clickablePortal: null,
     creationDatetime: 1624557784470,
+    description: null,
+    headline: null,
     position: {
       x: -247.6349071195266,
       y: 1373.5047340020942,
@@ -118,6 +120,8 @@ export const droppedAssets = [
     clickableLinkTitle: null,
     clickablePortal: null,
     creationDatetime: 1624476120886,
+    description: null,
+    headline: null,
     position: {
       x: 1101.8736822470964,
       y: -815.1441116727156,
@@ -168,6 +172,8 @@ export const droppedAssets = [
     clickableLinkTitle: null,
     clickablePortal: null,
     creationDatetime: 1624559093102,
+    description: null,
+    headline: null,
     position: {
       x: -1024.6450136852004,
       y: 1534.5126935363705,
@@ -218,6 +224,8 @@ export const droppedAssets = [
     clickableLinkTitle: null,
     clickablePortal: null,
     creationDatetime: 1624557083983,
+    description: null,
+    headline: null,
     position: {
       x: 383.4917021726642,
       y: 937.6441853712226,
