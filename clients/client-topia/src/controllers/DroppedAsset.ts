@@ -32,6 +32,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   readonly id?: string | undefined;
   text?: string | null | undefined;
   urlSlug: string;
+  isInteractive?: boolean | null;
+  interactivePublicKey?: string | null;
 
   constructor(
     topia: Topia,
@@ -424,7 +426,6 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * ```ts
    * await droppedAsset.addWebhook({
    *   active: true,
-   *   assetId: "id",
    *   dataObject: {},
    *   description: "Webhook desc",
    *   enteredBy: "you",
@@ -437,7 +438,6 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * ```
    */
   async addWebhook({
-    assetId,
     dataObject,
     description,
     isUniqueOnly,
@@ -445,7 +445,6 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     type,
     url,
   }: {
-    assetId: string;
     dataObject: object;
     description: string;
     isUniqueOnly: boolean;
@@ -458,7 +457,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         `/world/${this.urlSlug}/webhooks`,
         {
           active: true,
-          assetId,
+          assetId: this.id,
           dataObject,
           description,
           enteredBy: "",
@@ -470,6 +469,41 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         },
         this.requestOptions,
       );
+    } catch (error) {
+      throw getErrorResponse({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Set the interactive settings on a dropped asset
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.setInteractiveSettings({
+   *   isInteractive: true,
+   *   interactivePublicKey: "xyz"
+   * });
+   * ```
+   */
+  async setInteractiveSettings({
+    isInteractive = false,
+    interactivePublicKey = "",
+  }: {
+    isInteractive?: boolean;
+    interactivePublicKey: string;
+  }): Promise<void | ResponseType> {
+    try {
+      await this.topia.axios.put(
+        `/world/${this.urlSlug}/assets/${this.id}/set-asset-interactive-settings`,
+        {
+          interactivePublicKey,
+          isInteractive,
+        },
+        this.requestOptions,
+      );
+      this.isInteractive = isInteractive;
+      this.interactivePublicKey = interactivePublicKey;
     } catch (error) {
       throw getErrorResponse({ error });
     }
