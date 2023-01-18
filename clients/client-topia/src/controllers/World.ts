@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 
 // controllers
-import { DroppedAsset } from "controllers";
+import { DroppedAsset } from "controllers/DroppedAsset";
 import { SDKController } from "controllers/SDKController";
 import { Topia } from "controllers/Topia";
 import { Visitor } from "controllers/Visitor";
