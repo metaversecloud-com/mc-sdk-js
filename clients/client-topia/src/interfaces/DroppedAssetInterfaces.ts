@@ -20,8 +20,8 @@ export interface DroppedAssetInterface extends AssetInterface {
   creationDatetime?: number;
   contractAddress?: string | null;
   dataObject?: object | null;
-  description?: string | null;
-  headline?: string | null;
+  clickableDisplayTextDescription?: string | null;
+  clickableDisplayTextHeadline?: string | null;
   existingKey?: string | null;
   interactivePublicKey?: string | null;
   isInteractive?: boolean | null;
@@ -78,8 +78,8 @@ export interface UpdateClickTypeInterface {
   clickType: DroppedAssetClickType;
   clickableLink: string;
   clickableLinkTitle: string;
-  description: string;
-  headline: string;
+  clickableDisplayTextDescription: string;
+  clickableDisplayTextHeadline: string;
   portalName: string;
   position: { x: number; y: number };
 }
