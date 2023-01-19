@@ -9,7 +9,7 @@ export class AssetFactory {
     this.create;
   }
 
-  create(id: string, options?: { attributes: AssetOptionalInterface }): Asset {
+  create(id: string, options?: AssetOptionalInterface): Asset {
     return new Asset(this.topia, id, options);
   }
 }
