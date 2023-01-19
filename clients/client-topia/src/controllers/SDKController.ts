@@ -37,11 +37,13 @@ export class SDKController implements SDKInterface {
   topia: Topia;
 
   constructor(topia: Topia, credentials: InteractiveCredentials = {}) {
-    this.credentials = credentials;
+    const { assetId, interactiveNonce, visitorId, apiKey } = credentials;
     this.topia = topia;
-    const { assetId, interactiveNonce, visitorId } = credentials;
+    this.credentials = credentials;
+    this.requestOptions = {};
 
     let payload = {};
+    const headers: any = {};
     if (visitorId && assetId && interactiveNonce) {
       payload = {
         interactiveNonce,
@@ -49,10 +51,12 @@ export class SDKController implements SDKInterface {
         assetId,
       };
       this.jwt = jwt.sign(payload, topia.interactiveSecret as string);
-      this.requestOptions = { headers: { Interactivejwt: this.jwt } };
-    } else {
-      this.requestOptions = {};
+      headers.Interactivejwt = this.jwt;
     }
+    if (apiKey) {
+      headers.Authorization = apiKey;
+    }
+    this.requestOptions = { headers };
   }
 }
 

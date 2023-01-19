@@ -4,4 +4,5 @@ export type InteractiveCredentials = {
   interactivePublicKey?: string;
   visitorId?: number;
   urlSlug?: string;
+  apiKey?: string;
 };
