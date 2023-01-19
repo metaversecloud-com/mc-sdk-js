@@ -47,10 +47,8 @@ export class Topia implements TopiaInterface {
       "Authorization"?: string;
       "Content-Type": string;
       "Publickey"?: string;
-      "Accept-Encoding": string;
     } = {
       "Content-Type": "application/json",
-      "Accept-Encoding": "",
     };
 
     if (apiKey) headers.Authorization = apiKey;
