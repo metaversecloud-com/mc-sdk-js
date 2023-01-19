@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 
 // controllers
+import { DroppedAsset } from "controllers/DroppedAsset";
 import { SDKController } from "controllers/SDKController";
 import { Topia } from "controllers/Topia";
 
@@ -12,7 +13,6 @@ import { ResponseType } from "types";
 
 // utils
 import { getErrorResponse } from "utils";
-import { DroppedAsset } from "controllers";
 
 /**
  * Create an instance of Asset class with a given asset id and optional attributes and session credentials.
