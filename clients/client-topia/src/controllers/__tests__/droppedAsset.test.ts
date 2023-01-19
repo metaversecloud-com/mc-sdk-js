@@ -53,6 +53,8 @@ describe("DroppedAsset Class", () => {
       clickType: DroppedAssetClickType.LINK,
       clickableLink: "www.test.com",
       clickableLinkTitle: "Test",
+      description: "Description",
+      headline: "Title",
       portalName: "Test",
       position: {
         x: 0,

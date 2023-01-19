@@ -218,6 +218,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *   "clickType": "portal",
    *   "clickableLink": "https://topia.io",
    *   "clickableLinkTitle": "My awesome link!",
+   *  "description": "Description",
+      "headline": "Title",
    *   "position": {
    *     "x": 0,
    *     "y": 0
@@ -230,12 +232,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     clickType,
     clickableLink,
     clickableLinkTitle,
+    description,
+    headline,
     portalName,
     position,
   }: UpdateClickTypeInterface): Promise<void | ResponseType> {
     try {
       return this.#updateDroppedAsset(
-        { clickType, clickableLink, clickableLinkTitle, portalName, position },
+        { clickType, clickableLink, clickableLinkTitle, description, headline, portalName, position },
         "change-click-type",
       );
     } catch (error) {
