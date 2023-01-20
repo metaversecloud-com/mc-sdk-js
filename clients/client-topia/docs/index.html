@@ -17,23 +17,99 @@
   <h1>Javascript RTSDK - Topia Client Library</h1>
 </a>
 <p>The Topia Client Library leverages the Topia Public API and allows users to interact with the topia systems and modify their world programmatically. With the SDK you can now build new features to be used in Topia! Check out a few awesome examples <a href="https://sdk-examples.metaversecloud.com/">here</a>.</p>
+<br>
 
-<a href="#get-started" id="get-started" style="color: inherit; text-decoration: none;">
-  <h2>Get Started</h2>
-</a>
-<p>Run <code>yarn add @rtsdk/topia</code> or <code>npm install @rtsdk/topia</code></p>
 
 <a href="#authorization" id="authorization" style="color: inherit; text-decoration: none;">
   <h2>Authorization</h2>
 </a>
-<p>A Topia provided API Key should be included with every object initialization as a parameter named <code>apiKey</code>. This API Key is used to in authorization headers in all calls to the Public API.</p>
+<p>A Topia provided API Key can be included with every object initialization as a parameter named <code>apiKey</code>. This API Key is used to in authorization headers in all calls to the Public API.</p>
+
+<a href="#need-an-api-key-to-test-locally-this-is-how-you-can-create-one" id="need-an-api-key-to-test-locally-this-is-how-you-can-create-one" style="color: inherit; text-decoration: none;">
+  <h3>Need an API Key to test locally? This is how you can create one:</h3>
+</a>
+<ul>
+<li>While logged in to <a href="https://topia.io/">topia.io</a>, click on your image (or gray circle) in the top left of the screen to open My Account</li>
+<li>In the side menu, select Integrations</li>
+<li>Click Generate New API Key and copy the API Key to be used in your .env and while using <a href="https://sdk-examples.metaversecloud.com">https://sdk-examples.metaversecloud.com</a></li>
+</ul>
+<br>
+
+<p>Alternatively, visitors of a <a href="https://topia.io/">topia.io</a> world interact with each other and the interactively configured assets in your world without the need for an API Key. This is all made possible through Interactive Session credentials passed to the SDK with every request, when applicable. What does this mean for you? Not much, actually! All of the magic happens behind the scenes and all you have to do is make sure that new class constructors include an options object like this: <code>options: WorldOptionalInterface = { attributes: {}, credentials: {} }</code> and all calls to <code>this.topia.axios</code> include the inherited <code>this.requestOptions</code> parameter.</p>
+<p><img src="./InteractiveApplicationDevelopment.png" alt="Interactive Application Development Diagram"></p>
+<br>
+
+<hr/>
+
+
+<a href="#contributors" id="contributors" style="color: inherit; text-decoration: none;">
+  <h1>Contributors</h1>
+</a>
+
+<a href="#get-started" id="get-started" style="color: inherit; text-decoration: none;">
+  <h2>Get Started</h2>
+</a>
+<p>Run <code>gh repo clone metaversecloud-com/mc-sdk-js</code></p>
+<br>
+
+
+<a href="#issues" id="issues" style="color: inherit; text-decoration: none;">
+  <h2>Issues</h2>
+</a>
+<p>We&#39;ve added an Issue template to help standardize Issues and ensure they have enough detail for a developer to start work and help prevent contributors from forgetting to add an important piece of information.</p>
+<br>
+
+
+<a href="#pull-requests" id="pull-requests" style="color: inherit; text-decoration: none;">
+  <h2>Pull Requests</h2>
+</a>
+<p>We&#39;ve added a Pull Request template to help make it easier for developers to clarify what the proposed changes will do. This helps facilitate clear communication between all contributors of the SDK and ensures that we are all on the same page!</p>
+<br>
+
+
+<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+  <h2>Documentation</h2>
+</a>
+<p>We use <a href="https://typedoc.org/guides/overview">TypeDoc</a> to convert comments in TypeScript source code into rendered HTML documentation. Comments should be simple and concise and include examples where applicable. Please be sure to add or update comments accordingly!</p>
+<p>To update docs run <code>yarn docs</code>.</p>
+<p>To view docs locally open <code>mc-sdk-js/clients/client-topia/docs/modules.html</code> in your browser.</p>
+<p>Example of Class comments:</p>
+<pre><code class="language-ts"><span class="hl-0">/**</span><br/><span class="hl-0"> * </span><span class="hl-1">@summary</span><br/><span class="hl-0"> * Create an instance of Dropped Asset class with a given dropped asset id, url slug, and optional attributes and session credentials.</span><br/><span class="hl-0"> *</span><br/><span class="hl-0"> * </span><span class="hl-1">@usage</span><br/><span class="hl-0"> * ```ts</span><br/><span class="hl-0"> * await new DroppedAsset(topia, &quot;1giFZb0sQ3X27L7uGyQX&quot;, &quot;example&quot;, { attributes: { text: &quot;&quot; }, credentials: { assetId: &quot;1giFZb0sQ3X27L7uGyQX&quot; } } });</span><br/><span class="hl-0"> * ```</span><br/><span class="hl-0"> */</span>
+</code></pre>
+<p>Example of method comments</p>
+<pre><code class="language-ts"><span class="hl-0">/**</span><br/><span class="hl-0"> * </span><span class="hl-1">@summary</span><br/><span class="hl-0"> * Sets the data object for a dropped asset.</span><br/><span class="hl-0"> *</span><br/><span class="hl-0"> * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id</span><br/><span class="hl-0"> *</span><br/><span class="hl-0"> * </span><span class="hl-1">@usage</span><br/><span class="hl-0"> * ```ts</span><br/><span class="hl-0"> * await droppedAsset.setDroppedAssetDataObject({</span><br/><span class="hl-0"> *   &quot;exampleKey&quot;: &quot;exampleValue&quot;,</span><br/><span class="hl-0"> * });</span><br/><span class="hl-0"> * const { dataObject } = droppedAsset;</span><br/><span class="hl-0"> * ```</span><br/><span class="hl-0"> */</span>
+</code></pre>
+<br>
+
 
 <a href="#testing" id="testing" style="color: inherit; text-decoration: none;">
   <h2>Testing</h2>
 </a>
 <p>We use Jest for testing and take advantage of dependency injection to pass mock data into our services.</p>
-<p>To run the test suite, please run:</p>
-<p><code>yarn test</code></p>
+<p>To run the test suite, please run <code>yarn test</code>.</p>
+<p><br><br></p>
+<hr/>
+
+
+<a href="#developers" id="developers" style="color: inherit; text-decoration: none;">
+  <h1>Developers</h1>
+</a>
+<p>Need inspiration?! Check out our <a href="https://sdk-examples.metaversecloud.com/">example application</a> which utilizes the SDK to create new and enhanced features inside <a href="https://topia.io/">topia.io</a>.</p>
+<br>
+
+
+<a href="#get-started-1" id="get-started-1" style="color: inherit; text-decoration: none;">
+  <h2>Get Started</h2>
+</a>
+<p>Run <code>yarn add @rtsdk/topia</code> or <code>npm install @rtsdk/topia</code></p>
+<p>Create your instance of Topia and instantiate the factories you need:</p>
+<pre><code class="language-js"><span class="hl-2">dotenv</span><span class="hl-3">.</span><span class="hl-4">config</span><span class="hl-3">();</span><br/><span class="hl-5">import</span><span class="hl-3"> </span><span class="hl-2">dotenv</span><span class="hl-3"> </span><span class="hl-5">from</span><span class="hl-3"> </span><span class="hl-6">&quot;dotenv&quot;</span><span class="hl-3">;</span><br/><br/><span class="hl-5">import</span><span class="hl-3"> { </span><span class="hl-2">AssetFactory</span><span class="hl-3">, </span><span class="hl-2">Topia</span><span class="hl-3">, </span><span class="hl-2">DroppedAssetFactory</span><span class="hl-3">, </span><span class="hl-2">UserFactory</span><span class="hl-3">, </span><span class="hl-2">WorldFactory</span><span class="hl-3"> } </span><span class="hl-5">from</span><span class="hl-3"> </span><span class="hl-6">&quot;@rtsdk/topia&quot;</span><span class="hl-3">;</span><br/><br/><span class="hl-1">const</span><span class="hl-3"> </span><span class="hl-7">config</span><span class="hl-3"> = {</span><br/><span class="hl-3">  </span><span class="hl-2">apiDomain:</span><span class="hl-3"> </span><span class="hl-2">process</span><span class="hl-3">.</span><span class="hl-2">env</span><span class="hl-3">.</span><span class="hl-7">INSTANCE_DOMAIN</span><span class="hl-3"> || </span><span class="hl-6">&quot;https://api.topia.io/&quot;</span><span class="hl-3">,</span><br/><span class="hl-3">  </span><span class="hl-2">apiKey:</span><span class="hl-3"> </span><span class="hl-2">process</span><span class="hl-3">.</span><span class="hl-2">env</span><span class="hl-3">.</span><span class="hl-7">API_KEY</span><span class="hl-3">,</span><br/><span class="hl-3">  </span><span class="hl-2">interactiveKey:</span><span class="hl-3"> </span><span class="hl-2">process</span><span class="hl-3">.</span><span class="hl-2">env</span><span class="hl-3">.</span><span class="hl-7">INTERACTIVE_KEY</span><span class="hl-3">,</span><br/><span class="hl-3">  </span><span class="hl-2">interactiveSecret:</span><span class="hl-3"> </span><span class="hl-2">process</span><span class="hl-3">.</span><span class="hl-2">env</span><span class="hl-3">.</span><span class="hl-7">INTERACTIVE_SECRET</span><span class="hl-3">,</span><br/><span class="hl-3">};</span><br/><br/><span class="hl-1">const</span><span class="hl-3"> </span><span class="hl-7">myTopiaInstance</span><span class="hl-3"> = </span><span class="hl-1">new</span><span class="hl-3"> </span><span class="hl-4">Topia</span><span class="hl-3">(</span><span class="hl-2">config</span><span class="hl-3">);</span><br/><br/><span class="hl-1">const</span><span class="hl-3"> </span><span class="hl-7">Asset</span><span class="hl-3"> = </span><span class="hl-1">new</span><span class="hl-3"> </span><span class="hl-4">AssetFactory</span><span class="hl-3">(</span><span class="hl-2">myTopiaInstance</span><span class="hl-3">);</span><br/><span class="hl-1">const</span><span class="hl-3"> </span><span class="hl-7">DroppedAsset</span><span class="hl-3"> = </span><span class="hl-1">new</span><span class="hl-3"> </span><span class="hl-4">DroppedAssetFactory</span><span class="hl-3">(</span><span class="hl-2">myTopiaInstance</span><span class="hl-3">);</span><br/><span class="hl-1">const</span><span class="hl-3"> </span><span class="hl-7">User</span><span class="hl-3"> = </span><span class="hl-1">new</span><span class="hl-3"> </span><span class="hl-4">UserFactory</span><span class="hl-3">(</span><span class="hl-2">myTopiaInstance</span><span class="hl-3">);</span><br/><span class="hl-1">const</span><span class="hl-3"> </span><span class="hl-7">World</span><span class="hl-3"> = </span><span class="hl-1">new</span><span class="hl-3"> </span><span class="hl-4">WorldFactory</span><span class="hl-3">(</span><span class="hl-2">myTopiaInstance</span><span class="hl-3">);</span><br/><br/><span class="hl-5">export</span><span class="hl-3"> { </span><span class="hl-2">Asset</span><span class="hl-3">, </span><span class="hl-2">DroppedAsset</span><span class="hl-3">, </span><span class="hl-2">myTopiaInstance</span><span class="hl-3">, </span><span class="hl-2">User</span><span class="hl-3">, </span><span class="hl-2">World</span><span class="hl-3"> };</span>
+</code></pre>
+<br/>
+
+<p>Put it to use:</p>
+<pre><code class="language-js"><span class="hl-5">import</span><span class="hl-3"> { </span><span class="hl-2">DroppedAsset</span><span class="hl-3"> } </span><span class="hl-5">from</span><span class="hl-3"> </span><span class="hl-6">&quot;./pathToAboveCode&quot;</span><span class="hl-3">;</span><br/><br/><span class="hl-5">export</span><span class="hl-3"> </span><span class="hl-1">const</span><span class="hl-3"> </span><span class="hl-4">getAssetAndDataObject</span><span class="hl-3"> = </span><span class="hl-1">async</span><span class="hl-3"> (</span><span class="hl-2">req</span><span class="hl-3">) </span><span class="hl-1">=&gt;</span><span class="hl-3"> {</span><br/><span class="hl-3">  </span><span class="hl-1">const</span><span class="hl-3"> { </span><span class="hl-7">assetId</span><span class="hl-3">, </span><span class="hl-7">urlSlug</span><span class="hl-3"> } = </span><span class="hl-2">req</span><span class="hl-3">.</span><span class="hl-2">body</span><span class="hl-3">;</span><br/><br/><span class="hl-3">  </span><span class="hl-1">const</span><span class="hl-3"> </span><span class="hl-7">droppedAsset</span><span class="hl-3"> = </span><span class="hl-5">await</span><span class="hl-3"> </span><span class="hl-2">DroppedAsset</span><span class="hl-3">.</span><span class="hl-4">get</span><span class="hl-3">(</span><span class="hl-2">assetId</span><span class="hl-3">, </span><span class="hl-2">urlSlug</span><span class="hl-3">, {</span><br/><span class="hl-3">    </span><span class="hl-2">credentials:</span><span class="hl-3"> </span><span class="hl-2">req</span><span class="hl-3">.</span><span class="hl-2">body</span><span class="hl-3">,</span><br/><span class="hl-3">  });</span><br/><br/><span class="hl-3">  </span><span class="hl-5">await</span><span class="hl-3"> </span><span class="hl-2">droppedAsset</span><span class="hl-3">.</span><span class="hl-4">fetchDroppedAssetDataObject</span><span class="hl-3">();</span><br/><span class="hl-3">  </span><span class="hl-5">return</span><span class="hl-3"> </span><span class="hl-2">droppedAsset</span><span class="hl-3">;</span><br/><span class="hl-3">};</span>
+</code></pre>
 </div></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
