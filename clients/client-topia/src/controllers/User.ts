@@ -15,8 +15,10 @@ import { ResponseType } from "types";
 import { getErrorResponse } from "utils";
 
 /**
+ * @summary
  * Create an instance of User class with email and optional session credentials.
  *
+ * @usage
  * ```ts
  * await new User(topia, "example@email.io", { interactiveNonce: "exampleNonce", interactivePublicKey: "examplePublicKey", playerId: 1 });
  * ```

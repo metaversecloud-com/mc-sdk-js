@@ -12,8 +12,10 @@ import { ResponseType } from "types";
 import { getErrorResponse } from "utils";
 
 /**
+ * @summary
  * Create an instance of Visitor class with a given id and optional attributes and session credentials.
  *
+ * @usage
  * ```ts
  * await new Visitor(topia, id, urlSlug, { attributes: { moveTo: { x: 0, y: 0 } } });
  * ```

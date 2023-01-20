@@ -21,8 +21,10 @@ import { ResponseType } from "types";
 import { getErrorResponse } from "utils";
 
 /**
+ * @summary
  * Create an instance of Dropped Asset class with a given dropped asset id, url slug, and optional attributes and session credentials.
  *
+ * @usage
  * ```ts
  * await new DroppedAsset(topia, "1giFZb0sQ3X27L7uGyQX", "example", { attributes: { text: "" }, credentials: { assetId: "1giFZb0sQ3X27L7uGyQX" } } });
  * ```

@@ -14,8 +14,10 @@ import { ResponseType } from "types";
 import { getErrorResponse } from "utils";
 
 /**
+ * @summary
  * Create an instance of Asset class with a given asset id and optional attributes and session credentials.
  *
+ * @usage
  * ```ts
  * await new Asset(topia, "assetId", { attributes: { assetName: "My Asset", isPublic: false } });
  * ```

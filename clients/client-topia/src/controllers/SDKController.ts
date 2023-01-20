@@ -11,8 +11,10 @@ import { InteractiveCredentials } from "types";
 import jwt from "jsonwebtoken";
 
 /**
+ * @summary
  * Create an instance of SDKController class with credentials.
  *
+ * @usage
  * ```ts
  * const credentials = {
  *   assetId: "exampleAsset",
