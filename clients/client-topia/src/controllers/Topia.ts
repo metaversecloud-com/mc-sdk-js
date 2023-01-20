@@ -8,8 +8,10 @@ import { getBrowserWarning } from "utils";
 import jwt from "jsonwebtoken";
 
 /**
+ * @summary
  * Create a single instance of Topia axios used for all calls to the public API in all classes
  *
+ * @usage
  * ```ts
  * const topia = await new Topia({
  *   apiDomain: "api.topia.io",
