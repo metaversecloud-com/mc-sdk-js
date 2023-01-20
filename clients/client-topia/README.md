@@ -18,7 +18,7 @@ A Topia provided API Key can be included with every object initialization as a p
 
 Alternatively, visitors of a [topia.io](https://topia.io/) world interact with each other and the interactively configured assets in your world without the need for an API Key. This is all made possible through Interactive Session credentials passed to the SDK with every request, when applicable. What does this mean for you? Not much, actually! All of the magic happens behind the scenes and all you have to do is make sure that new class constructors include an options object like this: `options: WorldOptionalInterface = { attributes: {}, credentials: {} }` and all calls to `this.topia.axios` include the inherited `this.requestOptions` parameter.
 
-![Interactive Application Development Diagram](https://github.com/metaversecloud-com/mc-sdk-js/tree/main/clients/client-topia/InteractiveApplicationDevelopment.pdf)
+![Interactive Application Development Diagram](./InteractiveApplicationDevelopment.png)
 
 <br>
 
