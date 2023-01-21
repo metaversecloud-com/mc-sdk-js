@@ -18,8 +18,10 @@ import {
 import { ResponseType } from "types";
 
 /**
+ * @summary
  * Create an instance of Dropped Asset class with a given dropped asset id, url slug, and optional attributes and session credentials.
  *
+ * @usage
  * ```ts
  * await new DroppedAsset(topia, "1giFZb0sQ3X27L7uGyQX", "example", { attributes: { text: "" }, credentials: { assetId: "1giFZb0sQ3X27L7uGyQX" } } });
  * ```
@@ -287,7 +289,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *   "mediaLink": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
    *   "isVideo": true,
    *   "syncUserMedia": true,
-   *   "audioVolume": -1,
+   *   "audioSliderVolume: 30"
    *   "portalName": "community",
    *   "audioRadius": 0,
    *   "mediaName": "string"
@@ -296,7 +298,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    */
   updateMediaType({
     audioRadius,
-    audioVolume,
+    audioSliderVolume,
     isVideo,
     mediaLink,
     mediaName,
@@ -306,7 +308,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }: UpdateMediaTypeInterface): Promise<void | ResponseType> {
     try {
       return this.#updateDroppedAsset(
-        { audioRadius, audioVolume, isVideo, mediaLink, mediaName, mediaType, portalName, syncUserMedia },
+        { audioRadius, audioSliderVolume, isVideo, mediaLink, mediaName, mediaType, portalName, syncUserMedia },
         "change-media-type",
       );
     } catch (error) {

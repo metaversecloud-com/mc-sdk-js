@@ -12,8 +12,10 @@ import { UserOptionalInterface } from "interfaces";
 import { ResponseType } from "types";
 
 /**
+ * @summary
  * Create an instance of User class with email and optional session credentials.
  *
+ * @usage
  * ```ts
  * await new User(topia, "example@email.io", { interactiveNonce: "exampleNonce", interactivePublicKey: "examplePublicKey", playerId: 1 });
  * ```

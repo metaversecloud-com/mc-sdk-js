@@ -16,8 +16,10 @@ import { ResponseType, VisitorsToMoveArrayType } from "types";
 import { removeUndefined, scatterVisitors } from "utils";
 
 /**
+ * @summary
  * Create an instance of World class with a given url slug and optional attributes and session credentials.
  *
+ * @usage
  * ```ts
  * await new World(topia, "exampleWorld", { attributes: { name: "Example World" } });
  * ```

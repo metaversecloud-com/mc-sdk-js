@@ -12,8 +12,10 @@ import jwt from "jsonwebtoken";
 import { AxiosError } from "axios";
 
 /**
+ * @summary
  * Create an instance of SDKController class with credentials.
  *
+ * @usage
  * ```ts
  * const credentials = {
  *   assetId: "exampleAsset",

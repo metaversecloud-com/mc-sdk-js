@@ -52,7 +52,7 @@
     "test": "ENV=testing jest --watchAll=false",
     "lint": "eslint \"src/**\"",
     "docs": "typedoc",
-    "pkg": "npm publish",
+    "pkg": "yarn && yarn build && yarn docs && npm publish",
     "local-publish": "yarn build && yalc publish --push --no-scripts"
   },
   "type": "module",
