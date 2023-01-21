@@ -57,7 +57,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    */
   async fetchDroppedAssetById(): Promise<void | ResponseType> {
     try {
-      const response: AxiosResponse = await this.axios().get(
+      const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/assets/${this.id}`,
         this.requestOptions,
       );
@@ -70,7 +70,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // delete dropped asset
   async deleteDroppedAsset(): Promise<void | ResponseType> {
     try {
-      await this.axios().delete(`/world/${this.urlSlug}/assets/${this.id}`, this.requestOptions);
+      await this.topiaPublicApi().delete(`/world/${this.urlSlug}/assets/${this.id}`, this.requestOptions);
     } catch (error) {
       throw this.errorHandler({ error });
     }
@@ -89,7 +89,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // get dropped asset
   async fetchDroppedAssetDataObject(): Promise<void | ResponseType> {
     try {
-      const response: AxiosResponse = await this.axios().get(
+      const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/assets/${this.id}/data-object`,
         this.requestOptions,
       );
@@ -120,7 +120,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   ): Promise<void | ResponseType> {
     try {
       const { lock = {} } = options;
-      await this.axios().put(
+      await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/assets/${this.id}/set-data-object`,
         { dataObject, lock },
         this.requestOptions,
@@ -153,7 +153,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   ): Promise<void | ResponseType> {
     try {
       const { lock = {} } = options;
-      await this.axios().put(
+      await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/assets/${this.id}/update-data-object`,
         { dataObject, lock },
         this.requestOptions,
@@ -168,7 +168,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // update dropped assets
   #updateDroppedAsset = async (payload: object, updateType: string): Promise<void | ResponseType> => {
     try {
-      await this.axios().put(
+      await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/assets/${this.id}/${updateType}`,
         {
           ...payload,
@@ -462,7 +462,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     url: string;
   }): Promise<void | ResponseType> {
     try {
-      await this.axios().post(
+      await this.topiaPublicApi().post(
         `/world/${this.urlSlug}/webhooks`,
         {
           active: true,
@@ -503,7 +503,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     interactivePublicKey: string;
   }): Promise<void | ResponseType> {
     try {
-      await this.axios().put(
+      await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/assets/${this.id}/set-asset-interactive-settings`,
         {
           interactivePublicKey,

@@ -35,7 +35,7 @@ export class DroppedAssetFactory extends SDKController {
     },
   ): Promise<DroppedAsset> {
     try {
-      const response: AxiosResponse = await this.axios().post(
+      const response: AxiosResponse = await this.topiaPublicApi().post(
         `/world/${urlSlug}/assets`,
         {
           assetId: asset.id,

@@ -61,7 +61,7 @@ export class SDKController implements SDKInterface {
     this.requestOptions = { headers };
   }
 
-  axios() {
+  topiaPublicApi() {
     this.stackTrace = new Error("Thrown here:");
     return this.topia.axios;
   }

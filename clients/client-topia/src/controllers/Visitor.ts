@@ -45,7 +45,10 @@ export class Visitor extends SDKController implements VisitorInterface {
    */
   async fetchVisitor(): Promise<void | ResponseType> {
     try {
-      const response = await this.axios().get(`/world/${this.urlSlug}/visitors/${this.id}`, this.requestOptions);
+      const response = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/visitors/${this.id}`,
+        this.requestOptions,
+      );
       if (response.data.success) {
         Object.assign(this, response.data).players[0];
       } else {
@@ -74,7 +77,7 @@ export class Visitor extends SDKController implements VisitorInterface {
    */
   async moveVisitor({ shouldTeleportVisitor, x, y }: MoveVisitorInterface): Promise<void | ResponseType> {
     try {
-      await this.axios().put(
+      await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/move`,
         {
           moveTo: {
