@@ -1,13 +1,10 @@
-import { DroppedAsset, Topia, Asset } from "controllers";
+import { DroppedAsset, Topia, Asset, SDKController } from "controllers";
 import { DroppedAssetOptionalInterface } from "interfaces";
 import { AxiosResponse } from "axios";
-import { getErrorResponse } from "utils";
 
-export class DroppedAssetFactory {
-  topia: Topia;
-
+export class DroppedAssetFactory extends SDKController {
   constructor(topia: Topia) {
-    this.topia = topia;
+    super(topia);
   }
 
   create(id: string, urlSlug: string, options?: DroppedAssetOptionalInterface): DroppedAsset {
@@ -38,7 +35,7 @@ export class DroppedAssetFactory {
     },
   ): Promise<DroppedAsset> {
     try {
-      const response: AxiosResponse = await this.topia.axios.post(
+      const response: AxiosResponse = await this.axios().post(
         `/world/${urlSlug}/assets`,
         {
           assetId: asset.id,
@@ -50,7 +47,7 @@ export class DroppedAssetFactory {
       const { id } = response.data;
       return new DroppedAsset(this.topia, id, urlSlug, { credentials: asset.credentials });
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 }

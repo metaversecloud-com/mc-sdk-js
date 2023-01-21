@@ -11,9 +11,6 @@ import { UserOptionalInterface } from "interfaces";
 // types
 import { ResponseType } from "types";
 
-// utils
-import { getErrorResponse } from "utils";
-
 /**
  * Create an instance of User class with email and optional session credentials.
  *
@@ -41,13 +38,13 @@ export class User extends SDKController {
    */
   async fetchAssetsByEmail(ownerEmail: string): Promise<object | ResponseType> {
     try {
-      const response: AxiosResponse = await this.topia.axios.get(
+      const response: AxiosResponse = await this.axios().get(
         `/assets/my-assets?email=${ownerEmail}`,
         this.requestOptions,
       );
       return response.data;
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -57,14 +54,14 @@ export class User extends SDKController {
    */
   async fetchScenesByEmail(): Promise<object | ResponseType> {
     try {
-      if (!this.email) throw getErrorResponse({ message: "There is no email associated with this user." });
-      const response: AxiosResponse = await this.topia.axios.get(
+      if (!this.email) throw this.errorHandler({ message: "There is no email associated with this user." });
+      const response: AxiosResponse = await this.axios().get(
         `/scenes/my-scenes?email=${this.email}`,
         this.requestOptions,
       );
       return response.data;
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -87,7 +84,7 @@ export class User extends SDKController {
    */
   async fetchWorldsByKey(): Promise<void | ResponseType> {
     try {
-      const response: AxiosResponse = await this.topia.axios.get("/user/worlds", this.requestOptions);
+      const response: AxiosResponse = await this.axios().get("/user/worlds", this.requestOptions);
       const tempWorldsMap: { [key: string]: World } = {};
       for (const i in response.data) {
         const worldDetails = response.data[i];
@@ -97,7 +94,7 @@ export class User extends SDKController {
       }
       this.#worldsMap = tempWorldsMap;
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 }

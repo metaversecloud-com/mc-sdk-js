@@ -17,9 +17,6 @@ import {
 // types
 import { ResponseType } from "types";
 
-// utils
-import { getErrorResponse } from "utils";
-
 /**
  * Create an instance of Dropped Asset class with a given dropped asset id, url slug, and optional attributes and session credentials.
  *
@@ -60,22 +57,22 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    */
   async fetchDroppedAssetById(): Promise<void | ResponseType> {
     try {
-      const response: AxiosResponse = await this.topia.axios.get(
+      const response: AxiosResponse = await this.axios().get(
         `/world/${this.urlSlug}/assets/${this.id}`,
         this.requestOptions,
       );
       Object.assign(this, response.data);
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
   // delete dropped asset
   async deleteDroppedAsset(): Promise<void | ResponseType> {
     try {
-      await this.topia.axios.delete(`/world/${this.urlSlug}/assets/${this.id}`, this.requestOptions);
+      await this.axios().delete(`/world/${this.urlSlug}/assets/${this.id}`, this.requestOptions);
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -92,13 +89,13 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // get dropped asset
   async fetchDroppedAssetDataObject(): Promise<void | ResponseType> {
     try {
-      const response: AxiosResponse = await this.topia.axios.get(
+      const response: AxiosResponse = await this.axios().get(
         `/world/${this.urlSlug}/assets/${this.id}/data-object`,
         this.requestOptions,
       );
       this.dataObject = response.data;
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -123,7 +120,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   ): Promise<void | ResponseType> {
     try {
       const { lock = {} } = options;
-      await this.topia.axios.put(
+      await this.axios().put(
         `/world/${this.urlSlug}/assets/${this.id}/set-data-object`,
         { dataObject, lock },
         this.requestOptions,
@@ -131,7 +128,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
       this.dataObject = dataObject;
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -156,7 +153,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   ): Promise<void | ResponseType> {
     try {
       const { lock = {} } = options;
-      await this.topia.axios.put(
+      await this.axios().put(
         `/world/${this.urlSlug}/assets/${this.id}/update-data-object`,
         { dataObject, lock },
         this.requestOptions,
@@ -164,14 +161,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
       this.dataObject = dataObject;
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
   // update dropped assets
   #updateDroppedAsset = async (payload: object, updateType: string): Promise<void | ResponseType> => {
     try {
-      await this.topia.axios.put(
+      await this.axios().put(
         `/world/${this.urlSlug}/assets/${this.id}/${updateType}`,
         {
           ...payload,
@@ -179,7 +176,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   };
 
@@ -204,7 +201,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ assetBroadcast, assetBroadcastAll, broadcasterEmail }, "set-asset-broadcast");
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -251,7 +248,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         "change-click-type",
       );
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -275,7 +272,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ style, text }, "set-custom-text");
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -313,7 +310,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         "change-media-type",
       );
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -330,7 +327,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ isMutezone }, "set-mute-zone");
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -347,7 +344,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ x, y }, "set-position");
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -375,7 +372,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         "set-private-zone",
       );
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -392,7 +389,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ assetScale }, "change-scale");
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -409,7 +406,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ mediaId }, "change-uploaded-media-selected");
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -426,7 +423,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ bottom, top }, "set-webimage-layers");
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -465,7 +462,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     url: string;
   }): Promise<void | ResponseType> {
     try {
-      await this.topia.axios.post(
+      await this.axios().post(
         `/world/${this.urlSlug}/webhooks`,
         {
           active: true,
@@ -482,7 +479,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -506,7 +503,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     interactivePublicKey: string;
   }): Promise<void | ResponseType> {
     try {
-      await this.topia.axios.put(
+      await this.axios().put(
         `/world/${this.urlSlug}/assets/${this.id}/set-asset-interactive-settings`,
         {
           interactivePublicKey,
@@ -517,7 +514,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       this.isInteractive = isInteractive;
       this.interactivePublicKey = interactivePublicKey;
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 }
