@@ -26,6 +26,5 @@ export const getErrorResponse = ({
     errorMessage = error?.message || message;
   }
 
-  errorMessage = `${errorMessage}. Please surround your use of the RTSDK with a try/catch block.`;
   return { success: false, status, url, message: errorMessage, data };
 };
