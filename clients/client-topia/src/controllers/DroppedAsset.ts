@@ -292,7 +292,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *   "mediaLink": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
    *   "isVideo": true,
    *   "syncUserMedia": true,
-   *   "audioSliderVolume: 0.3"
+   *   "audioSliderVolume: 30"
    *   "portalName": "community",
    *   "audioRadius": 0,
    *   "mediaName": "string"
