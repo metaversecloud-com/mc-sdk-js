@@ -13,7 +13,8 @@ export const getErrorResponse = ({
   let data = {},
     errorMessage = message,
     status = 500,
-    url = "unknown";
+    url = "unknown",
+    method = "unknown";
 
   if (error instanceof AxiosError) {
     errorMessage = error?.message || message;
@@ -22,9 +23,10 @@ export const getErrorResponse = ({
       data = error.response.data;
     }
     if (error?.config?.url) url = error.config.url;
+    if (error?.config?.method) method = error.config.method;
   } else if (error instanceof Error) {
     errorMessage = error?.message || message;
   }
 
-  return { success: false, status, url, message: errorMessage, data };
+  return { success: false, status, url, method, message: errorMessage, data };
 };
