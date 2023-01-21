@@ -292,7 +292,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *   "mediaLink": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
    *   "isVideo": true,
    *   "syncUserMedia": true,
-   *   "audioVolume": -1,
+   *   "audioSliderVolume: 0.3"
    *   "portalName": "community",
    *   "audioRadius": 0,
    *   "mediaName": "string"
@@ -301,7 +301,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    */
   updateMediaType({
     audioRadius,
-    audioVolume,
+    audioSliderVolume,
     isVideo,
     mediaLink,
     mediaName,
@@ -311,7 +311,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }: UpdateMediaTypeInterface): Promise<void | ResponseType> {
     try {
       return this.#updateDroppedAsset(
-        { audioRadius, audioVolume, isVideo, mediaLink, mediaName, mediaType, portalName, syncUserMedia },
+        { audioRadius, audioSliderVolume, isVideo, mediaLink, mediaName, mediaType, portalName, syncUserMedia },
         "change-media-type",
       );
     } catch (error) {

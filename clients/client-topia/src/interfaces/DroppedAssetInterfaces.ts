@@ -11,7 +11,7 @@ export interface DroppedAssetInterface extends AssetInterface {
   assetPrivateConversation?: boolean | null;
   assetPrivateZoneChannelDisabled?: boolean | null;
   assetPrivateConversationCap?: number | null;
-  audioVolume?: number | null;
+  audioSliderVolume?: number | null;
   broadcasterEmail?: string | null;
   clickType?: string | null;
   clickableLink?: string | null;
@@ -86,7 +86,7 @@ export interface UpdateClickTypeInterface {
 
 export interface UpdateMediaTypeInterface {
   audioRadius: number;
-  audioVolume: number;
+  audioSliderVolume: number;
   isVideo: boolean;
   mediaLink: string;
   mediaName: string;
