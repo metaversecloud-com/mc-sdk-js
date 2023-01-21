@@ -1,6 +1,7 @@
 export { Topia } from "controllers";
 export { AssetFactory, DroppedAssetFactory, UserFactory, VisitorFactory, WorldFactory } from "factories";
 
+Error.stackTraceLimit = 20;
 process.on("unhandledRejection", (reason: any) => {
   if (reason.data) {
     const { errors } = reason.data;
