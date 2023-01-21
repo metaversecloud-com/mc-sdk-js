@@ -54,7 +54,7 @@ export class User extends SDKController {
    */
   async fetchScenesByEmail(): Promise<object | ResponseType> {
     try {
-      if (!this.email) throw this.errorHandler({ message: "There is no email associated with this user." });
+      if (!this.email) throw this.errorHandler({ error: new Error("There is no email associated with this user.") }); // throw a new Error so the stack trace goes to errorHandler
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/scenes/my-scenes?email=${this.email}`,
         this.requestOptions,
