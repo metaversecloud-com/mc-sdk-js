@@ -1,8 +1,8 @@
 export { Topia } from "controllers";
 export { AssetFactory, DroppedAssetFactory, UserFactory, VisitorFactory, WorldFactory } from "factories";
 
+Error.stackTraceLimit = 20;
 process.on("unhandledRejection", (reason: any) => {
-  console.error(reason);
   if (reason.data) {
     const { errors } = reason.data;
     if (Array.isArray(errors)) {
@@ -11,7 +11,9 @@ process.on("unhandledRejection", (reason: any) => {
       }
     }
   }
-  console.trace();
+  console.error(reason?.stack || "no stack");
+  delete reason.stack;
+  console.error(reason);
   console.error(`Please surround your use of the RTSDK with a try/catch block.`);
   process.exit(1);
 });

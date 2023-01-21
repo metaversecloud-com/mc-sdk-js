@@ -13,7 +13,7 @@ import { MoveAllVisitorsInterface, WorldInterface, WorldOptionalInterface } from
 import { ResponseType, VisitorsToMoveArrayType } from "types";
 
 // utils
-import { getErrorResponse, removeUndefined, scatterVisitors } from "utils";
+import { removeUndefined, scatterVisitors } from "utils";
 
 /**
  * @summary
@@ -58,13 +58,13 @@ export class World extends SDKController implements WorldInterface {
   // world details
   async fetchDetails(): Promise<void | ResponseType> {
     try {
-      const response: AxiosResponse = await this.topia.axios.get(
+      const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/world-details`,
         this.requestOptions,
       );
       Object.assign(this, response.data);
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -109,18 +109,18 @@ export class World extends SDKController implements WorldInterface {
       width,
     };
     try {
-      await this.topia.axios.put(`/world/${this.urlSlug}/world-details`, payload, this.requestOptions);
+      await this.topiaPublicApi().put(`/world/${this.urlSlug}/world-details`, payload, this.requestOptions);
       const cleanPayload = removeUndefined(payload);
       Object.assign(this, cleanPayload);
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
   // visitors
   private async fetchVisitors(): Promise<void | ResponseType> {
     try {
-      const response: AxiosResponse = await this.topia.axios.get(
+      const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/visitors`,
         this.requestOptions,
       );
@@ -133,7 +133,7 @@ export class World extends SDKController implements WorldInterface {
       }
       this.#visitorsMap = tempVisitorsMap;
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -246,7 +246,10 @@ export class World extends SDKController implements WorldInterface {
   // dropped assets
   async fetchDroppedAssets(): Promise<void | ResponseType> {
     try {
-      const response: AxiosResponse = await this.topia.axios.get(`/world/${this.urlSlug}/assets`, this.requestOptions);
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/assets`,
+        this.requestOptions,
+      );
       // create temp map and then update private property only once
       const tempDroppedAssetsMap: { [key: string]: DroppedAsset } = {};
       for (const index in response.data) {
@@ -257,7 +260,7 @@ export class World extends SDKController implements WorldInterface {
       }
       this.#droppedAssetsMap = tempDroppedAssetsMap;
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -310,9 +313,9 @@ export class World extends SDKController implements WorldInterface {
   // scenes
   async replaceScene(sceneId: string): Promise<void | ResponseType> {
     try {
-      await this.topia.axios.put(`/world/${this.urlSlug}/change-scene`, { sceneId }, this.requestOptions);
+      await this.topiaPublicApi().put(`/world/${this.urlSlug}/change-scene`, { sceneId }, this.requestOptions);
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -337,7 +340,7 @@ export class World extends SDKController implements WorldInterface {
     isReversed?: boolean;
   }): Promise<DroppedAsset[]> {
     try {
-      const response: AxiosResponse = await this.topia.axios.get(
+      const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/assets-with-unique-name/${uniqueName}?${isPartial ? `partial=${isPartial}&` : ""}${
           isReversed ? `reversed=${isReversed}` : ""
         }`,
@@ -354,7 +357,7 @@ export class World extends SDKController implements WorldInterface {
       }
       return droppedAssets;
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 }

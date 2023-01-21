@@ -8,9 +8,6 @@ import { MoveVisitorInterface, VisitorInterface, VisitorOptionalInterface } from
 // types
 import { ResponseType } from "types";
 
-// utils
-import { getErrorResponse } from "utils";
-
 /**
  * @summary
  * Create an instance of Visitor class with a given id and optional attributes and session credentials.
@@ -50,14 +47,17 @@ export class Visitor extends SDKController implements VisitorInterface {
    */
   async fetchVisitor(): Promise<void | ResponseType> {
     try {
-      const response = await this.topia.axios.get(`/world/${this.urlSlug}/visitors/${this.id}`, this.requestOptions);
+      const response = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/visitors/${this.id}`,
+        this.requestOptions,
+      );
       if (response.data.success) {
         Object.assign(this, response.data).players[0];
       } else {
         throw "This visitor is not active";
       }
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 
@@ -79,7 +79,7 @@ export class Visitor extends SDKController implements VisitorInterface {
    */
   async moveVisitor({ shouldTeleportVisitor, x, y }: MoveVisitorInterface): Promise<void | ResponseType> {
     try {
-      await this.topia.axios.put(
+      await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/move`,
         {
           moveTo: {
@@ -91,7 +91,7 @@ export class Visitor extends SDKController implements VisitorInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 }

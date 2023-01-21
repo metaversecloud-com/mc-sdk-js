@@ -10,9 +10,6 @@ import { AssetInterface, AssetOptionalInterface } from "interfaces";
 // types
 import { ResponseType } from "types";
 
-// utils
-import { getErrorResponse } from "utils";
-
 /**
  * @summary
  * Create an instance of Asset class with a given asset id and optional attributes and session credentials.
@@ -34,10 +31,10 @@ export class Asset extends SDKController implements AssetInterface {
 
   async fetchPlatformAssets(): Promise<object | ResponseType> {
     try {
-      const response: AxiosResponse = await this.topia.axios.get("/assets/topia-assets", this.requestOptions);
+      const response: AxiosResponse = await this.topiaPublicApi().get("/assets/topia-assets", this.requestOptions);
       return response.data;
     } catch (error) {
-      throw getErrorResponse({ error });
+      throw this.errorHandler({ error });
     }
   }
 }
