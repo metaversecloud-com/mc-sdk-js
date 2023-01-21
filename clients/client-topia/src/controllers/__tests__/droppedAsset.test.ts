@@ -76,7 +76,7 @@ describe("DroppedAsset Class", () => {
     const mediaTypeArgs = {
       ...attributes,
       audioRadius: 0,
-      audioVolume: -1,
+      audioSliderVolume: 0.3,
       isVideo: true,
       mediaLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
       mediaName: "string",
