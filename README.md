@@ -6,7 +6,7 @@ The MetaverseCloud SDK for JavaScript is an ever-growing collection of libraries
 
 ## What is MetaverseCloud?
 
-MetaverseCloud is a unique, SDK-driven Platform-as-a-Service (‘PaaS’) offering built to integrate into your clients’ & organization's tech stack and deploy a real time networking solution inside your firewall for ultimate privacy & security of your user information, data, analytics, & interactions.
+MetaverseCloud is a unique Platform-as-a-Service (‘PaaS’) offering for building real-time networked applications with a powerful SDK and patent-pending peer-to-peer (p2p) encrypted data channels.  It can be integrated into your clients’ & organization's tech stack and deployed inside your firewall for ultimate privacy & security of your user information, data, analytics, & interactions.
 
 <br />
 
