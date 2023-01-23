@@ -1,6 +1,6 @@
 # Welcome to the MetaverseCloud SDK!
 
-The MetaverseCloud SDK for JavaScript is an ever-growing collection of libraries, documentation, utilities, etc. that help developers implement certain features without having to do the work from scratch.
+The MetaverseCloud SDK for JavaScript is an ever-growing collection of libraries, documentation, utilities, etc. that help developers implement certain features without having to do the work from scratch.  You can find examples of using the javascript client library to build feature extensions, middleware integrations, & standalone real-time applications at https://github.com/metaversecloud-com/sdk-examples.
 
 <br />
 
