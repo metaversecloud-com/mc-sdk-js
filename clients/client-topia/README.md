@@ -8,6 +8,32 @@ The Topia Client Library leverages the Topia Public API and allows users to inte
 
 A Topia provided API Key can be included with every object initialization as a parameter named `apiKey`. This API Key is used to in authorization headers in all calls to the Public API.
 
+### Want to build interactive assets? This is how you can get started:
+
+- Email developers@metaversecloud.com and Topia wil send you a Public/Private key pair.
+- When you want to make an asset “interactive” add your PUBLIC key to the integrations page of the asset editor. Now webhooks that fire from this asset and iframes that open from this asset include the following values:
+  - assetId
+  - interactivePublicKey
+  - interactiveNonce
+  - visitorId
+  - urlSlug
+- The above values are included in the query params of the iframe URL as well as payload of the webhook.
+- Once you have the above values you can pass them as credentials into the factory classes when creating class instances.
+
+```ts
+await DroppedAsset.get(assetId, urlSlug, {
+  credentials: {
+    assetId,
+    interactivePublicKey,
+    interactiveNonce,
+    visitorId,
+    urlSlug,
+  },
+});
+```
+
+<br />
+
 ### Need an API Key to test locally? This is how you can create one:
 
 - While logged in to [topia.io](https://topia.io/), click on your image (or gray circle) in the top left of the screen to open My Account

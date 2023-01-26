@@ -27,7 +27,7 @@ export default { myTopiaInstance, DroppedAsset, TopiaWorld };
 import { DroppedAsset } from "./src";
 
 const setTextOnAsset = async (req: any, res: any) => {
-  const asset = await DroppedAsset.get(req.body.assetId, req.body.urlSlug, { creds: req.body });
+  const asset = await DroppedAsset.get(req.body.assetId, req.body.urlSlug, { credentials: req.body });
 
   await asset.setAssetText(req.body.text);
 };
@@ -45,7 +45,7 @@ import { myTopiaInterface } from "./src";
 
 const setTextOnAsset = async (req: any, res: any) => {
   const asset = await new DroppedAssetFactory(myTopiaInterface).get(req.body.assetId, req.body.urlSlug, {
-    creds: req.body,
+    credentials: req.body,
   });
 
   await asset.setAssetText(req.body.text);
