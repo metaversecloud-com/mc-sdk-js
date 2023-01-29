@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/metaversecloud-com/mc-sdk-js#readme",
   "keywords": [],
-  "license": "ISC",
+  "license": "bsd-3-clause",
   "main": "dist/index.js",
   "name": "mc-sdk",
   "private": true,
