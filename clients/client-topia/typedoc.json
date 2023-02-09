@@ -14,7 +14,7 @@
     "Readme": "https://www.npmjs.com/package/@rtsdk/topia",
     "Examples": "https://sdk-examples.metaversecloud.com/"
   },
-  "out": "docs",
+  "out": "../../docs",
   "readme": "https://www.npmjs.com/package/@rtsdk/topia",
   "tsconfig": "./tsconfig.json"
 }
