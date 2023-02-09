@@ -46,15 +46,17 @@ export class Topia implements TopiaInterface {
     this.interactiveSecret = interactiveSecret;
 
     const headers: {
+      "ApplicationId"?: string;
       "Authorization"?: string;
       "Content-Type": string;
-      "Publickey"?: string;
+      "PublicKey"?: string;
     } = {
+      "ApplicationId": "sdk-js-topia",
       "Content-Type": "application/json",
     };
 
     if (apiKey) headers.Authorization = apiKey;
-    if (interactiveKey) headers.Publickey = interactiveKey;
+    if (interactiveKey) headers.PublicKey = interactiveKey;
 
     this.axios = axios.create({
       baseURL: `https://${this.apiDomain}/api`,

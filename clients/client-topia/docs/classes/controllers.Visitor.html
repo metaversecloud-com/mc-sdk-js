@@ -20,7 +20,7 @@
 <div class="tsd-comment tsd-typography">
 <h3>Summary</h3><p>Create an instance of Visitor class with a given id and optional attributes and session credentials.</p>
 
-<h3>Usage</h3><pre><code class="language-ts"><span class="hl-5">await</span><span class="hl-3"> </span><span class="hl-1">new</span><span class="hl-3"> </span><span class="hl-4">Visitor</span><span class="hl-3">(</span><span class="hl-2">topia</span><span class="hl-3">, </span><span class="hl-2">id</span><span class="hl-3">, </span><span class="hl-2">urlSlug</span><span class="hl-3">, { </span><span class="hl-2">attributes:</span><span class="hl-3"> { </span><span class="hl-2">moveTo:</span><span class="hl-3"> { </span><span class="hl-2">x:</span><span class="hl-3"> </span><span class="hl-8">0</span><span class="hl-3">, </span><span class="hl-2">y:</span><span class="hl-3"> </span><span class="hl-8">0</span><span class="hl-3"> } } });</span>
+<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-3">Visitor</span><span class="hl-1">(</span><span class="hl-2">topia</span><span class="hl-1">, </span><span class="hl-2">id</span><span class="hl-1">, </span><span class="hl-2">urlSlug</span><span class="hl-1">, { </span><span class="hl-2">attributes:</span><span class="hl-1"> { </span><span class="hl-2">moveTo:</span><span class="hl-1"> { </span><span class="hl-2">x:</span><span class="hl-1"> </span><span class="hl-8">0</span><span class="hl-1">, </span><span class="hl-2">y:</span><span class="hl-1"> </span><span class="hl-8">0</span><span class="hl-1"> } } });</span>
 </code></pre>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
@@ -176,7 +176,7 @@
 <div class="tsd-comment tsd-typography">
 <h3>Summary</h3><p>Get a single visitor from a world</p>
 
-<h3>Usage</h3><pre><code class="language-ts"><span class="hl-5">await</span><span class="hl-3"> </span><span class="hl-2">visitor</span><span class="hl-3">.</span><span class="hl-4">fetchVisitor</span><span class="hl-3">();</span>
+<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">visitor</span><span class="hl-1">.</span><span class="hl-3">fetchVisitor</span><span class="hl-1">();</span>
 </code></pre>
 
 <h3>Result</h3><p>Updates each Visitor instance and world.visitors map.</p>
@@ -192,7 +192,7 @@
 <div class="tsd-comment tsd-typography">
 <h3>Summary</h3><p>Teleport or walk a visitor currently in a world to a single set of coordinates.</p>
 
-<h3>Usage</h3><pre><code class="language-ts"><span class="hl-5">await</span><span class="hl-3"> </span><span class="hl-2">visitor</span><span class="hl-3">.</span><span class="hl-4">moveVisitor</span><span class="hl-3">({</span><br/><span class="hl-3">  </span><span class="hl-2">shouldTeleportVisitor:</span><span class="hl-3"> </span><span class="hl-1">true</span><span class="hl-3">,</span><br/><span class="hl-3">  </span><span class="hl-2">x:</span><span class="hl-3"> </span><span class="hl-8">100</span><span class="hl-3">,</span><br/><span class="hl-3">  </span><span class="hl-2">y:</span><span class="hl-3"> </span><span class="hl-8">100</span><span class="hl-3">,</span><br/><span class="hl-3">});</span>
+<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">visitor</span><span class="hl-1">.</span><span class="hl-3">moveVisitor</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-2">shouldTeleportVisitor:</span><span class="hl-1"> </span><span class="hl-5">true</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">x:</span><span class="hl-1"> </span><span class="hl-8">100</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">y:</span><span class="hl-1"> </span><span class="hl-8">100</span><span class="hl-1">,</span><br/><span class="hl-1">});</span>
 </code></pre>
 
 <h3>Result</h3><p>Updates each Visitor instance and world.visitors map.</p>

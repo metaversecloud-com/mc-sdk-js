@@ -20,7 +20,7 @@
 <div class="tsd-comment tsd-typography">
 <h3>Summary</h3><p>Create an instance of User class with email and optional session credentials.</p>
 
-<h3>Usage</h3><pre><code class="language-ts"><span class="hl-5">await</span><span class="hl-3"> </span><span class="hl-1">new</span><span class="hl-3"> </span><span class="hl-4">User</span><span class="hl-3">(</span><span class="hl-2">topia</span><span class="hl-3">, </span><span class="hl-6">&quot;example@email.io&quot;</span><span class="hl-3">, { </span><span class="hl-2">interactiveNonce:</span><span class="hl-3"> </span><span class="hl-6">&quot;exampleNonce&quot;</span><span class="hl-3">, </span><span class="hl-2">interactivePublicKey:</span><span class="hl-3"> </span><span class="hl-6">&quot;examplePublicKey&quot;</span><span class="hl-3">, </span><span class="hl-2">playerId:</span><span class="hl-3"> </span><span class="hl-8">1</span><span class="hl-3"> });</span>
+<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-3">User</span><span class="hl-1">(</span><span class="hl-2">topia</span><span class="hl-1">, </span><span class="hl-6">&quot;example@email.io&quot;</span><span class="hl-1">, { </span><span class="hl-2">interactiveNonce:</span><span class="hl-1"> </span><span class="hl-6">&quot;exampleNonce&quot;</span><span class="hl-1">, </span><span class="hl-2">interactivePublicKey:</span><span class="hl-1"> </span><span class="hl-6">&quot;examplePublicKey&quot;</span><span class="hl-1">, </span><span class="hl-2">playerId:</span><span class="hl-1"> </span><span class="hl-8">1</span><span class="hl-1"> });</span>
 </code></pre>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
@@ -205,10 +205,10 @@
 creates a new World object for each,
 and creates new map of Worlds accessible via user.worlds.</p>
 
-<h3>Usage</h3><pre><code class="language-ts"><span class="hl-5">await</span><span class="hl-3"> </span><span class="hl-2">user</span><span class="hl-3">.</span><span class="hl-4">fetchWorldsByKey</span><span class="hl-3">();</span><br/><span class="hl-1">const</span><span class="hl-3"> </span><span class="hl-7">userWorlds</span><span class="hl-3"> = </span><span class="hl-2">user</span><span class="hl-3">.</span><span class="hl-2">worlds</span><span class="hl-3">;</span>
+<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">user</span><span class="hl-1">.</span><span class="hl-3">fetchWorldsByKey</span><span class="hl-1">();</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-7">userWorlds</span><span class="hl-1"> = </span><span class="hl-2">user</span><span class="hl-1">.</span><span class="hl-2">worlds</span><span class="hl-1">;</span>
 </code></pre>
 
-<h3>Result</h3><pre><code class="language-ts"><span class="hl-3">{ </span><span class="hl-9">urlSlug</span><span class="hl-3">: </span><span class="hl-1">new</span><span class="hl-3"> </span><span class="hl-4">World</span><span class="hl-3">({ </span><span class="hl-2">apiKey</span><span class="hl-3">, </span><span class="hl-2">worldArgs</span><span class="hl-3">, </span><span class="hl-2">urlSlug</span><span class="hl-3"> }) }</span>
+<h3>Result</h3><pre><code class="language-ts"><span class="hl-1">{ </span><span class="hl-9">urlSlug</span><span class="hl-1">: </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-3">World</span><span class="hl-1">({ </span><span class="hl-2">apiKey</span><span class="hl-1">, </span><span class="hl-2">worldArgs</span><span class="hl-1">, </span><span class="hl-2">urlSlug</span><span class="hl-1"> }) }</span>
 </code></pre>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
