@@ -51,7 +51,7 @@
     "build": "tsc && rollup -c",
     "test": "ENV=testing jest --watchAll=false",
     "lint": "eslint \"src/**\"",
-    "docs": "typedoc",
+    "docs": "typedoc && cd docs && cp index.html ../",
     "pkg": "yarn && yarn build && yarn docs && npm publish",
     "local-publish": "yarn build && yalc publish --push --no-scripts"
   },
