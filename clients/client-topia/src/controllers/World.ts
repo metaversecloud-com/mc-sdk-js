@@ -45,6 +45,7 @@ export class World extends SDKController implements WorldInterface {
     return this.#visitorsMap;
   }
 
+  //////// world details
   /**
    * @summary
    * Retrieves details of a world.
@@ -55,7 +56,6 @@ export class World extends SDKController implements WorldInterface {
    * const { name } = world;
    * ```
    */
-  // world details
   async fetchDetails(): Promise<void | ResponseType> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().get(
@@ -117,7 +117,7 @@ export class World extends SDKController implements WorldInterface {
     }
   }
 
-  // visitors
+  //////// visitors
   private async fetchVisitors(): Promise<void | ResponseType> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().get(
@@ -233,6 +233,7 @@ export class World extends SDKController implements WorldInterface {
     return outcomes;
   }
 
+  ////////// dropped assets
   /**
    * @summary
    * Retrieve all assets dropped in a world.
@@ -243,7 +244,6 @@ export class World extends SDKController implements WorldInterface {
    * const assets = world.droppedAssets;
    * ```
    */
-  // dropped assets
   async fetchDroppedAssets(): Promise<void | ResponseType> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().get(
@@ -259,6 +259,47 @@ export class World extends SDKController implements WorldInterface {
         });
       }
       this.#droppedAssetsMap = tempDroppedAssetsMap;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Retrieve all assets dropped in a world matching uniqueName.
+   *
+   * @usage
+   * ```ts
+   * await world.fetchDroppedAssets();
+   * const assets = world.droppedAssets;
+   * ```
+   */
+  async fetchDroppedAssetsWithUniqueName({
+    uniqueName,
+    isPartial = false,
+    isReversed = false,
+  }: {
+    uniqueName: string;
+    isPartial?: boolean;
+    isReversed?: boolean;
+  }): Promise<DroppedAsset[]> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/assets-with-unique-name/${uniqueName}?${isPartial ? `partial=${isPartial}&` : ""}${
+          isReversed ? `reversed=${isReversed}` : ""
+        }`,
+        this.requestOptions,
+      );
+      // create temp map and then update private property only once
+      const droppedAssets: DroppedAsset[] = [];
+      for (const asset of response.data.assets) {
+        droppedAssets.push(
+          new DroppedAsset(this.topia, asset.id, this.urlSlug, {
+            attributes: asset,
+          }),
+        );
+      }
+      return droppedAssets;
     } catch (error) {
       throw this.errorHandler({ error });
     }
@@ -293,6 +334,43 @@ export class World extends SDKController implements WorldInterface {
     return outcomes;
   }
 
+  //////// scenes
+  /**
+   * @summary
+   * Drop a scene in a world.
+   *
+   * @usage
+   * ```ts
+   * await world.dropScene({
+   *   "sceneId": "string",
+   *   "position": {
+   *     "x": 0,
+   *     "y": 0
+   *   },
+   *   "assetSuffix": "string"
+   * });
+   * ```
+   */
+  async dropScene({
+    assetSuffix,
+    position,
+    sceneId,
+  }: {
+    assetSuffix: string;
+    position: object;
+    sceneId: string;
+  }): Promise<void | ResponseType> {
+    try {
+      await this.topiaPublicApi().post(
+        `/world/${this.urlSlug}/drop-scene`,
+        { assetSuffix, position, sceneId },
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
   /**
    * @summary
    * Replace the current scene of a world.
@@ -310,52 +388,9 @@ export class World extends SDKController implements WorldInterface {
    * await world.replaceScene(SCENE_ID);
    * ```
    */
-  // scenes
   async replaceScene(sceneId: string): Promise<void | ResponseType> {
     try {
       await this.topiaPublicApi().put(`/world/${this.urlSlug}/change-scene`, { sceneId }, this.requestOptions);
-    } catch (error) {
-      throw this.errorHandler({ error });
-    }
-  }
-
-  /**
-   * @summary
-   * Retrieve all assets dropped in a world matching uniqueName.
-   *
-   * @usage
-   * ```ts
-   * await world.fetchDroppedAssets();
-   * const assets = world.droppedAssets;
-   * ```
-   */
-  // dropped assets
-  async fetchDroppedAssetsWithUniqueName({
-    uniqueName,
-    isPartial = false,
-    isReversed = false,
-  }: {
-    uniqueName: string;
-    isPartial?: boolean;
-    isReversed?: boolean;
-  }): Promise<DroppedAsset[]> {
-    try {
-      const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/assets-with-unique-name/${uniqueName}?${isPartial ? `partial=${isPartial}&` : ""}${
-          isReversed ? `reversed=${isReversed}` : ""
-        }`,
-        this.requestOptions,
-      );
-      // create temp map and then update private property only once
-      const droppedAssets: DroppedAsset[] = [];
-      for (const asset of response.data.assets) {
-        droppedAssets.push(
-          new DroppedAsset(this.topia, asset.id, this.urlSlug, {
-            attributes: asset,
-          }),
-        );
-      }
-      return droppedAssets;
     } catch (error) {
       throw this.errorHandler({ error });
     }

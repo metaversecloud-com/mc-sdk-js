@@ -1,9 +1,10 @@
 import { AxiosResponse } from "axios";
 
 // controllers
+import { Scene } from "controllers/Scene";
 import { SDKController } from "controllers/SDKController";
-import { World } from "controllers/World";
 import { Topia } from "controllers/Topia";
+import { World } from "controllers/World";
 
 // interfaces
 import { UserOptionalInterface } from "interfaces";
@@ -21,17 +22,46 @@ import { ResponseType } from "types";
  * ```
  */
 export class User extends SDKController {
+  #scenesMap: { [key: string]: Scene };
   #worldsMap: { [key: string]: World };
-  email: string;
+  email: string | undefined;
+  urlSlug: string | undefined;
+  visitorId: number | undefined | null;
 
-  constructor(topia: Topia, email: string, options: UserOptionalInterface = { credentials: {} }) {
+  constructor(
+    topia: Topia,
+    options: UserOptionalInterface = { email: "", visitorId: null, urlSlug: "", credentials: {} },
+  ) {
     super(topia, options.credentials);
+    this.#scenesMap = {};
     this.#worldsMap = {};
-    this.email = email;
+    this.email = options.email;
+    this.urlSlug = options.urlSlug;
+    this.visitorId = options.visitorId;
+  }
+
+  get scenes() {
+    return this.#scenesMap;
   }
 
   get worlds() {
     return this.#worldsMap;
+  }
+
+  /**
+   * @summary
+   * Returns details for a specific User by visitorId
+   */
+  async fetchUserByVisitorId(): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/visitors/${this.visitorId}`,
+        this.requestOptions,
+      );
+      Object.assign(this, response.data);
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
   }
 
   /**
@@ -52,16 +82,19 @@ export class User extends SDKController {
 
   /**
    * @summary
-   * Returns all scenes owned by User when an email address is provided.
+   * Returns all scenes owned by User
    */
-  async fetchScenesByEmail(): Promise<object | ResponseType> {
+  async fetchScenes(): Promise<void | ResponseType> {
     try {
-      if (!this.email) throw this.errorHandler({ error: new Error("There is no email associated with this user.") }); // throw a new Error so the stack trace goes to errorHandler
-      const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/scenes/my-scenes?email=${this.email}`,
-        this.requestOptions,
-      );
-      return response.data;
+      const response: AxiosResponse = await this.topiaPublicApi().get("/scenes/my-scenes", this.requestOptions);
+      const tempScenesMap: { [key: string]: Scene } = {};
+      for (const i in response.data) {
+        const sceneDetails = response.data[i];
+        tempScenesMap[sceneDetails.id] = new Scene(this.topia, sceneDetails.urlSlug, {
+          attributes: sceneDetails,
+        });
+      }
+      this.#scenesMap = tempScenesMap;
     } catch (error) {
       throw this.errorHandler({ error });
     }

@@ -8,8 +8,14 @@ export class UserFactory {
     this.topia = topia;
   }
 
-  create(email: string, options?: UserOptionalInterface): User {
-    return new User(this.topia, email, options);
+  create(options?: UserOptionalInterface): User {
+    return new User(this.topia, options);
+  }
+
+  async get(options?: UserOptionalInterface): Promise<User> {
+    const user = new User(this.topia, options);
+    await user.fetchUserByVisitorId();
+    return user;
   }
 }
 

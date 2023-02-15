@@ -4,7 +4,6 @@ import { User as UserClass, Topia } from "controllers";
 import { UserFactory } from "factories";
 
 const apiDomain = "api.topia.io";
-const email = "test@email.com";
 
 describe("User Class", () => {
   let mock: MockAdapter, testUser: UserClass, topia: Topia, User: UserFactory;
@@ -16,12 +15,18 @@ describe("User Class", () => {
     });
     mock = new MockAdapter(topia.axios);
     User = new UserFactory(topia);
-    testUser = User.create(email);
+    testUser = User.create({ email: "test@email.com", urlSlug: "exampleWorld", visitorId: 1 });
   });
 
   afterEach(() => {
     mock.restore();
     jest.resetAllMocks();
+  });
+
+  it("should update user with details when", async () => {
+    mock.onGet(`https://${apiDomain}/api/world/exampleWorld/visitors/1`).reply(200, worlds);
+    await testUser.fetchUserByVisitorId();
+    expect(mock.history.get.length).toBe(1);
   });
 
   it("should update user.worlds", async () => {
@@ -32,9 +37,9 @@ describe("User Class", () => {
   });
 
   it("should return an array of scenes owned by specific email address", async () => {
-    testUser.fetchScenesByEmail = jest.fn().mockReturnValue(scenes);
-    const mockScenes = await testUser.fetchScenesByEmail();
-    expect(testUser.fetchScenesByEmail).toHaveBeenCalled();
+    testUser.fetchScenes = jest.fn().mockReturnValue(scenes);
+    const mockScenes = await testUser.fetchScenes();
+    expect(testUser.fetchScenes).toHaveBeenCalled();
     expect(mockScenes).toBeDefined();
   });
 
