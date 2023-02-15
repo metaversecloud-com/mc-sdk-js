@@ -14,28 +14,23 @@ import { ResponseType } from "types";
 
 /**
  * @summary
- * Create an instance of User class with email and optional session credentials.
+ * Create an instance of User class with optional session credentials.
  *
  * @usage
  * ```ts
- * await new User(topia, "example@email.io", { interactiveNonce: "exampleNonce", interactivePublicKey: "examplePublicKey", playerId: 1 });
+ * await new User(topia, { interactiveNonce: "exampleNonce", interactivePublicKey: "examplePublicKey", playerId: 1 });
  * ```
  */
 export class User extends SDKController {
   #scenesMap: { [key: string]: Scene };
   #worldsMap: { [key: string]: World };
-  email: string | undefined;
   urlSlug: string | undefined;
   visitorId: number | undefined | null;
 
-  constructor(
-    topia: Topia,
-    options: UserOptionalInterface = { email: "", visitorId: null, urlSlug: "", credentials: {} },
-  ) {
+  constructor(topia: Topia, options: UserOptionalInterface = { visitorId: null, urlSlug: "", credentials: {} }) {
     super(topia, options.credentials);
     this.#scenesMap = {};
     this.#worldsMap = {};
-    this.email = options.email;
     this.urlSlug = options.urlSlug;
     this.visitorId = options.visitorId;
   }

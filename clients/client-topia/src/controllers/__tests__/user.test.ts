@@ -15,7 +15,7 @@ describe("User Class", () => {
     });
     mock = new MockAdapter(topia.axios);
     User = new UserFactory(topia);
-    testUser = User.create({ email: "test@email.com", urlSlug: "exampleWorld", visitorId: 1 });
+    testUser = User.create({ urlSlug: "exampleWorld", visitorId: 1 });
   });
 
   afterEach(() => {
@@ -36,7 +36,7 @@ describe("User Class", () => {
     expect(Object.keys(testUser.worlds).length).toBe(Object.keys(worlds).length);
   });
 
-  it("should return an array of scenes owned by specific email address", async () => {
+  it("should return an array of scenes owned by specific user", async () => {
     testUser.fetchScenes = jest.fn().mockReturnValue(scenes);
     const mockScenes = await testUser.fetchScenes();
     expect(testUser.fetchScenes).toHaveBeenCalled();
