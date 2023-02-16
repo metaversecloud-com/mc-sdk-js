@@ -1,6 +1,8 @@
+import { AxiosResponse } from "axios";
+
 // controllers
-import { SDKController } from "controllers/SDKController";
 import { Topia } from "controllers/Topia";
+import { User } from "controllers/User";
 
 // interfaces
 import { MoveVisitorInterface, VisitorInterface, VisitorOptionalInterface } from "interfaces";
@@ -17,9 +19,10 @@ import { ResponseType } from "types";
  * await new Visitor(topia, id, urlSlug, { attributes: { moveTo: { x: 0, y: 0 } } });
  * ```
  */
-export class Visitor extends SDKController implements VisitorInterface {
+export class Visitor extends User implements VisitorInterface {
   readonly id: number;
   urlSlug: string;
+  user?: User;
 
   constructor(
     topia: Topia,
@@ -27,7 +30,7 @@ export class Visitor extends SDKController implements VisitorInterface {
     urlSlug: string,
     options: VisitorOptionalInterface = { attributes: {}, credentials: {} },
   ) {
-    super(topia, options.credentials);
+    super(topia, { credentials: options.credentials });
     Object.assign(this, options.attributes);
     this.id = id;
     this.urlSlug = urlSlug;
@@ -43,16 +46,16 @@ export class Visitor extends SDKController implements VisitorInterface {
    * ```
    *
    * @result
-   * Updates each Visitor instance and world.visitors map.
+   * Returns details for a visitor in a world by id and urlSlug
    */
   async fetchVisitor(): Promise<void | ResponseType> {
     try {
-      const response = await this.topiaPublicApi().get(
+      const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/visitors/${this.id}`,
         this.requestOptions,
       );
-      if (response.data.success) {
-        Object.assign(this, response.data).players[0];
+      if (response.data?.playerId === this.id) {
+        Object.assign(this, response.data);
       } else {
         throw "This visitor is not active";
       }

@@ -23,17 +23,11 @@ describe("User Class", () => {
     jest.resetAllMocks();
   });
 
-  it("should update user with details when", async () => {
-    mock.onGet(`https://${apiDomain}/api/world/exampleWorld/visitors/1`).reply(200, worlds);
-    await testUser.fetchUserByVisitorId();
-    expect(mock.history.get.length).toBe(1);
-  });
-
-  it("should update user.worlds", async () => {
-    mock.onGet(`https://${apiDomain}/api/user/worlds`).reply(200, worlds);
-    await testUser.fetchWorldsByKey();
-    expect(mock.history.get.length).toBe(1);
-    expect(Object.keys(testUser.worlds).length).toBe(Object.keys(worlds).length);
+  it("should return an array of assets owned by specific email address", async () => {
+    testUser.fetchAssets = jest.fn().mockReturnValue(droppedAssets);
+    const mockAssets = await testUser.fetchAssets();
+    expect(testUser.fetchAssets).toHaveBeenCalled();
+    expect(mockAssets).toBeDefined();
   });
 
   it("should return an array of scenes owned by specific user", async () => {
@@ -43,10 +37,10 @@ describe("User Class", () => {
     expect(mockScenes).toBeDefined();
   });
 
-  it("should return an array of assets owned by specific email address", async () => {
-    testUser.fetchAssetsByEmail = jest.fn().mockReturnValue(droppedAssets);
-    const mockAssets = await testUser.fetchAssetsByEmail("lina@topia.io");
-    expect(testUser.fetchAssetsByEmail).toHaveBeenCalled();
-    expect(mockAssets).toBeDefined();
+  it("should update user.worlds", async () => {
+    mock.onGet(`https://${apiDomain}/api/user/worlds`).reply(200, worlds);
+    await testUser.fetchWorldsByKey();
+    expect(mock.history.get.length).toBe(1);
+    expect(Object.keys(testUser.worlds).length).toBe(Object.keys(worlds).length);
   });
 });

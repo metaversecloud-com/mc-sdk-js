@@ -5,4 +5,5 @@ export { SDKController } from "./SDKController";
 export { User } from "./User";
 export { Visitor } from "./Visitor";
 export { World } from "./World";
+export { WorldActivity } from "./WorldActivity";
 export { Topia } from "./Topia";

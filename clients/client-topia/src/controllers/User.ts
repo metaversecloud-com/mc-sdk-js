@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 
 // controllers
+import { Asset } from "controllers/Asset";
 import { Scene } from "controllers/Scene";
 import { SDKController } from "controllers/SDKController";
 import { Topia } from "controllers/Topia";
@@ -22,17 +23,19 @@ import { ResponseType } from "types";
  * ```
  */
 export class User extends SDKController {
+  #assetsMap: { [key: string]: Asset };
   #scenesMap: { [key: string]: Scene };
   #worldsMap: { [key: string]: World };
-  urlSlug: string | undefined;
-  visitorId: number | undefined | null;
 
-  constructor(topia: Topia, options: UserOptionalInterface = { visitorId: null, urlSlug: "", credentials: {} }) {
+  constructor(topia: Topia, options: UserOptionalInterface = { credentials: {} }) {
     super(topia, options.credentials);
+    this.#assetsMap = {};
     this.#scenesMap = {};
     this.#worldsMap = {};
-    this.urlSlug = options.urlSlug;
-    this.visitorId = options.visitorId;
+  }
+
+  get assets() {
+    return this.#assetsMap;
   }
 
   get scenes() {
@@ -45,31 +48,19 @@ export class User extends SDKController {
 
   /**
    * @summary
-   * Returns details for a specific User by visitorId
-   */
-  async fetchUserByVisitorId(): Promise<void | ResponseType> {
-    try {
-      const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/visitors/${this.visitorId}`,
-        this.requestOptions,
-      );
-      Object.assign(this, response.data);
-    } catch (error) {
-      throw this.errorHandler({ error });
-    }
-  }
-
-  /**
-   * @summary
    * Returns all assets owned by User when an email address is provided.
    */
-  async fetchAssetsByEmail(ownerEmail: string): Promise<object | ResponseType> {
+  async fetchAssets(): Promise<void | ResponseType> {
     try {
-      const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/assets/my-assets?email=${ownerEmail}`,
-        this.requestOptions,
-      );
-      return response.data;
+      const response: AxiosResponse = await this.topiaPublicApi().get(`/assets/my-assets`, this.requestOptions);
+      const tempAssetsMap: { [key: string]: Asset } = {};
+      for (const i in response.data) {
+        const assetDetails = response.data[i];
+        tempAssetsMap[assetDetails.id] = new Asset(this.topia, assetDetails.id, {
+          attributes: assetDetails,
+        });
+      }
+      this.#assetsMap = tempAssetsMap;
     } catch (error) {
       throw this.errorHandler({ error });
     }
