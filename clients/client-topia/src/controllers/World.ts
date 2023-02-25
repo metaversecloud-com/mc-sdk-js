@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 
 // controllers
+import { DroppedAsset } from "controllers/DroppedAsset";
 import { SDKController } from "controllers/SDKController";
 import { Topia } from "controllers/Topia";
 
@@ -23,12 +24,18 @@ import { removeUndefined } from "utils";
  * ```
  */
 export class World extends SDKController implements WorldInterface {
+  #droppedAssetsMap: { [key: string]: DroppedAsset };
   urlSlug: string;
 
   constructor(topia: Topia, urlSlug: string, options: WorldOptionalInterface = { attributes: {}, credentials: {} }) {
     super(topia, options.credentials);
     Object.assign(this, options.attributes);
+    this.#droppedAssetsMap = {};
     this.urlSlug = urlSlug;
+  }
+
+  get droppedAssets() {
+    return this.#droppedAssetsMap;
   }
 
   //////// world details
@@ -98,6 +105,168 @@ export class World extends SDKController implements WorldInterface {
       await this.topiaPublicApi().put(`/world/${this.urlSlug}/world-details`, payload, this.requestOptions);
       const cleanPayload = removeUndefined(payload);
       Object.assign(this, cleanPayload);
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  ////////// dropped assets
+  /**
+   * @summary
+   * Retrieve all assets dropped in a world.
+   *
+   * @usage
+   * ```ts
+   * await world.fetchDroppedAssets();
+   * const assets = world.droppedAssets;
+   * ```
+   */
+  async fetchDroppedAssets(): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/assets`,
+        this.requestOptions,
+      );
+      // create temp map and then update private property only once
+      const tempDroppedAssetsMap: { [key: string]: DroppedAsset } = {};
+      for (const index in response.data) {
+        // tempDroppedAssetsMap[id] = createDroppedAsset(this.apiKey, response.data[id], this.urlSlug);
+        tempDroppedAssetsMap[index] = new DroppedAsset(this.topia, response.data[index].id, this.urlSlug, {
+          attributes: response.data[index],
+        });
+      }
+      this.#droppedAssetsMap = tempDroppedAssetsMap;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Retrieve all assets dropped in a world matching uniqueName.
+   *
+   * @usage
+   * ```ts
+   * await world.fetchDroppedAssets();
+   * const assets = world.droppedAssets;
+   * ```
+   */
+  async fetchDroppedAssetsWithUniqueName({
+    uniqueName,
+    isPartial = false,
+    isReversed = false,
+  }: {
+    uniqueName: string;
+    isPartial?: boolean;
+    isReversed?: boolean;
+  }): Promise<DroppedAsset[]> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/assets-with-unique-name/${uniqueName}?${isPartial ? `partial=${isPartial}&` : ""}${
+          isReversed ? `reversed=${isReversed}` : ""
+        }`,
+        this.requestOptions,
+      );
+      // create temp map and then update private property only once
+      const droppedAssets: DroppedAsset[] = [];
+      for (const asset of response.data.assets) {
+        droppedAssets.push(
+          new DroppedAsset(this.topia, asset.id, this.urlSlug, {
+            attributes: asset,
+          }),
+        );
+      }
+      return droppedAssets;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Update multiple custom text dropped assets with a single style while preserving text for specified dropped assets only.
+   *
+   * @usage
+   * ```ts
+   * const droppedAssetsToUpdate = [world.droppedAssets["6"], world.droppedAssets["12"]];
+   * const style = {
+   *   "textColor": "#abc123",
+   *   "textFontFamily": "Arial",
+   *   "textSize": 40,
+   *   "textWeight": "normal",
+   *   "textWidth": 200
+   * };
+   * await world.updateCustomText(droppedAssetsToUpdate, style);
+   * ```
+   *
+   * @result
+   * Updates each DroppedAsset instance and world.droppedAssets map.
+   */
+  async updateCustomTextDroppedAssets(droppedAssetsToUpdate: Array<DroppedAsset>, style: object): Promise<object> {
+    const allPromises: Array<Promise<void | ResponseType>> = [];
+    droppedAssetsToUpdate.forEach((a) => {
+      allPromises.push(a.updateCustomTextAsset(style, a.text));
+    });
+    const outcomes = await Promise.all(allPromises);
+    return outcomes;
+  }
+
+  /**
+   * @summary
+   * Drop a scene in a world.
+   *
+   * @usage
+   * ```ts
+   * await world.dropScene({
+   *   "sceneId": "string",
+   *   "position": {
+   *     "x": 0,
+   *     "y": 0
+   *   },
+   *   "assetSuffix": "string"
+   * });
+   * ```
+   */
+  async dropScene({
+    assetSuffix,
+    position,
+    sceneId,
+  }: {
+    assetSuffix: string;
+    position: object;
+    sceneId: string;
+  }): Promise<void | ResponseType> {
+    try {
+      await this.topiaPublicApi().post(
+        `/world/${this.urlSlug}/drop-scene`,
+        { assetSuffix, position, sceneId },
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Replace the current scene of a world.
+   *
+   * @usage
+   * ```ts
+   * const droppedAssetsToUpdate = [world.droppedAssets["6"], world.droppedAssets["12"]]
+   * const style = {
+   *   "textColor": "#abc123",
+   *   "textFontFamily": "Arial",
+   *   "textSize": 40,
+   *   "textWeight": "normal",
+   *   "textWidth": 200
+   * }
+   * await world.replaceScene(SCENE_ID);
+   * ```
+   */
+  async replaceScene(sceneId: string): Promise<void | ResponseType> {
+    try {
+      await this.topiaPublicApi().put(`/world/${this.urlSlug}/change-scene`, { sceneId }, this.requestOptions);
     } catch (error) {
       throw this.errorHandler({ error });
     }

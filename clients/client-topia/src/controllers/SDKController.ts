@@ -55,7 +55,7 @@ export class SDKController implements SDKInterface {
         assetId,
       };
       this.jwt = jwt.sign(payload, topia.interactiveSecret as string);
-      headers.Interactivejwt = this.jwt;
+      headers.InteractiveJWT = this.jwt;
     }
     if (apiKey) {
       headers.Authorization = apiKey;
