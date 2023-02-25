@@ -2,6 +2,7 @@ export { Topia } from "controllers";
 export {
   AssetFactory,
   DroppedAssetFactory,
+  SceneFactory,
   UserFactory,
   VisitorFactory,
   WorldActivityFactory,
