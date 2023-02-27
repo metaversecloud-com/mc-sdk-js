@@ -1,5 +1,13 @@
 export { Topia } from "controllers";
-export { AssetFactory, DroppedAssetFactory, UserFactory, VisitorFactory, WorldFactory } from "factories";
+export {
+  AssetFactory,
+  DroppedAssetFactory,
+  SceneFactory,
+  UserFactory,
+  VisitorFactory,
+  WorldActivityFactory,
+  WorldFactory,
+} from "factories";
 
 Error.stackTraceLimit = 20;
 process.on("unhandledRejection", (reason: any) => {

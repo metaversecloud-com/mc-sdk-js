@@ -1,6 +1,6 @@
 // @ts-nocheck
 // Initialization... on backend
-import { Topia, DroppedAssetFactory, TopiaWorldFactory } from "@rtsdk/topia";
+import { Topia, DroppedAssetFactory, WorldFactory } from "@rtsdk/topia";
 
 const myTopiaInstance = new Topia({
   apiDomain: process.env.INSTANCE_DOMAIN || "api.topia.io/",
@@ -10,9 +10,9 @@ const myTopiaInstance = new Topia({
 });
 
 const DroppedAsset = new DroppedAssetFactory(myTopiaInstance);
-const TopiaWorld = new TopiaWorldFactory(myTopiaInstance);
+const World = new WorldFactory(myTopiaInstance);
 
-export default { myTopiaInstance, DroppedAsset, TopiaWorld };
+export default { myTopiaInstance, DroppedAsset, World };
 
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////

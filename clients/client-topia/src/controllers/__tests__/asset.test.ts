@@ -10,7 +10,7 @@ describe("Asset Class", () => {
 
   beforeEach(async () => {
     topia = new Topia({
-      apiDomain: "api.topia.io",
+      apiDomain,
       apiKey: "exampleKey",
       interactiveKey: "key",
       interactiveSecret: "secret",

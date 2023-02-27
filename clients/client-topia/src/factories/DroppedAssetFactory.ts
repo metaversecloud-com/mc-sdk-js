@@ -13,9 +13,7 @@ export class DroppedAssetFactory extends SDKController {
 
   async get(id: string, urlSlug: string, options?: DroppedAssetOptionalInterface): Promise<DroppedAsset> {
     const droppedAsset = new DroppedAsset(this.topia, id, urlSlug, options);
-
     await droppedAsset.fetchDroppedAssetById();
-
     return droppedAsset;
   }
 

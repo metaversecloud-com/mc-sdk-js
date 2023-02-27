@@ -50,6 +50,62 @@ Alternatively, visitors of a [topia.io](https://topia.io/) world interact with e
 
 <hr/>
 
+# Developers
+
+Need inspiration?! Check out our [example application](https://sdk-examples.metaversecloud.com/) which utilizes the SDK to create new and enhanced features inside [topia.io](https://topia.io/).
+
+<br>
+
+## Get Started
+
+Run `yarn add @rtsdk/topia` or `npm install @rtsdk/topia`
+
+Create your instance of Topia and instantiate the factories you need:
+
+```js
+dotenv.config();
+import dotenv from "dotenv";
+
+import { AssetFactory, Topia, DroppedAssetFactory, UserFactory, WorldFactory } from "@rtsdk/topia";
+
+const config = {
+  apiDomain: process.env.INSTANCE_DOMAIN || "https://api.topia.io/",
+  apiKey: process.env.API_KEY,
+  interactiveKey: process.env.INTERACTIVE_KEY,
+  interactiveSecret: process.env.INTERACTIVE_SECRET,
+};
+
+const myTopiaInstance = new Topia(config);
+
+const Asset = new AssetFactory(myTopiaInstance);
+const DroppedAsset = new DroppedAssetFactory(myTopiaInstance);
+const User = new UserFactory(myTopiaInstance);
+const World = new WorldFactory(myTopiaInstance);
+
+export { Asset, DroppedAsset, myTopiaInstance, User, World };
+```
+
+<br/>
+
+Put it to use:
+
+```js
+import { DroppedAsset } from "./pathToAboveCode";
+
+export const getAssetAndDataObject = async (req) => {
+  const { assetId, urlSlug } = req.body;
+
+  const droppedAsset = await DroppedAsset.get(assetId, urlSlug, {
+    credentials: req.body,
+  });
+
+  await droppedAsset.fetchDroppedAssetDataObject();
+  return droppedAsset;
+};
+```
+
+<hr/>
+
 # Contributors
 
 ## Get Started
@@ -120,59 +176,3 @@ We use Jest for testing and take advantage of dependency injection to pass mock 
 To run the test suite, please run `yarn test`.
 
 <br><br>
-
-<hr/>
-
-# Developers
-
-Need inspiration?! Check out our [example application](https://sdk-examples.metaversecloud.com/) which utilizes the SDK to create new and enhanced features inside [topia.io](https://topia.io/).
-
-<br>
-
-## Get Started
-
-Run `yarn add @rtsdk/topia` or `npm install @rtsdk/topia`
-
-Create your instance of Topia and instantiate the factories you need:
-
-```js
-dotenv.config();
-import dotenv from "dotenv";
-
-import { AssetFactory, Topia, DroppedAssetFactory, UserFactory, WorldFactory } from "@rtsdk/topia";
-
-const config = {
-  apiDomain: process.env.INSTANCE_DOMAIN || "https://api.topia.io/",
-  apiKey: process.env.API_KEY,
-  interactiveKey: process.env.INTERACTIVE_KEY,
-  interactiveSecret: process.env.INTERACTIVE_SECRET,
-};
-
-const myTopiaInstance = new Topia(config);
-
-const Asset = new AssetFactory(myTopiaInstance);
-const DroppedAsset = new DroppedAssetFactory(myTopiaInstance);
-const User = new UserFactory(myTopiaInstance);
-const World = new WorldFactory(myTopiaInstance);
-
-export { Asset, DroppedAsset, myTopiaInstance, User, World };
-```
-
-<br/>
-
-Put it to use:
-
-```js
-import { DroppedAsset } from "./pathToAboveCode";
-
-export const getAssetAndDataObject = async (req) => {
-  const { assetId, urlSlug } = req.body;
-
-  const droppedAsset = await DroppedAsset.get(assetId, urlSlug, {
-    credentials: req.body,
-  });
-
-  await droppedAsset.fetchDroppedAssetDataObject();
-  return droppedAsset;
-};
-```
