@@ -4,7 +4,7 @@ import { Visitor, WorldActivity as WorldActivityActivityClass, Topia } from "con
 import { VisitorType } from "types";
 import { WorldActivityFactory } from "factories";
 
-const BASE_URL = "https://api.topia.io/api/world/exampleWorld";
+const BASE_URL = "https://api.topia.io/api/v1/world/exampleWorld";
 const urlSlug = worlds[1].urlSlug;
 
 describe("WorldActivity Class", () => {
