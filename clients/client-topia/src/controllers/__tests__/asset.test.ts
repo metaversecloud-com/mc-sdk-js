@@ -26,7 +26,7 @@ describe("Asset Class", () => {
   });
 
   it("should return an array of assets owned by specific email address", async () => {
-    mock.onGet(`https://${apiDomain}/api/assets/topia-assets`).reply(200);
+    mock.onGet(`https://${apiDomain}/api/v1/assets/topia-assets`).reply(200);
     await testAsset.fetchPlatformAssets();
     expect(mock.history.get.length).toBe(1);
   });

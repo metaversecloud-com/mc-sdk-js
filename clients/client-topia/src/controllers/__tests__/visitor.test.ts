@@ -26,13 +26,13 @@ describe("Visitor Class", () => {
   });
 
   it("should update visitor details", async () => {
-    mock.onGet(`https://${apiDomain}/api/world/exampleWorld/visitors/1`).reply(200, visitor);
+    mock.onGet(`https://${apiDomain}/api/v1/world/exampleWorld/visitors/1`).reply(200, visitor);
     await testVisitor.fetchVisitor();
     expect(mock.history.get.length).toBe(1);
   });
 
   it("should move a list of visitors to uniquely specified coordinates", async () => {
-    mock.onPut(`https://${apiDomain}/api/world/${urlSlug}/visitors/${id}/move`).reply(200);
+    mock.onPut(`https://${apiDomain}/api/v1/world/${urlSlug}/visitors/${id}/move`).reply(200);
     await testVisitor.moveVisitor({
       shouldTeleportVisitor: true,
       x: 100,

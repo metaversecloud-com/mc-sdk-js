@@ -26,12 +26,14 @@ export class User extends SDKController {
   #assetsMap: { [key: string]: Asset };
   #scenesMap: { [key: string]: Scene };
   #worldsMap: { [key: string]: World };
+  email?: string;
 
   constructor(topia: Topia, options: UserOptionalInterface = { credentials: {} }) {
     super(topia, options.credentials);
     this.#assetsMap = {};
     this.#scenesMap = {};
     this.#worldsMap = {};
+    this.email = options.email;
   }
 
   get assets() {
@@ -44,6 +46,35 @@ export class User extends SDKController {
 
   get worlds() {
     return this.#worldsMap;
+  }
+
+  /**
+   * @summary
+   * Adds user to database (if applicable) and sends email with verification token
+   */
+  async sendEmailVerification(): Promise<void | ResponseType> {
+    try {
+      await this.topiaPublicApi().post(`/auth/verification-code`, { email: this.email }, this.requestOptions);
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Returns custom token if email with verification token successfully found
+   */
+  async verifyAuthToken(verificationCode: string): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().post(
+        `/auth/custom-token`,
+        { email: this.email, verificationCode },
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
   }
 
   /**

@@ -27,7 +27,7 @@ describe("Scene Class", () => {
   });
 
   it("should return a scene by id", async () => {
-    mock.onGet(`https://${apiDomain}/api/scenes/${scenes[0].id}`).reply(200);
+    mock.onGet(`https://${apiDomain}/api/v1/scenes/${scenes[0].id}`).reply(200);
     await testScene.fetchSceneById();
     expect(mock.history.get.length).toBe(1);
   });

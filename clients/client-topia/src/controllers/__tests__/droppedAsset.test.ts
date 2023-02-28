@@ -6,7 +6,7 @@ import { DroppedAssetFactory } from "factories";
 
 const apiDomain = "api.topia.io";
 const attributes = droppedAssets[0];
-const BASE_URL = `https://api.topia.io/api/world/exampleWorld/assets/${droppedAssets[0].id}`;
+const BASE_URL = `https://api.topia.io/api/v1/world/exampleWorld/assets/${droppedAssets[0].id}`;
 const id = droppedAssets[0].id;
 
 describe("DroppedAsset Class", () => {

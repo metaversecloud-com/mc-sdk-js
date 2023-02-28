@@ -15,12 +15,18 @@ describe("User Class", () => {
     });
     mock = new MockAdapter(topia.axios);
     User = new UserFactory(topia);
-    testUser = User.create({ urlSlug: "exampleWorld", visitorId: 1 });
+    testUser = User.create();
   });
 
   afterEach(() => {
     mock.restore();
     jest.resetAllMocks();
+  });
+
+  it("should return a custom auth token", async () => {
+    mock.onPost(`https://${apiDomain}/api/v1/auth/custom-token`, { verificationCode: "test" }).reply(200, "abc123");
+    await testUser.verifyAuthToken("test");
+    expect(mock.history.post.length).toBe(1);
   });
 
   it("should return an array of assets owned by specific email address", async () => {
@@ -38,7 +44,7 @@ describe("User Class", () => {
   });
 
   it("should update user.worlds", async () => {
-    mock.onGet(`https://${apiDomain}/api/user/worlds`).reply(200, worlds);
+    mock.onGet(`https://${apiDomain}/api/v1/user/worlds`).reply(200, worlds);
     await testUser.fetchWorldsByKey();
     expect(mock.history.get.length).toBe(1);
     expect(Object.keys(testUser.worlds).length).toBe(Object.keys(worlds).length);
