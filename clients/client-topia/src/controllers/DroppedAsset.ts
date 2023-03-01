@@ -69,7 +69,15 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     }
   }
 
-  // delete dropped asset
+  /**
+   * @summary
+   * Delete dropped asset.
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.deleteDroppedAsset();
+   * ```
+   */
   async deleteDroppedAsset(): Promise<void | ResponseType> {
     try {
       await this.topiaPublicApi().delete(`/world/${this.urlSlug}/assets/${this.id}`, this.requestOptions);
@@ -88,7 +96,6 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * const { dataObject } = droppedAsset;
    * ```
    */
-  // get dropped asset
   async fetchDroppedAssetDataObject(): Promise<void | ResponseType> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().get(
@@ -103,7 +110,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * @summary
-   * Setss the data object for a dropped asset.
+   * Sets the data object for a dropped asset.
    *
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
@@ -115,7 +122,6 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * const { dataObject } = droppedAsset;
    * ```
    */
-  // get dropped asset
   async setDroppedAssetDataObject(
     dataObject: object,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
