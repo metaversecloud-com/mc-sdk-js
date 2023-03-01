@@ -23,26 +23,30 @@ import jwt from "jsonwebtoken";
  */
 export class Topia implements TopiaInterface {
   axios: AxiosInstance;
-  apiDomain: string;
+  apiDomain?: string;
   apiKey?: string;
+  apiProtocol?: string;
   interactiveKey?: string;
   interactiveSecret?: jwt.Secret;
 
   constructor({
-    apiKey,
     apiDomain,
+    apiKey,
+    apiProtocol,
     interactiveKey,
     interactiveSecret,
   }: {
-    apiKey?: string;
     apiDomain?: string;
+    apiKey?: string;
+    apiProtocol?: string;
     interactiveKey?: string;
     interactiveSecret?: jwt.Secret;
   }) {
     getBrowserWarning();
 
-    this.apiKey = apiKey;
     this.apiDomain = apiDomain || "api.topia.io";
+    this.apiKey = apiKey;
+    this.apiProtocol = apiProtocol || "https";
     this.interactiveSecret = interactiveSecret;
 
     const headers: {
@@ -59,7 +63,7 @@ export class Topia implements TopiaInterface {
     if (interactiveKey) headers.PublicKey = interactiveKey;
 
     this.axios = axios.create({
-      baseURL: `https://${this.apiDomain}/api/v1`,
+      baseURL: `${apiProtocol}://${this.apiDomain}/api/v1`,
       headers,
     });
   }
