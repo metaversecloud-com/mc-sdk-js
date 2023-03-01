@@ -63,7 +63,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         `/world/${this.urlSlug}/assets/${this.id}`,
         this.requestOptions,
       );
-      Object.assign(this, response.data);
+      const droppedAssetDetails = response.data;
+      droppedAssetDetails.urlSlug = this.urlSlug;
+      Object.assign(this, droppedAssetDetails);
     } catch (error) {
       throw this.errorHandler({ error });
     }
