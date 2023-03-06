@@ -4,7 +4,7 @@ import { Visitor as VisitorClass, Topia } from "controllers";
 import { VisitorFactory } from "factories";
 
 const apiDomain = "api.topia.io";
-const id = visitor.playerId;
+const id = visitor.visitorId;
 const urlSlug = "exampleWorld";
 
 describe("Visitor Class", () => {
@@ -14,6 +14,7 @@ describe("Visitor Class", () => {
     topia = new Topia({
       apiDomain,
       apiKey: "key",
+      apiProtocol: "https",
     });
     mock = new MockAdapter(topia.axios);
     Visitor = new VisitorFactory(topia);

@@ -16,6 +16,7 @@ describe("DroppedAsset Class", () => {
     topia = new Topia({
       apiDomain,
       apiKey: "key",
+      apiProtocol: "https",
     });
     mock = new MockAdapter(topia.axios);
     DroppedAsset = new DroppedAssetFactory(topia);
