@@ -1,7 +1,6 @@
 import { AxiosResponse } from "axios";
 
 // controllers
-import { DroppedAsset } from "controllers/DroppedAsset";
 import { SDKController } from "controllers/SDKController";
 import { Topia } from "controllers/Topia";
 import { Visitor } from "controllers/Visitor";
@@ -50,7 +49,7 @@ export class WorldActivity extends SDKController {
       // create temp map and then update private property only once
       const tempVisitorsMap: { [key: string]: Visitor } = {};
       for (const id in response.data) {
-        tempVisitorsMap[id] = new Visitor(this.topia, response.data[id].playerId, this.urlSlug, {
+        tempVisitorsMap[id] = new Visitor(this.topia, response.data[id].visitorId, this.urlSlug, {
           attributes: response.data[id],
         });
       }

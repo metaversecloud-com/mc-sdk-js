@@ -54,8 +54,10 @@ export class Visitor extends User implements VisitorInterface {
         `/world/${this.urlSlug}/visitors/${this.id}`,
         this.requestOptions,
       );
-      if (response.data?.playerId === this.id) {
+      if (response.data?.visitorId === this.id) {
         Object.assign(this, response.data);
+      } else if (response.data[this.id]) {
+        Object.assign(this, response.data[this.id]);
       } else {
         throw "This visitor is not active";
       }

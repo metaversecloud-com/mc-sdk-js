@@ -12,6 +12,7 @@ describe("Asset Class", () => {
     topia = new Topia({
       apiDomain,
       apiKey: "exampleKey",
+      apiProtocol: "https",
       interactiveKey: "key",
       interactiveSecret: "secret",
     });

@@ -13,6 +13,7 @@ describe("Scene Class", () => {
     topia = new Topia({
       apiDomain,
       apiKey: "exampleKey",
+      apiProtocol: "https",
       interactiveKey: "key",
       interactiveSecret: "secret",
     });

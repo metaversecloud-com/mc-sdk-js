@@ -12,6 +12,7 @@ describe("World Class", () => {
     topia = new Topia({
       apiDomain: "api.topia.io",
       apiKey: "key",
+      apiProtocol: "https",
     });
     mock = new MockAdapter(topia.axios);
     World = new WorldFactory(topia);

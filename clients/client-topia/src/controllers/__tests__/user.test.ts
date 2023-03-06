@@ -3,7 +3,7 @@ import { droppedAssets, scenes, worlds } from "__mocks__";
 import { User as UserClass, Topia } from "controllers";
 import { UserFactory } from "factories";
 
-const apiDomain = "api.topia.io";
+const apiDomain = "api-stage.topia.io";
 
 describe("User Class", () => {
   let mock: MockAdapter, testUser: UserClass, topia: Topia, User: UserFactory;
@@ -12,6 +12,7 @@ describe("User Class", () => {
     topia = new Topia({
       apiDomain,
       apiKey: "key",
+      apiProtocol: "https",
     });
     mock = new MockAdapter(topia.axios);
     User = new UserFactory(topia);

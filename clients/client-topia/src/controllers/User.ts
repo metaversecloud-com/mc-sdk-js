@@ -19,7 +19,7 @@ import { ResponseType } from "types";
  *
  * @usage
  * ```ts
- * await new User(topia, { interactiveNonce: "exampleNonce", interactivePublicKey: "examplePublicKey", playerId: 1 });
+ * await new User(topia, { interactiveNonce: "exampleNonce", interactivePublicKey: "examplePublicKey", visitorId: 1 });
  * ```
  */
 export class User extends SDKController {

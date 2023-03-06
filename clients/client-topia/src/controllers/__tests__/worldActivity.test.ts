@@ -17,6 +17,7 @@ describe("WorldActivity Class", () => {
     topia = new Topia({
       apiDomain: "api.topia.io",
       apiKey: "key",
+      apiProtocol: "https",
     });
     mock = new MockAdapter(topia.axios);
     WorldActivity = new WorldActivityFactory(topia);
@@ -52,8 +53,8 @@ describe("WorldActivity Class", () => {
   it("should move a list of visitors to uniquely specified coordinates", async () => {
     mock.onPut(`${BASE_URL}/visitors/1/move`).reply(200);
     mock.onPut(`${BASE_URL}/visitors/2/move`).reply(200);
-    const v1 = new Visitor(topia, visitors["1"].playerId, urlSlug, { attributes: visitors["1"] as VisitorType });
-    const v2 = new Visitor(topia, visitors["2"].playerId, urlSlug, { attributes: visitors["2"] as VisitorType });
+    const v1 = new Visitor(topia, visitors["1"].visitorId, urlSlug, { attributes: visitors["1"] as VisitorType });
+    const v2 = new Visitor(topia, visitors["2"].visitorId, urlSlug, { attributes: visitors["2"] as VisitorType });
     const testVisitors = [
       { visitorObj: v1, shouldTeleportVisitor: true, x: 0, y: 0 },
       { visitorObj: v2, shouldTeleportVisitor: false, x: 100, y: 100 },

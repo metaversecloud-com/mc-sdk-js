@@ -21,7 +21,7 @@ import { AxiosError } from "axios";
  *   assetId: "exampleAsset",
  *   interactiveNonce: "exampleNonce"
  *   interactivePublicKey: "examplePublicKey",
- *   playerId: 1,
+ *   visitorId: 1,
  *   url: "https://topia.io",
  * }
  * const topia = await new Topia({

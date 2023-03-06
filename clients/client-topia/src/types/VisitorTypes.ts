@@ -1,6 +1,7 @@
 import Visitor from "../controllers/Visitor";
 
 export type VisitorType = {
+  visitorId: number;
   color: string;
   displayName: string;
   gestureType: number;
@@ -17,7 +18,6 @@ export type VisitorType = {
   muted: boolean;
   performer: boolean;
   performerNear: boolean;
-  playerId: number;
   shareScreen: boolean;
   sitting: boolean;
   username: string;

@@ -14,6 +14,10 @@ export default {
       exports: "auto",
       format: "esm",
     },
+    {
+      file: "dist/index.cjs",
+      format: "cjs",
+    },
   ],
   plugins: [
     commonjs({

@@ -1,5 +1,5 @@
 export const visitor = {
-  playerId: 1,
+  visitorId: 1,
   color: "0x7AD3BA",
   moveTo: {
     x: -1458,
@@ -28,7 +28,7 @@ export const visitor = {
 
 export const visitors = {
   "1": {
-    playerId: 1,
+    visitorId: 1,
     color: "0x7AD3BA",
     moveTo: {
       x: -1458,
@@ -55,7 +55,7 @@ export const visitors = {
     isRecordingBot: false,
   },
   "2": {
-    playerId: 2,
+    visitorId: 2,
     color: "0xA0D2A7",
     moveTo: {
       x: -1504,
