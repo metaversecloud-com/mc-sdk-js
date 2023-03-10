@@ -64,7 +64,7 @@ export interface DroppedAssetInterface extends AssetInterface {
 }
 
 export interface DroppedAssetOptionalInterface {
-  attributes?: DroppedAssetInterface | { text: string };
+  attributes?: DroppedAssetInterface | { text: string; urlSlug?: string };
   credentials?: InteractiveCredentials | object;
 }
 

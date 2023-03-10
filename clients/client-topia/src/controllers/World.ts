@@ -132,7 +132,7 @@ export class World extends SDKController implements WorldInterface {
       for (const index in response.data) {
         // tempDroppedAssetsMap[id] = createDroppedAsset(this.apiKey, response.data[id], this.urlSlug);
         tempDroppedAssetsMap[index] = new DroppedAsset(this.topia, response.data[index].id, this.urlSlug, {
-          attributes: { ...response.data[index], urlSlug: this.urlSlug },
+          attributes: response.data[index],
           credentials: this.credentials,
         });
       }
@@ -173,7 +173,7 @@ export class World extends SDKController implements WorldInterface {
       for (const asset of response.data.assets) {
         droppedAssets.push(
           new DroppedAsset(this.topia, asset.id, this.urlSlug, {
-            attributes: { ...asset, urlSlug: this.urlSlug },
+            attributes: asset,
             credentials: this.credentials,
           }),
         );
