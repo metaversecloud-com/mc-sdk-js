@@ -38,12 +38,15 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     topia: Topia,
     id: string,
     urlSlug: string,
-    options: DroppedAssetOptionalInterface = { attributes: { text: "" }, credentials: {} },
+    options: DroppedAssetOptionalInterface = { attributes: { text: "", urlSlug: "" }, credentials: {} },
   ) {
     super(topia, id, options);
     this.id = id;
     this.text = options.attributes?.text;
     this.urlSlug = urlSlug;
+    if (options.attributes?.urlSlug) {
+      delete options.attributes.urlSlug;
+    }
     Object.assign(this, options.attributes);
   }
 
