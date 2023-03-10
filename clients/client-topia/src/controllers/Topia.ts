@@ -63,7 +63,7 @@ export class Topia implements TopiaInterface {
     if (interactiveKey) headers.PublicKey = interactiveKey;
 
     this.axios = axios.create({
-      baseURL: `${apiProtocol}://${this.apiDomain}/api/v1`,
+      baseURL: `${this.apiProtocol}://${this.apiDomain}/api/v1`,
       headers,
     });
   }
