@@ -51,6 +51,7 @@ export class WorldActivity extends SDKController {
       for (const id in response.data) {
         tempVisitorsMap[id] = new Visitor(this.topia, response.data[id].visitorId, this.urlSlug, {
           attributes: response.data[id],
+          credentials: this.credentials,
         });
       }
       this.#visitorsMap = tempVisitorsMap;
