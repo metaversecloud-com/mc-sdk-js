@@ -58,6 +58,7 @@ export class User extends SDKController {
         const assetDetails = response.data[i];
         tempAssetsMap[assetDetails.id] = new Asset(this.topia, assetDetails.id, {
           attributes: assetDetails,
+          credentials: this.credentials,
         });
       }
       this.#assetsMap = tempAssetsMap;
@@ -78,6 +79,7 @@ export class User extends SDKController {
         const sceneDetails = response.data[i];
         tempScenesMap[sceneDetails.id] = new Scene(this.topia, sceneDetails.urlSlug, {
           attributes: sceneDetails,
+          credentials: this.credentials,
         });
       }
       this.#scenesMap = tempScenesMap;
@@ -111,6 +113,7 @@ export class User extends SDKController {
         const worldDetails = response.data[i];
         tempWorldsMap[worldDetails.urlSlug] = new World(this.topia, worldDetails.urlSlug, {
           attributes: worldDetails,
+          credentials: this.credentials,
         });
       }
       this.#worldsMap = tempWorldsMap;
