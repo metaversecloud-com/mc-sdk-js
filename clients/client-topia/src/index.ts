@@ -11,16 +11,18 @@ export {
 
 Error.stackTraceLimit = 20;
 process.on("unhandledRejection", (reason: any) => {
-  if (reason.data) {
+  if (reason && reason.data) {
     const { errors } = reason.data;
     if (Array.isArray(errors)) {
       for (const error of errors) {
         console.error(error);
       }
     }
+  } else {
+    console.error("Unhandled rejection failed with no defined reason.");
   }
   console.error(reason?.stack || "no stack");
-  delete reason.stack;
+  if (reason && reason.stack) delete reason.stack;
   console.error(reason);
   console.error(`Please surround your use of the RTSDK with a try/catch block.`);
   process.exit(1);
