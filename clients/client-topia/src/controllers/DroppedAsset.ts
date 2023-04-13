@@ -343,6 +343,23 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * @summary
+   * Updates webhook zone options for a dropped asset.
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.updateWebhookZone(true);
+   * ```
+   */
+  updateWebhookZone(isWebhookZoneEnabled: boolean): Promise<void | ResponseType> {
+    try {
+      return this.#updateDroppedAsset({ isWebhookZoneEnabled }, "set-webhook-zone");
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
    * Moves a dropped asset to specified coordinates.
    *
    * @usage
@@ -364,7 +381,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *
    * @usage
    * ```ts
-   * await droppedAsset.updateMuteZone({
+   * await droppedAsset.updatePrivateZone({
    *   "isPrivateZone": false,
    *   "isPrivateZoneChatDisabled": true,
    *   "privateZoneUserCap": 10
@@ -470,9 +487,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     title: string;
     type: string;
     url: string;
-  }): Promise<void | ResponseType> {
+  }): Promise<void | AxiosResponse> {
     try {
-      await this.topiaPublicApi().post(
+      const response = await this.topiaPublicApi().post(
         `/world/${this.urlSlug}/webhooks`,
         {
           active: true,
@@ -488,6 +505,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         },
         this.requestOptions,
       );
+      return response.data.webhookId;
     } catch (error) {
       throw this.errorHandler({ error });
     }
