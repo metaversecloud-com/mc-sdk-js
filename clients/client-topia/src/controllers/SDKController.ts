@@ -38,7 +38,6 @@ export class SDKController implements SDKInterface {
   jwt?: string;
   requestOptions: object;
   topia: Topia;
-  stackTrace?: Error;
 
   constructor(topia: Topia, credentials: InteractiveCredentials = {}) {
     const { assetId, interactiveNonce, visitorId, apiKey } = credentials;
@@ -64,7 +63,6 @@ export class SDKController implements SDKInterface {
   }
 
   topiaPublicApi() {
-    this.stackTrace = new Error("Thrown here:");
     return this.topia.axios;
   }
 
@@ -77,26 +75,37 @@ export class SDKController implements SDKInterface {
   }) {
     let data = {},
       errorMessage = message,
-      status = 500,
-      url = "unknown",
       method = "unknown",
-      stack = "empty";
+      stack = "empty",
+      stackTrace = new Error("Thrown here:"),
+      status = 500,
+      url = "unknown";
 
     if (error instanceof AxiosError) {
       errorMessage = error?.message || message;
       if (error.response) {
         status = error.response.status;
         data = error.response.data;
+        if (error.response.data.errors) errorMessage = error.response.data.errors[0].message;
       }
       if (error?.config?.url) url = error.config.url;
       if (error?.config?.method) method = error.config.method;
-      if (this.stackTrace?.stack) stack = `${error.stack}\n${this.stackTrace.stack}`;
+      stack = `${error.stack}\n${stackTrace.stack}`;
     } else if (error instanceof Error) {
       errorMessage = error?.message || message;
-      if (this.stackTrace?.stack) stack = `${error.stack}\n${this.stackTrace.stack}`;
+      stack = `${error.stack}\n${stackTrace.stack}`;
     }
 
-    return { success: false, status, url, method, message: errorMessage, data, stack };
+    return {
+      data,
+      message: errorMessage,
+      method,
+      stack,
+      stackTrace,
+      status,
+      success: false,
+      url,
+    };
   }
 }
 

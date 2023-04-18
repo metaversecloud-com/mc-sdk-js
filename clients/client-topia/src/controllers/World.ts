@@ -130,7 +130,6 @@ export class World extends SDKController implements WorldInterface {
       // create temp map and then update private property only once
       const tempDroppedAssetsMap: { [key: string]: DroppedAsset } = {};
       for (const index in response.data) {
-        // tempDroppedAssetsMap[id] = createDroppedAsset(this.apiKey, response.data[id], this.urlSlug);
         tempDroppedAssetsMap[index] = new DroppedAsset(this.topia, response.data[index].id, this.urlSlug, {
           attributes: response.data[index],
           credentials: this.credentials,
