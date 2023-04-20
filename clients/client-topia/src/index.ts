@@ -8,6 +8,7 @@ export {
   WorldActivityFactory,
   WorldFactory,
 } from "factories";
+export * from "types";
 
 Error.stackTraceLimit = 20;
 process.on("unhandledRejection", (reason: any) => {
