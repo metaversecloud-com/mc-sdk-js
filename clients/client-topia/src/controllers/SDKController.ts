@@ -47,6 +47,7 @@ export class SDKController implements SDKInterface {
 
     let payload = {};
     const headers: any = {};
+
     if (visitorId && assetId && interactiveNonce) {
       payload = {
         interactiveNonce,
@@ -73,11 +74,11 @@ export class SDKController implements SDKInterface {
     error?: Error | AxiosError | unknown;
     message?: string;
   }) {
+    const stackTrace = new Error("Thrown here:");
     let data = {},
       errorMessage = message,
       method = "unknown",
       stack = "empty",
-      stackTrace = new Error("Thrown here:"),
       status = 500,
       url = "unknown";
 

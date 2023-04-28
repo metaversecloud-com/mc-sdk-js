@@ -26,7 +26,7 @@
     "rollup-plugin-typescript2": "^0.34.1",
     "ts-jest": "^29.0.3",
     "typedoc": "^0.23.23",
-    "typescript": "^4.9.3",
+    "typescript": "^5.0.4",
     "yalc": "^1.0.0-pre.53"
   },
   "files": [
@@ -56,5 +56,6 @@
     "local-publish": "yarn build && yalc publish --push --no-scripts"
   },
   "type": "module",
-  "version": "0.0.31"
+  "types": "dist/types/src/index.d.ts",
+  "version": "0.1.1"
 }

@@ -8,7 +8,21 @@ export {
   WorldActivityFactory,
   WorldFactory,
 } from "factories";
-export * from "types";
+export type {
+  AssetOptions,
+  DroppedAssetClickType,
+  DroppedAssetMediaType,
+  DroppedAssetOptions,
+  InteractiveCredentials,
+  ResponseType,
+  UserOptions,
+  VisitorOptions,
+  VisitorType,
+  VisitorsToMoveType,
+  VisitorsToMoveArrayType,
+  WorldOptions,
+} from "types";
+export * from "interfaces";
 
 Error.stackTraceLimit = 20;
 process.on("unhandledRejection", (reason: any) => {

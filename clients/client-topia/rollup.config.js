@@ -34,6 +34,12 @@ export default {
     nodeResolve({ preferBuiltins: true, extensions: [".svg", ".js", ".ts"] }),
     json(),
     resolve(),
-    typescript({ useTsconfigDeclarationDir: true, tsconfig: "tsconfig.json" }),
+    typescript({
+      clean: true,
+      declaration: true,
+      useTsconfigDeclarationDir: true,
+      tsconfig: "tsconfig.json",
+      verbosity: 1,
+    }),
   ],
 };
