@@ -241,6 +241,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     clickableLinkTitle,
     clickableDisplayTextDescription,
     clickableDisplayTextHeadline,
+    isForceLinkInIframe,
+    isOpenLinkInDrawer,
     portalName,
     position,
   }: UpdateClickTypeInterface): Promise<void | ResponseType> {
@@ -252,6 +254,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
           clickableLinkTitle,
           clickableDisplayTextDescription,
           clickableDisplayTextHeadline,
+          isForceLinkInIframe,
+          isOpenLinkInDrawer,
           portalName,
           position,
         },
