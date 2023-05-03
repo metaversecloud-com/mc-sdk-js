@@ -80,6 +80,8 @@ export interface UpdateClickTypeInterface {
   clickableLinkTitle: string;
   clickableDisplayTextDescription: string;
   clickableDisplayTextHeadline: string;
+  isForceLinkInIframe?: boolean;
+  isOpenLinkInDrawer?: boolean;
   portalName: string;
   position: { x: number; y: number };
 }
