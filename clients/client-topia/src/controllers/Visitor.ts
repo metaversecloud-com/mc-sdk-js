@@ -29,6 +29,7 @@ export class Visitor extends User implements VisitorInterface {
   readonly id: number;
   urlSlug: string;
   user?: User;
+  profile?: any;
 
   constructor(
     topia: Topia,
@@ -67,6 +68,7 @@ export class Visitor extends User implements VisitorInterface {
       } else {
         throw "This visitor is not active";
       }
+      if (this.profile?.profileId) this.profileId = this.profile.profileId;
     } catch (error) {
       throw this.errorHandler({ error });
     }
@@ -159,6 +161,92 @@ export class Visitor extends User implements VisitorInterface {
         },
         this.requestOptions,
       );
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Retrieves the data object for a visitor.
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.fetchVisitorDataObject();
+   * const { dataObject } = droppedAsset;
+   * ```
+   */
+  async fetchVisitorDataObject(): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/visitors/${this.id}/get-data-object`,
+        this.requestOptions,
+      );
+      this.dataObject = response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Sets the data object for a visitor.
+   *
+   * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.setVisitorDataObject({
+   *   "exampleKey": "exampleValue",
+   * });
+   * const { dataObject } = droppedAsset;
+   * ```
+   */
+  async setVisitorDataObject(
+    dataObject: object,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<void | ResponseType> {
+    try {
+      const { lock = {} } = options;
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/set-data-object`,
+        { dataObject, lock },
+        this.requestOptions,
+      );
+
+      this.dataObject = dataObject;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Updates the data object for a visitor.
+   *
+   * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.updateVisitorDataObject({
+   *   "exampleKey": "exampleValue",
+   * });
+   * const { dataObject } = droppedAsset;
+   * ```
+   */
+  async updateVisitorDataObject(
+    dataObject: object,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<void | ResponseType> {
+    try {
+      const { lock = {} } = options;
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/update-data-object`,
+        { dataObject, lock },
+        this.requestOptions,
+      );
+
+      this.dataObject = dataObject;
     } catch (error) {
       throw this.errorHandler({ error });
     }
