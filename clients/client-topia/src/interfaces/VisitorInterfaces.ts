@@ -35,3 +35,15 @@ export interface MoveVisitorInterface {
   x: number;
   y: number;
 }
+
+export interface FireToastInterface {
+  groupId?: string;
+  title: string;
+  text?: string;
+}
+
+export interface OpenIframeInterface {
+  link: string;
+  shouldOpenInDrawer?: boolean;
+  title?: string;
+}
