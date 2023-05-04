@@ -5,4 +5,5 @@ export type InteractiveCredentials = {
   visitorId?: number;
   urlSlug?: string;
   apiKey?: string;
+  profileId?: string | null;
 };

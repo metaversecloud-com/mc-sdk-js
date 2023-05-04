@@ -31,7 +31,7 @@ export class User extends SDKController {
   profile?: object;
 
   constructor(topia: Topia, options: UserOptionalInterface = { profileId: null, credentials: {} }) {
-    super(topia, options.credentials);
+    super(topia, { profileId: options.profileId, ...options.credentials });
     this.#assetsMap = {};
     this.#scenesMap = {};
     this.#worldsMap = {};
