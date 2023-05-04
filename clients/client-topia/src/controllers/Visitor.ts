@@ -23,6 +23,7 @@ export class Visitor extends User implements VisitorInterface {
   readonly id: number;
   urlSlug: string;
   user?: User;
+  profile?: any;
 
   constructor(
     topia: Topia,
@@ -61,6 +62,7 @@ export class Visitor extends User implements VisitorInterface {
       } else {
         throw "This visitor is not active";
       }
+      if (this.profile?.profileId) this.profileId = this.profile.profileId;
     } catch (error) {
       throw this.errorHandler({ error });
     }
@@ -113,7 +115,7 @@ export class Visitor extends User implements VisitorInterface {
   async fetchVisitorDataObject(): Promise<void | ResponseType> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/visitor/${this.urlSlug}/visitors/${this.id}/get-data-object`,
+        `/world/${this.urlSlug}/visitors/${this.id}/get-data-object`,
         this.requestOptions,
       );
       this.dataObject = response.data;
@@ -143,7 +145,7 @@ export class Visitor extends User implements VisitorInterface {
     try {
       const { lock = {} } = options;
       await this.topiaPublicApi().put(
-        `/visitor/${this.urlSlug}/visitors/${this.id}/set-data-object`,
+        `/world/${this.urlSlug}/visitors/${this.id}/set-data-object`,
         { dataObject, lock },
         this.requestOptions,
       );
@@ -175,7 +177,7 @@ export class Visitor extends User implements VisitorInterface {
     try {
       const { lock = {} } = options;
       await this.topiaPublicApi().put(
-        `/visitor/${this.urlSlug}/visitors/${this.id}/update-data-object`,
+        `/world/${this.urlSlug}/visitors/${this.id}/update-data-object`,
         { dataObject, lock },
         this.requestOptions,
       );

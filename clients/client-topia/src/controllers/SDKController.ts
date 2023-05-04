@@ -48,18 +48,24 @@ export class SDKController implements SDKInterface {
     let payload = {};
     const headers: any = {};
 
-    payload = {
-      interactiveNonce,
-      visitorId,
-      assetId,
-      date: new Date(),
-    };
-    this.jwt = jwt.sign(payload, topia.interactiveSecret as string);
-    headers.InteractiveJWT = this.jwt;
-    if (apiKey) {
-      headers.Authorization = apiKey;
+    try {
+      if (topia.interactiveSecret) {
+        payload = {
+          interactiveNonce,
+          visitorId,
+          assetId,
+          date: new Date(),
+        };
+        this.jwt = jwt.sign(payload, topia.interactiveSecret as string);
+        headers.InteractiveJWT = this.jwt;
+      }
+      if (apiKey) {
+        headers.Authorization = apiKey;
+      }
+      this.requestOptions = { headers };
+    } catch (error) {
+      this.errorHandler({ error });
     }
-    this.requestOptions = { headers };
   }
 
   topiaPublicApi() {
