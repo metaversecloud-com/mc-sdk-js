@@ -24,14 +24,14 @@ import { removeUndefined } from "utils";
  * ```
  */
 export class World extends SDKController implements WorldInterface {
-  #droppedAssetsMap: { [key: string]: DroppedAsset };
   urlSlug: string;
+  #droppedAssetsMap: { [key: string]: DroppedAsset };
 
   constructor(topia: Topia, urlSlug: string, options: WorldOptionalInterface = { attributes: {}, credentials: {} }) {
     super(topia, options.credentials);
     Object.assign(this, options.attributes);
-    this.#droppedAssetsMap = {};
     this.urlSlug = urlSlug;
+    this.#droppedAssetsMap = {};
   }
 
   get droppedAssets() {

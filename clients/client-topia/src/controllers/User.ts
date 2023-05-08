@@ -23,22 +23,23 @@ import { ResponseType } from "types";
  * ```
  */
 export class User extends SDKController {
+  profileId?: string | null;
+  dataObject?: object | null | undefined;
+  profile?: object;
+
   #assetsMap: { [key: string]: Asset };
   #scenesMap: { [key: string]: Scene };
   #worldsMap: { [key: string]: World };
-  profileId?: string | null;
-  dataObject?: object;
-  profile?: object;
 
   constructor(topia: Topia, options: UserOptionalInterface = { profileId: null, credentials: {} }) {
-    super(topia, { profileId: options.profileId, ...options.credentials });
-    this.#assetsMap = {};
-    this.#scenesMap = {};
-    this.#worldsMap = {};
-
+    super(topia, options.credentials);
     this.profileId = options.profileId;
     this.dataObject = {};
     this.profile = {};
+
+    this.#assetsMap = {};
+    this.#scenesMap = {};
+    this.#worldsMap = {};
   }
 
   get assets() {
@@ -131,63 +132,42 @@ export class User extends SDKController {
 
   /**
    * @summary
-   * Retrieves the data object for a visitor.
+   * Retrieves the data object for a user.
    *
    * @usage
    * ```ts
-   * await droppedAsset.fetchUserDataObject();
+   * await droppedAsset.fetchDataObject();
    * const { dataObject } = droppedAsset;
    * ```
    */
-  async fetchUserDataObject(): Promise<void | ResponseType> {
-    try {
-      if (!this.profileId) throw "This method requires the use of a profileId";
-      const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/user/dataObjects/${this.profileId}/get-data-object`,
-        this.requestOptions,
-      );
-      this.dataObject = response.data;
-    } catch (error) {
-      throw this.errorHandler({ error });
-    }
+  async fetchDataObject(): Promise<void | ResponseType> {
+    return this.#fetchUserDataObject();
   }
 
   /**
    * @summary
-   * Sets the data object for a visitor.
+   * Sets the data object for a user.
    *
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
    * @usage
    * ```ts
-   * await droppedAsset.setUserDataObject({
+   * await droppedAsset.setDataObject({
    *   "exampleKey": "exampleValue",
    * });
    * const { dataObject } = droppedAsset;
    * ```
    */
-  async setUserDataObject(
-    dataObject: object,
+  async setDataObject(
+    dataObject: object | null | undefined,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
   ): Promise<void | ResponseType> {
-    try {
-      if (!this.profileId) throw "This method requires the use of a profileId";
-      const { lock = {} } = options;
-      await this.topiaPublicApi().put(
-        `/user/dataObjects/${this.profileId}/set-data-object`,
-        { dataObject, lock },
-        this.requestOptions,
-      );
-
-      this.dataObject = dataObject;
-    } catch (error) {
-      throw this.errorHandler({ error });
-    }
+    return this.#setUserDataObject(dataObject, options);
   }
 
   /**
    * @summary
-   * Updates the data object for a visitor.
+   * Updates the data object for a user.
    *
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
@@ -199,24 +179,64 @@ export class User extends SDKController {
    * const { dataObject } = droppedAsset;
    * ```
    */
-  async updateUserDataObject(
+  async updateDataObject(
     dataObject: object,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
   ): Promise<void | ResponseType> {
+    return this.#updateUserDataObject(dataObject, options);
+  }
+
+  #fetchUserDataObject = async (): Promise<void | ResponseType> => {
+    try {
+      if (!this.profileId) throw "This method requires the use of a profileId";
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/user/dataObjects/${this.profileId}/get-data-object`,
+        this.requestOptions,
+      );
+      this.dataObject = response.data;
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  };
+
+  #setUserDataObject = async (
+    dataObject: object | null | undefined,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<void | ResponseType> => {
     try {
       if (!this.profileId) throw "This method requires the use of a profileId";
       const { lock = {} } = options;
-      await this.topiaPublicApi().put(
+      const response = await this.topiaPublicApi().put(
+        `/user/dataObjects/${this.profileId}/set-data-object`,
+        { dataObject, lock },
+        this.requestOptions,
+      );
+      this.dataObject = response.data;
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  };
+
+  #updateUserDataObject = async (
+    dataObject: object,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<void | ResponseType> => {
+    try {
+      if (!this.profileId) throw "This method requires the use of a profileId";
+      const { lock = {} } = options;
+      const response = await this.topiaPublicApi().put(
         `/user/dataObjects/${this.profileId}/update-data-object`,
         { dataObject, lock },
         this.requestOptions,
       );
-
-      this.dataObject = dataObject;
+      this.dataObject = response.data;
+      return response.data;
     } catch (error) {
       throw this.errorHandler({ error });
     }
-  }
+  };
 }
 
 export default User;

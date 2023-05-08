@@ -94,20 +94,12 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *
    * @usage
    * ```ts
-   * await droppedAsset.fetchDroppedAssetDataObject();
+   * await droppedAsset.fetchDataObject();
    * const { dataObject } = droppedAsset;
    * ```
    */
-  async fetchDroppedAssetDataObject(): Promise<void | ResponseType> {
-    try {
-      const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/assets/${this.id}/data-object`,
-        this.requestOptions,
-      );
-      this.dataObject = response.data;
-    } catch (error) {
-      throw this.errorHandler({ error });
-    }
+  async fetchDataObject(): Promise<void | ResponseType> {
+    return this.#fetchDroppedAssetDataObject();
   }
 
   /**
@@ -118,28 +110,17 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *
    * @usage
    * ```ts
-   * await droppedAsset.setDroppedAssetDataObject({
+   * await droppedAsset.setDataObject({
    *   "exampleKey": "exampleValue",
    * });
    * const { dataObject } = droppedAsset;
    * ```
    */
-  async setDroppedAssetDataObject(
+  async setDataObject(
     dataObject: object,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
   ): Promise<void | ResponseType> {
-    try {
-      const { lock = {} } = options;
-      await this.topiaPublicApi().put(
-        `/world/${this.urlSlug}/assets/${this.id}/set-data-object`,
-        { dataObject, lock },
-        this.requestOptions,
-      );
-
-      this.dataObject = dataObject;
-    } catch (error) {
-      throw this.errorHandler({ error });
-    }
+    return this.#setDroppedAssetDataObject(dataObject, options);
   }
 
   /**
@@ -150,7 +131,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *
    * @usage
    * ```ts
-   * await droppedAsset.updateDroppedAssetDataObject({
+   * await droppedAsset.updateDataObject({
    *   "exampleKey": "exampleValue",
    * });
    * const { dataObject } = droppedAsset;
@@ -161,35 +142,10 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     dataObject: object,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
   ): Promise<void | ResponseType> {
-    try {
-      const { lock = {} } = options;
-      await this.topiaPublicApi().put(
-        `/world/${this.urlSlug}/assets/${this.id}/update-data-object`,
-        { dataObject, lock },
-        this.requestOptions,
-      );
-
-      this.dataObject = dataObject;
-    } catch (error) {
-      throw this.errorHandler({ error });
-    }
+    return this.#updateDroppedAssetDataObject(dataObject, options);
   }
 
   // update dropped assets
-  #updateDroppedAsset = async (payload: object, updateType: string): Promise<void | ResponseType> => {
-    try {
-      await this.topiaPublicApi().put(
-        `/world/${this.urlSlug}/assets/${this.id}/${updateType}`,
-        {
-          ...payload,
-        },
-        this.requestOptions,
-      );
-    } catch (error) {
-      throw this.errorHandler({ error });
-    }
-  };
-
   /**
    * @summary
    * Updates broadcast options for a dropped asset.
@@ -549,6 +505,72 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       throw this.errorHandler({ error });
     }
   }
+
+  // private methods
+  #fetchDroppedAssetDataObject = async (): Promise<void | ResponseType> => {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/assets/${this.id}/data-object`,
+        this.requestOptions,
+      );
+      this.dataObject = response.data;
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  };
+
+  #setDroppedAssetDataObject = async (
+    dataObject: object,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<void | ResponseType> => {
+    try {
+      const { lock = {} } = options;
+      const response = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/assets/${this.id}/set-data-object`,
+        { dataObject, lock },
+        this.requestOptions,
+      );
+
+      this.dataObject = dataObject;
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  };
+
+  #updateDroppedAssetDataObject = async (
+    dataObject: object,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<void | ResponseType> => {
+    try {
+      const { lock = {} } = options;
+      const response = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/assets/${this.id}/update-data-object`,
+        { dataObject, lock },
+        this.requestOptions,
+      );
+
+      this.dataObject = response.data;
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  };
+
+  #updateDroppedAsset = async (payload: object, updateType: string): Promise<void | ResponseType> => {
+    try {
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/assets/${this.id}/${updateType}`,
+        {
+          ...payload,
+        },
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  };
 }
 
 export default DroppedAsset;

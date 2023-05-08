@@ -176,64 +176,8 @@ export class Visitor extends User implements VisitorInterface {
    * const { dataObject } = droppedAsset;
    * ```
    */
-  async fetchVisitorDataObject(): Promise<void | ResponseType> {
-    return this.FetchVisitorDataObject();
-  }
-
-  /**
-   * @summary
-   * Sets the data object for a visitor.
-   *
-   * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
-   *
-   * @usage
-   * ```ts
-   * await droppedAsset.setVisitorDataObject({
-   *   "exampleKey": "exampleValue",
-   * });
-   * const { dataObject } = droppedAsset;
-   * ```
-   */
-  async setVisitorDataObject(
-    dataObject: object | null | undefined,
-    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
-  ): Promise<void | ResponseType> {
-    return this.SetVisitorDataObject(dataObject, options);
-  }
-
-  /**
-   * @summary
-   * Updates the data object for a visitor.
-   *
-   * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
-   *
-   * @usage
-   * ```ts
-   * await droppedAsset.updateVisitorDataObject({
-   *   "exampleKey": "exampleValue",
-   * });
-   * const { dataObject } = droppedAsset;
-   * ```
-   */
-  async updateVisitorDataObject(
-    dataObject: object | null | undefined,
-    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
-  ): Promise<void | ResponseType> {
-    return this.UpdateVisitorDataObject(dataObject, options);
-  }
-
-  /**
-   * @summary
-   * Retrieves the data object for a visitor.
-   *
-   * @usage
-   * ```ts
-   * await droppedAsset.fetchVisitorDataObject();
-   * const { dataObject } = droppedAsset;
-   * ```
-   */
   async fetchDataObject(): Promise<void | ResponseType> {
-    return this.FetchVisitorDataObject();
+    return this.#fetchVisitorDataObject();
   }
 
   /**
@@ -254,7 +198,7 @@ export class Visitor extends User implements VisitorInterface {
     dataObject: object | null | undefined,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
   ): Promise<void | ResponseType> {
-    return this.SetVisitorDataObject(dataObject, options);
+    return this.#setVisitorDataObject(dataObject, options);
   }
 
   /**
@@ -272,13 +216,13 @@ export class Visitor extends User implements VisitorInterface {
    * ```
    */
   async updateDataObject(
-    dataObject: object | null | undefined,
+    dataObject: object,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
   ): Promise<void | ResponseType> {
-    return this.UpdateVisitorDataObject(dataObject, options);
+    return this.#updateVisitorDataObject(dataObject, options);
   }
 
-  private async FetchVisitorDataObject(): Promise<void | ResponseType> {
+  #fetchVisitorDataObject = async (): Promise<void | ResponseType> => {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/visitors/${this.id}/get-data-object`,
@@ -289,12 +233,12 @@ export class Visitor extends User implements VisitorInterface {
     } catch (error) {
       throw this.errorHandler({ error });
     }
-  }
+  };
 
-  private async SetVisitorDataObject(
+  #setVisitorDataObject = async (
     dataObject: object | null | undefined,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
-  ): Promise<void | ResponseType> {
+  ): Promise<void | ResponseType> => {
     try {
       const { lock = {} } = options;
       const response = await this.topiaPublicApi().put(
@@ -302,17 +246,17 @@ export class Visitor extends User implements VisitorInterface {
         { dataObject: dataObject || this.dataObject, lock },
         this.requestOptions,
       );
-      if (dataObject) this.dataObject = dataObject;
+      this.dataObject = response.data;
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error });
     }
-  }
+  };
 
-  private async UpdateVisitorDataObject(
-    dataObject: object | null | undefined,
+  #updateVisitorDataObject = async (
+    dataObject: object,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
-  ): Promise<void | ResponseType> {
+  ): Promise<void | ResponseType> => {
     try {
       const { lock = {} } = options;
       const response = await this.topiaPublicApi().put(
@@ -320,12 +264,12 @@ export class Visitor extends User implements VisitorInterface {
         { dataObject: dataObject || this.dataObject, lock },
         this.requestOptions,
       );
-      if (dataObject) this.dataObject = dataObject;
+      this.dataObject = response.data;
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error });
     }
-  }
+  };
 }
 
 export default Visitor;
