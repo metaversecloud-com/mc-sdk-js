@@ -3,6 +3,7 @@ import { SDKInterface } from "interfaces/SDKInterfaces";
 
 export interface VisitorInterface extends SDKInterface {
   color?: string;
+  dataObject?: object | null | undefined;
   displayName?: string;
   gestureType?: number;
   hidden?: boolean;
