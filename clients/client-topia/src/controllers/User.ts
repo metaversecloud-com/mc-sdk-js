@@ -209,10 +209,10 @@ export class User extends SDKController {
       const { lock = {} } = options;
       const response = await this.topiaPublicApi().put(
         `/user/dataObjects/${this.profileId}/set-data-object`,
-        { dataObject, lock },
+        { dataObject: dataObject || this.dataObject, lock },
         this.requestOptions,
       );
-      this.dataObject = response.data;
+      this.dataObject = dataObject || this.dataObject;
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error });
@@ -228,10 +228,10 @@ export class User extends SDKController {
       const { lock = {} } = options;
       const response = await this.topiaPublicApi().put(
         `/user/dataObjects/${this.profileId}/update-data-object`,
-        { dataObject, lock },
+        { dataObject: dataObject || this.dataObject, lock },
         this.requestOptions,
       );
-      this.dataObject = response.data;
+      this.dataObject = dataObject || this.dataObject;
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error });
