@@ -5,7 +5,13 @@ import { Topia } from "controllers/Topia";
 import { User } from "controllers/User";
 
 // interfaces
-import { MoveVisitorInterface, VisitorInterface, VisitorOptionalInterface } from "interfaces";
+import {
+  FireToastInterface,
+  MoveVisitorInterface,
+  OpenIframeInterface,
+  VisitorInterface,
+  VisitorOptionalInterface,
+} from "interfaces";
 
 // types
 import { ResponseType } from "types";
@@ -94,6 +100,64 @@ export class Visitor extends User implements VisitorInterface {
             y,
           },
           teleport: shouldTeleportVisitor,
+        },
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Display a message via a toast to a visitor currently in a world.
+   *
+   * @usage
+   * ```ts
+   * await visitor.fireToast({
+   *   groupId: "custom-message",
+   *   title: "Hello World",
+   *   text: "Thank you for participating!",
+   * });
+   * ```
+   */
+  async fireToast({ groupId, title, text }: FireToastInterface): Promise<void | ResponseType> {
+    try {
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/fire-toast`,
+        {
+          groupId,
+          title,
+          text,
+        },
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Open an iframe in a drawer or modal for a visitor currently in a world.
+   *
+   * @usage
+   * ```ts
+   * await visitor.openIframe({
+   *   link: "https://topia.io",
+   *   shouldOpenInDrawer: true,
+   *   title: "Hello World",
+   * });
+   * ```
+   */
+  async openIframe({ link, shouldOpenInDrawer, title }: OpenIframeInterface): Promise<void | ResponseType> {
+    try {
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/open-iframe`,
+        {
+          link,
+          shouldOpenInDrawer,
+          title,
         },
         this.requestOptions,
       );
