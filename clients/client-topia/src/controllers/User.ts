@@ -25,7 +25,7 @@ import { ResponseType } from "types";
 export class User extends SDKController {
   profileId?: string | null;
   dataObject?: object | null | undefined;
-  profile?: object;
+  profile?: Record<string, any>;
 
   #assetsMap: { [key: string]: Asset };
   #scenesMap: { [key: string]: Scene };

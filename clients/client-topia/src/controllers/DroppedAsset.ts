@@ -238,7 +238,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * await droppedAsset.updateCustomTextAsset(style, "hello world");
    * ```
    */
-  updateCustomTextAsset(style: object, text: string | null | undefined): Promise<void | ResponseType> {
+  updateCustomTextAsset(style: object | undefined | null, text: string | null | undefined): Promise<void | ResponseType> {
     try {
       return this.#updateDroppedAsset({ style, text }, "set-custom-text");
     } catch (error) {

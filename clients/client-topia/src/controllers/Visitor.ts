@@ -29,7 +29,6 @@ export class Visitor extends User implements VisitorInterface {
   readonly id: number;
   urlSlug: string;
   user?: User;
-  profile?: any;
 
   constructor(
     topia: Topia,
