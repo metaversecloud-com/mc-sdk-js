@@ -551,7 +551,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         this.requestOptions,
       );
 
-      this.dataObject = dataObject || this.dataObject;
+      this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error });
