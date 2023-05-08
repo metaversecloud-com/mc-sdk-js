@@ -5,7 +5,13 @@ import { Topia } from "controllers/Topia";
 import { User } from "controllers/User";
 
 // interfaces
-import { MoveVisitorInterface, VisitorInterface, VisitorOptionalInterface } from "interfaces";
+import {
+  FireToastInterface,
+  MoveVisitorInterface,
+  OpenIframeInterface,
+  VisitorInterface,
+  VisitorOptionalInterface,
+} from "interfaces";
 
 // types
 import { ResponseType } from "types";
@@ -104,6 +110,64 @@ export class Visitor extends User implements VisitorInterface {
 
   /**
    * @summary
+   * Display a message via a toast to a visitor currently in a world.
+   *
+   * @usage
+   * ```ts
+   * await visitor.fireToast({
+   *   groupId: "custom-message",
+   *   title: "Hello World",
+   *   text: "Thank you for participating!",
+   * });
+   * ```
+   */
+  async fireToast({ groupId, title, text }: FireToastInterface): Promise<void | ResponseType> {
+    try {
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/fire-toast`,
+        {
+          groupId,
+          title,
+          text,
+        },
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Open an iframe in a drawer or modal for a visitor currently in a world.
+   *
+   * @usage
+   * ```ts
+   * await visitor.openIframe({
+   *   link: "https://topia.io",
+   *   shouldOpenInDrawer: true,
+   *   title: "Hello World",
+   * });
+   * ```
+   */
+  async openIframe({ link, shouldOpenInDrawer, title }: OpenIframeInterface): Promise<void | ResponseType> {
+    try {
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/open-iframe`,
+        {
+          link,
+          shouldOpenInDrawer,
+          title,
+        },
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
    * Retrieves the data object for a visitor.
    *
    * @usage
@@ -112,16 +176,8 @@ export class Visitor extends User implements VisitorInterface {
    * const { dataObject } = droppedAsset;
    * ```
    */
-  async fetchVisitorDataObject(): Promise<void | ResponseType> {
-    try {
-      const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/visitors/${this.id}/get-data-object`,
-        this.requestOptions,
-      );
-      this.dataObject = response.data;
-    } catch (error) {
-      throw this.errorHandler({ error });
-    }
+  async fetchDataObject(): Promise<void | ResponseType> {
+    return this.#fetchVisitorDataObject();
   }
 
   /**
@@ -138,22 +194,11 @@ export class Visitor extends User implements VisitorInterface {
    * const { dataObject } = droppedAsset;
    * ```
    */
-  async setVisitorDataObject(
-    dataObject: object,
+  async setDataObject(
+    dataObject: object | null | undefined,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
   ): Promise<void | ResponseType> {
-    try {
-      const { lock = {} } = options;
-      await this.topiaPublicApi().put(
-        `/world/${this.urlSlug}/visitors/${this.id}/set-data-object`,
-        { dataObject, lock },
-        this.requestOptions,
-      );
-
-      this.dataObject = dataObject;
-    } catch (error) {
-      throw this.errorHandler({ error });
-    }
+    return this.#setVisitorDataObject(dataObject, options);
   }
 
   /**
@@ -170,23 +215,63 @@ export class Visitor extends User implements VisitorInterface {
    * const { dataObject } = droppedAsset;
    * ```
    */
-  async updateVisitorDataObject(
+  async updateDataObject(
     dataObject: object,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
   ): Promise<void | ResponseType> {
+    return this.#updateVisitorDataObject(dataObject, options);
+  }
+
+  #fetchVisitorDataObject = async (): Promise<void | ResponseType> => {
     try {
-      const { lock = {} } = options;
-      await this.topiaPublicApi().put(
-        `/world/${this.urlSlug}/visitors/${this.id}/update-data-object`,
-        { dataObject, lock },
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/visitors/${this.id}/get-data-object`,
         this.requestOptions,
       );
-
-      this.dataObject = dataObject;
+      this.dataObject = response.data;
+      return response.data;
     } catch (error) {
       throw this.errorHandler({ error });
     }
-  }
+  };
+
+  #setVisitorDataObject = async (
+    dataObject: object | null | undefined,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<void | ResponseType> => {
+    try {
+      const { lock = {} } = options;
+      const response = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/set-data-object`,
+        { dataObject: dataObject || this.dataObject, lock },
+        this.requestOptions,
+      );
+
+      this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  };
+
+  #updateVisitorDataObject = async (
+    dataObject: object,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<void | ResponseType> => {
+    try {
+      const { lock = {} } = options;
+      const response = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/update-data-object`,
+        { dataObject: dataObject || this.dataObject, lock },
+        this.requestOptions,
+      );
+
+      this.dataObject = dataObject || this.dataObject;
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  };
 }
 
 export default Visitor;

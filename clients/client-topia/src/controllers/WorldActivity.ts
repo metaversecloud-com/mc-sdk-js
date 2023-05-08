@@ -26,13 +26,13 @@ import { scatterVisitors } from "utils";
  * ```
  */
 export class WorldActivity extends SDKController {
-  #visitorsMap: { [key: string]: Visitor };
   urlSlug: string;
+  #visitorsMap: { [key: string]: Visitor };
 
   constructor(topia: Topia, urlSlug: string, options: WorldActivityOptionalInterface = { credentials: {} }) {
     super(topia, options.credentials);
-    this.#visitorsMap = {};
     this.urlSlug = urlSlug;
+    this.#visitorsMap = {};
   }
 
   get visitors() {

@@ -3,6 +3,7 @@ import { SDKInterface } from "interfaces/SDKInterfaces";
 
 export interface VisitorInterface extends SDKInterface {
   color?: string;
+  dataObject?: object | null | undefined;
   displayName?: string;
   gestureType?: number;
   hidden?: boolean;
@@ -34,4 +35,16 @@ export interface MoveVisitorInterface {
   shouldTeleportVisitor: boolean;
   x: number;
   y: number;
+}
+
+export interface FireToastInterface {
+  groupId?: string;
+  title: string;
+  text?: string;
+}
+
+export interface OpenIframeInterface {
+  link: string;
+  shouldOpenInDrawer?: boolean;
+  title?: string;
 }
