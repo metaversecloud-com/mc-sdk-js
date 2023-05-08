@@ -22,6 +22,7 @@
     "jsonwebtoken": "^9.0.0",
     "prettier": "^2.7.1",
     "rollup": "^3.4.0",
+    "rollup-plugin-dts": "^5.3.0",
     "rollup-plugin-license": "^3.0.1",
     "rollup-plugin-typescript2": "^0.34.1",
     "ts-jest": "^29.0.3",
@@ -30,7 +31,7 @@
     "yalc": "^1.0.0-pre.53"
   },
   "files": [
-    "dist/*"
+    "dist/index.cjs", "dist/index.d.ts"
   ],
   "gitHead": "7eef1f7fd9b3b0af395f95cb908add3011abf808",
   "homepage": "https://github.com/metaversecloud-com/mc-sdk-js/tree/main/clients/client-topia",
@@ -38,6 +39,7 @@
   "keywords": [],
   "name": "@rtsdk/topia",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"

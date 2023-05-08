@@ -33,7 +33,7 @@
     "url": "git+https://github.com/metaversecloud-com/mc-sdk-js.git"
   },
   "scripts": {
-    "prepare": "yarn build",
+    "prepare": "lerna run build --scope @rtsdk/topia",
     "build": "tsc && lerna run build --no-private",
     "lint": "lerna run lint --parallel",
     "test": "lerna run test",

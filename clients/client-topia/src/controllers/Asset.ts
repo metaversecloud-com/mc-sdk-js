@@ -21,7 +21,6 @@ import { ResponseType } from "types";
  */
 export class Asset extends SDKController implements AssetInterface {
   readonly id?: string;
-  jwt?: string;
 
   constructor(topia: Topia, id: string, options: AssetOptionalInterface = { attributes: {}, credentials: {} }) {
     super(topia, options.credentials);
