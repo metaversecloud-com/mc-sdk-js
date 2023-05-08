@@ -212,6 +212,7 @@ export class User extends SDKController {
         { dataObject: dataObject || this.dataObject, lock },
         this.requestOptions,
       );
+
       this.dataObject = dataObject || this.dataObject;
       return response.data;
     } catch (error) {
@@ -231,7 +232,8 @@ export class User extends SDKController {
         { dataObject: dataObject || this.dataObject, lock },
         this.requestOptions,
       );
-      this.dataObject = dataObject || this.dataObject;
+
+      this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error });
