@@ -137,15 +137,13 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * const { dataObject } = droppedAsset;
    * ```
    */
-  // get dropped asset
-  async updateDroppedAssetDataObject(
+  async updateDataObject(
     dataObject: object,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
   ): Promise<void | ResponseType> {
     return this.#updateDroppedAssetDataObject(dataObject, options);
   }
 
-  // update dropped assets
   /**
    * @summary
    * Updates broadcast options for a dropped asset.
@@ -238,7 +236,10 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * await droppedAsset.updateCustomTextAsset(style, "hello world");
    * ```
    */
-  updateCustomTextAsset(style: object | undefined | null, text: string | null | undefined): Promise<void | ResponseType> {
+  updateCustomTextAsset(
+    style: object | undefined | null,
+    text: string | null | undefined,
+  ): Promise<void | ResponseType> {
     try {
       return this.#updateDroppedAsset({ style, text }, "set-custom-text");
     } catch (error) {
