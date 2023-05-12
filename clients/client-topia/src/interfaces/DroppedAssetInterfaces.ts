@@ -1,7 +1,76 @@
-import { DroppedAssetClickType, DroppedAssetMediaType, InteractiveCredentials } from "types";
+import { DroppedAssetClickType, DroppedAssetMediaType, InteractiveCredentials, ResponseType } from "types";
 import { AssetInterface } from "interfaces";
+import { AxiosResponse } from "axios";
 
 export interface DroppedAssetInterface extends AssetInterface {
+  fetchDroppedAssetById(): Promise<void | ResponseType>;
+  deleteDroppedAsset(): Promise<void | ResponseType>;
+  fetchDataObject(): Promise<void | ResponseType>;
+  setDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
+  updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
+  updateBroadcast({
+    assetBroadcast,
+    assetBroadcastAll,
+    broadcasterEmail,
+  }: UpdateBroadcastInterface): Promise<void | ResponseType>;
+  updateClickType({
+    clickType,
+    clickableLink,
+    clickableLinkTitle,
+    clickableDisplayTextDescription,
+    clickableDisplayTextHeadline,
+    isForceLinkInIframe,
+    isOpenLinkInDrawer,
+    portalName,
+    position,
+  }: UpdateClickTypeInterface): Promise<void | ResponseType>;
+  updateCustomTextAsset(
+    style: object | undefined | null,
+    text: string | null | undefined,
+  ): Promise<void | ResponseType>;
+  updateMediaType({
+    audioRadius,
+    audioSliderVolume,
+    isVideo,
+    mediaLink,
+    mediaName,
+    mediaType,
+    portalName,
+    syncUserMedia,
+  }: UpdateMediaTypeInterface): Promise<void | ResponseType>;
+  updateMuteZone(isMutezone: boolean): Promise<void | ResponseType>;
+  updateWebhookZone(isWebhookZoneEnabled: boolean): Promise<void | ResponseType>;
+  updatePosition(x: number, y: number): Promise<void | ResponseType>;
+  updatePrivateZone({
+    isPrivateZone,
+    isPrivateZoneChatDisabled,
+    privateZoneUserCap,
+  }: UpdatePrivateZoneInterface): Promise<void | ResponseType>;
+  updateScale(assetScale: number): Promise<void | ResponseType>;
+  updateUploadedMediaSelected(mediaId: string): Promise<void | ResponseType>;
+  updateWebImageLayers(bottom: string, top: string): Promise<void | ResponseType>;
+  addWebhook({
+    dataObject,
+    description,
+    isUniqueOnly,
+    title,
+    type,
+    url,
+  }: {
+    dataObject: object;
+    description: string;
+    isUniqueOnly: boolean;
+    title: string;
+    type: string;
+    url: string;
+  }): Promise<void | AxiosResponse>;
+  setInteractiveSettings({
+    isInteractive,
+    interactivePublicKey,
+  }: {
+    isInteractive?: boolean;
+    interactivePublicKey: string;
+  }): Promise<void | ResponseType>;
   id?: string;
   assetId?: string;
   assetScale?: number | null;

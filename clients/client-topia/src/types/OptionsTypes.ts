@@ -1,4 +1,4 @@
-import { AssetInterface, DroppedAssetInterface, VisitorInterface, WorldInterface } from "interfaces";
+import { AssetInterface, DroppedAssetInterface, VisitorInterface, WorldDetailsInterface } from "interfaces";
 import { InteractiveCredentials } from "./InteractiveCredentialsTypes";
 
 export type AssetOptions = {
@@ -21,6 +21,6 @@ export type VisitorOptions = {
 };
 
 export type WorldOptions = {
-  attributes?: WorldInterface | undefined;
+  attributes?: WorldDetailsInterface | undefined;
   credentials?: InteractiveCredentials | undefined;
 };

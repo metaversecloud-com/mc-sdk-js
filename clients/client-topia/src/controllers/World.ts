@@ -6,7 +6,7 @@ import { SDKController } from "controllers/SDKController";
 import { Topia } from "controllers/Topia";
 
 // interfaces
-import { WorldInterface, WorldOptionalInterface } from "interfaces";
+import { WorldInterface, WorldDetailsInterface, WorldOptionalInterface } from "interfaces";
 
 // types
 import { ResponseType } from "types";
@@ -91,7 +91,7 @@ export class World extends SDKController implements WorldInterface {
     name,
     spawnPosition,
     width,
-  }: WorldInterface): Promise<void | ResponseType> {
+  }: WorldDetailsInterface): Promise<void | ResponseType> {
     const payload = {
       controls,
       description,
@@ -167,6 +167,7 @@ export class World extends SDKController implements WorldInterface {
         }`,
         this.requestOptions,
       );
+      console.log("🚀 ~ file: World.ts:170 ~ World ~ response:", response);
       // create temp map and then update private property only once
       const droppedAssets: DroppedAsset[] = [];
       for (const asset of response.data.assets) {

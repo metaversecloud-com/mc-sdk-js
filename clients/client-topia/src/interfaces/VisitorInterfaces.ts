@@ -1,7 +1,14 @@
-import { InteractiveCredentials } from "types";
+import { InteractiveCredentials, ResponseType } from "types";
 import { SDKInterface } from "interfaces/SDKInterfaces";
 
 export interface VisitorInterface extends SDKInterface {
+  fetchVisitor(): Promise<void | ResponseType>;
+  moveVisitor({ shouldTeleportVisitor, x, y }: MoveVisitorInterface): Promise<void | ResponseType>;
+  fireToast({ groupId, title, text }: FireToastInterface): Promise<void | ResponseType>;
+  openIframe({ link, shouldOpenInDrawer, title }: OpenIframeInterface): Promise<void | ResponseType>;
+  fetchDataObject(): Promise<void | ResponseType>;
+  setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
+  updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
   color?: string;
   dataObject?: object | null | undefined;
   displayName?: string;

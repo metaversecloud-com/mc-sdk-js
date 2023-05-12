@@ -8,7 +8,7 @@ import { Topia } from "controllers/Topia";
 import { World } from "controllers/World";
 
 // interfaces
-import { UserOptionalInterface } from "interfaces";
+import { UserInterface, UserOptionalInterface } from "interfaces";
 
 // types
 import { ResponseType } from "types";
@@ -22,7 +22,7 @@ import { ResponseType } from "types";
  * await new User(topia, { interactiveNonce: "exampleNonce", interactivePublicKey: "examplePublicKey", visitorId: 1 });
  * ```
  */
-export class User extends SDKController {
+export class User extends SDKController implements UserInterface {
   profileId?: string | null;
   dataObject?: object | null | undefined;
   profile?: Record<string, any>;

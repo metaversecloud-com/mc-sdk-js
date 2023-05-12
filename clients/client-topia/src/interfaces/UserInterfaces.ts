@@ -1,4 +1,12 @@
-import { InteractiveCredentials } from "types";
+import { InteractiveCredentials, ResponseType } from "types";
+
+export interface UserInterface {
+  fetchAssets(): Promise<void | ResponseType>;
+  fetchScenes(): Promise<void | ResponseType>;
+  fetchWorldsByKey(): Promise<void | ResponseType>;
+  fetchDataObject(): Promise<void | ResponseType>;
+  setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
+}
 
 export interface UserOptionalInterface {
   credentials?: InteractiveCredentials | object;
