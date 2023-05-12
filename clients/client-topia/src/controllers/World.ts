@@ -167,7 +167,6 @@ export class World extends SDKController implements WorldInterface {
         }`,
         this.requestOptions,
       );
-      console.log("🚀 ~ file: World.ts:170 ~ World ~ response:", response);
       // create temp map and then update private property only once
       const droppedAssets: DroppedAsset[] = [];
       for (const asset of response.data.assets) {
