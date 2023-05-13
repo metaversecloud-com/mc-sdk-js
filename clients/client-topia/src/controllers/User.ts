@@ -141,7 +141,17 @@ export class User extends SDKController implements UserInterface {
    * ```
    */
   async fetchDataObject(): Promise<void | ResponseType> {
-    return this.#fetchUserDataObject();
+    try {
+      if (!this.profileId) throw "This method requires the use of a profileId";
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/user/dataObjects/${this.profileId}/get-data-object`,
+        this.requestOptions,
+      );
+      this.dataObject = response.data;
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
   }
 
   /**
@@ -162,7 +172,20 @@ export class User extends SDKController implements UserInterface {
     dataObject: object | null | undefined,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
   ): Promise<void | ResponseType> {
-    return this.#setUserDataObject(dataObject, options);
+    try {
+      if (!this.profileId) throw "This method requires the use of a profileId";
+      const { lock = {} } = options;
+      const response = await this.topiaPublicApi().put(
+        `/user/dataObjects/${this.profileId}/set-data-object`,
+        { dataObject: dataObject || this.dataObject, lock },
+        this.requestOptions,
+      );
+
+      this.dataObject = dataObject || this.dataObject;
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
   }
 
   /**
@@ -183,47 +206,6 @@ export class User extends SDKController implements UserInterface {
     dataObject: object,
     options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
   ): Promise<void | ResponseType> {
-    return this.#updateUserDataObject(dataObject, options);
-  }
-
-  #fetchUserDataObject = async (): Promise<void | ResponseType> => {
-    try {
-      if (!this.profileId) throw "This method requires the use of a profileId";
-      const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/user/dataObjects/${this.profileId}/get-data-object`,
-        this.requestOptions,
-      );
-      this.dataObject = response.data;
-      return response.data;
-    } catch (error) {
-      throw this.errorHandler({ error });
-    }
-  };
-
-  #setUserDataObject = async (
-    dataObject: object | null | undefined,
-    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
-  ): Promise<void | ResponseType> => {
-    try {
-      if (!this.profileId) throw "This method requires the use of a profileId";
-      const { lock = {} } = options;
-      const response = await this.topiaPublicApi().put(
-        `/user/dataObjects/${this.profileId}/set-data-object`,
-        { dataObject: dataObject || this.dataObject, lock },
-        this.requestOptions,
-      );
-
-      this.dataObject = dataObject || this.dataObject;
-      return response.data;
-    } catch (error) {
-      throw this.errorHandler({ error });
-    }
-  };
-
-  #updateUserDataObject = async (
-    dataObject: object,
-    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
-  ): Promise<void | ResponseType> => {
     try {
       if (!this.profileId) throw "This method requires the use of a profileId";
       const { lock = {} } = options;
@@ -238,7 +220,7 @@ export class User extends SDKController implements UserInterface {
     } catch (error) {
       throw this.errorHandler({ error });
     }
-  };
+  }
 }
 
 export default User;
