@@ -362,6 +362,39 @@ export class World extends SDKController implements WorldInterface {
       throw this.errorHandler({ error });
     }
   };
+
+  /**
+   * @summary
+   * Updates the data object for a world. Must have valid interactive credentials from a visitor in the world.
+   *
+   * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
+   *
+   * @usage
+   * ```ts
+   * await world.updateDataObject({
+   *   "exampleKey": "exampleValue",
+   * });
+   * const { dataObject } = world;
+   * ```
+   */
+  incrementDataObjectValue = async (
+    path: string,
+    amount: number,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<void | ResponseType> => {
+    try {
+      const { lock = {} } = options;
+      const response = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/increment-data-object-value`,
+        { path, amount, lock },
+        this.requestOptions,
+      );
+
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  };
 }
 
 export default World;
