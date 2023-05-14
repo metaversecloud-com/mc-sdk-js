@@ -317,14 +317,12 @@ export class World extends SDKController implements WorldInterface {
   ): Promise<void | ResponseType> => {
     try {
       const { lock = {} } = options;
-      const response = await this.topiaPublicApi().put(
+      await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/set-data-object`,
         { dataObject: dataObject || this.dataObject, lock },
         this.requestOptions,
       );
-
       this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
-      return response.data;
     } catch (error) {
       throw this.errorHandler({ error });
     }
@@ -350,18 +348,47 @@ export class World extends SDKController implements WorldInterface {
   ): Promise<void | ResponseType> => {
     try {
       const { lock = {} } = options;
-      const response = await this.topiaPublicApi().put(
+      await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/update-data-object`,
         { dataObject: dataObject || this.dataObject, lock },
         this.requestOptions,
       );
-
       this.dataObject = dataObject || this.dataObject;
-      return response.data;
     } catch (error) {
       throw this.errorHandler({ error });
     }
   };
+
+  /**
+   * @summary
+   * Increments a specific value in the data object for a world by the amount specified. Must have valid interactive credentials from a visitor in the world.
+   *
+   * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
+   *
+   * @usage
+   * ```ts
+   * await world.incrementDataObjectValue(
+   *   "path": "key",
+   *   "amount": 1,
+   * );
+   * ```
+   */
+  async incrementDataObjectValue(
+    path: string,
+    amount: number,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<void | ResponseType> {
+    try {
+      const { lock = {} } = options;
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/increment-data-object-value`,
+        { path, amount, lock },
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
 }
 
 export default World;

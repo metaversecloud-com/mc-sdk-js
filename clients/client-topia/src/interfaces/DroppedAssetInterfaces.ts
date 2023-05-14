@@ -8,6 +8,7 @@ export interface DroppedAssetInterface extends AssetInterface {
   fetchDataObject(): Promise<void | ResponseType>;
   setDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
   updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
+  incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
   updateBroadcast({
     assetBroadcast,
     assetBroadcastAll,

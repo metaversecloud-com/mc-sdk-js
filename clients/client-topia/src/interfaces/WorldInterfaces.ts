@@ -61,6 +61,10 @@ export interface WorldInterface extends SDKInterface, WorldDetailsInterface {
     sceneId: string;
   }): Promise<void | ResponseType>;
   replaceScene(sceneId: string): Promise<void | ResponseType>;
+  fetchDataObject(): Promise<void | ResponseType>;
+  setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
+  updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
+  incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
 }
 
 export interface WorldOptionalInterface {
