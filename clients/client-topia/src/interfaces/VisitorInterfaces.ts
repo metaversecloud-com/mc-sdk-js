@@ -9,6 +9,8 @@ export interface VisitorInterface extends SDKInterface {
   fetchDataObject(): Promise<void | ResponseType>;
   setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
   updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
+  incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
+
   color?: string;
   dataObject?: object | null | undefined;
   displayName?: string;
