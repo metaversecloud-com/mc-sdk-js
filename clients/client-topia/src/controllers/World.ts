@@ -6,7 +6,7 @@ import { SDKController } from "controllers/SDKController";
 import { Topia } from "controllers/Topia";
 
 // interfaces
-import { WorldInterface, WorldOptionalInterface } from "interfaces";
+import { WorldInterface, WorldDetailsInterface, WorldOptionalInterface } from "interfaces";
 
 // types
 import { ResponseType } from "types";
@@ -26,6 +26,7 @@ import { removeUndefined } from "utils";
 export class World extends SDKController implements WorldInterface {
   urlSlug: string;
   #droppedAssetsMap: { [key: string]: DroppedAsset };
+  dataObject?: object | null | undefined;
 
   constructor(topia: Topia, urlSlug: string, options: WorldOptionalInterface = { attributes: {}, credentials: {} }) {
     super(topia, options.credentials);
@@ -91,7 +92,7 @@ export class World extends SDKController implements WorldInterface {
     name,
     spawnPosition,
     width,
-  }: WorldInterface): Promise<void | ResponseType> {
+  }: WorldDetailsInterface): Promise<void | ResponseType> {
     const payload = {
       controls,
       description,
@@ -268,6 +269,122 @@ export class World extends SDKController implements WorldInterface {
   async replaceScene(sceneId: string): Promise<void | ResponseType> {
     try {
       await this.topiaPublicApi().put(`/world/${this.urlSlug}/change-scene`, { sceneId }, this.requestOptions);
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Retrieves the data object for a world. Must have valid interactive credentials from a visitor in the world.
+   *
+   * @usage
+   * ```ts
+   * await world.fetchDataObject();
+   * const { dataObject } = world;
+   * ```
+   */
+  fetchDataObject = async (): Promise<void | ResponseType> => {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/get-data-object`,
+        this.requestOptions,
+      );
+      this.dataObject = response.data;
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  };
+
+  /**
+   * @summary
+   * Sets the data object for a user. Must have valid interactive credentials from a visitor in the world.
+   *
+   * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
+   *
+   * @usage
+   * ```ts
+   * await world.setDataObject({
+   *   "exampleKey": "exampleValue",
+   * });
+   * const { dataObject } = world;
+   * ```
+   */
+  setDataObject = async (
+    dataObject: object | null | undefined,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<void | ResponseType> => {
+    try {
+      const { lock = {} } = options;
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/set-data-object`,
+        { dataObject: dataObject || this.dataObject, lock },
+        this.requestOptions,
+      );
+      this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  };
+
+  /**
+   * @summary
+   * Updates the data object for a world. Must have valid interactive credentials from a visitor in the world.
+   *
+   * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
+   *
+   * @usage
+   * ```ts
+   * await world.updateDataObject({
+   *   "exampleKey": "exampleValue",
+   * });
+   * const { dataObject } = world;
+   * ```
+   */
+  updateDataObject = async (
+    dataObject: object,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<void | ResponseType> => {
+    try {
+      const { lock = {} } = options;
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/update-data-object`,
+        { dataObject: dataObject || this.dataObject, lock },
+        this.requestOptions,
+      );
+      this.dataObject = dataObject || this.dataObject;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  };
+
+  /**
+   * @summary
+   * Increments a specific value in the data object for a world by the amount specified. Must have valid interactive credentials from a visitor in the world.
+   *
+   * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
+   *
+   * @usage
+   * ```ts
+   * await world.incrementDataObjectValue(
+   *   "path": "key",
+   *   "amount": 1,
+   * );
+   * ```
+   */
+  async incrementDataObjectValue(
+    path: string,
+    amount: number,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<void | ResponseType> {
+    try {
+      const { lock = {} } = options;
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/increment-data-object-value`,
+        { path, amount, lock },
+        this.requestOptions,
+      );
     } catch (error) {
       throw this.errorHandler({ error });
     }

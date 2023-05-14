@@ -1,7 +1,8 @@
-import { InteractiveCredentials } from "types";
+import { InteractiveCredentials, ResponseType } from "types";
 import { SDKInterface } from "interfaces/SDKInterfaces";
+import { DroppedAsset } from "controllers/DroppedAsset";
 
-export interface WorldInterface extends SDKInterface {
+export interface WorldDetailsInterface {
   background?: string | null;
   controls?: {
     allowMuteAll?: boolean;
@@ -28,7 +29,45 @@ export interface WorldInterface extends SDKInterface {
   width?: number;
 }
 
+export interface WorldInterface extends SDKInterface, WorldDetailsInterface {
+  fetchDetails(): Promise<void | ResponseType>;
+  updateDetails({
+    controls,
+    description,
+    forceAuthOnLogin,
+    height,
+    name,
+    spawnPosition,
+    width,
+  }: WorldDetailsInterface): Promise<void | ResponseType>;
+  fetchDroppedAssets(): Promise<void | ResponseType>;
+  fetchDroppedAssetsWithUniqueName({
+    uniqueName,
+    isPartial,
+    isReversed,
+  }: {
+    uniqueName: string;
+    isPartial?: boolean;
+    isReversed?: boolean;
+  }): Promise<DroppedAsset[]>;
+  updateCustomTextDroppedAssets(droppedAssetsToUpdate: Array<DroppedAsset>, style: object): Promise<object>;
+  dropScene({
+    assetSuffix,
+    position,
+    sceneId,
+  }: {
+    assetSuffix: string;
+    position: object;
+    sceneId: string;
+  }): Promise<void | ResponseType>;
+  replaceScene(sceneId: string): Promise<void | ResponseType>;
+  fetchDataObject(): Promise<void | ResponseType>;
+  setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
+  updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
+  incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
+}
+
 export interface WorldOptionalInterface {
-  attributes?: WorldInterface | object;
+  attributes?: WorldDetailsInterface | object;
   credentials?: InteractiveCredentials | object;
 }
