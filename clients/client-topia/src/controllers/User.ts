@@ -136,8 +136,7 @@ export class User extends SDKController implements UserInterface {
    *
    * @usage
    * ```ts
-   * await droppedAsset.fetchDataObject();
-   * const { dataObject } = droppedAsset;
+   * const dataObject = await user.fetchDataObject();
    * ```
    */
   async fetchDataObject(): Promise<void | ResponseType> {
@@ -162,10 +161,9 @@ export class User extends SDKController implements UserInterface {
    *
    * @usage
    * ```ts
-   * await droppedAsset.setDataObject({
+   * await user.setDataObject({
    *   "exampleKey": "exampleValue",
    * });
-   * const { dataObject } = droppedAsset;
    * ```
    */
   async setDataObject(
@@ -175,14 +173,12 @@ export class User extends SDKController implements UserInterface {
     try {
       if (!this.profileId) throw "This method requires the use of a profileId";
       const { lock = {} } = options;
-      const response = await this.topiaPublicApi().put(
+      await this.topiaPublicApi().put(
         `/user/dataObjects/${this.profileId}/set-data-object`,
         { dataObject: dataObject || this.dataObject, lock },
         this.requestOptions,
       );
-
       this.dataObject = dataObject || this.dataObject;
-      return response.data;
     } catch (error) {
       throw this.errorHandler({ error });
     }
@@ -196,10 +192,9 @@ export class User extends SDKController implements UserInterface {
    *
    * @usage
    * ```ts
-   * await droppedAsset.updateUserDataObject({
+   * await user.updateUserDataObject({
    *   "exampleKey": "exampleValue",
    * });
-   * const { dataObject } = droppedAsset;
    * ```
    */
   async updateDataObject(
@@ -209,14 +204,43 @@ export class User extends SDKController implements UserInterface {
     try {
       if (!this.profileId) throw "This method requires the use of a profileId";
       const { lock = {} } = options;
-      const response = await this.topiaPublicApi().put(
+      await this.topiaPublicApi().put(
         `/user/dataObjects/${this.profileId}/update-data-object`,
         { dataObject: dataObject || this.dataObject, lock },
         this.requestOptions,
       );
-
       this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
-      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Increments a specific value in the data object for a user by the amount specified. Must have valid interactive credentials from a visitor in the world.
+   *
+   * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
+   *
+   * @usage
+   * ```ts
+   * await user.incrementDataObjectValue(
+   *   "path": "key",
+   *   "amount": 1,
+   * );
+   * ```
+   */
+  async incrementDataObjectValue(
+    path: string,
+    amount: number,
+    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+  ): Promise<void | ResponseType> {
+    try {
+      const { lock = {} } = options;
+      await this.topiaPublicApi().put(
+        `/user/dataObjects/${this.profileId}/increment-data-object-value`,
+        { path, amount, lock },
+        this.requestOptions,
+      );
     } catch (error) {
       throw this.errorHandler({ error });
     }
