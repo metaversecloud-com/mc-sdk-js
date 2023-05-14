@@ -65,6 +65,7 @@
 <a href="controllers.DroppedAsset.html#fetchDataObject" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>fetch<wbr/>Data<wbr/>Object</span></a>
 <a href="controllers.DroppedAsset.html#fetchDroppedAssetById" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>fetch<wbr/>Dropped<wbr/>Asset<wbr/>By<wbr/>Id</span></a>
 <a href="controllers.DroppedAsset.html#fetchPlatformAssets" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>fetch<wbr/>Platform<wbr/>Assets</span></a>
+<a href="controllers.DroppedAsset.html#incrementDataObjectValue" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>increment<wbr/>Data<wbr/>Object<wbr/>Value</span></a>
 <a href="controllers.DroppedAsset.html#setDataObject" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Data<wbr/>Object</span></a>
 <a href="controllers.DroppedAsset.html#setInteractiveSettings" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Interactive<wbr/>Settings</span></a>
 <a href="controllers.DroppedAsset.html#topiaPublicApi" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>topia<wbr/>Public<wbr/>Api</span></a>
@@ -204,7 +205,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#addWebhook">addWebhook</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:472</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:498</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="deleteDroppedAsset" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>delete<wbr/>Dropped<wbr/>Asset</span><a href="#deleteDroppedAsset" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -265,13 +266,13 @@
 <div class="tsd-comment tsd-typography">
 <h3>Summary</h3><p>Retrieves the data object for a dropped asset.</p>
 
-<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">droppedAsset</span><span class="hl-1">.</span><span class="hl-3">fetchDataObject</span><span class="hl-1">();</span><br/><span class="hl-5">const</span><span class="hl-1"> { </span><span class="hl-6">dataObject</span><span class="hl-1"> } = </span><span class="hl-2">droppedAsset</span><span class="hl-1">;</span>
+<h3>Usage</h3><pre><code class="language-ts"><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">dataObject</span><span class="hl-1"> = </span><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">droppedAsset</span><span class="hl-1">.</span><span class="hl-3">fetchDataObject</span><span class="hl-1">();</span>
 </code></pre>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#fetchDataObject">fetchDataObject</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:101</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:100</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fetchDroppedAssetById" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>fetch<wbr/>Dropped<wbr/>Asset<wbr/>By<wbr/>Id</span><a href="#fetchDroppedAssetById" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -297,6 +298,39 @@
 <p>Inherited from <a href="controllers.Asset.html">Asset</a>.<a href="controllers.Asset.html#fetchPlatformAssets">fetchPlatformAssets</a></p>
 <ul>
 <li>Defined in controllers/Asset.ts:31</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="incrementDataObjectValue" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>increment<wbr/>Data<wbr/>Object<wbr/>Value</span><a href="#incrementDataObjectValue" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="incrementDataObjectValue.incrementDataObjectValue-1">increment<wbr/>Data<wbr/>Object<wbr/>Value<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>lock<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">{ </span><br/><span>        </span>lockId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>        </span>releaseLock<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span><a href="#incrementDataObjectValue.incrementDataObjectValue-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography">
+<h3>Summary</h3><p>Increments a specific value in the data object for a dropped asset by the amount specified. Must have valid interactive credentials from a visitor in the world.</p>
+<p>Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id</p>
+
+<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">droppedAsset</span><span class="hl-1">.</span><span class="hl-3">incrementDataObjectValue</span><span class="hl-1">(</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;path&quot;</span><span class="hl-1">: </span><span class="hl-4">&quot;key&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;amount&quot;</span><span class="hl-1">: </span><span class="hl-8">1</span><span class="hl-1">,</span><br/><span class="hl-1">);</span>
+</code></pre>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>path: <span class="tsd-signature-type">string</span></h5></li>
+<li>
+<h5>amount: <span class="tsd-signature-type">number</span></h5></li>
+<li>
+<h5>options: <span class="tsd-signature-symbol">{ </span><br/><span>    </span>lock<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">{ </span><br/><span>        </span>lockId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>        </span>releaseLock<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol"> = {}</span></h5>
+<ul class="tsd-parameters">
+<li class="tsd-parameter">
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> lock<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>lockId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>releaseLock<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h5>
+<ul class="tsd-parameters">
+<li class="tsd-parameter">
+<h5>lock<wbr/>Id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li>
+<li class="tsd-parameter">
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> release<wbr/>Lock<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5></li></ul></li></ul></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#incrementDataObjectValue">incrementDataObjectValue</a></p>
+<ul>
+<li>Defined in controllers/DroppedAsset.ts:190</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setDataObject" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Data<wbr/>Object</span><a href="#setDataObject" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -306,7 +340,7 @@
 <h3>Summary</h3><p>Sets the data object for a dropped asset.</p>
 <p>Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id</p>
 
-<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">droppedAsset</span><span class="hl-1">.</span><span class="hl-3">setDataObject</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;exampleKey&quot;</span><span class="hl-2">:</span><span class="hl-1"> </span><span class="hl-4">&quot;exampleValue&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">});</span><br/><span class="hl-5">const</span><span class="hl-1"> { </span><span class="hl-6">dataObject</span><span class="hl-1"> } = </span><span class="hl-2">droppedAsset</span><span class="hl-1">;</span>
+<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">droppedAsset</span><span class="hl-1">.</span><span class="hl-3">setDataObject</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;exampleKey&quot;</span><span class="hl-2">:</span><span class="hl-1"> </span><span class="hl-4">&quot;exampleValue&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">});</span>
 </code></pre>
 </div>
 <div class="tsd-parameters">
@@ -327,7 +361,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#setDataObject">setDataObject</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:128</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:126</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setInteractiveSettings" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Interactive<wbr/>Settings</span><a href="#setInteractiveSettings" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -352,7 +386,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#setInteractiveSettings">setInteractiveSettings</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:522</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:548</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="topiaPublicApi" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>topia<wbr/>Public<wbr/>Api</span><a href="#topiaPublicApi" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -381,7 +415,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#updateBroadcast">updateBroadcast</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:195</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:221</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateClickType" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Click<wbr/>Type</span><a href="#updateClickType" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -401,7 +435,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#updateClickType">updateClickType</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:227</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:253</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateCustomTextAsset" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Custom<wbr/>Text<wbr/>Asset</span><a href="#updateCustomTextAsset" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -423,7 +457,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#updateCustomTextAsset">updateCustomTextAsset</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:274</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:300</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateDataObject" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Data<wbr/>Object</span><a href="#updateDataObject" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -433,7 +467,7 @@
 <h3>Summary</h3><p>Updates the data object for a dropped asset.</p>
 <p>Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id</p>
 
-<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">droppedAsset</span><span class="hl-1">.</span><span class="hl-3">updateDataObject</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;exampleKey&quot;</span><span class="hl-2">:</span><span class="hl-1"> </span><span class="hl-4">&quot;exampleValue&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">});</span><br/><span class="hl-5">const</span><span class="hl-1"> { </span><span class="hl-6">dataObject</span><span class="hl-1"> } = </span><span class="hl-2">droppedAsset</span><span class="hl-1">;</span>
+<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">droppedAsset</span><span class="hl-1">.</span><span class="hl-3">updateDataObject</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;exampleKey&quot;</span><span class="hl-2">:</span><span class="hl-1"> </span><span class="hl-4">&quot;exampleValue&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">});</span>
 </code></pre>
 </div>
 <div class="tsd-parameters">
@@ -454,7 +488,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#updateDataObject">updateDataObject</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:162</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:158</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateMediaType" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Media<wbr/>Type</span><a href="#updateMediaType" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -474,7 +508,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#updateMediaType">updateMediaType</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:303</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:329</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateMuteZone" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Mute<wbr/>Zone</span><a href="#updateMuteZone" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -494,7 +528,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#updateMuteZone">updateMuteZone</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:332</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:358</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updatePosition" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Position</span><a href="#updatePosition" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -516,7 +550,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#updatePosition">updatePosition</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:366</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:392</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updatePrivateZone" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Private<wbr/>Zone</span><a href="#updatePrivateZone" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -536,7 +570,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#updatePrivateZone">updatePrivateZone</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:387</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:413</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateScale" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Scale</span><a href="#updateScale" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -556,7 +590,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#updateScale">updateScale</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:411</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:437</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateUploadedMediaSelected" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Uploaded<wbr/>Media<wbr/>Selected</span><a href="#updateUploadedMediaSelected" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -576,7 +610,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#updateUploadedMediaSelected">updateUploadedMediaSelected</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:428</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:454</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateWebImageLayers" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Web<wbr/>Image<wbr/>Layers</span><a href="#updateWebImageLayers" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -598,7 +632,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#updateWebImageLayers">updateWebImageLayers</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:445</li></ul></aside></li></ul></section>
+<li>Defined in controllers/DroppedAsset.ts:471</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateWebhookZone" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Webhook<wbr/>Zone</span><a href="#updateWebhookZone" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -618,7 +652,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.DroppedAssetInterface.html">DroppedAssetInterface</a>.<a href="../interfaces/interfaces.DroppedAssetInterface.html#updateWebhookZone">updateWebhookZone</a></p>
 <ul>
-<li>Defined in controllers/DroppedAsset.ts:349</li></ul></aside></li></ul></section></section></div>
+<li>Defined in controllers/DroppedAsset.ts:375</li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -665,6 +699,7 @@
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="controllers.DroppedAsset.html#fetchDataObject" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>fetch<wbr/>Data<wbr/>Object</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="controllers.DroppedAsset.html#fetchDroppedAssetById" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>fetch<wbr/>Dropped<wbr/>Asset<wbr/>By<wbr/>Id</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="controllers.DroppedAsset.html#fetchPlatformAssets" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>fetch<wbr/>Platform<wbr/>Assets</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="controllers.DroppedAsset.html#incrementDataObjectValue" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>increment<wbr/>Data<wbr/>Object<wbr/>Value</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="controllers.DroppedAsset.html#setDataObject" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Data<wbr/>Object</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="controllers.DroppedAsset.html#setInteractiveSettings" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Interactive<wbr/>Settings</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="controllers.DroppedAsset.html#topiaPublicApi" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>topia<wbr/>Public<wbr/>Api</a></li>
