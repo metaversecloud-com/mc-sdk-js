@@ -32,7 +32,7 @@ export class User extends SDKController implements UserInterface {
   #worldsMap: { [key: string]: World };
 
   constructor(topia: Topia, options: UserOptionalInterface = { profileId: null, credentials: {} }) {
-    super(topia, options.credentials);
+    super(topia, { profileId: options.profileId, ...options.credentials });
     this.profileId = options.profileId;
     this.dataObject = {};
     this.profile = {};
