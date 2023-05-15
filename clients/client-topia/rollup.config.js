@@ -10,15 +10,18 @@ export default {
   input: ["src/index.ts"],
   output: [
     {
-      dir: "dist",
       esModule: true,
       exports: "auto",
       format: "esm",
+      file: "dist/index.js",
     },
     {
       file: "dist/index.cjs",
       format: "cjs",
     },
+    {
+      file: "dist/index.d.ts", format: "es"
+    }
   ],
   plugins: [
     commonjs({

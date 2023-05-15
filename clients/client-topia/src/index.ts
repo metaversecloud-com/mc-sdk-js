@@ -24,6 +24,8 @@ export type {
 } from "types";
 export * from "interfaces";
 
+export { Asset, DroppedAsset, SDKController,  World, User, Scene, WorldActivity, Visitor } from "controllers";
+
 Error.stackTraceLimit = 20;
 process.on("unhandledRejection", (reason: any) => {
   if (reason && reason.data) {
