@@ -143,12 +143,14 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
+   * @deprecated Please use fetchDroppedAssetsByUniqueNameSceneDropId().
+   *
    * @summary
    * Retrieve all assets dropped in a world matching uniqueName.
    *
    * @usage
    * ```ts
-   * await world.fetchDroppedAssets();
+   * await world.fetchDroppedAssetsWithUniqueName();
    * const assets = world.droppedAssets;
    * ```
    */
@@ -166,6 +168,55 @@ export class World extends SDKController implements WorldInterface {
         `/world/${this.urlSlug}/assets-with-unique-name/${uniqueName}?${isPartial ? `partial=${isPartial}&` : ""}${
           isReversed ? `reversed=${isReversed}` : ""
         }`,
+        this.requestOptions,
+      );
+      // create temp map and then update private property only once
+      const droppedAssets: DroppedAsset[] = [];
+      for (const asset of response.data.assets) {
+        droppedAssets.push(
+          new DroppedAsset(this.topia, asset.id, this.urlSlug, {
+            attributes: asset,
+            credentials: this.credentials,
+          }),
+        );
+      }
+      return droppedAssets;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Get dropped assets by uniqueName and/or dropSceneId.
+   *
+   * @usage
+   * ```ts
+   * await world.fetchDroppedAssetsByUniqueNameSceneDropId({
+   *   isPartial: false,
+   *   isReversed: false,
+   *   sceneDropId: "sceneDropIdExample",
+   *   uniqueName: "uniqueNameExample",
+   * });
+   * const assets = world.droppedAssets;
+   * ```
+   */
+  async fetchDroppedAssetsByUniqueNameSceneDropId({
+    isPartial = false,
+    isReversed = false,
+    sceneDropId,
+    uniqueName,
+  }: {
+    isPartial?: boolean;
+    isReversed?: boolean;
+    sceneDropId: string;
+    uniqueName: string;
+  }): Promise<DroppedAsset[]> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/assets-with-unique-name?${isPartial ? `partial=${isPartial}&` : ""}${
+          isReversed ? `reversed=${isReversed}` : ""
+        }${sceneDropId ? `sceneDropId=${sceneDropId}&` : ""}${uniqueName ? `uniqueName=${uniqueName}&` : ""}`,
         this.requestOptions,
       );
       // create temp map and then update private property only once
