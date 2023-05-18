@@ -213,10 +213,12 @@ export class World extends SDKController implements WorldInterface {
     uniqueName: string;
   }): Promise<DroppedAsset[]> {
     try {
+      if (!sceneDropId && !uniqueName) throw this.errorHandler({ message: "A sceneDropId or uniqueName is required." });
+      const query = `${isPartial ? `partial=${isPartial}&` : ""}${isReversed ? `reversed=${isReversed}&` : ""}${
+        sceneDropId ? `sceneDropId=${sceneDropId}&` : ""
+      }${uniqueName ? `uniqueName=${uniqueName}&` : ""}`;
       const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/assets-with-unique-name?${isPartial ? `partial=${isPartial}&` : ""}${
-          isReversed ? `reversed=${isReversed}` : ""
-        }${sceneDropId ? `sceneDropId=${sceneDropId}&` : ""}${uniqueName ? `uniqueName=${uniqueName}&` : ""}`,
+        `/world/${this.urlSlug}/assets-by-unique-name-scene-id?${query.slice(0, -1)}`,
         this.requestOptions,
       );
       // create temp map and then update private property only once
