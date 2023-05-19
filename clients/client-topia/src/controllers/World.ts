@@ -143,8 +143,6 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
-   * @deprecated Please use fetchDroppedAssetsByUniqueNameSceneDropId().
-   *
    * @summary
    * Retrieve all assets dropped in a world matching uniqueName.
    *
@@ -188,37 +186,30 @@ export class World extends SDKController implements WorldInterface {
 
   /**
    * @summary
-   * Get dropped assets by uniqueName and/or dropSceneId.
+   * Retrieve all assets dropped in a world matching dropSceneId.
    *
    * @usage
    * ```ts
-   * await world.fetchDroppedAssetsByUniqueNameSceneDropId({
-   *   isPartial: false,
-   *   isReversed: false,
+   * await world.fetchDroppedAssetsBySceneDropId({
    *   sceneDropId: "sceneDropIdExample",
-   *   uniqueName: "uniqueNameExample",
+   *   uniqueName: "optionalUniqueNameExample",
    * });
    * const assets = world.droppedAssets;
    * ```
    */
-  async fetchDroppedAssetsByUniqueNameSceneDropId({
-    isPartial = false,
-    isReversed = false,
+  async fetchDroppedAssetsBySceneDropId({
     sceneDropId,
     uniqueName,
   }: {
-    isPartial?: boolean;
-    isReversed?: boolean;
     sceneDropId: string;
-    uniqueName: string;
+    uniqueName?: string;
   }): Promise<DroppedAsset[]> {
     try {
-      if (!sceneDropId && !uniqueName) throw this.errorHandler({ message: "A sceneDropId or uniqueName is required." });
-      const query = `${isPartial ? `partial=${isPartial}&` : ""}${isReversed ? `reversed=${isReversed}&` : ""}${
-        sceneDropId ? `sceneDropId=${sceneDropId}&` : ""
-      }${uniqueName ? `uniqueName=${uniqueName}&` : ""}`;
+      if (!sceneDropId) throw this.errorHandler({ message: "A sceneDropId is required." });
       const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/assets-by-unique-name-scene-id?${query.slice(0, -1)}`,
+        `/world/${this.urlSlug}/assets-with-scene-drop-id/${sceneDropId}?${
+          uniqueName ? `?uniqueName=${uniqueName}` : ""
+        }`,
         this.requestOptions,
       );
       // create temp map and then update private property only once
