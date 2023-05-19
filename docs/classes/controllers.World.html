@@ -64,6 +64,7 @@
 <a href="controllers.World.html#fetchDataObject" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>fetch<wbr/>Data<wbr/>Object</span></a>
 <a href="controllers.World.html#fetchDetails" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>fetch<wbr/>Details</span></a>
 <a href="controllers.World.html#fetchDroppedAssets" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>fetch<wbr/>Dropped<wbr/>Assets</span></a>
+<a href="controllers.World.html#fetchDroppedAssetsByUniqueNameSceneDropId" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>fetch<wbr/>Dropped<wbr/>Assets<wbr/>By<wbr/>Unique<wbr/>Name<wbr/>Scene<wbr/>Drop<wbr/>Id</span></a>
 <a href="controllers.World.html#fetchDroppedAssetsWithUniqueName" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>fetch<wbr/>Dropped<wbr/>Assets<wbr/>With<wbr/>Unique<wbr/>Name</span></a>
 <a href="controllers.World.html#incrementDataObjectValue" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>increment<wbr/>Data<wbr/>Object<wbr/>Value</span></a>
 <a href="controllers.World.html#replaceScene" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>replace<wbr/>Scene</span></a>
@@ -175,7 +176,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.WorldInterface.html">WorldInterface</a>.<a href="../interfaces/interfaces.WorldInterface.html#dropScene">dropScene</a></p>
 <ul>
-<li>Defined in controllers/World.ts:232</li></ul></aside></li></ul></section>
+<li>Defined in controllers/World.ts:283</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="errorHandler" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>error<wbr/>Handler</span><a href="#errorHandler" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -227,7 +228,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.WorldInterface.html">WorldInterface</a>.<a href="../interfaces/interfaces.WorldInterface.html#fetchDataObject">fetchDataObject</a></p>
 <ul>
-<li>Defined in controllers/World.ts:287</li></ul></aside></li></ul></section>
+<li>Defined in controllers/World.ts:338</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fetchDetails" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>fetch<wbr/>Details</span><a href="#fetchDetails" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -258,15 +259,45 @@
 <p>Implementation of <a href="../interfaces/interfaces.WorldInterface.html">WorldInterface</a>.<a href="../interfaces/interfaces.WorldInterface.html#fetchDroppedAssets">fetchDroppedAssets</a></p>
 <ul>
 <li>Defined in controllers/World.ts:125</li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fetchDroppedAssetsByUniqueNameSceneDropId" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>fetch<wbr/>Dropped<wbr/>Assets<wbr/>By<wbr/>Unique<wbr/>Name<wbr/>Scene<wbr/>Drop<wbr/>Id</span><a href="#fetchDroppedAssetsByUniqueNameSceneDropId" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="fetchDroppedAssetsByUniqueNameSceneDropId.fetchDroppedAssetsByUniqueNameSceneDropId-1">fetch<wbr/>Dropped<wbr/>Assets<wbr/>By<wbr/>Unique<wbr/>Name<wbr/>Scene<wbr/>Drop<wbr/>Id<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>isPartial<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>isReversed<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>sceneDropId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>uniqueName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="controllers.DroppedAsset.html" class="tsd-signature-type" data-tsd-kind="Class">DroppedAsset</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><a href="#fetchDroppedAssetsByUniqueNameSceneDropId.fetchDroppedAssetsByUniqueNameSceneDropId-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography">
+<h3>Summary</h3><p>Get dropped assets by uniqueName and/or dropSceneId.</p>
+
+<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">world</span><span class="hl-1">.</span><span class="hl-3">fetchDroppedAssetsByUniqueNameSceneDropId</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-2">isPartial:</span><span class="hl-1"> </span><span class="hl-5">false</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">isReversed:</span><span class="hl-1"> </span><span class="hl-5">false</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">sceneDropId:</span><span class="hl-1"> </span><span class="hl-4">&quot;sceneDropIdExample&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">uniqueName:</span><span class="hl-1"> </span><span class="hl-4">&quot;uniqueNameExample&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">});</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">assets</span><span class="hl-1"> = </span><span class="hl-2">world</span><span class="hl-1">.</span><span class="hl-2">droppedAssets</span><span class="hl-1">;</span>
+</code></pre>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>__namedParameters: <span class="tsd-signature-symbol">{ </span><br/><span>    </span>isPartial<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>isReversed<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>sceneDropId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>uniqueName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h5>
+<ul class="tsd-parameters">
+<li class="tsd-parameter">
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> is<wbr/>Partial<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5></li>
+<li class="tsd-parameter">
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> is<wbr/>Reversed<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5></li>
+<li class="tsd-parameter">
+<h5>scene<wbr/>Drop<wbr/>Id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li>
+<li class="tsd-parameter">
+<h5>unique<wbr/>Name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li></ul></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="controllers.DroppedAsset.html" class="tsd-signature-type" data-tsd-kind="Class">DroppedAsset</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in controllers/World.ts:204</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fetchDroppedAssetsWithUniqueName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>fetch<wbr/>Dropped<wbr/>Assets<wbr/>With<wbr/>Unique<wbr/>Name</span><a href="#fetchDroppedAssetsWithUniqueName" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="fetchDroppedAssetsWithUniqueName.fetchDroppedAssetsWithUniqueName-1">fetch<wbr/>Dropped<wbr/>Assets<wbr/>With<wbr/>Unique<wbr/>Name<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>isPartial<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>isReversed<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>uniqueName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="controllers.DroppedAsset.html" class="tsd-signature-type" data-tsd-kind="Class">DroppedAsset</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><a href="#fetchDroppedAssetsWithUniqueName.fetchDroppedAssetsWithUniqueName-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography">
+<h3>Deprecated</h3><p>Please use fetchDroppedAssetsByUniqueNameSceneDropId().</p>
+
 <h3>Summary</h3><p>Retrieve all assets dropped in a world matching uniqueName.</p>
 
-<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">world</span><span class="hl-1">.</span><span class="hl-3">fetchDroppedAssets</span><span class="hl-1">();</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">assets</span><span class="hl-1"> = </span><span class="hl-2">world</span><span class="hl-1">.</span><span class="hl-2">droppedAssets</span><span class="hl-1">;</span>
+<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">world</span><span class="hl-1">.</span><span class="hl-3">fetchDroppedAssetsWithUniqueName</span><span class="hl-1">();</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">assets</span><span class="hl-1"> = </span><span class="hl-2">world</span><span class="hl-1">.</span><span class="hl-2">droppedAssets</span><span class="hl-1">;</span>
 </code></pre>
 </div>
 <div class="tsd-parameters">
@@ -284,7 +315,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="controllers.DroppedAsset.html" class="tsd-signature-type" data-tsd-kind="Class">DroppedAsset</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.WorldInterface.html">WorldInterface</a>.<a href="../interfaces/interfaces.WorldInterface.html#fetchDroppedAssetsWithUniqueName">fetchDroppedAssetsWithUniqueName</a></p>
 <ul>
-<li>Defined in controllers/World.ts:155</li></ul></aside></li></ul></section>
+<li>Defined in controllers/World.ts:157</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="incrementDataObjectValue" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>increment<wbr/>Data<wbr/>Object<wbr/>Value</span><a href="#incrementDataObjectValue" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -317,7 +348,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.WorldInterface.html">WorldInterface</a>.<a href="../interfaces/interfaces.WorldInterface.html#incrementDataObjectValue">incrementDataObjectValue</a></p>
 <ul>
-<li>Defined in controllers/World.ts:376</li></ul></aside></li></ul></section>
+<li>Defined in controllers/World.ts:427</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="replaceScene" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>replace<wbr/>Scene</span><a href="#replaceScene" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -337,7 +368,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.WorldInterface.html">WorldInterface</a>.<a href="../interfaces/interfaces.WorldInterface.html#replaceScene">replaceScene</a></p>
 <ul>
-<li>Defined in controllers/World.ts:269</li></ul></aside></li></ul></section>
+<li>Defined in controllers/World.ts:320</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setDataObject" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Data<wbr/>Object</span><a href="#setDataObject" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -368,7 +399,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.WorldInterface.html">WorldInterface</a>.<a href="../interfaces/interfaces.WorldInterface.html#setDataObject">setDataObject</a></p>
 <ul>
-<li>Defined in controllers/World.ts:314</li></ul></aside></li></ul></section>
+<li>Defined in controllers/World.ts:365</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="topiaPublicApi" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>topia<wbr/>Public<wbr/>Api</span><a href="#topiaPublicApi" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -401,7 +432,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.WorldInterface.html">WorldInterface</a>.<a href="../interfaces/interfaces.WorldInterface.html#updateCustomTextDroppedAssets">updateCustomTextDroppedAssets</a></p>
 <ul>
-<li>Defined in controllers/World.ts:207</li></ul></aside></li></ul></section>
+<li>Defined in controllers/World.ts:258</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateDataObject" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Data<wbr/>Object</span><a href="#updateDataObject" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -432,7 +463,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.WorldInterface.html">WorldInterface</a>.<a href="../interfaces/interfaces.WorldInterface.html#updateDataObject">updateDataObject</a></p>
 <ul>
-<li>Defined in controllers/World.ts:345</li></ul></aside></li></ul></section>
+<li>Defined in controllers/World.ts:396</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateDetails" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Details</span><a href="#updateDetails" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -495,6 +526,7 @@
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="controllers.World.html#fetchDataObject" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>fetch<wbr/>Data<wbr/>Object</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="controllers.World.html#fetchDetails" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>fetch<wbr/>Details</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="controllers.World.html#fetchDroppedAssets" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>fetch<wbr/>Dropped<wbr/>Assets</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="controllers.World.html#fetchDroppedAssetsByUniqueNameSceneDropId" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>fetch<wbr/>Dropped<wbr/>Assets<wbr/>By<wbr/>Unique<wbr/>Name<wbr/>Scene<wbr/>Drop<wbr/>Id</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="controllers.World.html#fetchDroppedAssetsWithUniqueName" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>fetch<wbr/>Dropped<wbr/>Assets<wbr/>With<wbr/>Unique<wbr/>Name</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="controllers.World.html#incrementDataObjectValue" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>increment<wbr/>Data<wbr/>Object<wbr/>Value</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="controllers.World.html#replaceScene" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>replace<wbr/>Scene</a></li>

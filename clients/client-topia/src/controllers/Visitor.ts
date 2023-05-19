@@ -171,7 +171,7 @@ export class Visitor extends User implements VisitorInterface {
    *
    * @usage
    * ```ts
-   * const dataObject = await visitor.fetchVisitorDataObject();
+   * const dataObject = await visitor.fetchDataObject();
    * ```
    */
   async fetchDataObject(): Promise<void | ResponseType> {
@@ -195,7 +195,7 @@ export class Visitor extends User implements VisitorInterface {
    *
    * @usage
    * ```ts
-   * await visitor.setVisitorDataObject({
+   * await visitor.setDataObject({
    *   "exampleKey": "exampleValue",
    * });
    * ```
@@ -225,7 +225,7 @@ export class Visitor extends User implements VisitorInterface {
    *
    * @usage
    * ```ts
-   * await visitor.updateVisitorDataObject({
+   * await visitor.updateDataObject({
    *   "exampleKey": "exampleValue",
    * });
    * ```
