@@ -59,7 +59,7 @@ export interface WorldInterface extends SDKInterface, WorldDetailsInterface {
     assetSuffix: string;
     position: object;
     sceneId: string;
-  }): Promise<void | ResponseType>;
+  }): Promise<object | ResponseType>;
   replaceScene(sceneId: string): Promise<void | ResponseType>;
   fetchDataObject(): Promise<void | ResponseType>;
   setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
