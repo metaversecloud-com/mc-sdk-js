@@ -148,7 +148,7 @@ export class World extends SDKController implements WorldInterface {
    *
    * @usage
    * ```ts
-   * await world.fetchDroppedAssets();
+   * await world.fetchDroppedAssetsWithUniqueName();
    * const assets = world.droppedAssets;
    * ```
    */
@@ -165,6 +165,50 @@ export class World extends SDKController implements WorldInterface {
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/assets-with-unique-name/${uniqueName}?${isPartial ? `partial=${isPartial}&` : ""}${
           isReversed ? `reversed=${isReversed}` : ""
+        }`,
+        this.requestOptions,
+      );
+      // create temp map and then update private property only once
+      const droppedAssets: DroppedAsset[] = [];
+      for (const asset of response.data.assets) {
+        droppedAssets.push(
+          new DroppedAsset(this.topia, asset.id, this.urlSlug, {
+            attributes: asset,
+            credentials: this.credentials,
+          }),
+        );
+      }
+      return droppedAssets;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Retrieve all assets dropped in a world matching dropSceneId.
+   *
+   * @usage
+   * ```ts
+   * await world.fetchDroppedAssetsBySceneDropId({
+   *   sceneDropId: "sceneDropIdExample",
+   *   uniqueName: "optionalUniqueNameExample",
+   * });
+   * const assets = world.droppedAssets;
+   * ```
+   */
+  async fetchDroppedAssetsBySceneDropId({
+    sceneDropId,
+    uniqueName,
+  }: {
+    sceneDropId: string;
+    uniqueName?: string;
+  }): Promise<DroppedAsset[]> {
+    try {
+      if (!sceneDropId) throw this.errorHandler({ message: "A sceneDropId is required." });
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/assets-with-scene-drop-id/${sceneDropId}?${
+          uniqueName ? `?uniqueName=${uniqueName}` : ""
         }`,
         this.requestOptions,
       );

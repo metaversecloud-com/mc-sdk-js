@@ -192,7 +192,7 @@ export class User extends SDKController implements UserInterface {
    *
    * @usage
    * ```ts
-   * await user.updateUserDataObject({
+   * await user.updateDataObject({
    *   "exampleKey": "exampleValue",
    * });
    * ```
