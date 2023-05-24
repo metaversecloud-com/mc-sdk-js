@@ -186,7 +186,7 @@ export class World extends SDKController implements WorldInterface {
 
   /**
    * @summary
-   * Retrieve all assets dropped in a world matching dropSceneId.
+   * Retrieve all assets dropped in a world matching sceneDropId.
    *
    * @usage
    * ```ts
@@ -259,7 +259,7 @@ export class World extends SDKController implements WorldInterface {
 
   /**
    * @summary
-   * Drop a scene in a world.
+   * Drops a scene in a world and returns sceneDropId.
    *
    * @usage
    * ```ts
@@ -272,6 +272,11 @@ export class World extends SDKController implements WorldInterface {
    *   "assetSuffix": "string"
    * });
    * ```
+   *
+   * @result
+   * ```ts
+   * { sceneDropId: sceneId-timestamp, success: true }
+   * ```
    */
   async dropScene({
     assetSuffix,
@@ -281,13 +286,14 @@ export class World extends SDKController implements WorldInterface {
     assetSuffix: string;
     position: object;
     sceneId: string;
-  }): Promise<void | ResponseType> {
+  }): Promise<object | ResponseType> {
     try {
-      await this.topiaPublicApi().post(
+      const result = await this.topiaPublicApi().post(
         `/world/${this.urlSlug}/drop-scene`,
         { assetSuffix, position, sceneId },
         this.requestOptions,
       );
+      return result;
     } catch (error) {
       throw this.errorHandler({ error });
     }
