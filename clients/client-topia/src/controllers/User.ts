@@ -27,6 +27,7 @@ export class User extends SDKController implements UserInterface {
   dataObject?: object | null | undefined;
   profile?: Record<string, any>;
 
+  #adminWorldsMap: { [key: string]: World };
   #assetsMap: { [key: string]: Asset };
   #scenesMap: { [key: string]: Scene };
   #worldsMap: { [key: string]: World };
@@ -37,9 +38,14 @@ export class User extends SDKController implements UserInterface {
     this.dataObject = {};
     this.profile = {};
 
+    this.#adminWorldsMap = {};
     this.#assetsMap = {};
     this.#scenesMap = {};
     this.#worldsMap = {};
+  }
+
+  get adminWorlds() {
+    return this.#adminWorldsMap;
   }
 
   get assets() {
@@ -125,6 +131,34 @@ export class User extends SDKController implements UserInterface {
         });
       }
       this.#worldsMap = tempWorldsMap;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Retrieves all worlds a user with matching API Key is an admin in,
+   * creates a new World object for each,
+   * and creates new map of Worlds accessible via user.adminWorlds.
+   *
+   * @usage
+   * ```ts
+   * await user.fetchAdminWorldsByKey();
+   * const adminWorlds = user.adminWorlds;
+   * ```
+   */
+  async fetchAdminWorldsByKey(): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get("/user/admin-worlds", this.requestOptions);
+      const tempAdminWorldsMap: { [key: string]: World } = {};
+      for (const i in response.data) {
+        const urlSlug = response.data[i];
+        tempAdminWorldsMap[urlSlug] = new World(this.topia, urlSlug, {
+          credentials: this.credentials,
+        });
+      }
+      this.#adminWorldsMap = tempAdminWorldsMap;
     } catch (error) {
       throw this.errorHandler({ error });
     }
