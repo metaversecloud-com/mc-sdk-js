@@ -166,6 +166,30 @@ export class User extends SDKController implements UserInterface {
 
   /**
    * @summary
+   * Retrieves ids of all dropped assets in all worlds with a matching interactivePublicKey.
+   *
+   * @usage
+   * ```ts
+   * await user.fetchInteractiveWorldsByKey("interactivePublicKeyExample");
+   * const interactiveWorlds = user.interactiveWorlds;
+   * ```
+   */
+  async fetchInteractiveWorldsByKey(interactivePublicKey: string): Promise<object | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/user/interactive-worlds?interactivePublicKey=${interactivePublicKey}`,
+        this.requestOptions,
+      );
+      console.log("🚀 ~ file: User.ts:187 ~ User ~ fetchInteractiveWorldsByKey ~ response.data:", response.data);
+      return response.data;
+    } catch (error) {
+      console.log("🚀 ~ file: User.ts:186 ~ User ~ fetchInteractiveWorldsByKey ~ error:", error);
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
    * Retrieves the data object for a user.
    *
    * @usage
