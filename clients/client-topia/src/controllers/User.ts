@@ -180,10 +180,8 @@ export class User extends SDKController implements UserInterface {
         `/user/interactive-worlds?interactivePublicKey=${interactivePublicKey}`,
         this.requestOptions,
       );
-      console.log("🚀 ~ file: User.ts:187 ~ User ~ fetchInteractiveWorldsByKey ~ response.data:", response.data);
       return response.data;
     } catch (error) {
-      console.log("🚀 ~ file: User.ts:186 ~ User ~ fetchInteractiveWorldsByKey ~ error:", error);
       throw this.errorHandler({ error });
     }
   }
