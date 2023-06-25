@@ -27,6 +27,7 @@ export class World extends SDKController implements WorldInterface {
   urlSlug: string;
   #droppedAssetsMap: { [key: string]: DroppedAsset };
   dataObject?: object | null | undefined;
+  sceneDropIds?: [string] | null | undefined;
 
   constructor(topia: Topia, urlSlug: string, options: WorldOptionalInterface = { attributes: {}, credentials: {} }) {
     super(topia, options.credentials);
@@ -255,6 +256,33 @@ export class World extends SDKController implements WorldInterface {
     });
     const outcomes = await Promise.all(allPromises);
     return outcomes;
+  }
+
+  /**
+   * @summary
+   * Fetch a list of all scene drop ids in a world that include at least one asset with an interactivePublicKey
+   *
+   * @usage
+   * ```ts
+   * await world.fetchSceneDropIds();
+   * ```
+   *
+   * @result
+   * ```ts
+   * { sceneDropIds: [] }
+   * ```
+   */
+  async fetchSceneDropIds(): Promise<object | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/scenes`,
+        this.requestOptions,
+      );
+      this.sceneDropIds = response.data;
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
   }
 
   /**
