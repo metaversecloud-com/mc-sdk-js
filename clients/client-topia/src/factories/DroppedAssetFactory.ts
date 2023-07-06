@@ -20,10 +20,12 @@ export class DroppedAssetFactory extends SDKController {
   async drop(
     asset: Asset,
     {
+      interactivePublicKey,
       position: { x, y },
       uniqueName,
       urlSlug,
     }: {
+      interactivePublicKey?: string;
       position: {
         x: number;
         y: number;
@@ -37,6 +39,7 @@ export class DroppedAssetFactory extends SDKController {
         `/world/${urlSlug}/assets`,
         {
           assetId: asset.id,
+          interactivePublicKey,
           position: { x, y },
           uniqueName,
         },
