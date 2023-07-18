@@ -167,6 +167,23 @@ export class Visitor extends User implements VisitorInterface {
 
   /**
    * @summary
+   * Mute and turn video off for a visitor currently in a world.
+   *
+   * @usage
+   * ```ts
+   * await visitor.turnAVOff();
+   * ```
+   */
+  async turnAVOff(): Promise<void | ResponseType> {
+    try {
+      await this.topiaPublicApi().put(`/world/${this.urlSlug}/visitors/${this.id}/turn-av-off`, this.requestOptions);
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
    * Retrieves the data object for a visitor.
    *
    * @usage
