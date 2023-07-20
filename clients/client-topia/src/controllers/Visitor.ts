@@ -176,7 +176,11 @@ export class Visitor extends User implements VisitorInterface {
    */
   async turnAVOff(): Promise<void | ResponseType> {
     try {
-      await this.topiaPublicApi().put(`/world/${this.urlSlug}/visitors/${this.id}/turn-av-off`, this.requestOptions);
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/turn-av-off`,
+        {},
+        this.requestOptions,
+      );
     } catch (error) {
       throw this.errorHandler({ error });
     }
