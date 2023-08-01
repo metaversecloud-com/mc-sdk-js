@@ -5,5 +5,6 @@ export * from "./SDKInterfaces";
 export * from "./TopiaInterfaces";
 export * from "./UserInterfaces";
 export * from "./VisitorInterfaces";
+export * from "./WebhookInterfaces";
 export * from "./WorldActivityInterfaces";
 export * from "./WorldInterfaces";
