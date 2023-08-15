@@ -1,5 +1,6 @@
 import { InteractiveCredentials, ResponseType } from "types";
 import { SDKInterface } from "interfaces/SDKInterfaces";
+import { WebhookInterface } from "./WebhookInterfaces";
 import { DroppedAsset } from "controllers/DroppedAsset";
 
 export interface WorldDetailsInterface {
@@ -70,4 +71,8 @@ export interface WorldInterface extends SDKInterface, WorldDetailsInterface {
 export interface WorldOptionalInterface {
   attributes?: WorldDetailsInterface | object;
   credentials?: InteractiveCredentials | object;
+}
+
+export interface WorldWebhooksInterface {
+  webhooks: Array<WebhookInterface>;
 }

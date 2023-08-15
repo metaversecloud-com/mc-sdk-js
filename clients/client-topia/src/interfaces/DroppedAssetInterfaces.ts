@@ -115,6 +115,7 @@ export interface DroppedAssetInterface extends AssetInterface {
   portalCoordsY?: number | null;
   showMediaAsIfPeer?: boolean | null;
   syncUserMedia?: boolean | null;
+  uniqueName?: string | null;
   urlSlug: string;
   tagJson?: string | null;
   text?: string | null;
