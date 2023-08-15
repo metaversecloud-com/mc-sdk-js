@@ -6,7 +6,7 @@ import { SDKController } from "controllers/SDKController";
 import { Topia } from "controllers/Topia";
 
 // interfaces
-import { WorldInterface, WorldDetailsInterface, WorldOptionalInterface } from "interfaces";
+import { WorldInterface, WorldDetailsInterface, WorldOptionalInterface, WorldWebhooksInterface } from "interfaces";
 
 // types
 import { ResponseType } from "types";
@@ -28,6 +28,7 @@ export class World extends SDKController implements WorldInterface {
   #droppedAssetsMap: { [key: string]: DroppedAsset };
   dataObject?: object | null | undefined;
   sceneDropIds?: [string] | null | undefined;
+  webhooks?: WorldWebhooksInterface | null | undefined;
 
   constructor(topia: Topia, urlSlug: string, options: WorldOptionalInterface = { attributes: {}, credentials: {} }) {
     super(topia, options.credentials);
@@ -352,6 +353,7 @@ export class World extends SDKController implements WorldInterface {
     }
   }
 
+  ////////// data objects
   /**
    * @summary
    * Retrieves the data object for a world. Must have valid interactive credentials from a visitor in the world.
@@ -463,6 +465,29 @@ export class World extends SDKController implements WorldInterface {
         { path, amount, lock },
         this.requestOptions,
       );
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  ////////// webhooks
+  /**
+   * @summary
+   * Retrieve all webhooks in a world.
+   *
+   * @usage
+   * ```ts
+   * await world.fetchWebhooks();
+   * const webhooks = world.webhooks;
+   * ```
+   */
+  async fetchWebhooks(): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/webhooks`,
+        this.requestOptions,
+      );
+      this.webhooks = response.data;
     } catch (error) {
       throw this.errorHandler({ error });
     }
