@@ -22,6 +22,7 @@ export class DroppedAssetFactory extends SDKController {
     {
       interactivePublicKey,
       position: { x, y },
+      sceneDropId,
       uniqueName,
       urlSlug,
     }: {
@@ -30,6 +31,7 @@ export class DroppedAssetFactory extends SDKController {
         x: number;
         y: number;
       };
+      sceneDropId?: string;
       uniqueName?: string;
       urlSlug: string;
     },
@@ -41,6 +43,7 @@ export class DroppedAssetFactory extends SDKController {
           assetId: asset.id,
           interactivePublicKey,
           position: { x, y },
+          sceneDropId,
           uniqueName,
         },
         asset.requestOptions,
