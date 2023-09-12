@@ -389,9 +389,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * await droppedAsset.updatePosition(100,200);
    * ```
    */
-  updatePosition(x: number, y: number): Promise<void | ResponseType> {
+  updatePosition(x: number, y: number, yOrderAdjust: number): Promise<void | ResponseType> {
     try {
-      return this.#updateDroppedAsset({ x, y }, "set-position");
+      return this.#updateDroppedAsset({ x, y, yOrderAdjust }, "set-position");
     } catch (error) {
       throw this.errorHandler({ error });
     }

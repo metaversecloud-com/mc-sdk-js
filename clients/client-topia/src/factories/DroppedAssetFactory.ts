@@ -25,6 +25,7 @@ export class DroppedAssetFactory extends SDKController {
       sceneDropId,
       uniqueName,
       urlSlug,
+      yOrderAdjust,
     }: {
       interactivePublicKey?: string;
       position: {
@@ -34,6 +35,7 @@ export class DroppedAssetFactory extends SDKController {
       sceneDropId?: string;
       uniqueName?: string;
       urlSlug: string;
+      yOrderAdjust?: number;
     },
   ): Promise<DroppedAsset> {
     try {
@@ -45,6 +47,7 @@ export class DroppedAssetFactory extends SDKController {
           position: { x, y },
           sceneDropId,
           uniqueName,
+          yOrderAdjust,
         },
         asset.requestOptions,
       );
