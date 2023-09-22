@@ -41,7 +41,7 @@ export interface DroppedAssetInterface extends AssetInterface {
   }: UpdateMediaTypeInterface): Promise<void | ResponseType>;
   updateMuteZone(isMutezone: boolean): Promise<void | ResponseType>;
   updateWebhookZone(isWebhookZoneEnabled: boolean): Promise<void | ResponseType>;
-  updatePosition(x: number, y: number): Promise<void | ResponseType>;
+  updatePosition(x: number, y: number, yOrderAdjust: number): Promise<void | ResponseType>;
   updatePrivateZone({
     isPrivateZone,
     isPrivateZoneChatDisabled,
