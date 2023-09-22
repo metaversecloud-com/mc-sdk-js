@@ -40,7 +40,14 @@ export class SDKController implements SDKInterface {
   topia: Topia;
 
   constructor(topia: Topia, credentials: InteractiveCredentials = {}) {
-    const { apiKey = null, assetId = null, interactiveNonce = null, profileId = null, visitorId = null } = credentials;
+    const {
+      apiKey = null,
+      assetId = null,
+      interactiveNonce = null,
+      profileId = null,
+      urlSlug = null,
+      visitorId = null,
+    } = credentials;
     this.topia = topia;
     this.credentials = credentials;
     this.requestOptions = {};
@@ -49,7 +56,7 @@ export class SDKController implements SDKInterface {
     const headers: any = {};
 
     try {
-      if (topia.interactiveSecret && (profileId || assetId)) {
+      if (topia.interactiveSecret && (profileId || assetId || urlSlug)) {
         payload = {
           interactiveNonce,
           visitorId,

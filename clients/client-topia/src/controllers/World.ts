@@ -31,7 +31,7 @@ export class World extends SDKController implements WorldInterface {
   webhooks?: WorldWebhooksInterface | null | undefined;
 
   constructor(topia: Topia, urlSlug: string, options: WorldOptionalInterface = { attributes: {}, credentials: {} }) {
-    super(topia, options.credentials);
+    super(topia, { urlSlug, ...options.credentials });
     Object.assign(this, options.attributes);
     this.urlSlug = urlSlug;
     this.#droppedAssetsMap = {};
