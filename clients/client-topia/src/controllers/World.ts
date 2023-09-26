@@ -28,6 +28,7 @@ export class World extends SDKController implements WorldInterface {
   #droppedAssetsMap: { [key: string]: DroppedAsset };
   dataObject?: object | null | undefined;
   sceneDropIds?: [string] | null | undefined;
+  scenes?: [string] | null | undefined;
   webhooks?: WorldWebhooksInterface | null | undefined;
 
   constructor(topia: Topia, urlSlug: string, options: WorldOptionalInterface = { attributes: {}, credentials: {} }) {
@@ -260,6 +261,8 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
+   * @deprecated Use {@link fetchScenes} instead.
+   *
    * @summary
    * Fetch a list of all scene drop ids in a world that include at least one asset with an interactivePublicKey
    *
@@ -280,6 +283,47 @@ export class World extends SDKController implements WorldInterface {
         this.requestOptions,
       );
       this.sceneDropIds = response.data;
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Fetch a list of all scene drop ids and dropped assets in a world
+   *
+   * @usage
+   * ```ts
+   * await world.fetchScenes();
+   * ```
+   *
+   * @result
+   * ```ts
+   * { "scenes": {
+   *     "sceneDropId_1": {
+   *         "droppedAssets": {
+   *             "droppedAssetId_1": {
+   *                 "metaName": "hello"
+   *                 "metaNameReversed": "olleh"
+   *             },
+   *             "droppedAssetId_2": {
+   *                 "metaName": "world"
+   *                 "metaNameReversed": "dlorw"
+   *             }
+   *         }
+   *     },
+   *   }
+   * }
+   * ```
+   */
+  async fetchScenes(): Promise<object | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/scenes-with-dropped-assets`,
+        this.requestOptions,
+      );
+      this.scenes = response.data;
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error });
