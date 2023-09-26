@@ -97,7 +97,7 @@ describe("DroppedAsset Class", () => {
 
   it("should update dropped asset position", async () => {
     mock.onPut(`${BASE_URL}/set-position`).reply(200);
-    await testDroppedAsset.updatePosition(100, 100);
+    await testDroppedAsset.updatePosition(100, 100, 0);
     expect(mock.history.put.length).toBe(1);
   });
 

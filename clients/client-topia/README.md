@@ -10,8 +10,22 @@ A Topia provided API Key can be included with every object initialization as a p
 
 ### Want to build interactive assets? This is how you can get started:
 
-- Email developers@metaversecloud.com and Topia wil send you a Public/Private key pair.
-- When you want to make an asset “interactive” add your PUBLIC key to the integrations page of the asset editor. Now webhooks that fire from this asset and iframes that open from this asset include the following values:
+Getting a Key Pair:
+
+- Navigate directly to your [integrations page](https://topia.io/t/dashboard/integrations) or follow the steps below from within a world.
+  - Click on your image (or circle) at the top left of the left hand navbar.
+  - Click Edit Profile. This will bring you to a separate dashboard.
+  - Click Integrations on the left nav
+- Click the “Add Key Pair” button. This is going to be your public / private key pair for your app.
+
+Adding a Key Pair to an asset:
+
+Make an asset “interactive” by adding your PUBLIC key to the integrations page of the asset editor.
+
+- Go back to your world. Make sure you are in “Edit Mode” by toggling on Edit on the left nav bar
+- Hover over any asset. Click the pencil icon that should show up on hover and select “Edit”
+- Go to the Integrations tab
+- At the bottom, you'll see a section that says “Add player session credentials to asset interactions”. Toggle that on. Now webhooks that fire from this asset and iframes that open from this asset will include the following values:
   - assetId
   - interactivePublicKey
   - interactiveNonce
