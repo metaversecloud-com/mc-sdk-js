@@ -12,7 +12,13 @@ export class DroppedAssetFactory extends SDKController {
     return new DroppedAsset(this.topia, id, urlSlug, options);
   }
 
-  async createWithUniqueName(
+  async get(id: string, urlSlug: string, options?: DroppedAssetOptionalInterface): Promise<DroppedAsset> {
+    const droppedAsset = new DroppedAsset(this.topia, id, urlSlug, options);
+    await droppedAsset.fetchDroppedAssetById();
+    return droppedAsset;
+  }
+
+  async getWithUniqueName(
     uniqueName: string,
     urlSlug: string,
     interactivePublicKey: string,
@@ -29,12 +35,6 @@ export class DroppedAssetFactory extends SDKController {
     } catch (error) {
       throw this.errorHandler({ error });
     }
-  }
-
-  async get(id: string, urlSlug: string, options?: DroppedAssetOptionalInterface): Promise<DroppedAsset> {
-    const droppedAsset = new DroppedAsset(this.topia, id, urlSlug, options);
-    await droppedAsset.fetchDroppedAssetById();
-    return droppedAsset;
   }
 
   async drop(
