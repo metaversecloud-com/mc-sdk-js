@@ -568,6 +568,49 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     }
   }
 
+  ////////// analytics
+  /**
+   * @summary
+   * Retrieve analytics for a dropped asset by day, week, month, quarter, or year
+   *
+   * @usage
+   * ```ts
+   * const analytics = await droppedAsset.fetchDroppedAssetAnalytics({
+   *   periodType: "quarter",
+   *   dateValue: 3,
+   *   year: 2023,
+   * });
+   * ```
+   */
+  async fetchDroppedAssetAnalytics({
+    periodType,
+    dateValue,
+    year,
+  }: {
+    periodType: "week" | "month" | "quarter" | "year";
+    dateValue: number;
+    year: number;
+  }): Promise<void | ResponseType> {
+    try {
+      let query = "";
+      switch (periodType) {
+        case "week":
+          query = `&week=W${dateValue}`;
+        case "month":
+          query = `&month=${dateValue}`;
+        case "quarter":
+          query = `&quarter=Q${dateValue}`;
+      }
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/dropped-asset-analytics/${this.id}?year=${year}${query}`,
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
   // private methods
   #updateDroppedAsset = async (payload: object, updateType: string): Promise<void | ResponseType> => {
     try {

@@ -536,6 +536,49 @@ export class World extends SDKController implements WorldInterface {
       throw this.errorHandler({ error });
     }
   }
+
+  ////////// analytics
+  /**
+   * @summary
+   * Retrieve world analytics by day, week, month, quarter, or year
+   *
+   * @usage
+   * ```ts
+   * const analytics = await world.fetchWorldAnalytics({
+   *   periodType: "week",
+   *   dateValue: 40,
+   *   year: 2023,
+   * });
+   * ```
+   */
+  async fetchWorldAnalytics({
+    periodType,
+    dateValue,
+    year,
+  }: {
+    periodType: "week" | "month" | "quarter" | "year";
+    dateValue: number;
+    year: number;
+  }): Promise<void | ResponseType> {
+    try {
+      let query = "";
+      switch (periodType) {
+        case "week":
+          query = `&week=W${dateValue}`;
+        case "month":
+          query = `&month=${dateValue}`;
+        case "quarter":
+          query = `&quarter=Q${dateValue}`;
+      }
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/world-analytics?year=${year}${query}`,
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
 }
 
 export default World;
