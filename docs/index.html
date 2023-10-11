@@ -64,12 +64,14 @@
   <h3>Need an API Key to test locally? This is how you can create one:</h3>
 </a>
 <ul>
-<li>While logged in to <a href="https://topia.io/">topia.io</a>, click on your image (or gray circle) in the top left of the screen to open My Account</li>
-<li>In the side menu, select Integrations</li>
+<li>Navigate directly to your <a href="https://topia.io/t/dashboard/integrations">integrations page</a> or follow the steps below from within a world.<ul>
+<li>Click on your image (or circle) at the top left of the left hand navbar.</li>
+<li>Click Edit Profile. This will bring you to a separate dashboard.</li>
+<li>Click Integrations on the left nav</li>
+</ul>
+</li>
 <li>Click Generate New API Key and copy the API Key to be used in your .env and while using <a href="https://sdk-examples.metaversecloud.com">https://sdk-examples.metaversecloud.com</a></li>
 </ul>
-<br>
-
 <p>Alternatively, visitors of a <a href="https://topia.io/">topia.io</a> world interact with each other and the interactively configured assets in your world without the need for an API Key. This is all made possible through Interactive Session credentials passed to the SDK with every request, when applicable. What does this mean for you? Not much, actually! All of the magic happens behind the scenes and all you have to do is make sure that new class constructors include an options object like this: <code>options: WorldOptionalInterface = { attributes: {}, credentials: {} }</code> and all calls to <code>this.topia.axios</code> include the inherited <code>this.requestOptions</code> parameter.</p>
 <p><img src="./InteractiveApplicationDevelopment.png" alt="Interactive Application Development Diagram"></p>
 <br>

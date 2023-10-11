@@ -31,7 +31,7 @@ export class DroppedAssetFactory extends SDKController {
         { headers: { interactiveJWT, publickey: interactivePublicKey } },
       );
       const { id } = response.data;
-      return new DroppedAsset(this.topia, id, urlSlug, { attributes: response.data, credentials: { urlSlug } });
+      return new DroppedAsset(this.topia, id, urlSlug, { attributes: response.data });
     } catch (error) {
       throw this.errorHandler({ error });
     }
