@@ -50,11 +50,11 @@ await DroppedAsset.get(assetId, urlSlug, {
 
 ### Need an API Key to test locally? This is how you can create one:
 
-- While logged in to [topia.io](https://topia.io/), click on your image (or gray circle) in the top left of the screen to open My Account
-- In the side menu, select Integrations
+- Navigate directly to your [integrations page](https://topia.io/t/dashboard/integrations) or follow the steps below from within a world.
+  - Click on your image (or circle) at the top left of the left hand navbar.
+  - Click Edit Profile. This will bring you to a separate dashboard.
+  - Click Integrations on the left nav
 - Click Generate New API Key and copy the API Key to be used in your .env and while using https://sdk-examples.metaversecloud.com
-
-<br>
 
 Alternatively, visitors of a [topia.io](https://topia.io/) world interact with each other and the interactively configured assets in your world without the need for an API Key. This is all made possible through Interactive Session credentials passed to the SDK with every request, when applicable. What does this mean for you? Not much, actually! All of the magic happens behind the scenes and all you have to do is make sure that new class constructors include an options object like this: `options: WorldOptionalInterface = { attributes: {}, credentials: {} }` and all calls to `this.topia.axios` include the inherited `this.requestOptions` parameter.
 

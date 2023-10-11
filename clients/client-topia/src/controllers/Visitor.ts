@@ -36,7 +36,7 @@ export class Visitor extends User implements VisitorInterface {
     urlSlug: string,
     options: VisitorOptionalInterface = { attributes: {}, credentials: {} },
   ) {
-    super(topia, { credentials: options.credentials });
+    super(topia, { credentials: { ...options.credentials, urlSlug } });
     Object.assign(this, options.attributes);
     this.id = id;
     this.urlSlug = urlSlug;
@@ -181,6 +181,33 @@ export class Visitor extends User implements VisitorInterface {
         {},
         this.requestOptions,
       );
+    } catch (error) {
+      throw this.errorHandler({ error });
+    }
+  }
+
+  /**
+   * @summary
+   * Grant expression to a visitor by id or name.
+   *
+   * @usage
+   * ```ts
+   * await visitor.grantExpression({ name: "Eyes" });
+   * ```
+   */
+  async grantExpression({ id, name }: { id?: string; name?: string }): Promise<object | ResponseType> {
+    if (!id && !name) throw "An expression id or name is required.";
+    try {
+      let expressionId = id;
+      if (name) {
+        expressionId = await this.topiaPublicApi().get(`/expressions?name=${name}`, this.requestOptions);
+      }
+      const result = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/grant-expression/${expressionId}`,
+        {},
+        this.requestOptions,
+      );
+      return result;
     } catch (error) {
       throw this.errorHandler({ error });
     }
