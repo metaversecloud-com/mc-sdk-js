@@ -82,9 +82,11 @@ export class SDKController implements SDKInterface {
   errorHandler({
     error,
     message = "Something went wrong. Please try again or contact support.",
+    params,
   }: {
     error?: Error | AxiosError | unknown;
     message?: string;
+    params?: object;
   }) {
     const stackTrace = new Error("Thrown here:");
     let data = {},
@@ -113,6 +115,7 @@ export class SDKController implements SDKInterface {
       data,
       message: errorMessage,
       method,
+      params,
       stack,
       stackTrace,
       status,

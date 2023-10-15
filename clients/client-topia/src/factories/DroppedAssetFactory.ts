@@ -24,6 +24,7 @@ export class DroppedAssetFactory extends SDKController {
     interactivePublicKey: string,
     interactiveSecret: string,
   ): Promise<DroppedAsset> {
+    const params = { uniqueName, urlSlug, interactivePublicKey, interactiveSecret };
     const interactiveJWT = jwt.sign(interactivePublicKey, interactiveSecret);
     try {
       const response: AxiosResponse = await this.topiaPublicApi().get(
@@ -33,7 +34,7 @@ export class DroppedAssetFactory extends SDKController {
       const { id } = response.data;
       return new DroppedAsset(this.topia, id, urlSlug, { attributes: response.data });
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 
@@ -58,6 +59,7 @@ export class DroppedAssetFactory extends SDKController {
       yOrderAdjust?: number;
     },
   ): Promise<DroppedAsset> {
+    const params = { interactivePublicKey, sceneDropId, uniqueName, urlSlug, yOrderAdjust };
     try {
       const response: AxiosResponse = await this.topiaPublicApi().post(
         `/world/${urlSlug}/assets`,
@@ -74,7 +76,7 @@ export class DroppedAssetFactory extends SDKController {
       const { id } = response.data;
       return new DroppedAsset(this.topia, id, urlSlug, { credentials: asset.credentials });
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 }

@@ -236,7 +236,7 @@ export class User extends SDKController implements UserInterface {
       );
       this.dataObject = dataObject || this.dataObject;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { dataObject, options } });
     }
   }
 
@@ -267,7 +267,7 @@ export class User extends SDKController implements UserInterface {
       );
       this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { dataObject, options } });
     }
   }
 
@@ -298,7 +298,7 @@ export class User extends SDKController implements UserInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { path, amount, options } });
     }
   }
 }
