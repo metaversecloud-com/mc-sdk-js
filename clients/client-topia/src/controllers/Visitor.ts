@@ -103,7 +103,7 @@ export class Visitor extends User implements VisitorInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { shouldTeleportVisitor, x, y } });
     }
   }
 
@@ -121,18 +121,19 @@ export class Visitor extends User implements VisitorInterface {
    * ```
    */
   async fireToast({ groupId, title, text }: FireToastInterface): Promise<void | ResponseType> {
+    const params = {
+      groupId,
+      title,
+      text,
+    };
     try {
       await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/fire-toast`,
-        {
-          groupId,
-          title,
-          text,
-        },
+        params,
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 
@@ -150,18 +151,19 @@ export class Visitor extends User implements VisitorInterface {
    * ```
    */
   async openIframe({ link, shouldOpenInDrawer, title }: OpenIframeInterface): Promise<void | ResponseType> {
+    const params = {
+      link,
+      shouldOpenInDrawer,
+      title,
+    };
     try {
       await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/open-iframe`,
-        {
-          link,
-          shouldOpenInDrawer,
-          title,
-        },
+        params,
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 
@@ -209,7 +211,7 @@ export class Visitor extends User implements VisitorInterface {
       );
       return result;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { id, name } });
     }
   }
 
@@ -261,7 +263,7 @@ export class Visitor extends User implements VisitorInterface {
       );
       this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { dataObject, options } });
     }
   }
 
@@ -291,7 +293,7 @@ export class Visitor extends User implements VisitorInterface {
       );
       this.dataObject = dataObject || this.dataObject;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { dataObject, options } });
     }
   }
 
@@ -322,7 +324,7 @@ export class Visitor extends User implements VisitorInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { path, amount, options } });
     }
   }
 }
