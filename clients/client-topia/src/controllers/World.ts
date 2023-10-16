@@ -96,7 +96,7 @@ export class World extends SDKController implements WorldInterface {
     spawnPosition,
     width,
   }: WorldDetailsInterface): Promise<void | ResponseType> {
-    const payload = {
+    const params = {
       controls,
       description,
       forceAuthOnLogin,
@@ -106,11 +106,11 @@ export class World extends SDKController implements WorldInterface {
       width,
     };
     try {
-      await this.topiaPublicApi().put(`/world/${this.urlSlug}/world-details`, payload, this.requestOptions);
-      const cleanPayload = removeUndefined(payload);
+      await this.topiaPublicApi().put(`/world/${this.urlSlug}/world-details`, params, this.requestOptions);
+      const cleanPayload = removeUndefined(params);
       Object.assign(this, cleanPayload);
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 
@@ -183,7 +183,7 @@ export class World extends SDKController implements WorldInterface {
       }
       return droppedAssets;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { uniqueName, isPartial, isReversed } });
     }
   }
 
@@ -227,7 +227,7 @@ export class World extends SDKController implements WorldInterface {
       }
       return droppedAssets;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { sceneDropId, uniqueName } });
     }
   }
 
@@ -360,15 +360,12 @@ export class World extends SDKController implements WorldInterface {
     position: object;
     sceneId: string;
   }): Promise<object | ResponseType> {
+    const params = { assetSuffix, position, sceneId };
     try {
-      const result = await this.topiaPublicApi().post(
-        `/world/${this.urlSlug}/drop-scene`,
-        { assetSuffix, position, sceneId },
-        this.requestOptions,
-      );
+      const result = await this.topiaPublicApi().post(`/world/${this.urlSlug}/drop-scene`, params, this.requestOptions);
       return result;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 
@@ -393,7 +390,7 @@ export class World extends SDKController implements WorldInterface {
     try {
       await this.topiaPublicApi().put(`/world/${this.urlSlug}/change-scene`, { sceneId }, this.requestOptions);
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { sceneId } });
     }
   }
 
@@ -448,7 +445,7 @@ export class World extends SDKController implements WorldInterface {
       );
       this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { dataObject, options } });
     }
   };
 
@@ -479,7 +476,7 @@ export class World extends SDKController implements WorldInterface {
       );
       this.dataObject = dataObject || this.dataObject;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { dataObject, options } });
     }
   };
 
@@ -510,7 +507,7 @@ export class World extends SDKController implements WorldInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { path, amount, options } });
     }
   }
 
@@ -576,7 +573,7 @@ export class World extends SDKController implements WorldInterface {
       );
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { periodType, dateValue, year } });
     }
   }
 }

@@ -137,7 +137,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
       this.dataObject = dataObject || this.dataObject;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { dataObject, options } });
     }
   }
 
@@ -169,7 +169,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
       this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { dataObject, options } });
     }
   }
 
@@ -200,7 +200,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { path, amount, options } });
     }
   }
 
@@ -223,10 +223,11 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     assetBroadcastAll,
     broadcasterEmail,
   }: UpdateBroadcastInterface): Promise<void | ResponseType> {
+    const params = { assetBroadcast, assetBroadcastAll, broadcasterEmail };
     try {
-      return this.#updateDroppedAsset({ assetBroadcast, assetBroadcastAll, broadcasterEmail }, "set-asset-broadcast");
+      return this.#updateDroppedAsset(params, "set-asset-broadcast");
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 
@@ -261,23 +262,21 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     portalName,
     position,
   }: UpdateClickTypeInterface): Promise<void | ResponseType> {
+    const params = {
+      clickType,
+      clickableLink,
+      clickableLinkTitle,
+      clickableDisplayTextDescription,
+      clickableDisplayTextHeadline,
+      isForceLinkInIframe,
+      isOpenLinkInDrawer,
+      portalName,
+      position,
+    };
     try {
-      return this.#updateDroppedAsset(
-        {
-          clickType,
-          clickableLink,
-          clickableLinkTitle,
-          clickableDisplayTextDescription,
-          clickableDisplayTextHeadline,
-          isForceLinkInIframe,
-          isOpenLinkInDrawer,
-          portalName,
-          position,
-        },
-        "change-click-type",
-      );
+      return this.#updateDroppedAsset(params, "change-click-type");
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 
@@ -301,10 +300,11 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     style: object | undefined | null,
     text: string | null | undefined,
   ): Promise<void | ResponseType> {
+    const params = { style, text };
     try {
-      return this.#updateDroppedAsset({ style, text }, "set-custom-text");
+      return this.#updateDroppedAsset(params, "set-custom-text");
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 
@@ -336,13 +336,20 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     portalName,
     syncUserMedia,
   }: UpdateMediaTypeInterface): Promise<void | ResponseType> {
+    const params = {
+      audioRadius,
+      audioSliderVolume,
+      isVideo,
+      mediaLink,
+      mediaName,
+      mediaType,
+      portalName,
+      syncUserMedia,
+    };
     try {
-      return this.#updateDroppedAsset(
-        { audioRadius, audioSliderVolume, isVideo, mediaLink, mediaName, mediaType, portalName, syncUserMedia },
-        "change-media-type",
-      );
+      return this.#updateDroppedAsset(params, "change-media-type");
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 
@@ -359,7 +366,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ isMutezone }, "set-mute-zone");
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { isMutezone } });
     }
   }
 
@@ -376,7 +383,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ isWebhookZoneEnabled }, "set-webhook-zone");
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { isWebhookZoneEnabled } });
     }
   }
 
@@ -390,10 +397,11 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * ```
    */
   updatePosition(x: number, y: number, yOrderAdjust?: number): Promise<void | ResponseType> {
+    const params = { x, y, yOrderAdjust };
     try {
-      return this.#updateDroppedAsset({ x, y, yOrderAdjust }, "set-position");
+      return this.#updateDroppedAsset(params, "set-position");
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 
@@ -415,13 +423,11 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     isPrivateZoneChatDisabled,
     privateZoneUserCap,
   }: UpdatePrivateZoneInterface): Promise<void | ResponseType> {
+    const params = { isPrivateZone, isPrivateZoneChatDisabled, privateZoneUserCap };
     try {
-      return this.#updateDroppedAsset(
-        { isPrivateZone, isPrivateZoneChatDisabled, privateZoneUserCap },
-        "set-private-zone",
-      );
+      return this.#updateDroppedAsset(params, "set-private-zone");
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 
@@ -438,7 +444,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ assetScale }, "change-scale");
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { assetScale } });
     }
   }
 
@@ -455,7 +461,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ mediaId }, "change-uploaded-media-selected");
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { mediaId } });
     }
   }
 
@@ -469,10 +475,11 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * ```
    */
   updateWebImageLayers(bottom: string, top: string): Promise<void | ResponseType> {
+    const params = { bottom, top };
     try {
-      return this.#updateDroppedAsset({ bottom, top }, "set-webimage-layers");
+      return this.#updateDroppedAsset(params, "set-webimage-layers");
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 
@@ -510,26 +517,23 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     type: string;
     url: string;
   }): Promise<void | AxiosResponse> {
+    const params = { dataObject, description, isUniqueOnly, title, type, url };
     try {
       const response = await this.topiaPublicApi().post(
         `/world/${this.urlSlug}/webhooks`,
         {
+          ...params,
           active: true,
           assetId: this.id,
-          dataObject,
-          description,
+
           enteredBy: "",
-          isUniqueOnly,
-          title,
-          type,
-          url,
           urlSlug: this.urlSlug,
         },
         this.requestOptions,
       );
       return response.data.webhookId;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 
@@ -552,19 +556,20 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     isInteractive?: boolean;
     interactivePublicKey: string;
   }): Promise<void | ResponseType> {
+    const params = {
+      interactivePublicKey,
+      isInteractive,
+    };
     try {
       await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/assets/${this.id}/set-asset-interactive-settings`,
-        {
-          interactivePublicKey,
-          isInteractive,
-        },
+        params,
         this.requestOptions,
       );
       this.isInteractive = isInteractive;
       this.interactivePublicKey = interactivePublicKey;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params });
     }
   }
 
@@ -607,7 +612,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       );
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { periodType, dateValue, year } });
     }
   }
 
@@ -622,7 +627,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, params: { payload, updateType } });
     }
   };
 }
