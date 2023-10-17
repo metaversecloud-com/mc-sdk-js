@@ -69,7 +69,7 @@ export class Visitor extends User implements VisitorInterface {
       }
       if (this.profile?.profileId) this.profileId = this.profile.profileId;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "Visitor.fetchVisitor" });
     }
   }
 
@@ -103,7 +103,7 @@ export class Visitor extends User implements VisitorInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error, params: { shouldTeleportVisitor, x, y } });
+      throw this.errorHandler({ error, params: { shouldTeleportVisitor, x, y }, sdkMethod: "Visitor.moveVisitor" });
     }
   }
 
@@ -133,7 +133,7 @@ export class Visitor extends User implements VisitorInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "Visitor.fireToast" });
     }
   }
 
@@ -163,7 +163,7 @@ export class Visitor extends User implements VisitorInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "Visitor.openIframe" });
     }
   }
 
@@ -184,7 +184,7 @@ export class Visitor extends User implements VisitorInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "Visitor.turnAVOff" });
     }
   }
 
@@ -211,7 +211,7 @@ export class Visitor extends User implements VisitorInterface {
       );
       return result;
     } catch (error) {
-      throw this.errorHandler({ error, params: { id, name } });
+      throw this.errorHandler({ error, params: { id, name }, sdkMethod: "Visitor.grantExpression" });
     }
   }
 
@@ -233,7 +233,7 @@ export class Visitor extends User implements VisitorInterface {
       this.dataObject = response.data;
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "Visitor.fetchDataObject" });
     }
   }
 
@@ -263,7 +263,7 @@ export class Visitor extends User implements VisitorInterface {
       );
       this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
     } catch (error) {
-      throw this.errorHandler({ error, params: { dataObject, options } });
+      throw this.errorHandler({ error, params: { dataObject, options }, sdkMethod: "Visitor.setDataObject" });
     }
   }
 
@@ -293,7 +293,7 @@ export class Visitor extends User implements VisitorInterface {
       );
       this.dataObject = dataObject || this.dataObject;
     } catch (error) {
-      throw this.errorHandler({ error, params: { dataObject, options } });
+      throw this.errorHandler({ error, params: { dataObject, options }, sdkMethod: "Visitor.updateDataObject" });
     }
   }
 
@@ -324,7 +324,11 @@ export class Visitor extends User implements VisitorInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error, params: { path, amount, options } });
+      throw this.errorHandler({
+        error,
+        params: { path, amount, options },
+        sdkMethod: "Visitor.incrementDataObjectValue",
+      });
     }
   }
 }

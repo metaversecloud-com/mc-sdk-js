@@ -67,7 +67,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       droppedAssetDetails.urlSlug = this.urlSlug;
       Object.assign(this, droppedAssetDetails);
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "DroppedAsset.fetchDroppedAssetById" });
     }
   }
 
@@ -84,7 +84,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       await this.topiaPublicApi().delete(`/world/${this.urlSlug}/assets/${this.id}`, this.requestOptions);
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "DroppedAsset.deleteDroppedAsset" });
     }
   }
 
@@ -106,7 +106,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       this.dataObject = response.data;
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "DroppedAsset.fetchDataObject" });
     }
   }
 
@@ -137,7 +137,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
       this.dataObject = dataObject || this.dataObject;
     } catch (error) {
-      throw this.errorHandler({ error, params: { dataObject, options } });
+      throw this.errorHandler({ error, params: { dataObject, options }, sdkMethod: "DroppedAsset.setDataObject" });
     }
   }
 
@@ -169,7 +169,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
       this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
     } catch (error) {
-      throw this.errorHandler({ error, params: { dataObject, options } });
+      throw this.errorHandler({ error, params: { dataObject, options }, sdkMethod: "DroppedAsset.updateDataObject" });
     }
   }
 
@@ -200,7 +200,11 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error, params: { path, amount, options } });
+      throw this.errorHandler({
+        error,
+        params: { path, amount, options },
+        sdkMethod: "DroppedAsset.incrementDataObjectValue",
+      });
     }
   }
 
@@ -227,7 +231,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset(params, "set-asset-broadcast");
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.updateBroadcast" });
     }
   }
 
@@ -276,7 +280,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset(params, "change-click-type");
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.updateClickType" });
     }
   }
 
@@ -304,7 +308,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset(params, "set-custom-text");
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.updateCustomTextAsset" });
     }
   }
 
@@ -349,7 +353,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset(params, "change-media-type");
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.updateMediaType" });
     }
   }
 
@@ -366,7 +370,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ isMutezone }, "set-mute-zone");
     } catch (error) {
-      throw this.errorHandler({ error, params: { isMutezone } });
+      throw this.errorHandler({ error, params: { isMutezone }, sdkMethod: "DroppedAsset.updateMuteZone" });
     }
   }
 
@@ -383,7 +387,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ isWebhookZoneEnabled }, "set-webhook-zone");
     } catch (error) {
-      throw this.errorHandler({ error, params: { isWebhookZoneEnabled } });
+      throw this.errorHandler({ error, params: { isWebhookZoneEnabled }, sdkMethod: "DroppedAsset.updateWebhookZone" });
     }
   }
 
@@ -401,7 +405,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset(params, "set-position");
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.updatePosition" });
     }
   }
 
@@ -427,7 +431,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset(params, "set-private-zone");
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.updatePrivateZone" });
     }
   }
 
@@ -444,7 +448,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ assetScale }, "change-scale");
     } catch (error) {
-      throw this.errorHandler({ error, params: { assetScale } });
+      throw this.errorHandler({ error, params: { assetScale }, sdkMethod: "DroppedAsset.updateScale" });
     }
   }
 
@@ -461,7 +465,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset({ mediaId }, "change-uploaded-media-selected");
     } catch (error) {
-      throw this.errorHandler({ error, params: { mediaId } });
+      throw this.errorHandler({ error, params: { mediaId }, sdkMethod: "DroppedAsset.updateUploadedMediaSelected" });
     }
   }
 
@@ -479,7 +483,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     try {
       return this.#updateDroppedAsset(params, "set-webimage-layers");
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.updateWebImageLayers" });
     }
   }
 
@@ -533,7 +537,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       );
       return response.data.webhookId;
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.addWebhook" });
     }
   }
 
@@ -569,7 +573,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       this.isInteractive = isInteractive;
       this.interactivePublicKey = interactivePublicKey;
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.setInteractiveSettings" });
     }
   }
 
@@ -612,7 +616,11 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       );
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error, params: { periodType, dateValue, year } });
+      throw this.errorHandler({
+        error,
+        params: { periodType, dateValue, year },
+        sdkMethod: "DroppedAsset.fetchDroppedAssetAnalytics",
+      });
     }
   }
 
@@ -627,7 +635,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error, params: { payload, updateType } });
+      throw this.errorHandler({ error, params: { payload, updateType }, sdkMethod: "DroppedAsset.updateDroppedAsset" });
     }
   };
 }

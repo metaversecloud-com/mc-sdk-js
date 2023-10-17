@@ -33,7 +33,7 @@ export class Scene extends SDKController implements SceneInterface {
       const response: AxiosResponse = await this.topiaPublicApi().get(`/scenes/${this.id}`, this.requestOptions);
       Object.assign(this, response.data);
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "Scene.fetchSceneById" });
     }
   }
 }

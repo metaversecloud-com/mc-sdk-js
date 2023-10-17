@@ -56,7 +56,7 @@ export class WorldActivity extends SDKController {
       }
       this.#visitorsMap = tempVisitorsMap;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "WorldActivity.fetchVisitors" });
     }
   }
 
@@ -74,7 +74,7 @@ export class WorldActivity extends SDKController {
       await this.fetchVisitors();
       return this.visitors;
     } catch (error) {
-      return error;
+      throw this.errorHandler({ error, sdkMethod: "WorldActivity.currentVisitors" });
     }
   }
 
