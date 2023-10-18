@@ -53,6 +53,7 @@ export interface FireToastInterface {
 }
 
 export interface OpenIframeInterface {
+  droppedAssetId: string;
   link: string;
   shouldOpenInDrawer?: boolean;
   title?: string;
