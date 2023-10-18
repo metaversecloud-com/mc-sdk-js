@@ -61,7 +61,7 @@ export class World extends SDKController implements WorldInterface {
       );
       Object.assign(this, response.data);
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "World.fetchDetails" });
     }
   }
 
@@ -110,7 +110,7 @@ export class World extends SDKController implements WorldInterface {
       const cleanPayload = removeUndefined(params);
       Object.assign(this, cleanPayload);
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "World.updateDetails" });
     }
   }
 
@@ -141,7 +141,7 @@ export class World extends SDKController implements WorldInterface {
       }
       this.#droppedAssetsMap = tempDroppedAssetsMap;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "World.fetchDroppedAssets" });
     }
   }
 
@@ -183,7 +183,11 @@ export class World extends SDKController implements WorldInterface {
       }
       return droppedAssets;
     } catch (error) {
-      throw this.errorHandler({ error, params: { uniqueName, isPartial, isReversed } });
+      throw this.errorHandler({
+        error,
+        params: { uniqueName, isPartial, isReversed },
+        sdkMethod: "World.fetchDroppedAssetsWithUniqueName",
+      });
     }
   }
 
@@ -227,7 +231,11 @@ export class World extends SDKController implements WorldInterface {
       }
       return droppedAssets;
     } catch (error) {
-      throw this.errorHandler({ error, params: { sceneDropId, uniqueName } });
+      throw this.errorHandler({
+        error,
+        params: { sceneDropId, uniqueName },
+        sdkMethod: "World.fetchDroppedAssetsBySceneDropId",
+      });
     }
   }
 
@@ -285,7 +293,7 @@ export class World extends SDKController implements WorldInterface {
       this.sceneDropIds = response.data;
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "World.fetchSceneDropIds" });
     }
   }
 
@@ -326,7 +334,7 @@ export class World extends SDKController implements WorldInterface {
       this.scenes = response.data;
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "World.fetchScenes" });
     }
   }
 
@@ -365,7 +373,7 @@ export class World extends SDKController implements WorldInterface {
       const result = await this.topiaPublicApi().post(`/world/${this.urlSlug}/drop-scene`, params, this.requestOptions);
       return result;
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "World.dropScene" });
     }
   }
 
@@ -390,7 +398,7 @@ export class World extends SDKController implements WorldInterface {
     try {
       await this.topiaPublicApi().put(`/world/${this.urlSlug}/change-scene`, { sceneId }, this.requestOptions);
     } catch (error) {
-      throw this.errorHandler({ error, params: { sceneId } });
+      throw this.errorHandler({ error, params: { sceneId }, sdkMethod: "World.replaceScene" });
     }
   }
 
@@ -414,7 +422,7 @@ export class World extends SDKController implements WorldInterface {
       this.dataObject = response.data;
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "World.fetchDataObject" });
     }
   };
 
@@ -445,7 +453,7 @@ export class World extends SDKController implements WorldInterface {
       );
       this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
     } catch (error) {
-      throw this.errorHandler({ error, params: { dataObject, options } });
+      throw this.errorHandler({ error, params: { dataObject, options }, sdkMethod: "World.setDataObject" });
     }
   };
 
@@ -476,7 +484,7 @@ export class World extends SDKController implements WorldInterface {
       );
       this.dataObject = dataObject || this.dataObject;
     } catch (error) {
-      throw this.errorHandler({ error, params: { dataObject, options } });
+      throw this.errorHandler({ error, params: { dataObject, options }, sdkMethod: "World.updateDataObject" });
     }
   };
 
@@ -507,7 +515,11 @@ export class World extends SDKController implements WorldInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error, params: { path, amount, options } });
+      throw this.errorHandler({
+        error,
+        params: { path, amount, options },
+        sdkMethod: "World.incrementDataObjectValue",
+      });
     }
   }
 
@@ -530,7 +542,7 @@ export class World extends SDKController implements WorldInterface {
       );
       this.webhooks = response.data;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "World.fetchWebhooks" });
     }
   }
 
@@ -573,7 +585,11 @@ export class World extends SDKController implements WorldInterface {
       );
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error, params: { periodType, dateValue, year } });
+      throw this.errorHandler({
+        error,
+        params: { periodType, dateValue, year },
+        sdkMethod: "World.fetchWorldAnalytics",
+      });
     }
   }
 }

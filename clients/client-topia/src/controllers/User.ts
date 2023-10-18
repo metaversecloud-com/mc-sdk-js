@@ -77,7 +77,7 @@ export class User extends SDKController implements UserInterface {
       }
       this.#assetsMap = tempAssetsMap;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "User.fetchAssets" });
     }
   }
 
@@ -98,7 +98,7 @@ export class User extends SDKController implements UserInterface {
       }
       this.#scenesMap = tempScenesMap;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "User.fetchScenes" });
     }
   }
 
@@ -132,7 +132,7 @@ export class User extends SDKController implements UserInterface {
       }
       this.#worldsMap = tempWorldsMap;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "User.fetchWorldsByKey" });
     }
   }
 
@@ -160,7 +160,7 @@ export class User extends SDKController implements UserInterface {
       }
       this.#adminWorldsMap = tempAdminWorldsMap;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "User.fetchAdminWorldsByKey" });
     }
   }
 
@@ -182,7 +182,7 @@ export class User extends SDKController implements UserInterface {
       );
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "User.fetchInteractiveWorldsByKey" });
     }
   }
 
@@ -205,7 +205,7 @@ export class User extends SDKController implements UserInterface {
       this.dataObject = response.data;
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "User.fetchDataObject" });
     }
   }
 
@@ -236,7 +236,7 @@ export class User extends SDKController implements UserInterface {
       );
       this.dataObject = dataObject || this.dataObject;
     } catch (error) {
-      throw this.errorHandler({ error, params: { dataObject, options } });
+      throw this.errorHandler({ error, params: { dataObject, options }, sdkMethod: "User.setDataObject" });
     }
   }
 
@@ -267,7 +267,7 @@ export class User extends SDKController implements UserInterface {
       );
       this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
     } catch (error) {
-      throw this.errorHandler({ error, params: { dataObject, options } });
+      throw this.errorHandler({ error, params: { dataObject, options }, sdkMethod: "User.updateDataObject" });
     }
   }
 
@@ -298,7 +298,7 @@ export class User extends SDKController implements UserInterface {
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error, params: { path, amount, options } });
+      throw this.errorHandler({ error, params: { path, amount, options }, sdkMethod: "User.incrementDataObjectValue" });
     }
   }
 }

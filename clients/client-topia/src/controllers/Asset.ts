@@ -33,7 +33,7 @@ export class Asset extends SDKController implements AssetInterface {
       const response: AxiosResponse = await this.topiaPublicApi().get("/assets/topia-assets", this.requestOptions);
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error });
+      throw this.errorHandler({ error, sdkMethod: "Asset.fetchPlatformAssets" });
     }
   }
 }
