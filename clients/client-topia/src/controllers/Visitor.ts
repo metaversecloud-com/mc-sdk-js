@@ -176,11 +176,15 @@ export class Visitor extends User implements VisitorInterface {
    * await visitor.reloadIframe();
    * ```
    */
-  async reloadIframe(): Promise<void | ResponseType> {
+  async reloadIframe(droppedAssetId: string): Promise<void | ResponseType> {
     try {
-      await this.topiaPublicApi().put(`/world/${this.urlSlug}/visitors/${this.id}/reload-iframe`, this.requestOptions);
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/reload-iframe`,
+        { droppedAssetId },
+        this.requestOptions,
+      );
     } catch (error) {
-      throw this.errorHandler({ error, sdkMethod: "Visitor.reloadIframe" });
+      throw this.errorHandler({ error, params: { droppedAssetId }, sdkMethod: "Visitor.reloadIframe" });
     }
   }
 
