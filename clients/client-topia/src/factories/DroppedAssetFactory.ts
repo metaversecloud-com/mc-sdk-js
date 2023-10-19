@@ -34,7 +34,7 @@ export class DroppedAssetFactory extends SDKController {
       const { id } = response.data;
       return new DroppedAsset(this.topia, id, urlSlug, { attributes: response.data });
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAssetFactory.getWithUniqueName" });
     }
   }
 
@@ -76,7 +76,7 @@ export class DroppedAssetFactory extends SDKController {
       const { id } = response.data;
       return new DroppedAsset(this.topia, id, urlSlug, { credentials: asset.credentials });
     } catch (error) {
-      throw this.errorHandler({ error, params });
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAssetFactory.drop" });
     }
   }
 }
