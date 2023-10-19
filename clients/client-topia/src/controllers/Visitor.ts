@@ -144,14 +144,21 @@ export class Visitor extends User implements VisitorInterface {
    * @usage
    * ```ts
    * await visitor.openIframe({
+   *   droppedAssetId: "droppedAssetId",
    *   link: "https://topia.io",
    *   shouldOpenInDrawer: true,
    *   title: "Hello World",
    * });
    * ```
    */
-  async openIframe({ link, shouldOpenInDrawer, title }: OpenIframeInterface): Promise<void | ResponseType> {
+  async openIframe({
+    droppedAssetId,
+    link,
+    shouldOpenInDrawer,
+    title,
+  }: OpenIframeInterface): Promise<void | ResponseType> {
     const params = {
+      droppedAssetId,
       link,
       shouldOpenInDrawer,
       title,
@@ -173,7 +180,7 @@ export class Visitor extends User implements VisitorInterface {
    *
    * @usage
    * ```ts
-   * await visitor.reloadIframe();
+   * await visitor.reloadIframe("droppedAssetId");
    * ```
    */
   async reloadIframe(droppedAssetId: string): Promise<void | ResponseType> {
@@ -185,6 +192,27 @@ export class Visitor extends User implements VisitorInterface {
       );
     } catch (error) {
       throw this.errorHandler({ error, params: { droppedAssetId }, sdkMethod: "Visitor.reloadIframe" });
+    }
+  }
+
+  /**
+   * @summary
+   * Close an iframe for a visitor currently in a world.
+   *
+   * @usage
+   * ```ts
+   * await visitor.closeIframe("droppedAssetId");
+   * ```
+   */
+  async closeIframe(droppedAssetId: string): Promise<void | ResponseType> {
+    try {
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/close-iframe`,
+        { droppedAssetId },
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw this.errorHandler({ error, params: { droppedAssetId }, sdkMethod: "Visitor.closeIframe" });
     }
   }
 
