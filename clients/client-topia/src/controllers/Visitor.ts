@@ -182,11 +182,15 @@ export class Visitor extends User implements VisitorInterface {
    * await visitor.closeIframe();
    * ```
    */
-  async closeIframe(): Promise<void | ResponseType> {
+  async closeIframe(droppedAssetId: string): Promise<void | ResponseType> {
     try {
-      await this.topiaPublicApi().put(`/world/${this.urlSlug}/visitors/${this.id}/close-iframe`, this.requestOptions);
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/close-iframe`,
+        { droppedAssetId },
+        this.requestOptions,
+      );
     } catch (error) {
-      throw this.errorHandler({ error, sdkMethod: "Visitor.closeIframe" });
+      throw this.errorHandler({ error, params: { droppedAssetId }, sdkMethod: "Visitor.closeIframe" });
     }
   }
 
