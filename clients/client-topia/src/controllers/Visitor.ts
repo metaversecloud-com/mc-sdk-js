@@ -169,6 +169,23 @@ export class Visitor extends User implements VisitorInterface {
 
   /**
    * @summary
+   * Reload an iframe for a visitor currently in a world.
+   *
+   * @usage
+   * ```ts
+   * await visitor.reloadIframe();
+   * ```
+   */
+  async reloadIframe(): Promise<void | ResponseType> {
+    try {
+      await this.topiaPublicApi().put(`/world/${this.urlSlug}/visitors/${this.id}/reload-iframe`, this.requestOptions);
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.reloadIframe" });
+    }
+  }
+
+  /**
+   * @summary
    * Mute and turn video off for a visitor currently in a world.
    *
    * @usage
