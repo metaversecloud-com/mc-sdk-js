@@ -150,8 +150,14 @@ export class Visitor extends User implements VisitorInterface {
    * });
    * ```
    */
-  async openIframe({ link, shouldOpenInDrawer, title }: OpenIframeInterface): Promise<void | ResponseType> {
+  async openIframe({
+    droppedAssetId,
+    link,
+    shouldOpenInDrawer,
+    title,
+  }: OpenIframeInterface): Promise<void | ResponseType> {
     const params = {
+      droppedAssetId,
       link,
       shouldOpenInDrawer,
       title,
@@ -164,6 +170,27 @@ export class Visitor extends User implements VisitorInterface {
       );
     } catch (error) {
       throw this.errorHandler({ error, params, sdkMethod: "Visitor.openIframe" });
+    }
+  }
+
+  /**
+   * @summary
+   * Close an iframe for a visitor currently in a world.
+   *
+   * @usage
+   * ```ts
+   * await visitor.closeIframe();
+   * ```
+   */
+  async closeIframe(droppedAssetId: string): Promise<void | ResponseType> {
+    try {
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/close-iframe`,
+        { droppedAssetId },
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw this.errorHandler({ error, params: { droppedAssetId }, sdkMethod: "Visitor.closeIframe" });
     }
   }
 
