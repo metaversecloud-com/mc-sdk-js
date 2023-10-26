@@ -510,6 +510,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     dataObject,
     description,
     isUniqueOnly,
+    shouldSetClickType,
+    shouldSetIsInteractive,
     title,
     type,
     url,
@@ -517,11 +519,22 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     dataObject: object;
     description: string;
     isUniqueOnly: boolean;
+    shouldSetClickType?: boolean;
+    shouldSetIsInteractive?: boolean;
     title: string;
     type: string;
     url: string;
   }): Promise<void | AxiosResponse> {
-    const params = { dataObject, description, isUniqueOnly, title, type, url };
+    const params = {
+      dataObject,
+      description,
+      isUniqueOnly,
+      shouldSetClickType,
+      shouldSetIsInteractive,
+      title,
+      type,
+      url,
+    };
     try {
       const response = await this.topiaPublicApi().post(
         `/world/${this.urlSlug}/webhooks`,
@@ -529,7 +542,6 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
           ...params,
           active: true,
           assetId: this.id,
-
           enteredBy: "",
           urlSlug: this.urlSlug,
         },
