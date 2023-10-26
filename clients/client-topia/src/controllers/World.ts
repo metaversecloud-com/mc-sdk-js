@@ -20,7 +20,10 @@ import { removeUndefined } from "utils";
  *
  * @usage
  * ```ts
- * await new World(topia, "exampleWorld", { attributes: { name: "Example World" } });
+ * await new World(topia, "exampleWorld", {
+ *   attributes: { name: "Example World" },
+ *   credentials: { apiKey: "exampleKey", interactiveNonce: "exampleNonce", urlSlug: "exampleWorld", visitorId: 1 }
+ * });
  * ```
  */
 export class World extends SDKController implements WorldInterface {
@@ -32,7 +35,12 @@ export class World extends SDKController implements WorldInterface {
   webhooks?: WorldWebhooksInterface | null | undefined;
 
   constructor(topia: Topia, urlSlug: string, options: WorldOptionalInterface = { attributes: {}, credentials: {} }) {
-    super(topia, { urlSlug, ...options.credentials });
+    super(topia, {
+      apiKey: options?.credentials?.apiKey,
+      interactiveNonce: options?.credentials?.interactiveNonce,
+      urlSlug,
+      visitorId: options?.credentials?.visitorId,
+    });
     Object.assign(this, options.attributes);
     this.urlSlug = urlSlug;
     this.#droppedAssetsMap = {};

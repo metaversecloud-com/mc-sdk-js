@@ -16,14 +16,22 @@ import { ResponseType } from "types";
  *
  * @usage
  * ```ts
- * await new Scene(topia, "sceneId", { attributes: { name: "My Scene" } });
+ * await new Scene(topia, "sceneId", {
+ *   attributes: { name: "My Scene" },
+ *   credentials: { apiKey: "exampleKey", interactiveNonce: "exampleNonce", urlSlug: "exampleWorld", visitorId: 1 }
+ * });
  * ```
  */
 export class Scene extends SDKController implements SceneInterface {
   readonly id: string;
 
   constructor(topia: Topia, id: string, options: SceneOptionalInterface = { attributes: {}, credentials: {} }) {
-    super(topia, options.credentials);
+    super(topia, {
+      apiKey: options?.credentials?.apiKey,
+      interactiveNonce: options?.credentials?.interactiveNonce,
+      urlSlug: options?.credentials?.urlSlug,
+      visitorId: options?.credentials?.visitorId,
+    });
     this.id = id;
     Object.assign(this, options.attributes);
   }

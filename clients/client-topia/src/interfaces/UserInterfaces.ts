@@ -11,7 +11,7 @@ export interface UserInterface {
 }
 
 export interface UserOptionalInterface {
-  credentials?: InteractiveCredentials | object;
+  credentials?: InteractiveCredentials;
   profileId?: string | null;
   visitorId?: number | null;
   urlSlug?: string;

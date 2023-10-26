@@ -70,7 +70,7 @@ export interface WorldInterface extends SDKInterface, WorldDetailsInterface {
 
 export interface WorldOptionalInterface {
   attributes?: WorldDetailsInterface | object;
-  credentials?: InteractiveCredentials | object;
+  credentials?: InteractiveCredentials;
 }
 
 export interface WorldWebhooksInterface {
