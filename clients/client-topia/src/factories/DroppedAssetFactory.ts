@@ -42,6 +42,7 @@ export class DroppedAssetFactory extends SDKController {
     asset: Asset,
     {
       interactivePublicKey,
+      isInteractive,
       position: { x, y },
       sceneDropId,
       uniqueName,
@@ -49,6 +50,7 @@ export class DroppedAssetFactory extends SDKController {
       yOrderAdjust,
     }: {
       interactivePublicKey?: string;
+      isInteractive?: boolean;
       position: {
         x: number;
         y: number;
@@ -59,13 +61,21 @@ export class DroppedAssetFactory extends SDKController {
       yOrderAdjust?: number;
     },
   ): Promise<DroppedAsset> {
-    const params = { interactivePublicKey, sceneDropId, uniqueName, urlSlug, yOrderAdjust };
+    const params = { interactivePublicKey, isInteractive, sceneDropId, uniqueName, urlSlug, yOrderAdjust };
+    if (isInteractive && !interactivePublicKey) {
+      throw this.errorHandler({
+        message: "interactivePublicKey is required",
+        params,
+        sdkMethod: "DroppedAssetFactory.drop",
+      });
+    }
     try {
       const response: AxiosResponse = await this.topiaPublicApi().post(
         `/world/${urlSlug}/assets`,
         {
           assetId: asset.id,
           interactivePublicKey,
+          isInteractive,
           position: { x, y },
           sceneDropId,
           uniqueName,
