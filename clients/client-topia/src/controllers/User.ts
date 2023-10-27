@@ -39,7 +39,7 @@ export class User extends SDKController implements UserInterface {
     super(topia, {
       apiKey: options?.credentials?.apiKey,
       interactiveNonce: options?.credentials?.interactiveNonce,
-      profileId: options.profileId,
+      profileId: options?.profileId,
       urlSlug: options?.credentials?.urlSlug,
       visitorId: options?.credentials?.visitorId,
     });
