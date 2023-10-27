@@ -3,6 +3,7 @@ export enum DroppedAssetClickType {
   LINK = "link",
   PORTAL = "portal",
   TELEPORT = "teleport",
+  WEBHOOK = "webhook",
 }
 
 export enum DroppedAssetMediaType {
