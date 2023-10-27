@@ -43,7 +43,7 @@ export class User extends SDKController implements UserInterface {
       urlSlug: options?.credentials?.urlSlug,
       visitorId: options?.credentials?.visitorId,
     });
-    this.profileId = options.profileId;
+    this.profileId = options?.profileId;
     this.dataObject = {};
     this.profile = {};
 
