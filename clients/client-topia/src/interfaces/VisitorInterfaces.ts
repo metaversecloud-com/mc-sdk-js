@@ -37,7 +37,7 @@ export interface VisitorInterface extends SDKInterface {
 
 export interface VisitorOptionalInterface {
   attributes?: VisitorInterface | object;
-  credentials?: InteractiveCredentials | object;
+  credentials?: InteractiveCredentials;
 }
 
 export interface MoveVisitorInterface {

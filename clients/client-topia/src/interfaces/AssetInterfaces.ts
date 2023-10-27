@@ -24,5 +24,5 @@ export interface AssetInterface extends SDKInterface {
 
 export type AssetOptionalInterface = {
   attributes?: AssetInterface | object;
-  credentials?: InteractiveCredentials | object;
+  credentials?: InteractiveCredentials;
 };

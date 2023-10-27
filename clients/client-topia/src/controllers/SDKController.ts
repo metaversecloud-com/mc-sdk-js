@@ -56,7 +56,7 @@ export class SDKController implements SDKInterface {
     const headers: any = {};
 
     try {
-      if (topia.interactiveSecret && (profileId || assetId || urlSlug)) {
+      if (topia.interactiveSecret && (profileId || assetId || urlSlug || visitorId)) {
         payload = {
           interactiveNonce,
           visitorId,

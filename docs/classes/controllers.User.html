@@ -20,7 +20,7 @@
 <div class="tsd-comment tsd-typography">
 <h3>Summary</h3><p>Create an instance of User class with optional session credentials.</p>
 
-<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-3">User</span><span class="hl-1">(</span><span class="hl-2">topia</span><span class="hl-1">, { </span><span class="hl-2">interactiveNonce:</span><span class="hl-1"> </span><span class="hl-4">&quot;exampleNonce&quot;</span><span class="hl-1">, </span><span class="hl-2">interactivePublicKey:</span><span class="hl-1"> </span><span class="hl-4">&quot;examplePublicKey&quot;</span><span class="hl-1">, </span><span class="hl-2">visitorId:</span><span class="hl-1"> </span><span class="hl-8">1</span><span class="hl-1"> });</span>
+<h3>Usage</h3><pre><code class="language-ts"><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-3">User</span><span class="hl-1">(</span><span class="hl-2">topia</span><span class="hl-1">, {</span><br/><span class="hl-1">  </span><span class="hl-2">profileId:</span><span class="hl-1"> </span><span class="hl-8">1</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">credentials:</span><span class="hl-1"> { </span><span class="hl-2">apiKey:</span><span class="hl-1"> </span><span class="hl-4">&quot;exampleKey&quot;</span><span class="hl-1">, </span><span class="hl-2">interactiveNonce:</span><span class="hl-1"> </span><span class="hl-4">&quot;exampleNonce&quot;</span><span class="hl-1">, </span><span class="hl-2">urlSlug:</span><span class="hl-1"> </span><span class="hl-4">&quot;exampleWorld&quot;</span><span class="hl-1">, </span><span class="hl-2">visitorId:</span><span class="hl-1"> </span><span class="hl-8">1</span><span class="hl-1"> }</span><br/><span class="hl-1">});</span>
 </code></pre>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
@@ -36,7 +36,7 @@
 <ul class="tsd-hierarchy">
 <li><a href="../interfaces/interfaces.UserInterface.html" class="tsd-signature-type" data-tsd-kind="Interface">UserInterface</a></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in controllers/User.ts:25</li></ul></aside>
+<li>Defined in controllers/User.ts:28</li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -94,7 +94,7 @@
 <h4 class="tsd-returns-title">Returns <a href="controllers.User.html" class="tsd-signature-type" data-tsd-kind="Class">User</a></h4><aside class="tsd-sources">
 <p>Overrides <a href="controllers.SDKController.html">SDKController</a>.<a href="controllers.SDKController.html#constructor">constructor</a></p>
 <ul>
-<li>Defined in controllers/User.ts:35</li></ul></aside></li></ul></section></section>
+<li>Defined in controllers/User.ts:38</li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="credentials" class="tsd-anchor"></a>
@@ -108,7 +108,7 @@
 <div class="tsd-signature">data<wbr/>Object<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.UserInterface.html">UserInterface</a>.<a href="../interfaces/interfaces.UserInterface.html#dataObject">dataObject</a></p>
 <ul>
-<li>Defined in controllers/User.ts:27</li></ul></aside></section>
+<li>Defined in controllers/User.ts:30</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="jwt" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>jwt</span><a href="#jwt" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">jwt<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
@@ -119,12 +119,12 @@
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>profile</span><a href="#profile" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">profile<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in controllers/User.ts:28</li></ul></aside></section>
+<li>Defined in controllers/User.ts:31</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="profileId" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagOptional">Optional</code> <span>profile<wbr/>Id</span><a href="#profileId" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">profile<wbr/>Id<span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in controllers/User.ts:26</li></ul></aside></section>
+<li>Defined in controllers/User.ts:29</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="requestOptions" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>request<wbr/>Options</span><a href="#requestOptions" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">request<wbr/>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div><aside class="tsd-sources">
@@ -149,7 +149,7 @@
 <li class="tsd-parameter-index-signature">
 <h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="controllers.World.html" class="tsd-signature-type" data-tsd-kind="Class">World</a></h5></li></ul><aside class="tsd-sources">
 <ul>
-<li>Defined in controllers/User.ts:47</li></ul></aside></li></ul></section>
+<li>Defined in controllers/User.ts:56</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="assets" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>assets</span><a href="#assets" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
@@ -160,7 +160,7 @@
 <li class="tsd-parameter-index-signature">
 <h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="controllers.Asset.html" class="tsd-signature-type" data-tsd-kind="Class">Asset</a></h5></li></ul><aside class="tsd-sources">
 <ul>
-<li>Defined in controllers/User.ts:51</li></ul></aside></li></ul></section>
+<li>Defined in controllers/User.ts:60</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="scenes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>scenes</span><a href="#scenes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
@@ -171,7 +171,7 @@
 <li class="tsd-parameter-index-signature">
 <h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="controllers.Scene.html" class="tsd-signature-type" data-tsd-kind="Class">Scene</a></h5></li></ul><aside class="tsd-sources">
 <ul>
-<li>Defined in controllers/User.ts:55</li></ul></aside></li></ul></section>
+<li>Defined in controllers/User.ts:64</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="worlds" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>worlds</span><a href="#worlds" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
@@ -182,7 +182,7 @@
 <li class="tsd-parameter-index-signature">
 <h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="controllers.World.html" class="tsd-signature-type" data-tsd-kind="Class">World</a></h5></li></ul><aside class="tsd-sources">
 <ul>
-<li>Defined in controllers/User.ts:59</li></ul></aside></li></ul></section></section>
+<li>Defined in controllers/User.ts:68</li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="errorHandler" class="tsd-anchor"></a>
@@ -245,7 +245,7 @@ and creates new map of Worlds accessible via user.adminWorlds.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in controllers/User.ts:151</li></ul></aside></li></ul></section>
+<li>Defined in controllers/User.ts:160</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fetchAssets" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>fetch<wbr/>Assets</span><a href="#fetchAssets" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -257,7 +257,7 @@ and creates new map of Worlds accessible via user.adminWorlds.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.UserInterface.html">UserInterface</a>.<a href="../interfaces/interfaces.UserInterface.html#fetchAssets">fetchAssets</a></p>
 <ul>
-<li>Defined in controllers/User.ts:67</li></ul></aside></li></ul></section>
+<li>Defined in controllers/User.ts:76</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fetchDataObject" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>fetch<wbr/>Data<wbr/>Object</span><a href="#fetchDataObject" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -272,7 +272,7 @@ and creates new map of Worlds accessible via user.adminWorlds.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.UserInterface.html">UserInterface</a>.<a href="../interfaces/interfaces.UserInterface.html#fetchDataObject">fetchDataObject</a></p>
 <ul>
-<li>Defined in controllers/User.ts:198</li></ul></aside></li></ul></section>
+<li>Defined in controllers/User.ts:207</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fetchInteractiveWorldsByKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>fetch<wbr/>Interactive<wbr/>Worlds<wbr/>By<wbr/>Key</span><a href="#fetchInteractiveWorldsByKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -291,7 +291,7 @@ and creates new map of Worlds accessible via user.adminWorlds.</p>
 <h5>interactivePublicKey: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in controllers/User.ts:177</li></ul></aside></li></ul></section>
+<li>Defined in controllers/User.ts:186</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fetchScenes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>fetch<wbr/>Scenes</span><a href="#fetchScenes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -303,7 +303,7 @@ and creates new map of Worlds accessible via user.adminWorlds.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.UserInterface.html">UserInterface</a>.<a href="../interfaces/interfaces.UserInterface.html#fetchScenes">fetchScenes</a></p>
 <ul>
-<li>Defined in controllers/User.ts:88</li></ul></aside></li></ul></section>
+<li>Defined in controllers/User.ts:97</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fetchWorldsByKey" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>fetch<wbr/>Worlds<wbr/>By<wbr/>Key</span><a href="#fetchWorldsByKey" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -323,7 +323,7 @@ and creates new map of Worlds accessible via user.worlds.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.UserInterface.html">UserInterface</a>.<a href="../interfaces/interfaces.UserInterface.html#fetchWorldsByKey">fetchWorldsByKey</a></p>
 <ul>
-<li>Defined in controllers/User.ts:122</li></ul></aside></li></ul></section>
+<li>Defined in controllers/User.ts:131</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="incrementDataObjectValue" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>increment<wbr/>Data<wbr/>Object<wbr/>Value</span><a href="#incrementDataObjectValue" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -356,7 +356,7 @@ and creates new map of Worlds accessible via user.worlds.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.UserInterface.html">UserInterface</a>.<a href="../interfaces/interfaces.UserInterface.html#incrementDataObjectValue">incrementDataObjectValue</a></p>
 <ul>
-<li>Defined in controllers/User.ts:288</li></ul></aside></li></ul></section>
+<li>Defined in controllers/User.ts:297</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setDataObject" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Data<wbr/>Object</span><a href="#setDataObject" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -387,7 +387,7 @@ and creates new map of Worlds accessible via user.worlds.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/interfaces.UserInterface.html">UserInterface</a>.<a href="../interfaces/interfaces.UserInterface.html#setDataObject">setDataObject</a></p>
 <ul>
-<li>Defined in controllers/User.ts:225</li></ul></aside></li></ul></section>
+<li>Defined in controllers/User.ts:234</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="topiaPublicApi" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>topia<wbr/>Public<wbr/>Api</span><a href="#topiaPublicApi" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -426,7 +426,7 @@ and creates new map of Worlds accessible via user.worlds.</p>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> release<wbr/>Lock<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5></li></ul></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><a href="../types/types.ResponseType.html" class="tsd-signature-type" data-tsd-kind="Type alias">ResponseType</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in controllers/User.ts:256</li></ul></aside></li></ul></section></section></div>
+<li>Defined in controllers/User.ts:265</li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
