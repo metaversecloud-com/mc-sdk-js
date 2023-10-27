@@ -1,7 +1,7 @@
 import { InteractiveCredentials } from "types";
 
 export interface WorldActivityOptionalInterface {
-  credentials?: InteractiveCredentials | object;
+  credentials?: InteractiveCredentials;
 }
 
 export interface MoveAllVisitorsInterface {

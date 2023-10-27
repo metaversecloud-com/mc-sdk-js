@@ -26,5 +26,5 @@ export interface SceneInterface {
 
 export type SceneOptionalInterface = {
   attributes?: SceneInterface | object;
-  credentials?: InteractiveCredentials | object;
+  credentials?: InteractiveCredentials;
 };

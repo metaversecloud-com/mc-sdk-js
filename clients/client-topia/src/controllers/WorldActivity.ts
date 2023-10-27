@@ -22,7 +22,10 @@ import { scatterVisitors } from "utils";
  *
  * @usage
  * ```ts
- * await new WorldActivity(topia, "exampleWorld", { attributes: { name: "Example World" } });
+ * await new WorldActivity(topia, "exampleWorld", {
+ *   attributes: { name: "Example World" },
+ *   credentials: { apiKey: "exampleKey", interactiveNonce: "exampleNonce", urlSlug: "exampleWorld", visitorId: 1 }
+ * });
  * ```
  */
 export class WorldActivity extends SDKController {
@@ -30,7 +33,12 @@ export class WorldActivity extends SDKController {
   #visitorsMap: { [key: string]: Visitor };
 
   constructor(topia: Topia, urlSlug: string, options: WorldActivityOptionalInterface = { credentials: {} }) {
-    super(topia, options.credentials);
+    super(topia, {
+      apiKey: options?.credentials?.apiKey,
+      interactiveNonce: options?.credentials?.interactiveNonce,
+      urlSlug,
+      visitorId: options?.credentials?.visitorId,
+    });
     this.urlSlug = urlSlug;
     this.#visitorsMap = {};
   }

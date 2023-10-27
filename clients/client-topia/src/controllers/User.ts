@@ -19,7 +19,10 @@ import { ResponseType } from "types";
  *
  * @usage
  * ```ts
- * await new User(topia, { interactiveNonce: "exampleNonce", interactivePublicKey: "examplePublicKey", visitorId: 1 });
+ * await new User(topia, {
+ *   profileId: 1,
+ *   credentials: { apiKey: "exampleKey", interactiveNonce: "exampleNonce", urlSlug: "exampleWorld", visitorId: 1 }
+ * });
  * ```
  */
 export class User extends SDKController implements UserInterface {
@@ -33,8 +36,14 @@ export class User extends SDKController implements UserInterface {
   #worldsMap: { [key: string]: World };
 
   constructor(topia: Topia, options: UserOptionalInterface = { profileId: null, credentials: {} }) {
-    super(topia, { profileId: options.profileId, ...options.credentials });
-    this.profileId = options.profileId;
+    super(topia, {
+      apiKey: options?.credentials?.apiKey,
+      interactiveNonce: options?.credentials?.interactiveNonce,
+      profileId: options?.profileId,
+      urlSlug: options?.credentials?.urlSlug,
+      visitorId: options?.credentials?.visitorId,
+    });
+    this.profileId = options?.profileId;
     this.dataObject = {};
     this.profile = {};
 

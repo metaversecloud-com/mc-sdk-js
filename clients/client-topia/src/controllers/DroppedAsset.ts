@@ -23,7 +23,10 @@ import { ResponseType } from "types";
  *
  * @usage
  * ```ts
- * await new DroppedAsset(topia, "1giFZb0sQ3X27L7uGyQX", "example", { attributes: { text: "" }, credentials: { assetId: "1giFZb0sQ3X27L7uGyQX" } } });
+ * await new DroppedAsset(topia, "1giFZb0sQ3X27L7uGyQX", "example", {
+ *   attributes: { text: "My Asset" },
+ *   credentials: { apiKey: "exampleKey", interactiveNonce: "exampleNonce", visitorId: 1 }
+ * });
  * ```
  */
 export class DroppedAsset extends Asset implements DroppedAssetInterface {
@@ -40,7 +43,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     urlSlug: string,
     options: DroppedAssetOptionalInterface = { attributes: { text: "" }, credentials: {} },
   ) {
-    super(topia, id, { attributes: options.attributes, credentials: { ...options.credentials, urlSlug } });
+    super(topia, id, { attributes: options.attributes, credentials: { ...options.credentials, assetId: id, urlSlug } });
     Object.assign(this, options.attributes);
     this.id = id;
     this.text = options.attributes?.text;
