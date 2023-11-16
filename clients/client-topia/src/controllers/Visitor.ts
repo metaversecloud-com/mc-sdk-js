@@ -36,7 +36,7 @@ export class Visitor extends User implements VisitorInterface {
     urlSlug: string,
     options: VisitorOptionalInterface = { attributes: {}, credentials: {} },
   ) {
-    super(topia, { credentials: { ...options.credentials, urlSlug } });
+    super(topia, { credentials: { urlSlug, ...options.credentials } });
     Object.assign(this, options.attributes);
     this.id = id;
     this.urlSlug = urlSlug;

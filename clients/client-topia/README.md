@@ -1,6 +1,6 @@
 # Javascript RTSDK - Topia Client Library
 
-The Topia Client Library leverages the Topia Public API and allows users to interact with the topia systems and modify their world programmatically. With the SDK you can now build new features to be used in Topia! Check out a list of examples [here](https://github.com/metaversecloud-com/sdk-examples).
+The Topia Client Library leverages the Topia Public API and allows users to interact with the topia systems and modify their world programmatically. With the SDK you can now build new features to be used in Topia! Check out a list of examples [here](https://github.com/metaversecloud-com/sdk-examples). Questions, comments, or have something exciting to share with the Topia team? Reach out to [developers@topia.io](mailto:developers@topia.io)!
 
 <br>
 

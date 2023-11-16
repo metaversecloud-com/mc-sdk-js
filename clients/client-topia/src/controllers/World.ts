@@ -38,7 +38,7 @@ export class World extends SDKController implements WorldInterface {
     super(topia, {
       apiKey: options?.credentials?.apiKey,
       interactiveNonce: options?.credentials?.interactiveNonce,
-      urlSlug,
+      urlSlug: options?.credentials?.urlSlug || urlSlug,
       visitorId: options?.credentials?.visitorId,
     });
     Object.assign(this, options.attributes);

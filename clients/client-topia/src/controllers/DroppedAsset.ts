@@ -43,7 +43,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     urlSlug: string,
     options: DroppedAssetOptionalInterface = { attributes: { text: "" }, credentials: {} },
   ) {
-    super(topia, id, { attributes: options.attributes, credentials: { ...options.credentials, assetId: id, urlSlug } });
+    super(topia, id, { attributes: options.attributes, credentials: { assetId: id, urlSlug, ...options.credentials } });
     Object.assign(this, options.attributes);
     this.id = id;
     this.text = options.attributes?.text;

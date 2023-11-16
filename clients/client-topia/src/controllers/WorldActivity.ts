@@ -36,7 +36,7 @@ export class WorldActivity extends SDKController {
     super(topia, {
       apiKey: options?.credentials?.apiKey,
       interactiveNonce: options?.credentials?.interactiveNonce,
-      urlSlug,
+      urlSlug: options?.credentials?.urlSlug || urlSlug,
       visitorId: options?.credentials?.visitorId,
     });
     this.urlSlug = urlSlug;
