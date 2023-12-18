@@ -49,6 +49,11 @@ export class DroppedAssetFactory extends SDKController {
       layer1,
       position: { x, y },
       sceneDropId,
+      text,
+      textColor,
+      textSize,
+      textWeight,
+      textWidth,
       uniqueName,
       urlSlug,
       yOrderAdjust,
@@ -64,6 +69,11 @@ export class DroppedAssetFactory extends SDKController {
         y: number;
       };
       sceneDropId?: string;
+      text?: string;
+      textColor?: string;
+      textSize?: number;
+      textWeight?: string;
+      textWidth?: number;
       uniqueName?: string;
       urlSlug: string;
       yOrderAdjust?: number;
@@ -71,6 +81,7 @@ export class DroppedAssetFactory extends SDKController {
   ): Promise<DroppedAsset> {
     let specialType;
     if (layer0 || layer1) specialType = "webImage";
+    else if (text) specialType = "text";
 
     const params = {
       assetScale,
@@ -81,6 +92,11 @@ export class DroppedAssetFactory extends SDKController {
       isInteractive,
       sceneDropId,
       specialType,
+      text,
+      textColor,
+      textSize,
+      textWeight,
+      textWidth,
       uniqueName,
       urlSlug,
       yOrderAdjust,
