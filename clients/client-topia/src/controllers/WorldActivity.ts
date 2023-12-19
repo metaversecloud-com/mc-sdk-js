@@ -74,7 +74,7 @@ export class WorldActivity extends SDKController {
    *
    * @usage
    * ```ts
-   * const visitors = await world.currentVisitors();
+   * const visitors = await worldActivity.currentVisitors();
    * ```
    */
   async currentVisitors() {
@@ -94,7 +94,7 @@ export class WorldActivity extends SDKController {
    *
    * @usage
    * ```ts
-   * await world.moveAllVisitors({
+   * await worldActivity.moveAllVisitors({
    *   shouldFetchVisitors: true,
    *   shouldTeleportVisitors: true,
    *   scatterVisitorsBy: 40,
@@ -104,7 +104,7 @@ export class WorldActivity extends SDKController {
    * ```
    *
    * @result
-   * Updates each Visitor instance and world.visitors map.
+   * Updates each Visitor instance and worldActivity.visitors map.
    */
   async moveAllVisitors({
     shouldFetchVisitors = true,
@@ -138,22 +138,22 @@ export class WorldActivity extends SDKController {
    * ```ts
    * const visitorsToMove = [
    *   {
-   *     visitorObj: world.visitors["1"],
+   *     visitorObj: worldActivity.visitors["1"],
    *     shouldTeleportVisitor: true,
    *     x: 100,
    *     y: 100
    *   }, {
-   *     visitorObj: world.visitors["2"],
+   *     visitorObj: worldActivity.visitors["2"],
    *     shouldTeleportVisitor: false,
    *     x: 100,
    *     y: 100
    *   }
    * ];
-   * await world.moveVisitors(visitorsToMove);
+   * await worldActivity.moveVisitors(visitorsToMove);
    * ```
    *
    * @result
-   * Updates each Visitor instance and world.visitors map.
+   * Updates each Visitor instance and worldActivity.visitors map.
    */
   async moveVisitors(visitorsToMove: VisitorsToMoveArrayType) {
     const allPromises: Array<Promise<void | ResponseType>> = [];
