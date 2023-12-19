@@ -457,6 +457,23 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * @summary
+   * Flip an dropped asset.
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.flip(.5);
+   * ```
+   */
+  flip(): Promise<void | ResponseType> {
+    try {
+      return this.#updateDroppedAsset({}, "flip");
+    } catch (error) {
+      throw this.errorHandler({ error, params: {}, sdkMethod: "DroppedAsset.flip" });
+    }
+  }
+
+  /**
+   * @summary
    * Change or remove media embedded in a dropped asset.
    *
    * @usage
