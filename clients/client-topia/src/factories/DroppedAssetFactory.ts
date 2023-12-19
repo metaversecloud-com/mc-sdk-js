@@ -41,27 +41,67 @@ export class DroppedAssetFactory extends SDKController {
   async drop(
     asset: Asset,
     {
+      assetScale,
+      flipped,
       interactivePublicKey,
       isInteractive,
+      layer0,
+      layer1,
       position: { x, y },
       sceneDropId,
+      text,
+      textColor,
+      textSize,
+      textWeight,
+      textWidth,
       uniqueName,
       urlSlug,
       yOrderAdjust,
     }: {
+      assetScale?: number;
+      flipped?: boolean;
       interactivePublicKey?: string;
       isInteractive?: boolean;
+      layer0?: string;
+      layer1?: string;
       position: {
         x: number;
         y: number;
       };
       sceneDropId?: string;
+      text?: string;
+      textColor?: string;
+      textSize?: number;
+      textWeight?: string;
+      textWidth?: number;
       uniqueName?: string;
       urlSlug: string;
       yOrderAdjust?: number;
     },
   ): Promise<DroppedAsset> {
-    const params = { interactivePublicKey, isInteractive, sceneDropId, uniqueName, urlSlug, yOrderAdjust };
+    let specialType;
+    if (layer0 || layer1) specialType = "webImage";
+    else if (text) specialType = "text";
+
+    const params = {
+      assetScale,
+      flipped,
+      layer0,
+      layer1,
+      interactivePublicKey,
+      isInteractive,
+      sceneDropId,
+      specialType,
+      text,
+      textColor,
+      textSize,
+      textWeight,
+      textWidth,
+      uniqueName,
+      urlSlug,
+      yOrderAdjust,
+    };
+
     if (isInteractive && !interactivePublicKey) {
       throw this.errorHandler({
         message: "interactivePublicKey is required",
@@ -69,18 +109,11 @@ export class DroppedAssetFactory extends SDKController {
         sdkMethod: "DroppedAssetFactory.drop",
       });
     }
+
     try {
       const response: AxiosResponse = await this.topiaPublicApi().post(
         `/world/${urlSlug}/assets`,
-        {
-          assetId: asset.id,
-          interactivePublicKey,
-          isInteractive,
-          position: { x, y },
-          sceneDropId,
-          uniqueName,
-          yOrderAdjust,
-        },
+        { ...params, assetId: asset.id, position: { x, y } },
         asset.requestOptions,
       );
       const { id } = response.data;
