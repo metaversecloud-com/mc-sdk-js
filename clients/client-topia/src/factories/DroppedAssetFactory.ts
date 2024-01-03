@@ -25,8 +25,8 @@ export class DroppedAssetFactory extends SDKController {
     interactiveSecret: string,
   ): Promise<DroppedAsset> {
     const params = { uniqueName, urlSlug, interactivePublicKey, interactiveSecret };
-    const interactiveJWT = jwt.sign(interactivePublicKey, interactiveSecret);
     try {
+      const interactiveJWT = jwt.sign(interactivePublicKey, interactiveSecret);
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${urlSlug}/asset-by-unique-name/${uniqueName}`,
         { headers: { interactiveJWT, publickey: interactivePublicKey } },
@@ -41,7 +41,7 @@ export class DroppedAssetFactory extends SDKController {
   async drop(
     asset: Asset,
     {
-      assetScale,
+      assetScale = 1,
       flipped,
       interactivePublicKey,
       isInteractive,
