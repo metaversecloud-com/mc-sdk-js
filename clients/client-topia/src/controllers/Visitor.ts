@@ -251,7 +251,8 @@ export class Visitor extends User implements VisitorInterface {
     try {
       let expressionId = id;
       if (name) {
-        expressionId = await this.topiaPublicApi().get(`/expressions?name=${name}`, this.requestOptions);
+        const response = await this.topiaPublicApi().get(`/expressions?name=${name}`, this.requestOptions);
+        expressionId = response.data.expressionId;
       }
       const result = await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/grant-expression/${expressionId}`,
