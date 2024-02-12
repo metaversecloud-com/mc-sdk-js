@@ -33,7 +33,7 @@ import { AxiosError } from "axios";
  * await new SDKController({ credentials, topia });
  * ```
  */
-export class SDKController implements SDKInterface {
+export abstract class SDKController implements SDKInterface {
   credentials: InteractiveCredentials | undefined;
   jwt?: string;
   requestOptions: object;

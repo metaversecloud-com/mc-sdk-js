@@ -21,15 +21,26 @@ export class DroppedAssetFactory extends SDKController {
   async getWithUniqueName(
     uniqueName: string,
     urlSlug: string,
-    interactivePublicKey: string,
-    interactiveSecret: string,
+    credentials: {
+      apiKey?: string;
+      interactivePublicKey?: string;
+      interactiveSecret?: string;
+    },
   ): Promise<DroppedAsset> {
-    const params = { uniqueName, urlSlug, interactivePublicKey, interactiveSecret };
+    const { apiKey, interactivePublicKey, interactiveSecret } = credentials;
+    const params = { apiKey, interactivePublicKey, interactiveSecret, uniqueName, urlSlug };
     try {
-      const interactiveJWT = jwt.sign(interactivePublicKey, interactiveSecret);
+      const headers: any = {};
+      if (apiKey) {
+        headers.Authorization = apiKey;
+      } else if (interactivePublicKey && interactiveSecret) {
+        headers.interactiveJWT = jwt.sign(interactivePublicKey, interactiveSecret);
+        headers.publickey = interactivePublicKey;
+      }
+
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${urlSlug}/asset-by-unique-name/${uniqueName}`,
-        { headers: { interactiveJWT, publickey: interactivePublicKey } },
+        { headers },
       );
       const { id } = response.data;
       return new DroppedAsset(this.topia, id, urlSlug, { attributes: response.data });
@@ -45,8 +56,8 @@ export class DroppedAssetFactory extends SDKController {
       flipped,
       interactivePublicKey,
       isInteractive,
-      layer0,
-      layer1,
+      layer0 = "",
+      layer1 = "",
       position: { x, y },
       sceneDropId,
       text,
@@ -79,7 +90,7 @@ export class DroppedAssetFactory extends SDKController {
       yOrderAdjust?: number;
     },
   ): Promise<DroppedAsset> {
-    let specialType;
+    let specialType = null;
     if (layer0 || layer1) specialType = "webImage";
     else if (text) specialType = "text";
 
