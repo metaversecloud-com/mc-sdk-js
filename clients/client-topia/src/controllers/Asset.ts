@@ -38,12 +38,12 @@ export class Asset extends SDKController implements AssetInterface {
     Object.assign(this, options.attributes);
   }
 
-  async fetchPlatformAssets(): Promise<object | ResponseType> {
+  async fetchAssetById(): Promise<object | ResponseType> {
     try {
-      const response: AxiosResponse = await this.topiaPublicApi().get("/assets/topia-assets", this.requestOptions);
+      const response: AxiosResponse = await this.topiaPublicApi().get(`/assets/${this.id}`, this.requestOptions);
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error, sdkMethod: "Asset.fetchPlatformAssets" });
+      throw this.errorHandler({ error, sdkMethod: "Asset.fetchAssetById" });
     }
   }
 }

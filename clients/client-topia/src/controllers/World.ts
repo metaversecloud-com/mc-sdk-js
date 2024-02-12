@@ -122,6 +122,50 @@ export class World extends SDKController implements WorldInterface {
     }
   }
 
+  /**
+   * @summary
+   * Set close world settings
+   *
+   * @usage
+   * ```ts
+   * await world.updateCloseWorldSettings({
+   *   controls: {
+   *     allowMuteAll: true,
+   *     disableHideVideo: true,
+   *     isMobileDisabled: false,
+   *     isShowingCurrentGuests: false,
+   *   },
+   *   description: 'Welcome to my world.',
+   *   forceAuthOnLogin: false,
+   *   height: 2000,
+   *   name: 'Example',
+   *   spawnPosition: { x: 100, y: 100 },
+   *   width: 2000
+   * });
+   * ```
+   */
+  async updateCloseWorldSettings({
+    closeWorldDescription,
+    isWorldClosed,
+  }: {
+    closeWorldDescription: string;
+    isWorldClosed: boolean;
+  }): Promise<void | ResponseType> {
+    const params = {
+      closeWorldDescription,
+      isWorldClosed,
+    };
+    try {
+      return await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/set-close-world-settings`,
+        params,
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw this.errorHandler({ error, params, sdkMethod: "World.updateCloseWorldSettings" });
+    }
+  }
+
   ////////// dropped assets
   /**
    * @summary
@@ -276,6 +320,7 @@ export class World extends SDKController implements WorldInterface {
     return outcomes;
   }
 
+  // scenes
   /**
    * @deprecated Use {@link fetchScenes} instead.
    *
@@ -339,7 +384,7 @@ export class World extends SDKController implements WorldInterface {
         `/world/${this.urlSlug}/scenes-with-dropped-assets`,
         this.requestOptions,
       );
-      this.scenes = response.data;
+      this.scenes = response.data.scenes;
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "World.fetchScenes" });
