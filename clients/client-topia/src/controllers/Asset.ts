@@ -24,7 +24,7 @@ import { ResponseType } from "types";
  */
 export class Asset extends SDKController implements AssetInterface {
   readonly id?: string;
-  readonly urlSlug?: string;
+  urlSlug?: string;
 
   constructor(topia: Topia, id: string, options: AssetOptionalInterface = { attributes: {}, credentials: {} }) {
     // assetId and urlSlug should only be used when Asset is extended by DroppedAsset
@@ -36,7 +36,7 @@ export class Asset extends SDKController implements AssetInterface {
       visitorId: options?.credentials?.visitorId,
     });
     this.id = id;
-    this.id = options?.credentials?.urlSlug;
+    this.urlSlug = options?.credentials?.urlSlug;
     Object.assign(this, options.attributes);
   }
 
