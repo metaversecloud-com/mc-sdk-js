@@ -72,6 +72,12 @@ export class User extends SDKController implements UserInterface {
   /**
    * @summary
    * Returns all assets owned by User when an email address is provided.
+   *
+   * @usage
+   * ```ts
+   * await user.fetchAssets();
+   * const userAssets = user.assets;
+   * ```
    */
   async fetchAssets(): Promise<void | ResponseType> {
     try {
@@ -92,7 +98,31 @@ export class User extends SDKController implements UserInterface {
 
   /**
    * @summary
-   * Returns all scenes owned by User
+   * Returns all platform assets.
+   *
+   * @usage
+   * ```ts
+   * const assets = await user.fetchPlatformAssets();
+   * ```
+   */
+  async fetchPlatformAssets(): Promise<object | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get("/assets/topia-assets", this.requestOptions);
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Asset.fetchPlatformAssets" });
+    }
+  }
+
+  /**
+   * @summary
+   * Returns all scenes owned by User.
+   *
+   * @usage
+   * ```ts
+   * await user.fetchScenes();
+   * const userScenes = user.scenes;
+   * ```
    */
   async fetchScenes(): Promise<void | ResponseType> {
     try {

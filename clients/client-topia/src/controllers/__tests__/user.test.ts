@@ -31,6 +31,12 @@ describe("User Class", () => {
     expect(mockAssets).toBeDefined();
   });
 
+  it("should return an array of assets owned by specific email address", async () => {
+    mock.onGet(`https://${apiDomain}/api/v1/assets/topia-assets`).reply(200);
+    await testUser.fetchPlatformAssets();
+    expect(mock.history.get.length).toBe(1);
+  });
+
   it("should return an array of scenes owned by specific user", async () => {
     testUser.fetchScenes = jest.fn().mockReturnValue(scenes);
     const mockScenes = await testUser.fetchScenes();

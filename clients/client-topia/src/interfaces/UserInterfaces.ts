@@ -2,6 +2,7 @@ import { InteractiveCredentials, ResponseType } from "types";
 
 export interface UserInterface {
   fetchAssets(): Promise<void | ResponseType>;
+  fetchPlatformAssets(): Promise<object | ResponseType>;
   fetchScenes(): Promise<void | ResponseType>;
   fetchWorldsByKey(): Promise<void | ResponseType>;
   fetchDataObject(): Promise<void | ResponseType>;

@@ -13,27 +13,37 @@ export class WorldFactory extends SDKController {
   async deleteDroppedAssets(
     urlSlug: string,
     droppedAssetIds: string[],
-    interactivePublicKey: string,
-    interactiveSecret: string,
+    credentials: {
+      apiKey?: string;
+      interactivePublicKey?: string;
+      interactiveSecret?: string;
+    },
   ) {
-    const params = { droppedAssetIds, urlSlug, interactivePublicKey, interactiveSecret };
+    const { apiKey, interactivePublicKey, interactiveSecret } = credentials;
+    const params = { apiKey, droppedAssetIds, interactivePublicKey, interactiveSecret, urlSlug };
+
     try {
-      const interactiveJWT = jwt.sign(interactivePublicKey, interactiveSecret);
+      const headers: any = {};
+      if (apiKey) {
+        headers.Authorization = apiKey;
+      } else if (interactivePublicKey && interactiveSecret) {
+        headers.interactiveJWT = jwt.sign(interactivePublicKey, interactiveSecret);
+        headers.publickey = interactivePublicKey;
+      }
 
       const promiseArray = [];
       for (const id of droppedAssetIds) {
         promiseArray.push(
           this.topiaPublicApi().delete(`/world/${urlSlug}/assets/${id}`, {
-            headers: { interactiveJWT, publickey: interactivePublicKey },
+            headers,
           }),
         );
       }
-      const result = await Promise.all(promiseArray);
-      console.log(result);
+      await Promise.all(promiseArray);
 
       return { success: true };
     } catch (error) {
-      throw this.errorHandler({ error, params, sdkMethod: "DroppedAssetFactory.getWithUniqueName" });
+      throw this.errorHandler({ error, params, sdkMethod: "WorldFactory.deleteDroppedAssets" });
     }
   }
 }

@@ -2,7 +2,7 @@ import { InteractiveCredentials } from "types";
 import { SDKInterface } from "interfaces/SDKInterfaces";
 
 export interface AssetInterface extends SDKInterface {
-  fetchPlatformAssets(): Promise<object>;
+  fetchAssetById(): Promise<object | ResponseType>;
   addedOn?: string;
   assetName?: string;
   creatorTags?: object;

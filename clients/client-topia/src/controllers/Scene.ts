@@ -36,6 +36,16 @@ export class Scene extends SDKController implements SceneInterface {
     Object.assign(this, options.attributes);
   }
 
+  /**
+   * @summary
+   * Retrieves scene details.
+   *
+   * @usage
+   * ```ts
+   * await scene.fetchSceneById();
+   * const { name } = scene;
+   * ```
+   */
   async fetchSceneById(): Promise<void | ResponseType> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().get(`/scenes/${this.id}`, this.requestOptions);

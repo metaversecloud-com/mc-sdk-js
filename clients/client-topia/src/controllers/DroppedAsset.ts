@@ -30,12 +30,13 @@ import { ResponseType } from "types";
  * ```
  */
 export class DroppedAsset extends Asset implements DroppedAssetInterface {
-  dataObject?: object | null;
   readonly id?: string | undefined;
-  text?: string | null | undefined;
-  urlSlug: string;
+  dataObject?: object | null;
   isInteractive?: boolean | null;
   interactivePublicKey?: string | null;
+  position?: { x: number; y: number };
+  text?: string | null | undefined;
+  urlSlug: string;
 
   constructor(
     topia: Topia,
@@ -514,7 +515,6 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * @usage
    * ```ts
    * await droppedAsset.addWebhook({
-   *   active: true,
    *   dataObject: {},
    *   description: "Webhook desc",
    *   enteredBy: "you",
@@ -522,7 +522,6 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *   title: "title",
    *   type: "type",
    *   url: "https://url.com",
-   *   urlSlug: "world",
    * });
    * ```
    */

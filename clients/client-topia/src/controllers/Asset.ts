@@ -24,6 +24,7 @@ import { ResponseType } from "types";
  */
 export class Asset extends SDKController implements AssetInterface {
   readonly id?: string;
+  urlSlug?: string;
 
   constructor(topia: Topia, id: string, options: AssetOptionalInterface = { attributes: {}, credentials: {} }) {
     // assetId and urlSlug should only be used when Asset is extended by DroppedAsset
@@ -35,15 +36,29 @@ export class Asset extends SDKController implements AssetInterface {
       visitorId: options?.credentials?.visitorId,
     });
     this.id = id;
+    this.urlSlug = options?.credentials?.urlSlug;
     Object.assign(this, options.attributes);
   }
 
-  async fetchPlatformAssets(): Promise<object | ResponseType> {
+  /**
+   * @summary
+   * Retrieves platform asset details.
+   *
+   * @usage
+   * ```ts
+   * await asset.fetchAssetById();
+   * const { assetName } = asset;
+   * ```
+   */
+  async fetchAssetById(): Promise<object | ResponseType> {
     try {
-      const response: AxiosResponse = await this.topiaPublicApi().get("/assets/topia-assets", this.requestOptions);
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/assets/${this.urlSlug}/${this.id}`,
+        this.requestOptions,
+      );
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error, sdkMethod: "Asset.fetchPlatformAssets" });
+      throw this.errorHandler({ error, sdkMethod: "Asset.fetchAssetById" });
     }
   }
 }
