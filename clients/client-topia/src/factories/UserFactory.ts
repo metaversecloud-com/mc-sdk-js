@@ -1,6 +1,12 @@
 import { Topia, User } from "controllers";
 import { UserOptionalInterface } from "interfaces";
 
+/**
+ * @usage
+ * ```ts
+ * const User = new UserFactory(myTopiaInstance);
+ * ```
+ */
 export class UserFactory {
   topia: Topia;
 
@@ -8,6 +14,15 @@ export class UserFactory {
     this.topia = topia;
   }
 
+  /**
+   * @summary
+   * Instantiate a new instance of User class.
+   *
+   * @usage
+   * ```
+   * const userInstance = await User.create({ credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * ```
+   */
   create(options?: UserOptionalInterface): User {
     return new User(this.topia, options);
   }

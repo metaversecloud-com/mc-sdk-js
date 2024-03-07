@@ -3,21 +3,54 @@ import { DroppedAssetOptionalInterface } from "interfaces";
 import { AxiosResponse } from "axios";
 import jwt from "jsonwebtoken";
 
+/**
+ * @usage
+ * ```ts
+ * const DroppedAsset = new DroppedAssetFactory(myTopiaInstance);
+ * ```
+ */
 export class DroppedAssetFactory extends SDKController {
   constructor(topia: Topia) {
     super(topia);
   }
 
+  /**
+   * @summary
+   * Instantiate a new instance of DroppedAsset class.
+   *
+   * @usage
+   * ```
+   * const droppedAssetInstance = await DroppedAsset.create(assetId, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * ```
+   */
   create(id: string, urlSlug: string, options?: DroppedAssetOptionalInterface): DroppedAsset {
     return new DroppedAsset(this.topia, id, urlSlug, options);
   }
 
+  /**
+   * @summary
+   * Instantiate a new instance of DroppedAsset class and retrieve all properties.
+   *
+   * @usage
+   * ```
+   * const droppedAssetInstance = await DroppedAsset.get(assetId, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * ```
+   */
   async get(id: string, urlSlug: string, options?: DroppedAssetOptionalInterface): Promise<DroppedAsset> {
     const droppedAsset = new DroppedAsset(this.topia, id, urlSlug, options);
     await droppedAsset.fetchDroppedAssetById();
     return droppedAsset;
   }
 
+  /**
+   * @summary
+   * Searches dropped assets within a world by a provide `uniqueName`. If a single match is found, a new instance of DroppedAsset class is returned all properties.
+   *
+   * @usage
+   * ```
+   * const droppedAssetInstance = await DroppedAsset.getWithUniqueName("exampleUniqueName", urlSlug, { interactivePublicKey, interactiveSecret });
+   * ```
+   */
   async getWithUniqueName(
     uniqueName: string,
     urlSlug: string,
@@ -49,6 +82,26 @@ export class DroppedAssetFactory extends SDKController {
     }
   }
 
+  /**
+   * @summary
+   * Drops an asset in a world and returns a new instance of DroppedAsset class with all properties.
+   *
+   * @usage
+   * ```
+   * const assetInstance = await Asset.create(id, { credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * const droppedAssetInstance = await DroppedAsset.get(assetInstance, {
+        assetScale: 1.5,
+        flipped: true,
+        layer0: "",
+        layer1: "https://pathtoimage.png",
+        interactivePublicKey,
+        isInteractive: true,
+        position: { x: 0, y: 0 },
+        uniqueName: "exampleUniqueName",
+        urlSlug,
+      });
+   * ```
+   */
   async drop(
     asset: Asset,
     {

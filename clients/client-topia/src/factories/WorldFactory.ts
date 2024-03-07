@@ -1,15 +1,40 @@
 import { SDKController, Topia, World } from "controllers";
 import { WorldOptionalInterface } from "interfaces";
 import jwt from "jsonwebtoken";
+
+/**
+ * @usage
+ * ```ts
+ * const World = new WorldFactory(myTopiaInstance);
+ * ```
+ */
 export class WorldFactory extends SDKController {
   constructor(topia: Topia) {
     super(topia);
   }
 
+  /**
+   * @summary
+   * Instantiate a new instance of World class.
+   *
+   * @usage
+   * ```
+   * const worldInstance = await World.create(urlSlug, { credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * ```
+   */
   create(urlSlug: string, options?: WorldOptionalInterface): World {
     return new World(this.topia, urlSlug, options);
   }
 
+  /**
+   * @summary
+   * Deletes an array of Dropped Assets from within a world and returns success: true
+   *
+   * @usage
+   * ```
+   * await World.deleteDroppedAssets(urlSlug, ["exampleDroppedAssetId1", "exampleDroppedAssetId2"], { interactiveNonce, interactivePublicKey, visitorId });
+   * ```
+   */
   async deleteDroppedAssets(
     urlSlug: string,
     droppedAssetIds: string[],

@@ -302,13 +302,13 @@ export class Visitor extends User implements VisitorInterface {
    */
   async setDataObject(
     dataObject: object | null | undefined,
-    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+    options: { analytics?: string[]; lock?: { lockId: string; releaseLock?: boolean } } = {},
   ): Promise<void | ResponseType> {
     try {
-      const { lock = {} } = options;
+      const { analytics = [], lock = {} } = options;
       await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/set-data-object`,
-        { dataObject: dataObject || this.dataObject, lock },
+        { analytics, dataObject: dataObject || this.dataObject, lock },
         this.requestOptions,
       );
       this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
@@ -332,13 +332,13 @@ export class Visitor extends User implements VisitorInterface {
    */
   async updateDataObject(
     dataObject: object,
-    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+    options: { analytics?: string[]; lock?: { lockId: string; releaseLock?: boolean } } = {},
   ): Promise<void | ResponseType> {
     try {
-      const { lock = {} } = options;
+      const { analytics = [], lock = {} } = options;
       await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/update-data-object`,
-        { dataObject: dataObject || this.dataObject, lock },
+        { analytics, dataObject: dataObject || this.dataObject, lock },
         this.requestOptions,
       );
       this.dataObject = dataObject || this.dataObject;
@@ -364,13 +364,13 @@ export class Visitor extends User implements VisitorInterface {
   async incrementDataObjectValue(
     path: string,
     amount: number,
-    options: { lock?: { lockId: string; releaseLock?: boolean } } = {},
+    options: { analytics?: string[]; lock?: { lockId: string; releaseLock?: boolean } } = {},
   ): Promise<void | ResponseType> {
     try {
-      const { lock = {} } = options;
+      const { analytics = [], lock = {} } = options;
       await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/increment-data-object-value`,
-        { path, amount, lock },
+        { path, amount, analytics, lock },
         this.requestOptions,
       );
     } catch (error) {
