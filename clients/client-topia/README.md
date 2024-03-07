@@ -205,6 +205,15 @@ try {
 
 Once complete be sure to also call `await keyAsset.updateDataObject({ turnCount: turnCount + 1 });` so that the next player is free to take their turn!
 
+**Custom analytics**
+You can leverage the data object methods for all types to track analytics unique to your Public Key by passing `analytics` as an optional array to all calls that set, update, or increment data objects!
+
+```js
+await droppedAsset.updateDataObject({ isResetInProgress: true }, { analytics: ["resetCount"], lock: { lockId } });
+```
+
+Note: This does NOT impact the data objects themselves but rather allows you to track custom analytics (incremented by 1) across all instances of your application with a given Public Key.
+
 <br>
 
 <hr/>
