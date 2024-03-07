@@ -18,9 +18,7 @@
 <h1>Class WorldFactory</h1></div>
 <section class="tsd-panel tsd-comment">
 <div class="tsd-comment tsd-typography">
-<h3>Summary</h3><p>Create an instance of SDKController class with credentials.</p>
-
-<h3>Usage</h3><pre><code class="language-ts"><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">credentials</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-2">assetId:</span><span class="hl-1"> </span><span class="hl-4">&quot;exampleAsset&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">interactiveNonce:</span><span class="hl-1"> </span><span class="hl-4">&quot;exampleNonce&quot;</span><br/><span class="hl-1">  </span><span class="hl-2">interactivePublicKey</span><span class="hl-1">: </span><span class="hl-4">&quot;examplePublicKey&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">visitorId:</span><span class="hl-1"> </span><span class="hl-8">1</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">url:</span><span class="hl-1"> </span><span class="hl-4">&quot;https://topia.io&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">}</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">topia</span><span class="hl-1"> = </span><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-3">Topia</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-2">apiDomain:</span><span class="hl-1"> </span><span class="hl-4">&quot;api.topia.io&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">apiKey:</span><span class="hl-1"> </span><span class="hl-4">&quot;exampleKey&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">interactiveKey:</span><span class="hl-1"> </span><span class="hl-4">&quot;key&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">interactiveSecret:</span><span class="hl-1"> </span><span class="hl-4">&quot;secret&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">}</span><br/><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-3">SDKController</span><span class="hl-1">({ </span><span class="hl-2">credentials</span><span class="hl-1">, </span><span class="hl-2">topia</span><span class="hl-1"> });</span>
+<h3>Usage</h3><pre><code class="language-ts"><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">World</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-3">WorldFactory</span><span class="hl-1">(</span><span class="hl-2">myTopiaInstance</span><span class="hl-1">);</span>
 </code></pre>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
@@ -30,7 +28,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">WorldFactory</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in factories/WorldFactory.ts:4</li></ul></aside>
+<li>Defined in factories/WorldFactory.ts:11</li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -69,7 +67,7 @@
 <h4 class="tsd-returns-title">Returns <a href="factories.WorldFactory.html" class="tsd-signature-type" data-tsd-kind="Class">WorldFactory</a></h4><aside class="tsd-sources">
 <p>Overrides <a href="controllers.SDKController.html">SDKController</a>.<a href="controllers.SDKController.html#constructor">constructor</a></p>
 <ul>
-<li>Defined in factories/WorldFactory.ts:5</li></ul></aside></li></ul></section></section>
+<li>Defined in factories/WorldFactory.ts:12</li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="credentials" class="tsd-anchor"></a>
@@ -103,6 +101,12 @@
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="create.create-1">create<span class="tsd-signature-symbol">(</span>urlSlug<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/interfaces.WorldOptionalInterface.html" class="tsd-signature-type" data-tsd-kind="Interface">WorldOptionalInterface</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="controllers.World.html" class="tsd-signature-type" data-tsd-kind="Class">World</a><a href="#create.create-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography">
+<h3>Summary</h3><p>Instantiate a new instance of World class.</p>
+
+<h3>Usage</h3><pre><code><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">worldInstance</span><span class="hl-1"> = </span><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">World</span><span class="hl-1">.</span><span class="hl-3">create</span><span class="hl-1">(</span><span class="hl-2">urlSlug</span><span class="hl-1">, { </span><span class="hl-2">credentials:</span><span class="hl-1"> { </span><span class="hl-2">interactiveNonce</span><span class="hl-1">, </span><span class="hl-2">interactivePublicKey</span><span class="hl-1">, </span><span class="hl-2">visitorId</span><span class="hl-1"> } });</span>
+</code></pre>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
@@ -112,12 +116,18 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> options: <a href="../interfaces/interfaces.WorldOptionalInterface.html" class="tsd-signature-type" data-tsd-kind="Interface">WorldOptionalInterface</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="controllers.World.html" class="tsd-signature-type" data-tsd-kind="Class">World</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in factories/WorldFactory.ts:9</li></ul></aside></li></ul></section>
+<li>Defined in factories/WorldFactory.ts:25</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="deleteDroppedAssets" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>delete<wbr/>Dropped<wbr/>Assets</span><a href="#deleteDroppedAssets" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="deleteDroppedAssets.deleteDroppedAssets-1">delete<wbr/>Dropped<wbr/>Assets<span class="tsd-signature-symbol">(</span>urlSlug<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, droppedAssetIds<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, credentials<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>apiKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>interactivePublicKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>interactiveSecret<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>success<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span><a href="#deleteDroppedAssets.deleteDroppedAssets-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography">
+<h3>Summary</h3><p>Deletes an array of Dropped Assets from within a world and returns success: true</p>
+
+<h3>Usage</h3><pre><code><span class="hl-0">await</span><span class="hl-1"> </span><span class="hl-2">World</span><span class="hl-1">.</span><span class="hl-3">deleteDroppedAssets</span><span class="hl-1">(</span><span class="hl-2">urlSlug</span><span class="hl-1">, [</span><span class="hl-4">&quot;exampleDroppedAssetId1&quot;</span><span class="hl-1">, </span><span class="hl-4">&quot;exampleDroppedAssetId2&quot;</span><span class="hl-1">], { </span><span class="hl-2">interactiveNonce</span><span class="hl-1">, </span><span class="hl-2">interactivePublicKey</span><span class="hl-1">, </span><span class="hl-2">visitorId</span><span class="hl-1"> });</span>
+</code></pre>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
@@ -136,7 +146,7 @@
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> interactive<wbr/>Secret<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>success<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in factories/WorldFactory.ts:13</li></ul></aside></li></ul></section>
+<li>Defined in factories/WorldFactory.ts:38</li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="errorHandler" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>error<wbr/>Handler</span><a href="#errorHandler" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
