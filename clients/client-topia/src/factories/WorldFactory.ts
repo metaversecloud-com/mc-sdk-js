@@ -32,7 +32,7 @@ export class WorldFactory extends SDKController {
    *
    * @usage
    * ```
-   * await World.deleteDroppedAssets(urlSlug, ["exampleDroppedAssetId1", "exampleDroppedAssetId2"], { interactiveNonce, interactivePublicKey, visitorId });
+   * await World.deleteDroppedAssets(urlSlug, ["exampleDroppedAssetId1", "exampleDroppedAssetId2"], { interactivePublicKey, interactiveSecret });
    * ```
    */
   async deleteDroppedAssets(

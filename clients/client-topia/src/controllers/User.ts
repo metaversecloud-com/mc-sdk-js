@@ -71,6 +71,27 @@ export class User extends SDKController implements UserInterface {
 
   /**
    * @summary
+   * Verify user has valid interactive credentials
+   *
+   * @usage
+   * ```ts
+   * await user.checkInteractiveCredentials();
+   * ```
+   */
+  async checkInteractiveCredentials(): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/auth/interactive-credentials`,
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "User.checkInteractiveCredentials" });
+    }
+  }
+
+  /**
+   * @summary
    * Returns all assets owned by User when an email address is provided.
    *
    * @usage
