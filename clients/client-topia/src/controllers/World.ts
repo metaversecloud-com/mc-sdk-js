@@ -455,6 +455,62 @@ export class World extends SDKController implements WorldInterface {
     }
   }
 
+  /**
+   * @summary
+   * Get all particles available
+   *
+   * @usage
+   * ```ts
+   * await world.getAllParticles();
+   * ```
+   */
+  async getAllParticles(): Promise<object | ResponseType> {
+    try {
+      const result = await this.topiaPublicApi().get(`/particles`, this.requestOptions);
+      return result.data;
+    } catch (error) {
+      throw this.errorHandler({ error, params: {}, sdkMethod: "World.getAllParticles" });
+    }
+  }
+
+  /**
+   * @summary
+   * Trigger a particle effect at a position in the world
+   *
+   * @usage
+   * ```ts
+   * await world.triggerParticle({ name: "Flame" });
+   * ```
+   */
+  async triggerParticle({
+    id,
+    name,
+    duration = 10,
+    position = { x: 1, y: 1 },
+  }: {
+    id?: string;
+    name?: string;
+    duration?: number;
+    position?: object;
+  }): Promise<object | ResponseType> {
+    if (!id && !name) throw "An particle name is required.";
+    try {
+      let particleId = id;
+      if (name) {
+        const response = await this.topiaPublicApi().get(`/particles?name=${name}`, this.requestOptions);
+        particleId = response.data[0].id;
+      }
+      const result = await this.topiaPublicApi().post(
+        `/world/${this.urlSlug}/particles`,
+        { particleId, position, duration },
+        this.requestOptions,
+      );
+      return result;
+    } catch (error) {
+      throw this.errorHandler({ error, params: { id, name }, sdkMethod: "World.triggerParticle" });
+    }
+  }
+
   ////////// data objects
   /**
    * @summary
