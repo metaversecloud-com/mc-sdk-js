@@ -63,7 +63,7 @@ export class DroppedAssetFactory extends SDKController {
     const { apiKey, interactivePublicKey, interactiveSecret } = credentials;
     const params = { apiKey, interactivePublicKey, interactiveSecret, uniqueName, urlSlug };
     try {
-      const headers: any = {};
+      const headers: { Authorization?: string, interactiveJWT?: string, publickey?: string } = {};
       if (apiKey) {
         headers.Authorization = apiKey;
       } else if (interactivePublicKey && interactiveSecret) {
