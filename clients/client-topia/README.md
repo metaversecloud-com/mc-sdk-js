@@ -246,6 +246,12 @@ We've added a Pull Request template to help make it easier for developers to cla
 
 ## Documentation
 
+### Styles
+
+The SDK Stylesheet is already added to every boilerplate. To view documentation and examples please [click here](https://sdk-style.s3.amazonaws.com/example.html).
+
+### Developer Documentation
+
 We use [TypeDoc](https://typedoc.org/guides/overview) to convert comments in TypeScript source code into rendered HTML documentation. Comments should be simple and concise and include examples where applicable. Please be sure to add or update comments accordingly!
 
 To update docs run `yarn docs`.
