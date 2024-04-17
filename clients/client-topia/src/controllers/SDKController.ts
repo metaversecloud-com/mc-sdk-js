@@ -53,7 +53,7 @@ export abstract class SDKController implements SDKInterface {
     this.requestOptions = {};
 
     let payload = {};
-    const headers: any = {};
+    const headers: { Authorization?: string; InteractiveJWT?: string; publickey?: string } = {};
 
     try {
       if (topia.interactiveSecret && (profileId || assetId || urlSlug || visitorId)) {

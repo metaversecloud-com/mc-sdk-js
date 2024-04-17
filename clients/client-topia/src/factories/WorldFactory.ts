@@ -48,7 +48,7 @@ export class WorldFactory extends SDKController {
     const params = { apiKey, droppedAssetIds, interactivePublicKey, interactiveSecret, urlSlug };
 
     try {
-      const headers: any = {};
+      const headers: { Authorization?: string, interactiveJWT?: string, publickey?: string } = {};
       if (apiKey) {
         headers.Authorization = apiKey;
       } else if (interactivePublicKey && interactiveSecret) {

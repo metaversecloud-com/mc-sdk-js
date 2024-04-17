@@ -636,10 +636,15 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       switch (periodType) {
         case "week":
           query = `&week=W${dateValue}`;
+          break;
         case "month":
           query = `&month=${dateValue}`;
+          break;
         case "quarter":
           query = `&quarter=Q${dateValue}`;
+          break;
+        default:
+          ""
       }
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/dropped-asset-analytics/${this.id}?year=${year}${query}`,

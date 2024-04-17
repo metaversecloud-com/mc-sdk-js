@@ -24,10 +24,10 @@ export type {
 } from "types";
 export * from "interfaces";
 
-export { Asset, DroppedAsset, SDKController,  World, User, Scene, WorldActivity, Visitor } from "controllers";
+export { Asset, DroppedAsset, SDKController, World, User, Scene, WorldActivity, Visitor } from "controllers";
 
 Error.stackTraceLimit = 20;
-process.on("unhandledRejection", (reason: any) => {
+process.on("unhandledRejection", (reason: { data?: { errors?: string[] }; stack?: string }) => {
   if (reason && reason.data) {
     const { errors } = reason.data;
     if (Array.isArray(errors)) {

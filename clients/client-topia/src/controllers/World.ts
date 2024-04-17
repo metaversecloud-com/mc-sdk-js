@@ -218,8 +218,7 @@ export class World extends SDKController implements WorldInterface {
   }): Promise<DroppedAsset[]> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/assets-with-unique-name/${uniqueName}?${isPartial ? `partial=${isPartial}&` : ""}${
-          isReversed ? `reversed=${isReversed}` : ""
+        `/world/${this.urlSlug}/assets-with-unique-name/${uniqueName}?${isPartial ? `partial=${isPartial}&` : ""}${isReversed ? `reversed=${isReversed}` : ""
         }`,
         this.requestOptions,
       );
@@ -266,8 +265,7 @@ export class World extends SDKController implements WorldInterface {
     try {
       if (!sceneDropId) throw this.errorHandler({ message: "A sceneDropId is required." });
       const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/assets-with-scene-drop-id/${sceneDropId}?${
-          uniqueName ? `?uniqueName=${uniqueName}` : ""
+        `/world/${this.urlSlug}/assets-with-scene-drop-id/${sceneDropId}${uniqueName ? `?uniqueName=${uniqueName}` : ""
         }`,
         this.requestOptions,
       );
@@ -683,10 +681,15 @@ export class World extends SDKController implements WorldInterface {
       switch (periodType) {
         case "week":
           query = `&week=W${dateValue}`;
+          break;
         case "month":
           query = `&month=${dateValue}`;
+          break;
         case "quarter":
           query = `&quarter=Q${dateValue}`;
+          break;
+        default:
+          ""
       }
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/world-analytics?year=${year}${query}`,

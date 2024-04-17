@@ -82,6 +82,7 @@ export interface DroppedAssetInterface extends AssetInterface {
   assetPrivateZoneChannelDisabled?: boolean | null;
   assetPrivateConversationCap?: number | null;
   audioSliderVolume?: number | null;
+  bottomLayerURL?: string | null;
   broadcasterEmail?: string | null;
   clickType?: string | null;
   clickableLink?: string | null;
@@ -127,6 +128,7 @@ export interface DroppedAssetInterface extends AssetInterface {
   textFontFamily?: string | null;
   teleportX?: number | null;
   teleportY?: number | null;
+  topLayerURL?: string | null;
   tokenSymbol?: string | null;
   tokenName?: string | null;
   worldId?: string | null;
