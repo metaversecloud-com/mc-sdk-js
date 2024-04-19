@@ -267,6 +267,60 @@ export class Visitor extends User implements VisitorInterface {
 
   /**
    * @summary
+   * Get all particles available
+   *
+   * @usage
+   * ```ts
+   * await visitor.getAllParticles();
+   * ```
+   */
+  async getAllParticles(): Promise<object | ResponseType> {
+    try {
+      const result = await this.topiaPublicApi().get(`/particles`, this.requestOptions);
+      return result.data;
+    } catch (error) {
+      throw this.errorHandler({ error, params: {}, sdkMethod: "Visitor.getAllParticles" });
+    }
+  }
+
+  /**
+   * @summary
+   * Trigger a particle effect on a visitor
+   *
+   * @usage
+   * ```ts
+   * await visitor.triggerParticle({ name: "Flame" });
+   * ```
+   */
+  async triggerParticle({
+    id,
+    name,
+    duration = 10,
+  }: {
+    id?: string;
+    name?: string;
+    duration?: number;
+  }): Promise<object | ResponseType> {
+    if (!id && !name) throw "An particle name is required.";
+    try {
+      let particleId = id;
+      if (name) {
+        const response = await this.topiaPublicApi().get(`/particles?name=${name}`, this.requestOptions);
+        particleId = response.data[0].id;
+      }
+      const result = await this.topiaPublicApi().post(
+        `/world/${this.urlSlug}/particles`,
+        { particleId, position: { x: 1, y: 1 }, duration, followPlayerId: this.id },
+        this.requestOptions,
+      );
+      return result;
+    } catch (error) {
+      throw this.errorHandler({ error, params: { id, name }, sdkMethod: "Visitor.triggerParticle" });
+    }
+  }
+
+  /**
+   * @summary
    * Retrieves the data object for a visitor.
    *
    * @usage
