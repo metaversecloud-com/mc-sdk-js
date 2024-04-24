@@ -218,7 +218,8 @@ export class World extends SDKController implements WorldInterface {
   }): Promise<DroppedAsset[]> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/assets-with-unique-name/${uniqueName}?${isPartial ? `partial=${isPartial}&` : ""}${isReversed ? `reversed=${isReversed}` : ""
+        `/world/${this.urlSlug}/assets-with-unique-name/${uniqueName}?${isPartial ? `partial=${isPartial}&` : ""}${
+          isReversed ? `reversed=${isReversed}` : ""
         }`,
         this.requestOptions,
       );
@@ -265,7 +266,8 @@ export class World extends SDKController implements WorldInterface {
     try {
       if (!sceneDropId) throw this.errorHandler({ message: "A sceneDropId is required." });
       const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/assets-with-scene-drop-id/${sceneDropId}${uniqueName ? `?uniqueName=${uniqueName}` : ""
+        `/world/${this.urlSlug}/assets-with-scene-drop-id/${sceneDropId}${
+          uniqueName ? `?uniqueName=${uniqueName}` : ""
         }`,
         this.requestOptions,
       );
@@ -491,7 +493,7 @@ export class World extends SDKController implements WorldInterface {
     duration?: number;
     position?: object;
   }): Promise<object | ResponseType> {
-    if (!id && !name) throw "An particle name is required.";
+    if (!id && !name) throw "A particle name is required.";
     try {
       let particleId = id;
       if (name) {
@@ -689,7 +691,7 @@ export class World extends SDKController implements WorldInterface {
           query = `&quarter=Q${dateValue}`;
           break;
         default:
-          ""
+          "";
       }
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/world-analytics?year=${year}${query}`,

@@ -301,7 +301,7 @@ export class Visitor extends User implements VisitorInterface {
     name?: string;
     duration?: number;
   }): Promise<object | ResponseType> {
-    if (!id && !name) throw "An particle name is required.";
+    if (!id && !name) throw "A particle name is required.";
     try {
       let particleId = id;
       if (name) {

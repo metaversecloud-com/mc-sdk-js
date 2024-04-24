@@ -11,7 +11,7 @@ import { World } from "controllers/World";
 import { UserInterface, UserOptionalInterface } from "interfaces";
 
 // types
-import { ResponseType } from "types";
+import { ResponseType, SpriteSheetJSONType } from "types";
 
 /**
  * @summary
@@ -87,6 +87,132 @@ export class User extends SDKController implements UserInterface {
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "User.checkInteractiveCredentials" });
+    }
+  }
+
+  /**
+   * @summary
+   * Returns all avatars owned by User
+   *
+   * @usage
+   * ```ts
+   * const avatars = await user.fetchAvatars();
+   * ```
+   */
+  async fetchAvatars(): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(`/avatars`, this.requestOptions);
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "User.fetchAvatars" });
+    }
+  }
+
+  /**
+   * @summary
+   * Add a new avatar
+   *
+   * @usage
+   * ```ts
+   * const { avatarId, spriteSheetId } = await user.addAvatar({
+   *   name: "ExampleAvatar",
+   *   animationMeta: {
+   *     dance: {
+   *       loop: true,
+   *       x: 0,
+   *       y: -20,
+   *       hideLoop: true,
+   *     },
+   *   },
+   *   animations: {
+   *     "dance": [
+   *       "dance/1.png",
+   *       "dance/2.png",
+   *       "dance/3.png",
+   *       "dance/4.png",
+   *       "dance/5.png",
+   *     ],
+   *   },
+   *   frames: {
+   *     "dance/1.png": {
+   *       "frame": {
+   *         "x": 1,
+   *         "y": 1040,
+   *         "w": 58,
+   *         "h": 107
+   *       },
+   *       "rotated": true,
+   *       "trimmed": true,
+   *       "spriteSourceSize": {
+   *         "x": 50,
+   *         "y": 58,
+   *         "w": 58,
+   *         "h": 107
+   *       },
+   *       "sourceSize": {
+   *         "w": 159,
+   *         "h": 200
+   *       }
+   *     },
+   *   },
+   *   "spriteSheetType": "PLAYER_AVATAR",
+   *   "spriteSheetTypeMeta": {
+   *   "meta": {
+   *     "image": "spriteSheets%2FTvHNjgoMkiErDNSrVqHU%2FspriteSheet.png?alt=media",
+   *     "format": "RGBA8888",
+   *     "size": {
+   *       "w": 2006,
+   *       "h": 1099,
+   *     },
+   *     "scale": "1",
+   *   },
+   * });
+   * ```
+   */
+  async addAvatar({
+    animationMeta,
+    animations,
+    name,
+    frames,
+    meta,
+  }: SpriteSheetJSONType): Promise<void | ResponseType> {
+    const params = { animationMeta, animations, name, frames, meta };
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().post(`/avatars`, params, this.requestOptions);
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error, params, sdkMethod: "User.addAvatar" });
+    }
+  }
+
+  /**
+   * @summary
+   * Upload sprite sheet and avatar preview .png files to existing sprite sheet and avatar storage buckets
+   *
+   * @usage
+   * ```ts
+   * const formData = new FormData();
+   * formData.append('dancePreviewImage', dancePreviewImage);
+   * formData.append('emotePreviewImage', emotePreviewImage);
+   * formData.append('previewImageFile', previewImageFile);
+   * formData.append('sitPreviewImage', sitPreviewImage);
+   * formData.append('standPreviewImage', standPreviewImage);
+   * formData.append('spriteSheet', spriteSheet);
+   * formData.append('transportPreviewImage', transportPreviewImage);
+   * formData.append('unityPackage', unityPackage);
+   * await user.uploadAvatarFiles("exampleAvatarId", formData);
+   * ```
+   */
+  async uploadAvatarFiles(avatarId: string, formData: FormData): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().post(
+        `/avatars/${avatarId}/upload-files`,
+        formData,
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "User.uploadAvatarFiles" });
     }
   }
 
