@@ -380,6 +380,36 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * @summary
+   * Updates landmark zone options for a dropped asset.
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.updateLandmarkZone({
+   *  isLandmarkZoneEnabled: true,
+   *  landmarkZoneName: "Example",
+   *  landmarkZoneIsVisible: true,
+   *});
+   * ```
+   */
+  updateLandmarkZone({
+    isLandmarkZoneEnabled,
+    landmarkZoneName,
+    landmarkZoneIsVisible,
+  }: {
+    isLandmarkZoneEnabled: boolean;
+    landmarkZoneName?: string;
+    landmarkZoneIsVisible?: boolean;
+  }): Promise<void | ResponseType> {
+    const params = { isLandmarkZoneEnabled, landmarkZoneName, landmarkZoneIsVisible };
+    try {
+      return this.#updateDroppedAsset(params, "set-landmark-zone");
+    } catch (error) {
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.updateLandmarkZone" });
+    }
+  }
+
+  /**
+   * @summary
    * Updates webhook zone options for a dropped asset.
    *
    * @usage
@@ -644,7 +674,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
           query = `&quarter=Q${dateValue}`;
           break;
         default:
-          ""
+          "";
       }
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/dropped-asset-analytics/${this.id}?year=${year}${query}`,

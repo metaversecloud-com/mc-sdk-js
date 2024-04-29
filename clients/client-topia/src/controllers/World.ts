@@ -218,11 +218,11 @@ export class World extends SDKController implements WorldInterface {
   }): Promise<DroppedAsset[]> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/assets-with-unique-name/${uniqueName}?${isPartial ? `partial=${isPartial}&` : ""}${isReversed ? `reversed=${isReversed}` : ""
+        `/world/${this.urlSlug}/assets-with-unique-name/${uniqueName}?${isPartial ? `partial=${isPartial}&` : ""}${
+          isReversed ? `reversed=${isReversed}` : ""
         }`,
         this.requestOptions,
       );
-      // create temp map and then update private property only once
       const droppedAssets: DroppedAsset[] = [];
       for (const asset of response.data.assets) {
         droppedAssets.push(
@@ -238,6 +238,47 @@ export class World extends SDKController implements WorldInterface {
         error,
         params: { uniqueName, isPartial, isReversed },
         sdkMethod: "World.fetchDroppedAssetsWithUniqueName",
+      });
+    }
+  }
+
+  /**
+   * @summary
+   * Retrieve all landmark zone assets dropped in a world.
+   *
+   * @usage
+   * ```ts
+   * const zones = await world.fetchLandmarkZones("optionalLandmarkZoneName", "optionalSceneDropIdExample");
+   * ```
+   */
+  async fetchLandmarkZones(landmarkZoneName?: string, sceneDropId?: string): Promise<DroppedAsset[]> {
+    try {
+      let queryParams = "";
+      if (landmarkZoneName) {
+        queryParams = `?landmarkZoneName=${landmarkZoneName}`;
+        if (sceneDropId) queryParams += `&sceneDropId=${sceneDropId}`;
+      } else if (sceneDropId) {
+        queryParams = `?sceneDropId=${sceneDropId}`;
+      }
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/landmark-zones${queryParams}`,
+        this.requestOptions,
+      );
+      const droppedAssets: DroppedAsset[] = [];
+      for (const asset of response.data.assets) {
+        droppedAssets.push(
+          new DroppedAsset(this.topia, asset.id, this.urlSlug, {
+            attributes: asset,
+            credentials: this.credentials,
+          }),
+        );
+      }
+      return droppedAssets;
+    } catch (error) {
+      throw this.errorHandler({
+        error,
+        params: { landmarkZoneName, sceneDropId },
+        sdkMethod: "World.fetchLandmarkZones",
       });
     }
   }
@@ -265,7 +306,8 @@ export class World extends SDKController implements WorldInterface {
     try {
       if (!sceneDropId) throw this.errorHandler({ message: "A sceneDropId is required." });
       const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/assets-with-scene-drop-id/${sceneDropId}${uniqueName ? `?uniqueName=${uniqueName}` : ""
+        `/world/${this.urlSlug}/assets-with-scene-drop-id/${sceneDropId}${
+          uniqueName ? `?uniqueName=${uniqueName}` : ""
         }`,
         this.requestOptions,
       );
@@ -689,7 +731,7 @@ export class World extends SDKController implements WorldInterface {
           query = `&quarter=Q${dateValue}`;
           break;
         default:
-          ""
+          "";
       }
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/world-analytics?year=${year}${query}`,
