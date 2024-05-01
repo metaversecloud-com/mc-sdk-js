@@ -48,10 +48,10 @@ export class WorldActivity extends SDKController {
   }
 
   //////// visitors
-  private async fetchVisitors(): Promise<void | ResponseType> {
+  private async fetchVisitors(droppedAssetId?: string): Promise<void | ResponseType> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/visitors`,
+        `/world/${this.urlSlug}/visitors${droppedAssetId ? `?droppedAssetId=${droppedAssetId}` : ""}`,
         this.requestOptions,
       );
       // create temp map and then update private property only once
@@ -83,6 +83,24 @@ export class WorldActivity extends SDKController {
       return this.visitors;
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "WorldActivity.currentVisitors" });
+    }
+  }
+
+  /**
+   * @summary
+   * Retrieve all visitors currently in a Landmark Zone.
+   *
+   * @usage
+   * ```ts
+   * const visitors = await worldActivity.fetchVisitorsInZone("exampleDroppedAssetId");
+   * ```
+   */
+  async fetchVisitorsInZone(droppedAssetId: string) {
+    try {
+      await this.fetchVisitors(droppedAssetId);
+      return this.visitors;
+    } catch (error) {
+      throw this.errorHandler({ error, params: { droppedAssetId }, sdkMethod: "WorldActivity.fetchVisitorsInZone" });
     }
   }
 
