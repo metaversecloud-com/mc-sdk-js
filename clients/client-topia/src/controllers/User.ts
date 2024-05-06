@@ -192,13 +192,13 @@ export class User extends SDKController implements UserInterface {
    * @usage
    * ```ts
    * const formData = new FormData();
-   * formData.append('dancePreviewImage', dancePreviewImage);
-   * formData.append('emotePreviewImage', emotePreviewImage);
-   * formData.append('previewImageFile', previewImageFile);
-   * formData.append('sitPreviewImage', sitPreviewImage);
-   * formData.append('standPreviewImage', standPreviewImage);
+   * formData.append('expression_dance', expression_dance);
+   * formData.append('expression_emote', expression_emote);
+   * formData.append('expression_sit', expression_sit);
+   * formData.append('expression_stand', expression_stand);
+   * formData.append('expression_transport', expression_transport);
+   * formData.append('preview', preview);
    * formData.append('spriteSheet', spriteSheet);
-   * formData.append('transportPreviewImage', transportPreviewImage);
    * formData.append('unityPackage', unityPackage);
    * await user.uploadAvatarFiles("exampleAvatarId", formData);
    * ```
