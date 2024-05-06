@@ -533,7 +533,7 @@ export class World extends SDKController implements WorldInterface {
     duration?: number;
     position?: object;
   }): Promise<object | ResponseType> {
-    if (!id && !name) throw "An particle name is required.";
+    if (!id && !name) throw "A particle name is required.";
     try {
       let particleId = id;
       if (name) {
