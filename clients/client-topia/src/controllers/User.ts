@@ -114,84 +114,59 @@ export class User extends SDKController implements UserInterface {
    *
    * @usage
    * ```ts
-   * const { avatarId, spriteSheetId } = await user.addAvatar({
-   *   name: "ExampleAvatar",
-   *   animationMeta: {
-   *     dance: {
-   *       loop: true,
-   *       x: 0,
-   *       y: -20,
-   *       hideLoop: true,
-   *     },
-   *   },
-   *   animations: {
-   *     "dance": [
-   *       "dance/1.png",
-   *       "dance/2.png",
-   *       "dance/3.png",
-   *       "dance/4.png",
-   *       "dance/5.png",
-   *     ],
-   *   },
-   *   frames: {
-   *     "dance/1.png": {
-   *       "frame": {
-   *         "x": 1,
-   *         "y": 1040,
-   *         "w": 58,
-   *         "h": 107
-   *       },
-   *       "rotated": true,
-   *       "trimmed": true,
-   *       "spriteSourceSize": {
-   *         "x": 50,
-   *         "y": 58,
-   *         "w": 58,
-   *         "h": 107
-   *       },
-   *       "sourceSize": {
-   *         "w": 159,
-   *         "h": 200
-   *       }
-   *     },
-   *   },
-   *   "spriteSheetType": "PLAYER_AVATAR",
-   *   "spriteSheetTypeMeta": {
-   *   "meta": {
-   *     "image": "spriteSheets%2FTvHNjgoMkiErDNSrVqHU%2FspriteSheet.png?alt=media",
-   *     "format": "RGBA8888",
-   *     "size": {
-   *       "w": 2006,
-   *       "h": 1099,
-   *     },
-   *     "scale": "1",
-   *   },
-   * });
-   * ```
-   */
-  async addAvatar({
-    animationMeta,
-    animations,
-    name,
-    frames,
-    meta,
-  }: SpriteSheetJSONType): Promise<void | ResponseType> {
-    const params = { animationMeta, animations, name, frames, meta };
-    try {
-      const response: AxiosResponse = await this.topiaPublicApi().post(`/avatars`, params, this.requestOptions);
-      return response.data;
-    } catch (error) {
-      throw this.errorHandler({ error, params, sdkMethod: "User.addAvatar" });
-    }
-  }
-
-  /**
-   * @summary
-   * Upload sprite sheet and avatar preview .png files to existing sprite sheet and avatar storage buckets
+   * const animationMeta = {
+   *   "emote": { "loop": false, "x": 0, "y": 0, "hideLoop": true }
+   * }
    *
-   * @usage
-   * ```ts
+   * const spriteSheetJSON = {
+   *   "animations": {
+   *     "emote": [
+   *       "emote/1.png"
+   *     ]
+   *   },
+   *   "frames": {
+   *     "emote/1.png": {
+   *       "frame": {
+   *        "x": 1911,
+   *        "y": 778,
+   *        "w": 58,
+   *        "h": 91
+   *      },
+   *      "rotated": true,
+   *      "trimmed": true,
+   *      "spriteSourceSize": {
+   *        "x": 50,
+   *        "y": 33,
+   *        "w": 58,
+   *        "h": 91
+   *      },
+   *      "sourceSize": {
+   *        "w": 159,
+   *        "h": 159
+   *      }
+   *    }
+   *  },
+   *  "spriteSheetTypeMeta": {
+   *    "nameplate": {
+   *      "x": 0,
+   *      "y": -70
+   *    }
+   *  },
+   *  "meta": {
+   *    "image": "spriteSheets%2FTvHNjgoMkiErDNSrVqHU%2FspriteSheet.png?alt=media",
+   *    "format": "RGBA8888",
+   *    "size": {
+   *      "w": 2006,
+   *      "h": 1099
+   *    },
+   *    "scale": "1"
+   *  }
+   * }
+   *
    * const formData = new FormData();
+   * formData.append('animationMeta', animationMeta);
+   * formData.append('name', "ExampleAvatarName");
+   * formData.append('spriteSheetJSON', spriteSheetJSON);
    * formData.append('expression_dance', expression_dance);
    * formData.append('expression_emote', expression_emote);
    * formData.append('expression_sit', expression_sit);
@@ -203,16 +178,113 @@ export class User extends SDKController implements UserInterface {
    * await user.uploadAvatarFiles("exampleAvatarId", formData);
    * ```
    */
-  async uploadAvatarFiles(avatarId: string, formData: FormData): Promise<void | ResponseType> {
+  async addAvatar(formData: FormData): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().post(`/avatars`, formData, this.requestOptions);
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error, params: formData, sdkMethod: "User.addAvatar" });
+    }
+  }
+
+  /**
+   * @summary
+   * Update avatar and sprite sheet records and upload files to existing sprite sheet and avatar storage buckets
+   *
+   * @usage
+   * ```ts
+   * const animationMeta = {
+   *   "emote": { "loop": false, "x": 0, "y": 0, "hideLoop": true }
+   * }
+   *
+   * const spriteSheetJSON = {
+   *   "animations": {
+   *     "emote": [
+   *       "emote/1.png"
+   *     ]
+   *   },
+   *   "frames": {
+   *     "emote/1.png": {
+   *       "frame": {
+   *        "x": 1911,
+   *        "y": 778,
+   *        "w": 58,
+   *        "h": 91
+   *      },
+   *      "rotated": true,
+   *      "trimmed": true,
+   *      "spriteSourceSize": {
+   *        "x": 50,
+   *        "y": 33,
+   *        "w": 58,
+   *        "h": 91
+   *      },
+   *      "sourceSize": {
+   *        "w": 159,
+   *        "h": 159
+   *      }
+   *    }
+   *  },
+   *  "spriteSheetTypeMeta": {
+   *    "nameplate": {
+   *      "x": 0,
+   *      "y": -70
+   *    }
+   *  },
+   *  "meta": {
+   *    "image": "spriteSheets%2FTvHNjgoMkiErDNSrVqHU%2FspriteSheet.png?alt=media",
+   *    "format": "RGBA8888",
+   *    "size": {
+   *      "w": 2006,
+   *      "h": 1099
+   *    },
+   *    "scale": "1"
+   *  }
+   * }
+   *
+   * const formData = new FormData();
+   * formData.append('animationMeta', animationMeta);
+   * formData.append('name', "ExampleAvatarName");
+   * formData.append('spriteSheetJSON', spriteSheetJSON);
+   * formData.append('expression_dance', expression_dance);
+   * formData.append('expression_emote', expression_emote);
+   * formData.append('expression_sit', expression_sit);
+   * formData.append('expression_stand', expression_stand);
+   * formData.append('expression_transport', expression_transport);
+   * formData.append('preview', preview);
+   * formData.append('spriteSheet', spriteSheet);
+   * formData.append('unityPackage', unityPackage);
+   * await user.uploadAvatarFiles("exampleAvatarId", formData);
+   * ```
+   */
+  async updateAvatar(avatarId: string, formData: FormData): Promise<void | ResponseType> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().post(
-        `/avatars/${avatarId}/upload-files`,
+        `/avatars/${avatarId}`,
         formData,
         this.requestOptions,
       );
       return response.data;
     } catch (error) {
-      throw this.errorHandler({ error, sdkMethod: "User.uploadAvatarFiles" });
+      throw this.errorHandler({ error, params: formData, sdkMethod: "User.updateAvatar" });
+    }
+  }
+
+  /**
+   * @summary
+   * Update avatar and sprite sheet records and upload files to existing sprite sheet and avatar storage buckets
+   *
+   * @usage
+   * ```ts
+   * await user.deleteAvatar("exampleAvatarId");
+   * ```
+   */
+  async deleteAvatar(avatarId: string): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().delete(`/avatars/${avatarId}`, this.requestOptions);
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "User.deleteAvatar" });
     }
   }
 
