@@ -1,4 +1,10 @@
+<hr />
+
 # Javascript RTSDK - Topia Client Library
+
+<hr/>
+
+<br>
 
 ### Create integrated, interactive experiences with Topia’s SDK and API
 
@@ -43,6 +49,7 @@ Topia offers a robust SDK and API that allows anyone to build custom apps or int
   - [Demo](https://topia.io/quest-prod)
 
 Questions, comments, or have something exciting to share with the Topia team? Reach out to [developers@topia.io](mailto:developers@topia.io)!
+<br/>
 
 ## Authorization
 
@@ -99,6 +106,10 @@ A Topia provided API Key can be included with every object initialization as a p
 <br>
 
 # Developers
+
+<hr/>
+
+<br>
 
 ## Get Started
 
@@ -158,6 +169,8 @@ export const getAssetAndDataObject = async (req) => {
 };
 ```
 
+<br/><br/>
+
 ## Data Objects
 
 Data Objects can be used to store information such as game state, configurations, themes, and analytics.
@@ -192,9 +205,8 @@ There are three types of Data Objects:
     ```
 - **User:** The User data object should be used to store information unique to a user that is NOT unique to a world or instance (dropped asset) of an app.
   - **Example - Update totalMessagesSentCount by a user across all worlds:**
-    ```js
-    await world.incrementDataObjectValue([`totalMessagesSentCount`], 1);
-    ```
+    `` js await world.incrementDataObjectValue([`totalMessagesSentCount`], 1);  ``
+    <br/>
 
 ### Data Object Locking
 
@@ -238,10 +250,6 @@ await droppedAsset.updateDataObject({ isResetInProgress: true }, { analytics: ["
 ```
 
 Note: This does NOT impact the data objects themselves but rather allows you to track custom analytics (incremented by 1) across all instances of your application with a given Public Key.
-
-<br>
-
-<hr/>
 
 <br>
 
