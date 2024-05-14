@@ -1,10 +1,52 @@
 # Javascript RTSDK - Topia Client Library
 
-The Topia Client Library leverages the Topia Public API and allows users to interact with the topia systems and modify their world programmatically. With the SDK you can now build new features to be used in Topia! Questions, comments, or have something exciting to share with the Topia team? Reach out to [developers@topia.io](mailto:developers@topia.io)!
+### Create integrated, interactive experiences with Topia’s SDK and API
+
+Topia offers a robust SDK and API that allows anyone to build custom apps or integrate any 3rd-party content, application, game or learning experience. Dedicated deployments launch with dozens of SDK Applications, including mini-games and social apps made by the Topia team and our developer community
+
+### Topia’s SDK/API can be used to:
+
+- Turn existing applications and systems into multiplayer, cooperative experiences
+- Integrate existing content into multiplayer learning journeys
+- Create your own custom, dynamic social experiences and games
+- Store and persist JSON data objects across sessions
+- Add Social Connectivity Networking capabilities to your existing platforms
+
+### Key Features:
+
+- Built-in safety and security via an interactive credentialing system
+- Control over the code and IP of your creations
+- Integrated via i-frame, in-world assets, and server-based bi-directional data flow
+- Every object, world, and visitor has a JSON database you use to build interactivity and data persistence
+- Powerful SDK classes and methods enable control of every aspect of Topia
+
+### Resources:
+
+- [NPM Package](https://www.npmjs.com/package/@rtsdk/topia)
+- [Demo World](https://topia.io/sdk-demos)
+- [Typescript Boilerplate](https://github.com/metaversecloud-com/sdk-ts-boilerplate)
+- [Javascript Boilerplate](https://github.com/metaversecloud-com/sdk-ts-boilerplate)
+
+#### Need inspiration?! Check out the following applications which utilizes the SDK to create new and enhanced features inside [topia.io](https://topia.io/):
+
+- **Bulletin Board:** A message board style application where users can submit messages and/or images for approval and an admin can approve the message so that it can be added to the world.
+  - [Github](https://github.com/metaversecloud-com/sdk-bulletin-board-app)
+  - [Demo](https://topia.io/bulletin-board-prod)
+- **Jukebox:** A real-time interactive music player.
+  - [Github](https://github.com/metaversecloud-com/jukebox)
+  - [Demo](https://topia.io/jukebox-prod)
+- **TicTacToe:** A turn based multiplayer game built completely on the canvas.
+  - [Github](https://github.com/metaversecloud-com/sdk-tictactoe)
+  - [Demo](https://topia.io/tictactoe-prod)
+- **Quest:** A dynamic hide and seek game where an admin can drop multiple quest items within a world for users to find.
+  - [Github](https://github.com/metaversecloud-com/sdk-quest)
+  - [Demo](https://topia.io/quest-prod)
+
+Questions, comments, or have something exciting to share with the Topia team? Reach out to [developers@topia.io](mailto:developers@topia.io)!
 
 ## Authorization
 
-A Topia provided API Key can be included with every object initialization as a parameter named `apiKey`. This API Key is used to in authorization headers in all calls to the Public API. Use it wisely and sparingly! The API Key should only be used to authorize your app (and therefore all of it's users) to perform specific actions. In most case the ability to interact with an SDK application should be controlled per user using Interactive Credentials (see below).
+Visitors of a [topia.io](https://topia.io/) world interact with each other and the interactively configured assets in your world without the need for an API Key. This is all made possible through Interactive Session credentials passed to the SDK with every request, when applicable. What does this mean for you? Not much, actually! All of the magic happens behind the scenes and all you have to do is make sure that new class constructors include an options object like this: `options: WorldOptionalInterface = { attributes: {}, credentials: {} }` and all calls to `this.topia.axios` include the inherited `this.requestOptions` parameter.
 
 ### Want to build interactive assets? This is how you can get started:
 
@@ -42,38 +84,21 @@ await DroppedAsset.get(assetId, urlSlug, {
 });
 ```
 
-<br />
-
 ### Need an API Key to test locally? This is how you can create one:
+
+A Topia provided API Key can be included with every object initialization as a parameter named `apiKey`. This API Key is used to in authorization headers in all calls to the Public API. **Use it wisely and sparingly!** The API Key should only be used to authorize your app (and therefore all of it's users) to perform specific actions. In most case the ability to interact with an SDK application should be controlled per user using Interactive Credentials (see above).
 
 - Navigate directly to your [integrations page](https://topia.io/t/dashboard/integrations) or follow the steps below from within a world.
   - Click on your image (or circle) at the top left of the left hand navbar.
   - Click Edit Profile. This will bring you to a separate dashboard.
   - Click Integrations on the left nav
-- Click Generate New API Key and copy the API Key to be used in your .env and while using https://sdk-examples.metaversecloud.com
-
-Alternatively, visitors of a [topia.io](https://topia.io/) world interact with each other and the interactively configured assets in your world without the need for an API Key. This is all made possible through Interactive Session credentials passed to the SDK with every request, when applicable. What does this mean for you? Not much, actually! All of the magic happens behind the scenes and all you have to do is make sure that new class constructors include an options object like this: `options: WorldOptionalInterface = { attributes: {}, credentials: {} }` and all calls to `this.topia.axios` include the inherited `this.requestOptions` parameter.
+- Click Generate New API Key and copy the API Key to be used in your .env
 
 ![Interactive Application Development Diagram](https://raw.githubusercontent.com/metaversecloud-com/mc-sdk-js/main/clients/client-topia/InteractiveApplicationDevelopment.png)
 
 <br>
 
-<hr/>
-
 # Developers
-
-<hr/>
-
-Need inspiration?! Check out the following applications which utilizes the SDK to create new and enhanced features inside [topia.io](https://topia.io/):
-
-- **TicTacToe:** A turn based multiplayer game built completely on the canvas.
-  - [Github](https://github.com/metaversecloud-com/sdk-tictactoe)
-  - [Demo](https://topia.io/tictactoe-prod)
-- **Quest:** A dynamic hide and seek game where an admin can drop multiple quest items within a world for users to find.
-  - [Github](https://github.com/metaversecloud-com/sdk-quest)
-  - [Demo](https://topia.io/quest-prod)
-
-<br>
 
 ## Get Started
 
