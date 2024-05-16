@@ -91,17 +91,17 @@ await DroppedAsset.get(assetId, urlSlug, {
 });
 ```
 
-### Need an API Key to test locally? This is how you can create one:
+![Interactive Application Development Diagram](https://raw.githubusercontent.com/metaversecloud-com/mc-sdk-js/main/clients/client-topia/InteractiveApplicationDevelopment.png)
 
-A Topia provided API Key can be included with every object initialization as a parameter named `apiKey`. This API Key is used to in authorization headers in all calls to the Public API. **Use it wisely and sparingly!** The API Key should only be used to authorize your app (and therefore all of it's users) to perform specific actions. In most case the ability to interact with an SDK application should be controlled per user using Interactive Credentials (see above).
+### Want to enable want world owners / admins to use the app outside of Topia, but still have ability to modify things in worlds where they have the permission to do so? This is how you can create an API Key:
+
+A Topia provided API Key can be included with every object initialization as a parameter named `apiKey`. This API Key is used to in authorization headers in all calls to the Public API. **Use it wisely and sparingly!** The API Key should only be used to authorize your app (and therefore all of it's users) to perform specific actions **when not currently in a Topia world**. In most case the ability to interact with an SDK application should be controlled per user using Interactive Credentials (see above).
 
 - Navigate directly to your [integrations page](https://topia.io/t/dashboard/integrations) or follow the steps below from within a world.
   - Click on your image (or circle) at the top left of the left hand navbar.
   - Click Edit Profile. This will bring you to a separate dashboard.
-  - Click Integrations on the left nav
-- Click Generate New API Key and copy the API Key to be used in your .env
-
-![Interactive Application Development Diagram](https://raw.githubusercontent.com/metaversecloud-com/mc-sdk-js/main/clients/client-topia/InteractiveApplicationDevelopment.png)
+  - Click Integrations on the left nav.
+- Click Generate New API Key and copy the API Key to be used in your .env file.
 
 <br>
 

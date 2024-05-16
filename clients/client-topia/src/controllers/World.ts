@@ -455,13 +455,15 @@ export class World extends SDKController implements WorldInterface {
   async dropScene({
     assetSuffix,
     position,
+    sceneDropId,
     sceneId,
   }: {
-    assetSuffix: string;
+    assetSuffix?: string;
     position: object;
+    sceneDropId?: string;
     sceneId: string;
   }): Promise<object | ResponseType> {
-    const params = { assetSuffix, position, sceneId };
+    const params = { assetSuffix, position, sceneDropId, sceneId };
     try {
       const result = await this.topiaPublicApi().post(`/world/${this.urlSlug}/drop-scene`, params, this.requestOptions);
       return result;
