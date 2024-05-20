@@ -48,10 +48,21 @@ export class WorldActivity extends SDKController {
   }
 
   //////// visitors
-  private async fetchVisitors(droppedAssetId?: string): Promise<void | ResponseType> {
+  private async fetchVisitors(
+    droppedAssetId?: string,
+    shouldIncludeAdminPermissions?: boolean,
+  ): Promise<void | ResponseType> {
     try {
+      let queryParams = "";
+      if (droppedAssetId) {
+        queryParams = `?droppedAssetId=${droppedAssetId}`;
+        if (shouldIncludeAdminPermissions)
+          queryParams += `&shouldIncludeAdminPermissions=${shouldIncludeAdminPermissions}`;
+      } else if (shouldIncludeAdminPermissions) {
+        queryParams = `?shouldIncludeAdminPermissions=${shouldIncludeAdminPermissions}`;
+      }
       const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/visitors${droppedAssetId ? `?droppedAssetId=${droppedAssetId}` : ""}`,
+        `/world/${this.urlSlug}/visitors${queryParams}`,
         this.requestOptions,
       );
       // create temp map and then update private property only once
@@ -77,9 +88,9 @@ export class WorldActivity extends SDKController {
    * const visitors = await worldActivity.currentVisitors();
    * ```
    */
-  async currentVisitors() {
+  async currentVisitors(droppedAssetId?: string, shouldIncludeAdminPermissions?: boolean) {
     try {
-      await this.fetchVisitors();
+      await this.fetchVisitors(droppedAssetId, shouldIncludeAdminPermissions);
       return this.visitors;
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "WorldActivity.currentVisitors" });
