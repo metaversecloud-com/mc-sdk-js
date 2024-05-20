@@ -12,7 +12,7 @@
   "name": "RTSDK",
   "navigationLinks": {
     "NPM Package": "https://www.npmjs.com/package/@rtsdk/topia",
-    "Examples": "https://github.com/metaversecloud-com/sdk-examples"
+    "Demo": "https://topia.io/sdk-demos"
   },
   "out": "../../docs",
   "readme": "https://www.npmjs.com/package/@rtsdk/topia",

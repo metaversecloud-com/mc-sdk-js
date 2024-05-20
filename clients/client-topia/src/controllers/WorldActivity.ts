@@ -97,6 +97,7 @@ export class WorldActivity extends SDKController {
    */
   async fetchVisitorsInZone(droppedAssetId: string) {
     try {
+      if (!droppedAssetId) throw "A landmark zone id (droppedAssetId) is required.";
       await this.fetchVisitors(droppedAssetId);
       return this.visitors;
     } catch (error) {
