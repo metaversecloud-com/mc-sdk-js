@@ -48,10 +48,13 @@ export class WorldActivity extends SDKController {
   }
 
   //////// visitors
-  private async fetchVisitors(
-    droppedAssetId?: string,
-    shouldIncludeAdminPermissions?: boolean,
-  ): Promise<void | ResponseType> {
+  private async fetchVisitors({
+    droppedAssetId,
+    shouldIncludeAdminPermissions,
+  }: {
+    droppedAssetId?: string;
+    shouldIncludeAdminPermissions?: boolean;
+  }): Promise<void | ResponseType> {
     try {
       let queryParams = "";
       if (droppedAssetId) {
@@ -85,12 +88,12 @@ export class WorldActivity extends SDKController {
    *
    * @usage
    * ```ts
-   * const visitors = await worldActivity.currentVisitors();
+   * const visitors = await worldActivity.currentVisitors("exampleLandmarkZoneId", true);
    * ```
    */
-  async currentVisitors(droppedAssetId?: string, shouldIncludeAdminPermissions?: boolean) {
+  async currentVisitors(shouldIncludeAdminPermissions?: boolean) {
     try {
-      await this.fetchVisitors(droppedAssetId, shouldIncludeAdminPermissions);
+      await this.fetchVisitors({ shouldIncludeAdminPermissions });
       return this.visitors;
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "WorldActivity.currentVisitors" });
@@ -106,10 +109,16 @@ export class WorldActivity extends SDKController {
    * const visitors = await worldActivity.fetchVisitorsInZone("exampleDroppedAssetId");
    * ```
    */
-  async fetchVisitorsInZone(droppedAssetId: string) {
+  async fetchVisitorsInZone({
+    droppedAssetId,
+    shouldIncludeAdminPermissions,
+  }: {
+    droppedAssetId?: string;
+    shouldIncludeAdminPermissions?: boolean;
+  }) {
     try {
       if (!droppedAssetId) throw "A landmark zone id (droppedAssetId) is required.";
-      await this.fetchVisitors(droppedAssetId);
+      await this.fetchVisitors({ droppedAssetId, shouldIncludeAdminPermissions });
       return this.visitors;
     } catch (error) {
       throw this.errorHandler({ error, params: { droppedAssetId }, sdkMethod: "WorldActivity.fetchVisitorsInZone" });
@@ -143,7 +152,7 @@ export class WorldActivity extends SDKController {
     x,
     y,
   }: MoveAllVisitorsInterface) {
-    if (shouldFetchVisitors) await this.fetchVisitors();
+    if (shouldFetchVisitors) await this.fetchVisitors({});
     const allPromises: Array<Promise<void | ResponseType>> = [];
     if (!this.visitors) return;
     const objectKeys = Object.keys(this.visitors);
