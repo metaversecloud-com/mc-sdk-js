@@ -482,16 +482,22 @@ export class User extends SDKController implements UserInterface {
    */
   async setDataObject(
     dataObject: object | null | undefined,
-    options: { analytics?: string[]; lock?: { lockId: string; releaseLock?: boolean } } = {},
+    options: {
+      analytics?: string[];
+      lock?: { lockId: string; releaseLock?: boolean };
+      uniqueKey?: string;
+      urlSlug?: string;
+    } = {},
   ): Promise<void | ResponseType> {
     try {
       if (!this.profileId) throw "This method requires the use of a profileId";
-      const { analytics = [], lock = {} } = options;
+
       await this.topiaPublicApi().put(
         `/user/dataObjects/${this.profileId}/set-data-object`,
-        { analytics, dataObject: dataObject || this.dataObject, lock },
+        { ...options, dataObject: dataObject || this.dataObject },
         this.requestOptions,
       );
+
       this.dataObject = dataObject || this.dataObject;
     } catch (error) {
       throw this.errorHandler({ error, params: { dataObject, options }, sdkMethod: "User.setDataObject" });
@@ -513,14 +519,19 @@ export class User extends SDKController implements UserInterface {
    */
   async updateDataObject(
     dataObject: object,
-    options: { analytics?: string[]; lock?: { lockId: string; releaseLock?: boolean } } = {},
+    options: {
+      analytics?: string[];
+      lock?: { lockId: string; releaseLock?: boolean };
+      uniqueKey?: string;
+      urlSlug?: string;
+    } = {},
   ): Promise<void | ResponseType> {
     try {
       if (!this.profileId) throw "This method requires the use of a profileId";
-      const { analytics = [], lock = {} } = options;
+
       await this.topiaPublicApi().put(
         `/user/dataObjects/${this.profileId}/update-data-object`,
-        { analytics, dataObject: dataObject || this.dataObject, lock },
+        { ...options, dataObject: dataObject || this.dataObject },
         this.requestOptions,
       );
       this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
@@ -546,13 +557,17 @@ export class User extends SDKController implements UserInterface {
   async incrementDataObjectValue(
     path: string,
     amount: number,
-    options: { analytics?: string[]; lock?: { lockId: string; releaseLock?: boolean } } = {},
+    options: {
+      analytics?: string[];
+      lock?: { lockId: string; releaseLock?: boolean };
+      uniqueKey?: string;
+      urlSlug?: string;
+    } = {},
   ): Promise<void | ResponseType> {
     try {
-      const { analytics = [], lock = {} } = options;
       await this.topiaPublicApi().put(
         `/user/dataObjects/${this.profileId}/increment-data-object-value`,
-        { path, amount, analytics, lock },
+        { path, amount, ...options },
         this.requestOptions,
       );
     } catch (error) {
