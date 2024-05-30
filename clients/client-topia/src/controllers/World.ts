@@ -10,6 +10,7 @@ import { WorldInterface, WorldDetailsInterface, WorldOptionalInterface, WorldWeb
 
 // types
 import { ResponseType } from "types";
+import { AnalyticType } from "types/AnalyticTypes";
 
 // utils
 import { removeUndefined } from "utils";
@@ -594,10 +595,8 @@ export class World extends SDKController implements WorldInterface {
   setDataObject = async (
     dataObject: object | null | undefined,
     options: {
-      analytics?: string[];
+      analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
-      profileId?: string;
-      uniqueKey?: string;
     } = {},
   ): Promise<void | ResponseType> => {
     try {
@@ -629,10 +628,8 @@ export class World extends SDKController implements WorldInterface {
   updateDataObject = async (
     dataObject: object,
     options: {
-      analytics?: string[];
+      analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
-      profileId?: string;
-      uniqueKey?: string;
     } = {},
   ): Promise<void | ResponseType> => {
     try {
@@ -665,10 +662,8 @@ export class World extends SDKController implements WorldInterface {
     path: string,
     amount: number,
     options: {
-      analytics?: string[];
+      analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
-      profileId?: string;
-      uniqueKey?: string;
     } = {},
   ): Promise<void | ResponseType> {
     try {

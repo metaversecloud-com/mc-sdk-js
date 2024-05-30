@@ -16,6 +16,7 @@ import {
 
 // types
 import { ResponseType } from "types";
+import { AnalyticType } from "types/AnalyticTypes";
 
 /**
  * @summary
@@ -130,10 +131,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   async setDataObject(
     dataObject: object,
     options: {
-      analytics?: string[];
+      analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
-      profileId?: string;
-      uniqueKey?: string;
     } = {},
   ): Promise<void | ResponseType> {
     try {
@@ -166,10 +165,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   async updateDataObject(
     dataObject: object,
     options: {
-      analytics?: string[];
+      analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
-      profileId?: string;
-      uniqueKey?: string;
     } = {},
   ): Promise<void | ResponseType> {
     try {
@@ -203,10 +200,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     path: string,
     amount: number,
     options: {
-      analytics?: string[];
+      analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
-      profileId?: string;
-      uniqueKey?: string;
     } = {},
   ): Promise<void | ResponseType> {
     try {

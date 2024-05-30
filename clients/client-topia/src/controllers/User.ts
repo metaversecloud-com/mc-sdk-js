@@ -12,6 +12,7 @@ import { UserInterface, UserOptionalInterface } from "interfaces";
 
 // types
 import { ResponseType, SpriteSheetJSONType } from "types";
+import { AnalyticType } from "types/AnalyticTypes";
 
 /**
  * @summary
@@ -483,10 +484,8 @@ export class User extends SDKController implements UserInterface {
   async setDataObject(
     dataObject: object | null | undefined,
     options: {
-      analytics?: string[];
+      analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
-      uniqueKey?: string;
-      urlSlug?: string;
     } = {},
   ): Promise<void | ResponseType> {
     try {
@@ -520,10 +519,8 @@ export class User extends SDKController implements UserInterface {
   async updateDataObject(
     dataObject: object,
     options: {
-      analytics?: string[];
+      analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
-      uniqueKey?: string;
-      urlSlug?: string;
     } = {},
   ): Promise<void | ResponseType> {
     try {
@@ -558,10 +555,8 @@ export class User extends SDKController implements UserInterface {
     path: string,
     amount: number,
     options: {
-      analytics?: string[];
+      analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
-      uniqueKey?: string;
-      urlSlug?: string;
     } = {},
   ): Promise<void | ResponseType> {
     try {
