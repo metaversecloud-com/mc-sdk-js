@@ -243,10 +243,38 @@ try {
 Once complete be sure to also call `await keyAsset.updateDataObject({ turnCount: turnCount + 1 });` so that the next player is free to take their turn!
 
 **Custom analytics**
-You can leverage the data object methods for all types to track analytics unique to your Public Key by passing `analytics` as an optional array to all calls that set, update, or increment data objects!
+You can leverage the data object methods for all types to track analytics unique to your Public Key by passing `analytics` as an optional array along with `profileId`, `urlSlug`, and/or `uniqueKey` to all calls that set, update, or increment data objects!
+
+**World** and **Dropped Asset** classes will automatically include `urlSlug`. In addition to `analytics` you can also pass `profileId` if you want to track event per user and/or a `uniqueKey` to additionally track uniqueness of the event for all time, per user (if `profileId` is included), and per world.
+
+Examples leveraging World data objects calls:
 
 ```js
-await droppedAsset.updateDataObject({ isResetInProgress: true }, { analytics: ["resetCount"], lock: { lockId } });
+await world.setDataObject({ hello: "world" }, { analytics: [{ analyticName: "resets"} ], lock: { lockId, releaseLock: true });
+
+await world.updateDataObject({}, { analytics: [ {analyticName: "matches", uniqueKey: `${playerOneProfileId}-${playerTwoProfileId}`, urlSlug }], });
+
+await world.incrementDataObjectValue(`keyAssets.${assetId}.completions`, 1, { analytics: [{ analyticName:"completions", incrementBy: 2, profileId, uniqueKey: profileId, urlSlug }] });
+```
+
+**Visitor** and **User** classes will automatically include `profileId`. In addition to `analytics` you can also pass `urlSlug` if you want to track event per world and/or a `uniqueKey` to additionally track uniqueness of the event for all time, per user, and per world (if `urlSlug` is included).
+
+Examples leveraging Visitor data objects calls:
+
+```js
+await visitor.setDataObject(
+  { hello: "world" },
+  { analytics: [{ analyticName: "starts" }], lock: { lockId, releaseLock: true } },
+);
+
+await visitor.updateDataObject(
+  {},
+  { analytics: [{ analyticName: "emotesUnlocked", profileId, uniqueKey: profileId }] },
+);
+
+await visitor.incrementDataObjectValue(`completions`, 1, {
+  analytics: [{ analyticName: "completions", incrementBy: 2, profileId, urlSlug, uniqueKey: profileId }],
+});
 ```
 
 Note: This does NOT impact the data objects themselves but rather allows you to track custom analytics (incremented by 1) across all instances of your application with a given Public Key.

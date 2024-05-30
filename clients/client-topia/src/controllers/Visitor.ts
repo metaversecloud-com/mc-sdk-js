@@ -15,6 +15,7 @@ import {
 
 // types
 import { ResponseType } from "types";
+import { AnalyticType } from "types/AnalyticTypes";
 
 /**
  * @summary
@@ -357,9 +358,8 @@ export class Visitor extends User implements VisitorInterface {
   async setDataObject(
     dataObject: object | null | undefined,
     options: {
-      analytics?: string[];
+      analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
-      uniqueKey?: string;
     } = {},
   ): Promise<void | ResponseType> {
     try {
@@ -390,9 +390,8 @@ export class Visitor extends User implements VisitorInterface {
   async updateDataObject(
     dataObject: object,
     options: {
-      analytics?: string[];
+      analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
-      uniqueKey?: string;
     } = {},
   ): Promise<void | ResponseType> {
     try {
@@ -425,9 +424,8 @@ export class Visitor extends User implements VisitorInterface {
     path: string,
     amount: number,
     options: {
-      analytics?: string[];
+      analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
-      uniqueKey?: string;
     } = {},
   ): Promise<void | ResponseType> {
     try {
