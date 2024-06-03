@@ -54,22 +54,19 @@ export class DroppedAssetFactory extends SDKController {
   async getWithUniqueName(
     uniqueName: string,
     urlSlug: string,
+    interactiveSecret: string,
     credentials: {
-      apiKey?: string;
-      interactivePublicKey?: string;
-      interactiveSecret?: string;
+      interactiveNonce: string;
+      interactivePublicKey: string;
+      visitorId: number;
     },
   ): Promise<DroppedAsset> {
-    const { apiKey, interactivePublicKey, interactiveSecret } = credentials;
-    const params = { apiKey, interactivePublicKey, interactiveSecret, uniqueName, urlSlug };
+    const params = { credentials, interactiveSecret, uniqueName, urlSlug };
     try {
-      const headers: { Authorization?: string, interactiveJWT?: string, publickey?: string } = {};
-      if (apiKey) {
-        headers.Authorization = apiKey;
-      } else if (interactivePublicKey && interactiveSecret) {
-        headers.interactiveJWT = jwt.sign(interactivePublicKey, interactiveSecret);
-        headers.publickey = interactivePublicKey;
-      }
+      const headers: { Authorization?: string; interactiveJWT?: string; publickey?: string } = {};
+
+      headers.interactiveJWT = jwt.sign(credentials, interactiveSecret);
+      headers.publickey = credentials.interactivePublicKey;
 
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${urlSlug}/asset-by-unique-name/${uniqueName}`,

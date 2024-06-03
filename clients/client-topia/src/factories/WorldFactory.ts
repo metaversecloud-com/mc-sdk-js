@@ -38,23 +38,19 @@ export class WorldFactory extends SDKController {
   async deleteDroppedAssets(
     urlSlug: string,
     droppedAssetIds: string[],
+    interactiveSecret: string,
     credentials: {
-      apiKey?: string;
-      interactivePublicKey?: string;
-      interactiveSecret?: string;
+      interactiveNonce: string;
+      interactivePublicKey: string;
+      visitorId: number;
     },
   ) {
-    const { apiKey, interactivePublicKey, interactiveSecret } = credentials;
-    const params = { apiKey, droppedAssetIds, interactivePublicKey, interactiveSecret, urlSlug };
+    const params = { credentials, droppedAssetIds, urlSlug };
 
     try {
-      const headers: { Authorization?: string, interactiveJWT?: string, publickey?: string } = {};
-      if (apiKey) {
-        headers.Authorization = apiKey;
-      } else if (interactivePublicKey && interactiveSecret) {
-        headers.interactiveJWT = jwt.sign(interactivePublicKey, interactiveSecret);
-        headers.publickey = interactivePublicKey;
-      }
+      const headers: { Authorization?: string; interactiveJWT?: string; publickey?: string } = {};
+      headers.interactiveJWT = jwt.sign(credentials, interactiveSecret);
+      headers.publickey = credentials.interactivePublicKey;
 
       const promiseArray = [];
       for (const id of droppedAssetIds) {
