@@ -48,7 +48,7 @@ export class DroppedAssetFactory extends SDKController {
    *
    * @usage
    * ```
-   * const droppedAssetInstance = await DroppedAsset.getWithUniqueName("exampleUniqueName", urlSlug, { interactivePublicKey, interactiveSecret });
+   * const droppedAssetInstance = await DroppedAsset.getWithUniqueName("exampleUniqueName", urlSlug, interactiveSecret, credentials);
    * ```
    */
   async getWithUniqueName(
