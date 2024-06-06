@@ -25,23 +25,3 @@ export type FrameType = {
     h: number;
   };
 };
-
-export type SpriteSheetJSONType = {
-  name: string;
-  animations: {
-    [key: string]: string[];
-  };
-  animationMeta: {
-    [key: string]: AnimationMetaType;
-  };
-  frames: {
-    [key: string]: FrameType;
-  };
-  meta: {
-    image: string;
-    format: string;
-    size: { w: number; h: number };
-    scale: string;
-  };
-  spriteSheetType: string;
-};

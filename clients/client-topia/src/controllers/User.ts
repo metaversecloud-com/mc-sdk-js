@@ -11,7 +11,7 @@ import { World } from "controllers/World";
 import { UserInterface, UserOptionalInterface } from "interfaces";
 
 // types
-import { ResponseType, SpriteSheetJSONType } from "types";
+import { ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
 
 /**
@@ -545,10 +545,7 @@ export class User extends SDKController implements UserInterface {
    *
    * @usage
    * ```ts
-   * await user.incrementDataObjectValue(
-   *   "path": "key",
-   *   "amount": 1,
-   * );
+   * await user.incrementDataObjectValue("key", 1);
    * ```
    */
   async incrementDataObjectValue(

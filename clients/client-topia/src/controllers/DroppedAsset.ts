@@ -190,10 +190,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *
    * @usage
    * ```ts
-   * await droppedAsset.incrementDataObjectValue(
-   *   "path": "key",
-   *   "amount": 1,
-   * );
+   * await droppedAsset.incrementDataObjectValue("key", 1);
    * ```
    */
   async incrementDataObjectValue(

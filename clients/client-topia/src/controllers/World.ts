@@ -652,10 +652,7 @@ export class World extends SDKController implements WorldInterface {
    *
    * @usage
    * ```ts
-   * await world.incrementDataObjectValue(
-   *   "path": "key",
-   *   "amount": 1,
-   * );
+   * await world.incrementDataObjectValue("key", 1);
    * ```
    */
   async incrementDataObjectValue(

@@ -414,10 +414,7 @@ export class Visitor extends User implements VisitorInterface {
    *
    * @usage
    * ```ts
-   * await visitor.incrementDataObjectValue(
-   *   "path": "key",
-   *   "amount": 1,
-   * );
+   * await visitor.incrementDataObjectValue("key", 1);
    * ```
    */
   async incrementDataObjectValue(
@@ -439,6 +436,27 @@ export class Visitor extends User implements VisitorInterface {
         error,
         params: { path, amount, options },
         sdkMethod: "Visitor.incrementDataObjectValue",
+      });
+    }
+  }
+
+  /**
+   * @summary
+   * Update analytics for a given public key. Must have valid interactive credentials from a visitor in the world.
+   *
+   * @usage
+   * ```ts
+   * await visitor.updatePublicKeyAnalytics([{ analyticName: "joins", profileId, uniqueKey: profileId, urlSlug }]);
+   * ```
+   */
+  async updatePublicKeyAnalytics(analytics?: AnalyticType[]): Promise<void | ResponseType> {
+    try {
+      await this.topiaPublicApi().put(`/analytics/public-key-analytics`, { analytics }, this.requestOptions);
+    } catch (error) {
+      throw this.errorHandler({
+        error,
+        params: { analytics },
+        sdkMethod: "Visitor.updatePublicKeyAnalytics",
       });
     }
   }
