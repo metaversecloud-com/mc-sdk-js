@@ -1,3 +1,4 @@
+export * from "./AnalyticTypes";
 export * from "./AvatarTypes";
 export * from "./DroppedAssetTypes";
 export * from "./InteractiveCredentialsTypes";

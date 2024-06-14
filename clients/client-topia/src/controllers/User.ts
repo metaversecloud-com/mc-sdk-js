@@ -102,7 +102,10 @@ export class User extends SDKController implements UserInterface {
    */
   async fetchAvatars(): Promise<void | ResponseType> {
     try {
-      const response: AxiosResponse = await this.topiaPublicApi().get(`/avatars`, this.requestOptions);
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/avatars/${this.profileId}`,
+        this.requestOptions,
+      );
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "User.fetchAvatars" });
@@ -181,7 +184,11 @@ export class User extends SDKController implements UserInterface {
    */
   async addAvatar(formData: FormData): Promise<void | ResponseType> {
     try {
-      const response: AxiosResponse = await this.topiaPublicApi().post(`/avatars`, formData, this.requestOptions);
+      const response: AxiosResponse = await this.topiaPublicApi().post(
+        `/avatars/${this.profileId}`,
+        formData,
+        this.requestOptions,
+      );
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error, params: formData, sdkMethod: "User.addAvatar" });
@@ -261,7 +268,7 @@ export class User extends SDKController implements UserInterface {
   async updateAvatar(avatarId: string, formData: FormData): Promise<void | ResponseType> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().post(
-        `/avatars/${avatarId}`,
+        `/avatars/${this.profileId}/${avatarId}`,
         formData,
         this.requestOptions,
       );
@@ -282,7 +289,10 @@ export class User extends SDKController implements UserInterface {
    */
   async deleteAvatar(avatarId: string): Promise<void | ResponseType> {
     try {
-      const response: AxiosResponse = await this.topiaPublicApi().delete(`/avatars/${avatarId}`, this.requestOptions);
+      const response: AxiosResponse = await this.topiaPublicApi().delete(
+        `/avatars/${this.profileId}/${avatarId}`,
+        this.requestOptions,
+      );
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "User.deleteAvatar" });
