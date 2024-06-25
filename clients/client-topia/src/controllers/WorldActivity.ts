@@ -106,7 +106,7 @@ export class WorldActivity extends SDKController {
    *
    * @usage
    * ```ts
-   * const visitors = await worldActivity.fetchVisitorsInZone("exampleDroppedAssetId");
+   * const visitors = await worldActivity.fetchVisitorsInZone({ droppedAssetId: "exampleDroppedAssetId" });
    * ```
    */
   async fetchVisitorsInZone({

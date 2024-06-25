@@ -454,17 +454,19 @@ export class World extends SDKController implements WorldInterface {
    * ```
    */
   async dropScene({
+    allowNonAdmins,
     assetSuffix,
     position,
     sceneDropId,
     sceneId,
   }: {
+    allowNonAdmins?: boolean;
     assetSuffix?: string;
     position: object;
     sceneDropId?: string;
     sceneId: string;
   }): Promise<object | ResponseType> {
-    const params = { assetSuffix, position, sceneDropId, sceneId };
+    const params = { allowNonAdmins, assetSuffix, position, sceneDropId, sceneId };
     try {
       const result = await this.topiaPublicApi().post(`/world/${this.urlSlug}/drop-scene`, params, this.requestOptions);
       return result;
