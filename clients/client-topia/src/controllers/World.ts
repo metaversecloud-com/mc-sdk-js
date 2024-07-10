@@ -537,14 +537,16 @@ export class World extends SDKController implements WorldInterface {
     name?: string;
     duration?: number;
     position?: object;
-  }): Promise<object | ResponseType> {
+  }): Promise<object | ResponseType | string> {
     if (!id && !name) throw "A particle name is required.";
     try {
       let particleId = id;
       if (name) {
         const response = await this.topiaPublicApi().get(`/particles?name=${name}`, this.requestOptions);
-        particleId = response.data[0].id;
+        particleId = response?.data[0]?.id;
       }
+      if (!particleId) return "No particleId found.";
+
       const result = await this.topiaPublicApi().post(
         `/world/${this.urlSlug}/particles`,
         { particleId, position, duration },

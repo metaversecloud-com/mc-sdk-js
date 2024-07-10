@@ -48,7 +48,7 @@ Topia offers a robust SDK and API that allows anyone to build custom apps or int
   - [Github](https://github.com/metaversecloud-com/sdk-quest)
   - [Demo](https://topia.io/quest-prod)
 
-Questions, comments, or have something exciting to share with the Topia team? Reach out to [developers@topia.io](mailto:developers@topia.io)!
+Questions, comments, or have something exciting to share with the Topia team? Reach out to [apps@topia.io](mailto:apps@topia.io)!
 <br/>
 
 ## Authorization

@@ -301,14 +301,16 @@ export class Visitor extends User implements VisitorInterface {
     id?: string;
     name?: string;
     duration?: number;
-  }): Promise<object | ResponseType> {
+  }): Promise<object | ResponseType | string> {
     if (!id && !name) throw "A particle name is required.";
     try {
       let particleId = id;
       if (name) {
         const response = await this.topiaPublicApi().get(`/particles?name=${name}`, this.requestOptions);
-        particleId = response.data[0].id;
+        particleId = response?.data[0]?.id;
       }
+      if (!particleId) return "No particleId found.";
+
       const result = await this.topiaPublicApi().post(
         `/world/${this.urlSlug}/particles`,
         { particleId, position: { x: 1, y: 1 }, duration, followPlayerId: this.id },
