@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+import SimplePeer from "simple-peer";
 
 // controllers
 import { Topia } from "controllers/Topia";
@@ -459,6 +460,36 @@ export class Visitor extends User implements VisitorInterface {
         error,
         params: { analytics },
         sdkMethod: "Visitor.updatePublicKeyAnalytics",
+      });
+    }
+  }
+
+  /**
+   * @summary
+   * Setup WebRTC
+   *
+   * @usage
+   * ```ts
+   * await visitor.connectWebRTC(iceServers);
+   * ```
+   */
+  async connectWebRTC(iceServers: [], callback: any): Promise<void | ResponseType> {
+    try {
+      console.log("🚀 ~ file: Visitor.ts:476 ~ iceServers:", iceServers);
+      const peer = new SimplePeer({
+        initiator: true,
+        trickle: false,
+        streams: [],
+        config: {
+          iceServers,
+        },
+      });
+      peer.on("signal", (signal: any) => callback(signal));
+    } catch (error) {
+      throw this.errorHandler({
+        error,
+        params: { iceServers },
+        sdkMethod: "Visitor.connectWebRTC",
       });
     }
   }

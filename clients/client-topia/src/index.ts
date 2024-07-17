@@ -1,13 +1,14 @@
-export { Topia } from "controllers";
 export {
   AssetFactory,
   DroppedAssetFactory,
   SceneFactory,
   UserFactory,
   VisitorFactory,
+  WebRTCConnectorFactory,
   WorldActivityFactory,
   WorldFactory,
 } from "factories";
+
 export type {
   AssetOptions,
   DroppedAssetClickType,
@@ -22,9 +23,21 @@ export type {
   VisitorsToMoveArrayType,
   WorldOptions,
 } from "types";
-export * from "interfaces";
 
-export { Asset, DroppedAsset, SDKController, World, User, Scene, WorldActivity, Visitor } from "controllers";
+export {
+  Asset,
+  DroppedAsset,
+  SDKController,
+  World,
+  User,
+  Scene,
+  Topia,
+  Visitor,
+  WebRTCConnector,
+  WorldActivity,
+} from "controllers";
+
+export * from "interfaces";
 
 Error.stackTraceLimit = 20;
 process.on("unhandledRejection", (reason: { data?: { errors?: string[] }; stack?: string }) => {
