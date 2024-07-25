@@ -45,30 +45,12 @@ export class WebRTCConnector extends SDKController implements WebRTCConnectorInt
   async getTwilioConfig(): Promise<void | ResponseType> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().get(`/webrtc/twilio-config`, this.requestOptions);
-      this.twilioConfig = response.data;
+      this.twilioConfig = response.data.twilioConfig;
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "WebRTCConnector.getTwilioConfig" });
     }
   }
-
-  // /**
-  //  * @summary
-  //  * Set twilio config
-  //  *
-  //  * @usage
-  //  * ```ts
-  //  * await webRTCConnector.setTwilioConfig();
-  //  * ```
-  //  */
-  // async setTwilioConfig(twilioConfig: object): Promise<{ success: boolean }> {
-  //   try {
-  //     this.twilioConfig = twilioConfig;
-  //     return { success: true };
-  //   } catch (error) {
-  //     throw this.errorHandler({ error, params: { twilioConfig }, sdkMethod: "WebRTCConnector.setTwilioConfig" });
-  //   }
-  // }
 }
 
 export default WebRTCConnector;
