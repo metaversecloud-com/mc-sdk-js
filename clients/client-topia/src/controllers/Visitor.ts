@@ -464,41 +464,6 @@ export class Visitor extends User implements VisitorInterface {
     }
   }
 
-  // /**
-  //  * @summary
-  //  * Setup WebRTC
-  //  *
-  //  * @usage
-  //  * ```ts
-  //  * await visitor.connectWebRTC(iceServers);
-  //  * ```
-  //  */
-  // async connectWebRTC(iceServers: [], callback: any): Promise<void | ResponseType> {
-  //   try {
-  //     return callback("test");
-  //     const peer = new SimplePeer({
-  //       initiator: true,
-  //       trickle: false,
-  //       streams: [],
-  //       config: {
-  //         iceServers,
-  //       },
-  //       wrtc: {
-  //         RTCPeerConnection,
-  //         RTCIceCandidate,
-  //         RTCSessionDescription,
-  //       },
-  //     });
-  //     peer.on("signal", (signal: any) => callback(signal));
-  //   } catch (error) {
-  //     throw this.errorHandler({
-  //       error,
-  //       params: { iceServers },
-  //       sdkMethod: "Visitor.connectWebRTC",
-  //     });
-  //   }
-  // }
-
   /**
    * @summary
    * Setup signal to visitor
@@ -515,7 +480,6 @@ export class Visitor extends User implements VisitorInterface {
         { signal, callback },
         this.requestOptions,
       );
-      console.log("🚀 ~ file: Visitor.ts:522 ~ response.data:", response.data);
       return response.data;
     } catch (error) {
       throw this.errorHandler({
