@@ -23,14 +23,20 @@ import { ResponseType } from "types";
  */
 export class WebRTCConnector extends SDKController implements WebRTCConnectorInterface {
   twilioConfig?: object | null | undefined;
+  urlSlug: string;
 
-  constructor(topia: Topia, options: WebRTCConnectorOptionalInterface = { twilioConfig: {}, credentials: {} }) {
+  constructor(
+    topia: Topia,
+    urlSlug: string,
+    options: WebRTCConnectorOptionalInterface = { twilioConfig: {}, credentials: {} },
+  ) {
     super(topia, {
       interactiveNonce: options?.credentials?.interactiveNonce,
       urlSlug: options?.credentials?.urlSlug,
       visitorId: options?.credentials?.visitorId,
     });
     this.twilioConfig = options?.twilioConfig;
+    this.urlSlug = urlSlug;
   }
 
   /**

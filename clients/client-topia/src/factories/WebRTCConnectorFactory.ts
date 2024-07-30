@@ -23,8 +23,8 @@ export class WebRTCConnectorFactory {
    * const userInstance = await WebRTCConnector.create({ credentials: { interactiveNonce, interactivePublicKey, urlSlug, visitorId }, twilioConfig: {} });
    * ```
    */
-  create(options?: WebRTCConnectorOptionalInterface): WebRTCConnector {
-    return new WebRTCConnector(this.topia, options);
+  create(urlSlug: string, options?: WebRTCConnectorOptionalInterface): WebRTCConnector {
+    return new WebRTCConnector(this.topia, urlSlug, options);
   }
 }
 

@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import SimplePeer from "simple-peer";
+// import SimplePeer from "simple-peer";
 
 // controllers
 import { Topia } from "controllers/Topia";
@@ -464,32 +464,64 @@ export class Visitor extends User implements VisitorInterface {
     }
   }
 
+  // /**
+  //  * @summary
+  //  * Setup WebRTC
+  //  *
+  //  * @usage
+  //  * ```ts
+  //  * await visitor.connectWebRTC(iceServers);
+  //  * ```
+  //  */
+  // async connectWebRTC(iceServers: [], callback: any): Promise<void | ResponseType> {
+  //   try {
+  //     return callback("test");
+  //     const peer = new SimplePeer({
+  //       initiator: true,
+  //       trickle: false,
+  //       streams: [],
+  //       config: {
+  //         iceServers,
+  //       },
+  //       wrtc: {
+  //         RTCPeerConnection,
+  //         RTCIceCandidate,
+  //         RTCSessionDescription,
+  //       },
+  //     });
+  //     peer.on("signal", (signal: any) => callback(signal));
+  //   } catch (error) {
+  //     throw this.errorHandler({
+  //       error,
+  //       params: { iceServers },
+  //       sdkMethod: "Visitor.connectWebRTC",
+  //     });
+  //   }
+  // }
+
   /**
    * @summary
-   * Setup WebRTC
+   * Setup signal to visitor
    *
    * @usage
    * ```ts
-   * await visitor.connectWebRTC(iceServers);
+   * await visitor.sendSignalToVisitor(iceServers);
    * ```
    */
-  async connectWebRTC(iceServers: [], callback: any): Promise<void | ResponseType> {
+  async sendSignalToVisitor(signal: any, callback: any): Promise<void | ResponseType> {
     try {
-      console.log("🚀 ~ file: Visitor.ts:476 ~ iceServers:", iceServers);
-      const peer = new SimplePeer({
-        initiator: true,
-        trickle: false,
-        streams: [],
-        config: {
-          iceServers,
-        },
-      });
-      peer.on("signal", (signal: any) => callback(signal));
+      const response: AxiosResponse = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/send-signal-to-visitor`,
+        { signal, callback },
+        this.requestOptions,
+      );
+      console.log("🚀 ~ file: Visitor.ts:522 ~ response.data:", response.data);
+      return response.data;
     } catch (error) {
       throw this.errorHandler({
         error,
-        params: { iceServers },
-        sdkMethod: "Visitor.connectWebRTC",
+        params: { signal },
+        sdkMethod: "Visitor.sendSignalToVisitor",
       });
     }
   }
