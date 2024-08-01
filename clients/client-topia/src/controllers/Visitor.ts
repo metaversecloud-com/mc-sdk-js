@@ -473,11 +473,11 @@ export class Visitor extends User implements VisitorInterface {
    * await visitor.sendSignalToVisitor(iceServers);
    * ```
    */
-  async sendSignalToVisitor(signal: any, callback: any): Promise<void | ResponseType> {
+  async sendSignalToVisitor(signal: any): Promise<void | ResponseType & { answerSignal: any }> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/send-signal-to-visitor`,
-        { signal, callback },
+        { signal },
         this.requestOptions,
       );
       return response.data;
