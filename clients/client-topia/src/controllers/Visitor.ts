@@ -1,5 +1,4 @@
 import { AxiosResponse } from "axios";
-// import SimplePeer from "simple-peer";
 
 // controllers
 import { Topia } from "controllers/Topia";
@@ -473,7 +472,7 @@ export class Visitor extends User implements VisitorInterface {
    * await visitor.sendSignalToVisitor(iceServers);
    * ```
    */
-  async sendSignalToVisitor(signal: any): Promise<void | ResponseType & { answerSignal: any }> {
+  async sendSignalToVisitor(signal: any): Promise<void | (ResponseType & { answerSignal: any })> {
     try {
       const response: AxiosResponse = await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/send-signal-to-visitor`,
