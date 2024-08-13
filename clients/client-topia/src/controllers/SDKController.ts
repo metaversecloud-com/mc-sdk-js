@@ -47,13 +47,18 @@ export abstract class SDKController implements SDKInterface {
       profileId = null,
       urlSlug = null,
       visitorId = null,
+      iframeId = null,
+      gameEngineId = null,
     } = credentials;
     this.topia = topia;
     this.credentials = credentials;
     this.requestOptions = {};
 
     let payload = {};
-    const headers: { Authorization?: string; InteractiveJWT?: string; publickey?: string } = {};
+    const headers: { Authorization?: string; InteractiveJWT?: string; publickey?: string;
+      iframeId?:string
+      gameEngineId?:string
+    } = {};
 
     try {
       if (topia.interactiveSecret && (profileId || assetId || urlSlug || visitorId)) {
@@ -68,6 +73,12 @@ export abstract class SDKController implements SDKInterface {
       }
       if (apiKey) {
         headers.Authorization = apiKey;
+      }
+      if (iframeId) {
+        headers.iframeId = iframeId;
+      }
+      if (gameEngineId) {
+        headers.gameEngineId = gameEngineId;
       }
       this.requestOptions = { headers };
     } catch (error) {

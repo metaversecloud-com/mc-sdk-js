@@ -6,5 +6,6 @@ export * from "./TopiaInterfaces";
 export * from "./UserInterfaces";
 export * from "./VisitorInterfaces";
 export * from "./WebhookInterfaces";
+export * from "./WebRTCConnectorInterfaces";
 export * from "./WorldActivityInterfaces";
 export * from "./WorldInterfaces";

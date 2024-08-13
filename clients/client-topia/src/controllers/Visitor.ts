@@ -462,6 +462,32 @@ export class Visitor extends User implements VisitorInterface {
       });
     }
   }
+
+  /**
+   * @summary
+   * Setup signal to visitor
+   *
+   * @usage
+   * ```ts
+   * await visitor.sendSignalToVisitor(iceServers);
+   * ```
+   */
+  async sendSignalToVisitor(signal: any): Promise<void | (ResponseType & { answerSignal: any })> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/send-signal-to-visitor`,
+        { signal },
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({
+        error,
+        params: { signal },
+        sdkMethod: "Visitor.sendSignalToVisitor",
+      });
+    }
+  }
 }
 
 export default Visitor;

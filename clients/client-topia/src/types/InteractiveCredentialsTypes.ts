@@ -6,4 +6,6 @@ export type InteractiveCredentials = {
   profileId?: string | null;
   urlSlug?: string;
   visitorId?: number;
+  iframeId?: string;
+  gameEngineId?: string;
 };
