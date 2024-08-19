@@ -10,6 +10,7 @@ export {
 } from "factories";
 export type {
   AssetOptions,
+  AssetType,
   DroppedAssetClickType,
   DroppedAssetMediaType,
   DroppedAssetOptions,
