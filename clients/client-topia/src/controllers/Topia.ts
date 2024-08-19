@@ -28,6 +28,7 @@ export class Topia implements TopiaInterface {
   apiProtocol?: string;
   interactiveKey?: string;
   interactiveSecret?: jwt.Secret;
+  mcAuthorizationKey?: string;
 
   constructor({
     apiDomain,
@@ -35,12 +36,14 @@ export class Topia implements TopiaInterface {
     apiProtocol,
     interactiveKey,
     interactiveSecret,
+    mcAuthorizationKey,
   }: {
     apiDomain?: string;
     apiKey?: string;
     apiProtocol?: string;
     interactiveKey?: string;
     interactiveSecret?: jwt.Secret;
+    mcAuthorizationKey?: string;
   }) {
     getBrowserWarning();
 
@@ -54,6 +57,7 @@ export class Topia implements TopiaInterface {
       "Authorization"?: string;
       "Content-Type": string;
       "PublicKey"?: string;
+      "MCAuthorizationKey"?: string;
     } = {
       "ApplicationId": "sdk-js-topia",
       "Content-Type": "application/json",
@@ -61,6 +65,7 @@ export class Topia implements TopiaInterface {
 
     if (apiKey) headers.Authorization = apiKey;
     if (interactiveKey) headers.PublicKey = interactiveKey;
+    if (mcAuthorizationKey) headers.MCAuthorizationKey = mcAuthorizationKey;
 
     this.axios = axios.create({
       baseURL: `${this.apiProtocol}://${this.apiDomain}/api/v1`,
