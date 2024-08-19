@@ -43,7 +43,10 @@ export class User extends SDKController implements UserInterface {
       profileId: options?.profileId,
       urlSlug: options?.credentials?.urlSlug,
       visitorId: options?.credentials?.visitorId,
+      iframeId: options?.credentials?.iframeId,
+      gameEngineId: options?.credentials?.gameEngineId,
     });
+
     this.profileId = options?.profileId;
     this.dataObject = {};
     this.profile = {};
