@@ -40,17 +40,22 @@ export class WorldFactory extends SDKController {
     droppedAssetIds: string[],
     interactiveSecret: string,
     credentials: {
-      interactiveNonce: string;
+      apiKey?: string;
+      interactiveNonce?: string;
       interactivePublicKey: string;
-      visitorId: number;
+      visitorId?: number;
     },
   ) {
     const params = { credentials, droppedAssetIds, urlSlug };
 
     try {
+      const { apiKey, interactivePublicKey } = credentials;
       const headers: { Authorization?: string; interactiveJWT?: string; publickey?: string } = {};
-      headers.interactiveJWT = jwt.sign(credentials, interactiveSecret);
-      headers.publickey = credentials.interactivePublicKey;
+      headers.publickey = interactivePublicKey;
+
+      if (interactiveSecret) headers.interactiveJWT = jwt.sign(credentials, interactiveSecret);
+      else if (apiKey) headers.Authorization = apiKey;
+      else throw "An apiKey or interactive credentials are required.";
 
       const promiseArray = [];
       for (const id of droppedAssetIds) {

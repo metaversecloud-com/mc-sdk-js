@@ -56,17 +56,21 @@ export class DroppedAssetFactory extends SDKController {
     urlSlug: string,
     interactiveSecret: string,
     credentials: {
-      interactiveNonce: string;
+      apiKey?: string;
+      interactiveNonce?: string;
       interactivePublicKey: string;
-      visitorId: number;
+      visitorId?: number;
     },
   ): Promise<DroppedAsset> {
     const params = { credentials, interactiveSecret, uniqueName, urlSlug };
     try {
+      const { apiKey, interactivePublicKey } = credentials;
       const headers: { Authorization?: string; interactiveJWT?: string; publickey?: string } = {};
+      headers.publickey = interactivePublicKey;
 
-      headers.interactiveJWT = jwt.sign(credentials, interactiveSecret);
-      headers.publickey = credentials.interactivePublicKey;
+      if (interactiveSecret) headers.interactiveJWT = jwt.sign(credentials, interactiveSecret);
+      else if (apiKey) headers.Authorization = apiKey;
+      else throw "An apiKey or interactive credentials are required.";
 
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${urlSlug}/asset-by-unique-name/${uniqueName}`,
