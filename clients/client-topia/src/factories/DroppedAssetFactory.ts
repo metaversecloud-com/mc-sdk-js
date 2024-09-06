@@ -107,9 +107,16 @@ export class DroppedAssetFactory extends SDKController {
     asset: Asset,
     {
       assetScale = 1,
+      clickType,
+      clickableDisplayTextDescription,
+      clickableDisplayTextHeadline,
+      clickableLink,
+      clickableLinkTitle,
       flipped,
       interactivePublicKey,
       isInteractive,
+      isForceLinkInIframe,
+      isOpenLinkInDrawer,
       layer0 = "",
       layer1 = "",
       position: { x, y },
@@ -125,8 +132,15 @@ export class DroppedAssetFactory extends SDKController {
     }: {
       assetScale?: number;
       flipped?: boolean;
+      clickType?: string;
+      clickableDisplayTextDescription?: string;
+      clickableDisplayTextHeadline?: string;
+      clickableLink?: string;
+      clickableLinkTitle?: string;
       interactivePublicKey?: string;
       isInteractive?: boolean;
+      isForceLinkInIframe?: boolean;
+      isOpenLinkInDrawer?: boolean;
       layer0?: string;
       layer1?: string;
       position: {
@@ -150,11 +164,18 @@ export class DroppedAssetFactory extends SDKController {
 
     const params = {
       assetScale,
+      clickType,
+      clickableDisplayTextDescription,
+      clickableDisplayTextHeadline,
+      clickableLink,
+      clickableLinkTitle,
       flipped,
-      layer0,
-      layer1,
       interactivePublicKey,
       isInteractive,
+      isForceLinkInIframe,
+      isOpenLinkInDrawer,
+      layer0,
+      layer1,
       sceneDropId,
       specialType,
       text,
@@ -163,7 +184,6 @@ export class DroppedAssetFactory extends SDKController {
       textWeight,
       textWidth,
       uniqueName,
-      urlSlug,
       yOrderAdjust,
     };
 

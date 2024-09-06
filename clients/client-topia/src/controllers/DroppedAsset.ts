@@ -15,7 +15,7 @@ import {
 } from "interfaces";
 
 // types
-import { ResponseType } from "types";
+import { DroppedAssetClickType, ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
 
 /**
@@ -264,7 +264,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * ```
    */
   updateClickType({
-    clickType,
+    clickType = DroppedAssetClickType.LINK,
     clickableLink,
     clickableLinkTitle,
     clickableDisplayTextDescription,

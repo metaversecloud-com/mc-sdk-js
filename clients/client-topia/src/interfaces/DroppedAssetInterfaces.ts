@@ -148,15 +148,15 @@ export interface UpdateBroadcastInterface {
 }
 
 export interface UpdateClickTypeInterface {
-  clickType: DroppedAssetClickType;
-  clickableLink: string;
-  clickableLinkTitle: string;
-  clickableDisplayTextDescription: string;
-  clickableDisplayTextHeadline: string;
+  clickType?: DroppedAssetClickType;
+  clickableLink?: string;
+  clickableLinkTitle?: string;
+  clickableDisplayTextDescription?: string;
+  clickableDisplayTextHeadline?: string;
   isForceLinkInIframe?: boolean;
   isOpenLinkInDrawer?: boolean;
-  portalName: string;
-  position: { x: number; y: number };
+  portalName?: string;
+  position?: { x: number; y: number };
 }
 
 export interface UpdateMediaTypeInterface {
