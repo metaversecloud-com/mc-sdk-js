@@ -60,5 +60,5 @@
     "yalc-push": "yarn build && yalc publish --push --dev --no-scripts"
   },
   "type": "module",
-  "version": "0.12.04"
+  "version": "0.12.05"
 }

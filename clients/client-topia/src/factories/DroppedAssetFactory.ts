@@ -117,6 +117,7 @@ export class DroppedAssetFactory extends SDKController {
       isInteractive,
       isForceLinkInIframe,
       isOpenLinkInDrawer,
+      isTextTopLayer = false,
       layer0 = "",
       layer1 = "",
       position: { x, y },
@@ -141,6 +142,7 @@ export class DroppedAssetFactory extends SDKController {
       isInteractive?: boolean;
       isForceLinkInIframe?: boolean;
       isOpenLinkInDrawer?: boolean;
+      isTextTopLayer?: boolean;
       layer0?: string;
       layer1?: string;
       position: {
@@ -174,6 +176,7 @@ export class DroppedAssetFactory extends SDKController {
       isInteractive,
       isForceLinkInIframe,
       isOpenLinkInDrawer,
+      isTextTopLayer,
       layer0,
       layer1,
       sceneDropId,
