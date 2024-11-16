@@ -35,7 +35,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   dataObject?: object | null;
   isInteractive?: boolean | null;
   interactivePublicKey?: string | null;
-  position?: { x: number; y: number };
+  position: { x: number; y: number };
   text?: string | null | undefined;
   urlSlug: string;
 
@@ -43,13 +43,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     topia: Topia,
     id: string,
     urlSlug: string,
-    options: DroppedAssetOptionalInterface = { attributes: { text: "" }, credentials: {} },
+    options: DroppedAssetOptionalInterface = { attributes: {}, credentials: {} },
   ) {
     super(topia, id, { attributes: options.attributes, credentials: { assetId: id, urlSlug, ...options.credentials } });
     Object.assign(this, options.attributes);
     this.id = id;
     this.text = options.attributes?.text;
     this.urlSlug = urlSlug;
+    this.position = options.attributes?.position || { x: 0, y: 0 };
   }
 
   /**

@@ -41,7 +41,7 @@ export interface DroppedAssetInterface extends AssetInterface {
   }: UpdateMediaTypeInterface): Promise<void | ResponseType>;
   updateMuteZone(isMutezone: boolean): Promise<void | ResponseType>;
   updateWebhookZone(isWebhookZoneEnabled: boolean): Promise<void | ResponseType>;
-  updatePosition(x: number, y: number, yOrderAdjust: number): Promise<void | ResponseType>;
+  updatePosition(x: number, y: number, yOrderAdjust?: number): Promise<void | ResponseType>;
   updatePrivateZone({
     isPrivateZone,
     isPrivateZoneChatDisabled,
@@ -108,9 +108,9 @@ export interface DroppedAssetInterface extends AssetInterface {
   mediaUploadedId?: string | null;
   mediaUploadedLink?: string | null;
   metaName?: string | null;
-  position?: {
-    x?: number;
-    y?: number;
+  position: {
+    x: number;
+    y: number;
   };
   portalCoordsX?: number | null;
   portalCoordsY?: number | null;
@@ -137,7 +137,7 @@ export interface DroppedAssetInterface extends AssetInterface {
 }
 
 export interface DroppedAssetOptionalInterface {
-  attributes?: DroppedAssetInterface | { text: string; urlSlug?: string };
+  attributes?: DroppedAssetInterface | { position?: { x: number; y: number }; text?: string; urlSlug?: string };
   credentials?: InteractiveCredentials | object;
 }
 
