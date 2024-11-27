@@ -460,6 +460,38 @@ export class User extends SDKController implements UserInterface {
 
   /**
    * @summary
+   * Send an email
+   *
+   * @usage
+   * ```ts
+   * const html = `<p><b>Hello World!</b></p><p>This email is being sent from via SDK.</p>`
+   * await user.sendEmail({ html, subject: "Example", to: "example@email.io" });
+   * ```
+   */
+  async sendEmail({
+    html,
+    subject,
+    to,
+  }: {
+    html: string;
+    subject: string;
+    to: string;
+  }): Promise<object | ResponseType> {
+    const params = { html, subject, to };
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().post(
+        `/notifications/send-email`,
+        params,
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error, params, sdkMethod: "User.sendEmail" });
+    }
+  }
+
+  /**
+   * @summary
    * Retrieves the data object for a user.
    *
    * @usage
