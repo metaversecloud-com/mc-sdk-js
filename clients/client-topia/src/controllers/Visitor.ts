@@ -247,7 +247,7 @@ export class Visitor extends User implements VisitorInterface {
    * await visitor.grantExpression({ name: "Eyes" });
    * ```
    */
-  async grantExpression({ id, name }: { id?: string; name?: string }): Promise<object | ResponseType> {
+  async grantExpression({ id, name }: { id?: string; name?: string }): Promise<ResponseType> {
     if (!id && !name) throw "An expression id or name is required.";
     try {
       let expressionId = id;
@@ -260,7 +260,7 @@ export class Visitor extends User implements VisitorInterface {
         {},
         this.requestOptions,
       );
-      return result;
+      return result.data;
     } catch (error) {
       throw this.errorHandler({ error, params: { id, name }, sdkMethod: "Visitor.grantExpression" });
     }
@@ -275,7 +275,7 @@ export class Visitor extends User implements VisitorInterface {
    * await visitor.getAllParticles();
    * ```
    */
-  async getAllParticles(): Promise<object | ResponseType> {
+  async getAllParticles(): Promise<ResponseType> {
     try {
       const result = await this.topiaPublicApi().get(`/particles`, this.requestOptions);
       return result.data;
@@ -301,7 +301,7 @@ export class Visitor extends User implements VisitorInterface {
     id?: string;
     name?: string;
     duration?: number;
-  }): Promise<object | ResponseType | string> {
+  }): Promise<ResponseType | string> {
     if (!id && !name) throw "A particle name is required.";
     try {
       let particleId = id;
@@ -316,7 +316,7 @@ export class Visitor extends User implements VisitorInterface {
         { particleId, position: { x: 1, y: 1 }, duration, followPlayerId: this.id },
         this.requestOptions,
       );
-      return result;
+      return result.data;
     } catch (error) {
       throw this.errorHandler({ error, params: { id, name }, sdkMethod: "Visitor.triggerParticle" });
     }

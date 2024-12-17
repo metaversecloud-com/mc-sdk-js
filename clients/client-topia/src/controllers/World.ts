@@ -465,11 +465,11 @@ export class World extends SDKController implements WorldInterface {
     position: object;
     sceneDropId?: string;
     sceneId: string;
-  }): Promise<object | ResponseType> {
+  }): Promise<ResponseType> {
     const params = { allowNonAdmins, assetSuffix, position, sceneDropId, sceneId };
     try {
       const result = await this.topiaPublicApi().post(`/world/${this.urlSlug}/drop-scene`, params, this.requestOptions);
-      return result;
+      return result.data;
     } catch (error) {
       throw this.errorHandler({ error, params, sdkMethod: "World.dropScene" });
     }
@@ -537,7 +537,7 @@ export class World extends SDKController implements WorldInterface {
     name?: string;
     duration?: number;
     position?: object;
-  }): Promise<object | ResponseType | string> {
+  }): Promise<ResponseType | string> {
     if (!id && !name) throw "A particle name is required.";
     try {
       let particleId = id;
@@ -552,7 +552,7 @@ export class World extends SDKController implements WorldInterface {
         { particleId, position, duration },
         this.requestOptions,
       );
-      return result;
+      return result.data;
     } catch (error) {
       throw this.errorHandler({ error, params: { id, name }, sdkMethod: "World.triggerParticle" });
     }

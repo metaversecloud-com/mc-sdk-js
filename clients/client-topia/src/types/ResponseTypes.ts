@@ -1,4 +1,5 @@
 export type ResponseType = {
-  message: string;
-  success: boolean;
+  message?: string;
+  statusCode?: number;
+  success?: boolean;
 };
