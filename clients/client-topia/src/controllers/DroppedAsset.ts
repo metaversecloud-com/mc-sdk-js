@@ -10,6 +10,7 @@ import {
   DroppedAssetOptionalInterface,
   UpdateBroadcastInterface,
   UpdateClickTypeInterface,
+  UpdateDroppedAssetInterface,
   UpdateMediaTypeInterface,
   UpdatePrivateZoneInterface,
 } from "interfaces";
@@ -17,6 +18,7 @@ import {
 // types
 import { DroppedAssetClickType, ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
+import { removeUndefined } from "utils";
 
 /**
  * @summary
@@ -74,6 +76,95 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       Object.assign(this, droppedAssetDetails);
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "DroppedAsset.fetchDroppedAssetById" });
+    }
+  }
+
+  /**
+   * @summary
+   * Updates dropped asset details.
+   *
+   * @usage
+   * ```ts
+   * const payload = {
+   * assetScale: 1,
+   * clickType: "link",
+   * clickableDisplayTextDescription: "Description",
+   * clickableDisplayTextHeadline: "Headline",
+   * clickableLink: "https://topia.io",
+   * clickableLinkTitle: "Topia",
+   * flipped: false,
+   * isTextTopLayer: false,
+   * layer0: "https://www.shutterstock.com/image-vector/colorful-illustration-test-word-260nw-1438324490.jpg",
+   * layer1: "https://www.shutterstock.com/image-vector/colorful-illustration-test-word-260nw-1438324490.jpg",
+   * position: { x: 0, y: 0 },
+   * specialType: "webImage",
+   * text: "My Asset",
+   * textColor: "#000000",
+   * textSize: 20,
+   * textWeight: "normal",
+   * textWidth: 200,
+   * uniqueName: "example",
+   * yOrderAdjust: 0,
+   * }
+   * await droppedAsset.updateDroppedAsset();
+   * const { assetName } = droppedAsset;
+   * ```
+   */
+  async updateDroppedAsset({
+    assetScale,
+    clickType,
+    clickableLink,
+    clickableLinkTitle,
+    clickableDisplayTextDescription,
+    clickableDisplayTextHeadline,
+    flipped,
+    isTextTopLayer,
+    layer0,
+    layer1,
+    position,
+    specialType,
+    text,
+    textColor,
+    textSize,
+    textWeight,
+    textWidth,
+    uniqueName,
+    yOrderAdjust,
+  }: UpdateDroppedAssetInterface): Promise<void | ResponseType> {
+    const params = {
+      assetScale,
+      clickType,
+      clickableLink,
+      clickableLinkTitle,
+      clickableDisplayTextDescription,
+      clickableDisplayTextHeadline,
+      flipped,
+      isTextTopLayer,
+      layer0,
+      layer1,
+      position,
+      specialType,
+      text,
+      textColor,
+      textSize,
+      textWeight,
+      textWidth,
+      uniqueName,
+      yOrderAdjust,
+    };
+
+    const filteredParams = removeUndefined(params);
+
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/assets/${this.id}`,
+        filteredParams,
+        this.requestOptions,
+      );
+      const droppedAssetDetails = response.data;
+      Object.assign(this, droppedAssetDetails);
+    } catch (error) {
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.updateDroppedAsset" });
     }
   }
 

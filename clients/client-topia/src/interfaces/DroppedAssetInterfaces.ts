@@ -147,6 +147,28 @@ export interface UpdateBroadcastInterface {
   broadcasterEmail?: string;
 }
 
+export interface UpdateDroppedAssetInterface {
+  assetScale?: number;
+  clickType?: DroppedAssetClickType;
+  clickableLink?: string;
+  clickableLinkTitle?: string;
+  clickableDisplayTextDescription?: string;
+  clickableDisplayTextHeadline?: string;
+  flipped?: boolean;
+  isTextTopLayer?: boolean;
+  layer0?: string;
+  layer1?: string;
+  position?: { x: number; y: number };
+  specialType?: string;
+  text?: string | null;
+  textColor?: string | null;
+  textSize?: number | null;
+  textWidth?: number | null;
+  textWeight?: string | null;
+  uniqueName?: string;
+  yOrderAdjust?: number;
+}
+
 export interface UpdateClickTypeInterface {
   clickType?: DroppedAssetClickType;
   clickableLink?: string;
