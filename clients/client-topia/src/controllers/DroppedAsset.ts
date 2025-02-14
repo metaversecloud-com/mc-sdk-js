@@ -18,6 +18,7 @@ import {
 // types
 import { DroppedAssetClickType, ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
+import { removeUndefined } from "utils";
 
 /**
  * @summary
@@ -152,7 +153,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       yOrderAdjust,
     };
 
-    const filteredParams = Object.fromEntries(Object.entries(params).filter(([_, v]) => v !== undefined));
+    const filteredParams = removeUndefined(params);
 
     try {
       const response: AxiosResponse = await this.topiaPublicApi().put(
