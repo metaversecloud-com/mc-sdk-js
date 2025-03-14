@@ -6,7 +6,13 @@ import { SDKController } from "controllers/SDKController";
 import { Topia } from "controllers/Topia";
 
 // interfaces
-import { WorldInterface, WorldDetailsInterface, WorldOptionalInterface, WorldWebhooksInterface } from "interfaces";
+import {
+  WorldInterface,
+  WorldDetailsInterface,
+  WorldOptionalInterface,
+  WorldWebhooksInterface,
+  FireToastInterface,
+} from "interfaces";
 
 // types
 import { ResponseType } from "types";
@@ -555,6 +561,32 @@ export class World extends SDKController implements WorldInterface {
       return result.data;
     } catch (error) {
       throw this.errorHandler({ error, params: { id, name }, sdkMethod: "World.triggerParticle" });
+    }
+  }
+
+  /**
+   * @summary
+   * Display a message via a toast to all visitors currently in a world.
+   *
+   * @usage
+   * ```ts
+   * await world.fireToast({
+   *   groupId: "custom-message",
+   *   title: "Hello World",
+   *   text: "Thank you for participating!",
+   * });
+   * ```
+   */
+  async fireToast({ groupId, title, text }: FireToastInterface): Promise<void | ResponseType> {
+    const params = {
+      groupId,
+      title,
+      text,
+    };
+    try {
+      await this.topiaPublicApi().put(`/world/${this.urlSlug}/fire-toast`, params, this.requestOptions);
+    } catch (error) {
+      throw this.errorHandler({ error, params, sdkMethod: "Visitor.fireToast" });
     }
   }
 
