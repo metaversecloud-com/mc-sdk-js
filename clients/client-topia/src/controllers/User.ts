@@ -492,6 +492,36 @@ export class User extends SDKController implements UserInterface {
 
   /**
    * @summary
+   * Get expressions
+   *
+   * @usage
+   * ```ts
+   * await user.getExpressions({ getUnlockablesOnly: true, });
+   * ```
+   */
+  async getExpressions({
+    name,
+    getUnlockablesOnly,
+  }: {
+    name?: string;
+    getUnlockablesOnly?: boolean;
+  }): Promise<ResponseType> {
+    try {
+      let query = `?getUnlockablesOnly=${getUnlockablesOnly}`;
+      if (name) query += `&name=${name}`;
+
+      const result = await this.topiaPublicApi().get(
+        `/expressions?getUnlockablesOnly=${getUnlockablesOnly}`,
+        this.requestOptions,
+      );
+      return result.data;
+    } catch (error) {
+      throw this.errorHandler({ error, params: { name, getUnlockablesOnly }, sdkMethod: "User.getExpressions" });
+    }
+  }
+
+  /**
+   * @summary
    * Retrieves the data object for a user.
    *
    * @usage
