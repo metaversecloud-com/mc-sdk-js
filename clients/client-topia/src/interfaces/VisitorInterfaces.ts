@@ -1,5 +1,6 @@
 import { InteractiveCredentials, ResponseType } from "types";
 import { SDKInterface } from "interfaces/SDKInterfaces";
+import { FireToastInterface } from "./SharedInterfaces";
 
 export interface VisitorInterface extends SDKInterface {
   fetchVisitor(): Promise<void | ResponseType>;
@@ -44,12 +45,6 @@ export interface MoveVisitorInterface {
   shouldTeleportVisitor: boolean;
   x: number;
   y: number;
-}
-
-export interface FireToastInterface {
-  groupId?: string;
-  title: string;
-  text?: string;
 }
 
 export interface OpenIframeInterface {

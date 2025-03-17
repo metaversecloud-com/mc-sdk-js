@@ -1,6 +1,5 @@
 import { InteractiveCredentials, ResponseType } from "types";
-import { SDKInterface } from "interfaces/SDKInterfaces";
-import { WebhookInterface } from "./WebhookInterfaces";
+import { FireToastInterface, SDKInterface, WebhookInterface } from "interfaces";
 import { DroppedAsset } from "controllers/DroppedAsset";
 
 export interface WorldDetailsInterface {
@@ -63,6 +62,7 @@ export interface WorldInterface extends SDKInterface, WorldDetailsInterface {
   }): Promise<object | ResponseType>;
   replaceScene(sceneId: string): Promise<void | ResponseType>;
   fetchDataObject(): Promise<void | ResponseType>;
+  fireToast({ groupId, title, text }: FireToastInterface): Promise<void | ResponseType>;
   setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
   updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
   incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
