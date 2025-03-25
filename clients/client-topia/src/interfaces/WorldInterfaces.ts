@@ -50,6 +50,13 @@ export interface WorldInterface extends SDKInterface, WorldDetailsInterface {
     isPartial?: boolean;
     isReversed?: boolean;
   }): Promise<DroppedAsset[]>;
+  fetchDroppedAssetsBySceneDropId({
+    sceneDropId,
+    uniqueName,
+  }: {
+    sceneDropId: string;
+    uniqueName?: string;
+  }): Promise<DroppedAsset[]>;
   updateCustomTextDroppedAssets(droppedAssetsToUpdate: Array<DroppedAsset>, style: object): Promise<object>;
   dropScene({
     assetSuffix,

@@ -124,6 +124,7 @@ export class DroppedAssetFactory extends SDKController {
       sceneDropId,
       text,
       textColor,
+      textFontFamily,
       textSize,
       textWeight,
       textWidth,
@@ -152,6 +153,7 @@ export class DroppedAssetFactory extends SDKController {
       sceneDropId?: string;
       text?: string;
       textColor?: string;
+      textFontFamily?: string;
       textSize?: number;
       textWeight?: string;
       textWidth?: number;
@@ -183,6 +185,7 @@ export class DroppedAssetFactory extends SDKController {
       specialType,
       text,
       textColor,
+      textFontFamily,
       textSize,
       textWeight,
       textWidth,
