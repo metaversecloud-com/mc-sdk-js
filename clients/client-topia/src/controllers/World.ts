@@ -567,7 +567,7 @@ export class World extends SDKController implements WorldInterface {
   /**
    * @summary
    * Add an activity to a world
-   * excludeFromNotification is an array of userIds to exclude from the notification
+   * excludeFromNotification is an array of visitorIds to exclude from the notification
    * 
    * @usage
    * ```ts
@@ -581,7 +581,7 @@ export class World extends SDKController implements WorldInterface {
   }: {
     type: WorldActivityTypes;
     assetId: string;
-    excludeFromNotification?: string[]
+    excludeFromNotification?: (string | number)[]
   }): Promise<ResponseType | string> {
     try {
       const result = await this.topiaPublicApi().post(
