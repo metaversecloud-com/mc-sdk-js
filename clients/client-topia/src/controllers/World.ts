@@ -15,7 +15,7 @@ import {
 } from "interfaces";
 
 // types
-import { ResponseType } from "types";
+import { WorldActivityTypes, ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
 
 // utils
@@ -561,6 +561,37 @@ export class World extends SDKController implements WorldInterface {
       return result.data;
     } catch (error) {
       throw this.errorHandler({ error, params: { id, name }, sdkMethod: "World.triggerParticle" });
+    }
+  }
+
+  /**
+   * @summary
+   * Add an activity to a world
+   * excludeFromNotification is an array of visitorIds to exclude from the notification
+   * 
+   * @usage
+   * ```ts
+   * await world.triggerActivity({ type: "GAME_ON", assetId: "abc123" });
+   * ```
+   */
+  async triggerActivity({
+    type,
+    assetId,
+    excludeFromNotification
+  }: {
+    type: WorldActivityTypes;
+    assetId: string;
+    excludeFromNotification?: (string | number)[]
+  }): Promise<ResponseType | string> {
+    try {
+      const result = await this.topiaPublicApi().post(
+        `/world/${this.urlSlug}/set-activity`,
+        { type, assetId, excludeFromNotification },
+        this.requestOptions,
+      );
+      return result.data;
+    } catch (error) {
+      throw this.errorHandler({ error, params: { type }, sdkMethod: "World.triggerActivity" });
     }
   }
 
