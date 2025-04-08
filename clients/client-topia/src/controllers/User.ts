@@ -510,10 +510,7 @@ export class User extends SDKController implements UserInterface {
       let query = `?getUnlockablesOnly=${getUnlockablesOnly}`;
       if (name) query += `&name=${name}`;
 
-      const result = await this.topiaPublicApi().get(
-        `/expressions?getUnlockablesOnly=${getUnlockablesOnly}`,
-        this.requestOptions,
-      );
+      const result = await this.topiaPublicApi().get(`/expressions${query}`, this.requestOptions);
       return result.data;
     } catch (error) {
       throw this.errorHandler({ error, params: { name, getUnlockablesOnly }, sdkMethod: "User.getExpressions" });

@@ -240,6 +240,33 @@ export class Visitor extends User implements VisitorInterface {
 
   /**
    * @summary
+   * Get expressions
+   *
+   * @usage
+   * ```ts
+   * await visitor.getExpressions({ getUnlockablesOnly: true, });
+   * ```
+   */
+  async getExpressions({
+    name,
+    getUnlockablesOnly,
+  }: {
+    name?: string;
+    getUnlockablesOnly?: boolean;
+  }): Promise<ResponseType> {
+    try {
+      let query = `?getUnlockablesOnly=${getUnlockablesOnly}`;
+      if (name) query += `&name=${name}`;
+
+      const result = await this.topiaPublicApi().get(`/expressions${query}`, this.requestOptions);
+      return result.data;
+    } catch (error) {
+      throw this.errorHandler({ error, params: { name, getUnlockablesOnly }, sdkMethod: "Visitors.getExpressions" });
+    }
+  }
+
+  /**
+   * @summary
    * Grant expression to a visitor by id or name.
    *
    * @usage
