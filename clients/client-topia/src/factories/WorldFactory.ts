@@ -19,7 +19,7 @@ export class WorldFactory extends SDKController {
    *
    * @usage
    * ```
-   * const worldInstance = await World.create(urlSlug, { credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * const worldInstance = await World.create(urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
    */
   create(urlSlug: string, options?: WorldOptionalInterface): World {

@@ -27,8 +27,8 @@ import { removeUndefined } from "utils";
  * @usage
  * ```ts
  * await new DroppedAsset(topia, "1giFZb0sQ3X27L7uGyQX", "example", {
- *   attributes: { text: "My Asset" },
- *   credentials: { apiKey: "exampleKey", interactiveNonce: "exampleNonce", visitorId: 1 }
+ *   attributes: { text: "My Dropped Asset" },
+ *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
  * ```
  */

@@ -20,7 +20,7 @@ export class WebRTCConnectorFactory {
    *
    * @usage
    * ```
-   * const userInstance = await WebRTCConnector.create({ credentials: { interactiveNonce, interactivePublicKey, urlSlug, visitorId }, twilioConfig: {} });
+   * const userInstance = await WebRTCConnector.create({ credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId }, twilioConfig: {} });
    * ```
    */
   create(urlSlug: string, options?: WebRTCConnectorOptionalInterface): WebRTCConnector {

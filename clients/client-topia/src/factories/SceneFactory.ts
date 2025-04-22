@@ -21,7 +21,7 @@ export class SceneFactory {
    *
    * @usage
    * ```
-   * const sceneInstance = await Scene.create(id, { credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * const sceneInstance = await Scene.create(id, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
    */
   create(id: string, options?: SceneOptionalInterface): Scene {
@@ -34,7 +34,7 @@ export class SceneFactory {
    *
    * @usage
    * ```
-   * const sceneInstance = await Scene.get(id, { credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * const sceneInstance = await Scene.get(id, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
    */
   async get(id: string, options?: SceneOptionalInterface): Promise<Scene> {

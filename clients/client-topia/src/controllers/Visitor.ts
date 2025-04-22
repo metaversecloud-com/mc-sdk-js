@@ -23,7 +23,7 @@ import { AnalyticType } from "types/AnalyticTypes";
  *
  * @usage
  * ```ts
- * await new Visitor(topia, id, urlSlug, { attributes: { moveTo: { x: 0, y: 0 } } });
+ * await new Visitor(topia, id, urlSlug, { attributes: { moveTo: { x: 0, y: 0 } }, credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" } });
  * ```
  */
 export class Visitor extends User implements VisitorInterface {
@@ -271,7 +271,8 @@ export class Visitor extends User implements VisitorInterface {
    *
    * @usage
    * ```ts
-   * await visitor.grantExpression({ name: "Eyes" });
+   * await visitor.grantExpression({ id: "exampleExpressionId" });
+   * await visitor.grantExpression({ name: "exampleExpressionName" });
    * ```
    */
   async grantExpression({ id, name }: { id?: string; name?: string }): Promise<ResponseType> {

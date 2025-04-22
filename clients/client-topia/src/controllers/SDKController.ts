@@ -55,9 +55,12 @@ export abstract class SDKController implements SDKInterface {
     this.requestOptions = {};
 
     let payload = {};
-    const headers: { Authorization?: string; InteractiveJWT?: string; publickey?: string;
-      iframeId?:string
-      gameEngineId?:string
+    const headers: {
+      Authorization?: string;
+      InteractiveJWT?: string;
+      publickey?: string;
+      iframeId?: string;
+      gameEngineId?: string;
     } = {};
 
     try {
@@ -66,6 +69,8 @@ export abstract class SDKController implements SDKInterface {
           interactiveNonce,
           visitorId,
           assetId,
+          urlSlug,
+          profileId,
           date: new Date(),
         };
         this.jwt = jwt.sign(payload, topia.interactiveSecret as string);

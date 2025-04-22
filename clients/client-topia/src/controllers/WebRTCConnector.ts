@@ -17,7 +17,7 @@ import { ResponseType } from "types";
  * @usage
  * ```ts
  * await new WebRTCConnector(topia, {
- *   credentials: { interactiveNonce: "exampleNonce", urlSlug: "exampleWorld", visitorId: 1 }
+ *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
  * ```
  */
@@ -30,11 +30,7 @@ export class WebRTCConnector extends SDKController implements WebRTCConnectorInt
     urlSlug: string,
     options: WebRTCConnectorOptionalInterface = { twilioConfig: {}, credentials: {} },
   ) {
-    super(topia, {
-      interactiveNonce: options?.credentials?.interactiveNonce,
-      urlSlug: options?.credentials?.urlSlug,
-      visitorId: options?.credentials?.visitorId,
-    });
+    super(topia, { urlSlug: options?.credentials?.urlSlug || urlSlug, ...options.credentials });
     this.twilioConfig = options?.twilioConfig;
     this.urlSlug = urlSlug;
   }
