@@ -15,7 +15,7 @@ import {
 } from "interfaces";
 
 // types
-import { WorldActivityTypes, ResponseType } from "types";
+import { WorldActivityType, ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
 
 // utils
@@ -574,7 +574,7 @@ export class World extends SDKController implements WorldInterface {
     assetId,
     excludeFromNotification,
   }: {
-    type: WorldActivityTypes;
+    type: WorldActivityType;
     assetId: string;
     excludeFromNotification?: (string | number)[];
   }): Promise<ResponseType | string> {

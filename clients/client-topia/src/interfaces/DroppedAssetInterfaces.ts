@@ -96,6 +96,8 @@ export interface DroppedAssetInterface extends AssetInterface {
   existingKey?: string | null;
   interactivePublicKey?: string | null;
   isInteractive?: boolean | null;
+  isLandmarkZoneEnabled?: boolean | null;
+  isPrivateZone?: boolean | null;
   isVideoPlayer?: boolean | null;
   kitId?: string | null;
   layer0?: string | null;

@@ -9,22 +9,6 @@ export {
   WorldFactory,
 } from "factories";
 
-export type {
-  AssetOptions,
-  AssetType,
-  DroppedAssetClickType,
-  DroppedAssetMediaType,
-  DroppedAssetOptions,
-  InteractiveCredentials,
-  ResponseType,
-  UserOptions,
-  VisitorOptions,
-  VisitorType,
-  VisitorsToMoveType,
-  VisitorsToMoveArrayType,
-  WorldOptions,
-} from "types";
-
 export {
   Asset,
   DroppedAsset,
@@ -38,6 +22,7 @@ export {
   WorldActivity,
 } from "controllers";
 
+export * from "types";
 export * from "interfaces";
 
 Error.stackTraceLimit = 20;
