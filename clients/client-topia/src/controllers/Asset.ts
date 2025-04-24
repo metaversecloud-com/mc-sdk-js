@@ -16,9 +16,9 @@ import { ResponseType } from "types";
  *
  * @usage
  * ```ts
- * await new Asset(topia, "assetId", {
+ * await new Asset(topia, "id", {
  *   attributes: { assetName: "My Asset", isPublic: false },
- *   credentials: { apiKey: "exampleKey", interactiveNonce: "exampleNonce", urlSlug: "exampleWorld", visitorId: 1 }
+ *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
  * ```
  */
@@ -26,14 +26,8 @@ export class Asset extends SDKController implements AssetInterface {
   readonly id?: string;
 
   constructor(topia: Topia, id: string, options: AssetOptionalInterface = { attributes: {}, credentials: {} }) {
-    // assetId and urlSlug should only be used when Asset is extended by DroppedAsset
-    super(topia, {
-      apiKey: options?.credentials?.apiKey,
-      assetId: options?.credentials?.assetId,
-      interactiveNonce: options?.credentials?.interactiveNonce,
-      urlSlug: options?.credentials?.urlSlug,
-      visitorId: options?.credentials?.visitorId,
-    });
+    // options.credentials.assetId is the dropped asset id and is used to validate the interactive credentials. It should NOT match the id that's passed to the constructor.
+    super(topia, { ...options.credentials });
     this.id = id;
     Object.assign(this, options.attributes);
   }

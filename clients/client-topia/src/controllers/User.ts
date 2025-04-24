@@ -22,7 +22,7 @@ import { AnalyticType } from "types/AnalyticTypes";
  * ```ts
  * await new User(topia, {
  *   profileId: 1,
- *   credentials: { apiKey: "exampleKey", interactiveNonce: "exampleNonce", urlSlug: "exampleWorld", visitorId: 1 }
+ *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
  * ```
  */
@@ -37,15 +37,7 @@ export class User extends SDKController implements UserInterface {
   #worldsMap: { [key: string]: World };
 
   constructor(topia: Topia, options: UserOptionalInterface = { profileId: null, credentials: {} }) {
-    super(topia, {
-      apiKey: options?.credentials?.apiKey,
-      interactiveNonce: options?.credentials?.interactiveNonce,
-      profileId: options?.profileId,
-      urlSlug: options?.credentials?.urlSlug,
-      visitorId: options?.credentials?.visitorId,
-      iframeId: options?.credentials?.iframeId,
-      gameEngineId: options?.credentials?.gameEngineId,
-    });
+    super(topia, { profileId: options?.profileId, ...options.credentials });
 
     this.profileId = options?.profileId;
     this.dataObject = {};

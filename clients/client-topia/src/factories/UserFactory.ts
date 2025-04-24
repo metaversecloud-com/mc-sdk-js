@@ -20,7 +20,7 @@ export class UserFactory {
    *
    * @usage
    * ```
-   * const userInstance = await User.create({ credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * const userInstance = await User.create({ credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
    */
   create(options?: UserOptionalInterface): User {

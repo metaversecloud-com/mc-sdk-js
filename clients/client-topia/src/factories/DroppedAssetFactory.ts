@@ -20,7 +20,7 @@ export class DroppedAssetFactory extends SDKController {
    *
    * @usage
    * ```
-   * const droppedAssetInstance = await DroppedAsset.create(assetId, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * const droppedAssetInstance = await DroppedAsset.create(assetId, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
    */
   create(id: string, urlSlug: string, options?: DroppedAssetOptionalInterface): DroppedAsset {
@@ -33,7 +33,7 @@ export class DroppedAssetFactory extends SDKController {
    *
    * @usage
    * ```
-   * const droppedAssetInstance = await DroppedAsset.get(assetId, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * const droppedAssetInstance = await DroppedAsset.get(assetId, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
    */
   async get(id: string, urlSlug: string, options?: DroppedAssetOptionalInterface): Promise<DroppedAsset> {
@@ -89,7 +89,7 @@ export class DroppedAssetFactory extends SDKController {
    *
    * @usage
    * ```
-   * const assetInstance = await Asset.create(id, { credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * const assetInstance = await Asset.create(id, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * const droppedAssetInstance = await DroppedAsset.get(assetInstance, {
         assetScale: 1.5,
         flipped: true,

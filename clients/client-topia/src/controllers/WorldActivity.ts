@@ -24,7 +24,7 @@ import { scatterVisitors } from "utils";
  * ```ts
  * await new WorldActivity(topia, "exampleWorld", {
  *   attributes: { name: "Example World" },
- *   credentials: { apiKey: "exampleKey", interactiveNonce: "exampleNonce", urlSlug: "exampleWorld", visitorId: 1 }
+ *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
  * ```
  */
@@ -33,12 +33,7 @@ export class WorldActivity extends SDKController {
   #visitorsMap: { [key: string]: Visitor };
 
   constructor(topia: Topia, urlSlug: string, options: WorldActivityOptionalInterface = { credentials: {} }) {
-    super(topia, {
-      apiKey: options?.credentials?.apiKey,
-      interactiveNonce: options?.credentials?.interactiveNonce,
-      urlSlug: options?.credentials?.urlSlug || urlSlug,
-      visitorId: options?.credentials?.visitorId,
-    });
+    super(topia, { urlSlug: options?.credentials?.urlSlug || urlSlug, ...options.credentials });
     this.urlSlug = urlSlug;
     this.#visitorsMap = {};
   }

@@ -20,7 +20,7 @@ export class WorldActivityFactory {
    *
    * @usage
    * ```
-   * const worldActivityInstance = await WorldActivity.create(urlSlug, { credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * const worldActivityInstance = await WorldActivity.create(urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
    */
   create(urlSlug: string, options?: WorldOptionalInterface): WorldActivity {

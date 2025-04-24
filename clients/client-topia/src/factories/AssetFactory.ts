@@ -20,7 +20,7 @@ export class AssetFactory extends SDKController {
    *
    * @usage
    * ```
-   * const assetInstance = await Asset.create(id, { credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * const assetInstance = await Asset.create(id, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
    */
   create(id: string, options?: AssetOptionalInterface): Asset {

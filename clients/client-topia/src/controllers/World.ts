@@ -15,7 +15,7 @@ import {
 } from "interfaces";
 
 // types
-import { WorldActivityTypes, ResponseType } from "types";
+import { WorldActivityType, ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
 
 // utils
@@ -29,7 +29,7 @@ import { removeUndefined } from "utils";
  * ```ts
  * await new World(topia, "exampleWorld", {
  *   attributes: { name: "Example World" },
- *   credentials: { apiKey: "exampleKey", interactiveNonce: "exampleNonce", urlSlug: "exampleWorld", visitorId: 1 }
+ *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
  * ```
  */
@@ -42,12 +42,7 @@ export class World extends SDKController implements WorldInterface {
   webhooks?: WorldWebhooksInterface | null | undefined;
 
   constructor(topia: Topia, urlSlug: string, options: WorldOptionalInterface = { attributes: {}, credentials: {} }) {
-    super(topia, {
-      apiKey: options?.credentials?.apiKey,
-      interactiveNonce: options?.credentials?.interactiveNonce,
-      urlSlug: options?.credentials?.urlSlug || urlSlug,
-      visitorId: options?.credentials?.visitorId,
-    });
+    super(topia, { urlSlug: options?.credentials?.urlSlug || urlSlug, ...options.credentials });
     Object.assign(this, options.attributes);
     this.urlSlug = urlSlug;
     this.#droppedAssetsMap = {};
@@ -568,7 +563,7 @@ export class World extends SDKController implements WorldInterface {
    * @summary
    * Add an activity to a world
    * excludeFromNotification is an array of visitorIds to exclude from the notification
-   * 
+   *
    * @usage
    * ```ts
    * await world.triggerActivity({ type: "GAME_ON", assetId: "abc123" });
@@ -577,11 +572,11 @@ export class World extends SDKController implements WorldInterface {
   async triggerActivity({
     type,
     assetId,
-    excludeFromNotification
+    excludeFromNotification,
   }: {
-    type: WorldActivityTypes;
+    type: WorldActivityType;
     assetId: string;
-    excludeFromNotification?: (string | number)[]
+    excludeFromNotification?: (string | number)[];
   }): Promise<ResponseType | string> {
     try {
       const result = await this.topiaPublicApi().post(

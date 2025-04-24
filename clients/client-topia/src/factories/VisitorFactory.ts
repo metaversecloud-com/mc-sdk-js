@@ -20,7 +20,7 @@ export class VisitorFactory {
    *
    * @usage
    * ```
-   * const visitorInstance = await Visitor.create(id, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * const visitorInstance = await Visitor.create(id, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
    */
   create(id: number, urlSlug: string, options?: VisitorOptionalInterface): Visitor {
@@ -33,7 +33,7 @@ export class VisitorFactory {
    *
    * @usage
    * ```
-   * const visitorInstance = await Visitor.get(id, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, visitorId } });
+   * const visitorInstance = await Visitor.get(id, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
    */
   async get(id: number, urlSlug: string, options?: VisitorOptionalInterface): Promise<Visitor> {

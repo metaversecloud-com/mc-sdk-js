@@ -18,7 +18,7 @@ import { ResponseType } from "types";
  * ```ts
  * await new Scene(topia, "sceneId", {
  *   attributes: { name: "My Scene" },
- *   credentials: { apiKey: "exampleKey", interactiveNonce: "exampleNonce", urlSlug: "exampleWorld", visitorId: 1 }
+ *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
  * ```
  */
@@ -26,12 +26,7 @@ export class Scene extends SDKController implements SceneInterface {
   readonly id: string;
 
   constructor(topia: Topia, id: string, options: SceneOptionalInterface = { attributes: {}, credentials: {} }) {
-    super(topia, {
-      apiKey: options?.credentials?.apiKey,
-      interactiveNonce: options?.credentials?.interactiveNonce,
-      urlSlug: options?.credentials?.urlSlug,
-      visitorId: options?.credentials?.visitorId,
-    });
+    super(topia, { ...options.credentials });
     this.id = id;
     Object.assign(this, options.attributes);
   }
