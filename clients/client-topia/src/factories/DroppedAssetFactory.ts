@@ -2,6 +2,7 @@ import { DroppedAsset, Topia, Asset, SDKController } from "controllers";
 import { DroppedAssetOptionalInterface } from "interfaces";
 import { AxiosResponse } from "axios";
 import jwt from "jsonwebtoken";
+import { InteractiveCredentials } from "types";
 
 /**
  * @usage
@@ -55,12 +56,7 @@ export class DroppedAssetFactory extends SDKController {
     uniqueName: string,
     urlSlug: string,
     interactiveSecret: string,
-    credentials: {
-      apiKey?: string;
-      interactiveNonce?: string;
-      interactivePublicKey: string;
-      visitorId?: number;
-    },
+    credentials: InteractiveCredentials,
   ): Promise<DroppedAsset> {
     const params = { credentials, interactiveSecret, uniqueName, urlSlug };
     try {
@@ -77,7 +73,7 @@ export class DroppedAssetFactory extends SDKController {
         { headers },
       );
       const { id } = response.data;
-      return new DroppedAsset(this.topia, id, urlSlug, { attributes: response.data });
+      return new DroppedAsset(this.topia, id, urlSlug, { attributes: response.data, credentials });
     } catch (error) {
       throw this.errorHandler({ error, params, sdkMethod: "DroppedAssetFactory.getWithUniqueName" });
     }
