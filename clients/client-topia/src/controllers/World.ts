@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 
 // controllers
 import { DroppedAsset } from "controllers/DroppedAsset";
@@ -586,6 +586,7 @@ export class World extends SDKController implements WorldInterface {
       );
       return result.data;
     } catch (error) {
+      // TODO: don't throw error if status 409
       throw this.errorHandler({ error, params: { type }, sdkMethod: "World.triggerActivity" });
     }
   }

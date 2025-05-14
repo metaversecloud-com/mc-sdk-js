@@ -31,7 +31,6 @@ Topia offers a robust SDK and API that allows anyone to build custom apps or int
 - [NPM Package](https://www.npmjs.com/package/@rtsdk/topia)
 - [Demo World](https://topia.io/sdk-demos)
 - [Typescript Boilerplate](https://github.com/metaversecloud-com/sdk-ts-boilerplate)
-- [Javascript Boilerplate](https://github.com/metaversecloud-com/sdk-ts-boilerplate)
 
 #### Need inspiration?! Check out the following applications which utilizes the SDK to create new and enhanced features inside [topia.io](https://topia.io/):
 
@@ -117,7 +116,6 @@ A Topia provided API Key can be included with every object initialization as a p
 
 We have two boilerplates available to help you get started. Pick the one that best suits your needs, clone it, and let the coding begin!
 
-- [Javascript](https://github.com/metaversecloud-com/sdk-boilerplate)
 - [Typescript](https://github.com/metaversecloud-com/sdk-ts-boilerplate)
 
 Run `yarn add @rtsdk/topia` or `npm install @rtsdk/topia`
