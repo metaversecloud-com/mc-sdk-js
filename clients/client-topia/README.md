@@ -104,6 +104,25 @@ A Topia provided API Key can be included with every object initialization as a p
 
 <br>
 
+# New for June 2025: Multiplayer Experience Engine
+
+Topia has developed a powerful new Experience Engine that enables extremely low-latency, interactive in-canvas multiplayer experiences. This engine is purpose-built for real-time interaction and supports a wide range of dynamic behaviors, making it ideal for collaborative activities, games, and social experiences within Topia worlds.
+
+## Key Features
+-	Ultra Low Latency: Real-time feedback for seamless multi-user interaction and state synchronization.
+-	Physics & Collision: Includes a robust physics and collision system to support realistic and responsive behaviors.
+-	Real-Time Interactivity: Supports dynamic responses to user input and environmental changes inside the canvas.
+-	Optimized for the Web: Engineered to perform smoothly across browser-based environments with minimal resource impact.
+
+## SDK Integration: Leverage the SDK inside the Experience Engine to:
+-	Trigger visual/audio effects based on real-time interactions
+-	Save and persist spatial data, such as object positions or interaction states
+
+This engine unlocks a whole new layer of interactivity, paving the way for creative, immersive experiences including educational tools, multiplayer games, or collaborative activities.
+
+## Get In Touch
+To sign up for the experience engine private beta, visit https://topia.io/p/game-engine.
+
 # Developers
 
 <hr/>
