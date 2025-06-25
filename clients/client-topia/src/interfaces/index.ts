@@ -1,5 +1,6 @@
 export * from "./AssetInterfaces";
 export * from "./DroppedAssetInterfaces";
+export * from "./EcosystemInterfaces";
 export * from "./SceneInterfaces";
 export * from "./SDKInterfaces";
 export * from "./SharedInterfaces";

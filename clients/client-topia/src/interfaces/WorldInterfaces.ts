@@ -68,8 +68,8 @@ export interface WorldInterface extends SDKInterface, WorldDetailsInterface {
     sceneId: string;
   }): Promise<object | ResponseType>;
   replaceScene(sceneId: string): Promise<void | ResponseType>;
-  fetchDataObject(): Promise<void | ResponseType>;
   fireToast({ groupId, title, text }: FireToastInterface): Promise<void | ResponseType>;
+  fetchDataObject(appPublicKey?: string, appPublicKeyJWT?: string): Promise<void | ResponseType>;
   setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
   updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
   incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
