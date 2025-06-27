@@ -194,10 +194,10 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * const dataObject = await droppedAsset.fetchDataObject();
    * ```
    */
-  async fetchDataObject(appPublicKey?: string, appPublicKeyJWT?: string): Promise<void | ResponseType> {
+  async fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> {
     try {
       let query = "";
-      if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appPublicKeyJWT=${appPublicKeyJWT}`;
+      if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appJWT=${appJWT}`;
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/assets/${this.id}/data-object${query}`,
         this.requestOptions,
@@ -225,8 +225,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   async setDataObject(
     dataObject: object,
     options: {
-      appPublicKey?: string;
-      appPublicKeyJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
@@ -261,8 +261,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   async updateDataObject(
     dataObject: object,
     options: {
-      appPublicKey?: string;
-      appPublicKeyJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
@@ -295,8 +295,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     path: string,
     amount: number,
     options: {
-      appPublicKey?: string;
-      appPublicKeyJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},

@@ -39,10 +39,10 @@ export class Ecosystem extends SDKController {
    * const dataObject = await ecosystem.fetchDataObject("exampleAppPublicKey", "exampleAppPublicKeyJWT");
    * ```
    */
-  async fetchDataObject(appPublicKey?: string, appPublicKeyJWT?: string): Promise<void | ResponseType> {
+  async fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> {
     try {
       let query = "";
-      if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appPublicKeyJWT=${appPublicKeyJWT}`;
+      if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appJWT=${appJWT}`;
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/ecosystem/data-object${query}`,
         this.requestOptions,
@@ -63,16 +63,16 @@ export class Ecosystem extends SDKController {
    * @usage
    * ```ts
    * await ecosystem.setDataObject({ "exampleKey": "exampleValue" }, {
-   *   appPublicKey: "exampleAppPublicKey",
-   *   appPublicKeyJWT: "exampleAppPublicKeyJWT",}
+   *   sharedAppPublicKey: "exampleAppPublicKey",
+   *   sharedAppJWT: "exampleAppPublicKeyJWT",}
    * });
    * ```
    */
   async setDataObject(
     dataObject: object | null | undefined,
     options: {
-      appPublicKey?: string;
-      appPublicKeyJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
@@ -99,16 +99,16 @@ export class Ecosystem extends SDKController {
    * @usage
    * ```ts
    * await ecosystem.updateDataObject({ "exampleKey": "exampleValue" }, {
-   *   appPublicKey: "exampleAppPublicKey",
-   *   appPublicKeyJWT: "exampleAppPublicKeyJWT",}
+   *   sharedAppPublicKey: "exampleAppPublicKey",
+   *   sharedAppJWT: "exampleAppPublicKeyJWT",}
    * });
    * ```
    */
   async updateDataObject(
     dataObject: object,
     options: {
-      appPublicKey?: string;
-      appPublicKeyJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
@@ -134,8 +134,8 @@ export class Ecosystem extends SDKController {
    * @usage
    * ```ts
    * await ecosystem.incrementDataObjectValue("key", 1, {
-   *   appPublicKey: "exampleAppPublicKey",
-   *   appPublicKeyJWT: "exampleAppPublicKeyJWT",}
+   *   sharedAppPublicKey: "exampleAppPublicKey",
+   *   sharedAppJWT: "exampleAppPublicKeyJWT",}
    * });
    * ```
    */
@@ -143,8 +143,8 @@ export class Ecosystem extends SDKController {
     path: string,
     amount: number,
     options: {
-      appPublicKey?: string;
-      appPublicKeyJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},

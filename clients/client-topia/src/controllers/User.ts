@@ -518,12 +518,12 @@ export class User extends SDKController implements UserInterface {
    * const dataObject = await user.fetchDataObject();
    * ```
    */
-  async fetchDataObject(appPublicKey?: string, appPublicKeyJWT?: string): Promise<void | ResponseType> {
+  async fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> {
     try {
       if (!this.profileId) throw "This method requires the use of a profileId";
 
       let query = "";
-      if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appPublicKeyJWT=${appPublicKeyJWT}`;
+      if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appJWT=${appJWT}`;
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/user/dataObjects/${this.profileId}/get-data-object${query}`,
         this.requestOptions,
@@ -551,8 +551,8 @@ export class User extends SDKController implements UserInterface {
   async setDataObject(
     dataObject: object | null | undefined,
     options: {
-      appPublicKey?: string;
-      appPublicKeyJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
@@ -588,8 +588,8 @@ export class User extends SDKController implements UserInterface {
   async updateDataObject(
     dataObject: object,
     options: {
-      appPublicKey?: string;
-      appPublicKeyJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
@@ -623,8 +623,8 @@ export class User extends SDKController implements UserInterface {
     path: string,
     amount: number,
     options: {
-      appPublicKey?: string;
-      appPublicKeyJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},

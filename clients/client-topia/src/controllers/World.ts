@@ -628,10 +628,10 @@ export class World extends SDKController implements WorldInterface {
    * const { dataObject } = world;
    * ```
    */
-  fetchDataObject = async (appPublicKey?: string, appPublicKeyJWT?: string): Promise<void | ResponseType> => {
+  fetchDataObject = async (appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> => {
     try {
       let query = "";
-      if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appPublicKeyJWT=${appPublicKeyJWT}`;
+      if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appJWT=${appJWT}`;
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/get-data-object${query}`,
         this.requestOptions,
@@ -660,8 +660,8 @@ export class World extends SDKController implements WorldInterface {
   setDataObject = async (
     dataObject: object | null | undefined,
     options: {
-      appPublicKey?: string;
-      appPublicKeyJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
@@ -695,8 +695,8 @@ export class World extends SDKController implements WorldInterface {
   updateDataObject = async (
     dataObject: object,
     options: {
-      appPublicKey?: string;
-      appPublicKeyJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
@@ -728,8 +728,8 @@ export class World extends SDKController implements WorldInterface {
     path: string,
     amount: number,
     options: {
-      appPublicKey?: string;
-      appPublicKeyJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
