@@ -225,6 +225,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   async setDataObject(
     dataObject: object,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];
@@ -261,6 +263,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   async updateDataObject(
     dataObject: object,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];
@@ -295,6 +299,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     path: string,
     amount: number,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];

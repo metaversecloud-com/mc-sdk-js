@@ -551,6 +551,8 @@ export class User extends SDKController implements UserInterface {
   async setDataObject(
     dataObject: object | null | undefined,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];
@@ -588,6 +590,8 @@ export class User extends SDKController implements UserInterface {
   async updateDataObject(
     dataObject: object,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];
@@ -623,6 +627,8 @@ export class User extends SDKController implements UserInterface {
     path: string,
     amount: number,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];

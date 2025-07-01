@@ -391,6 +391,8 @@ export class Visitor extends User implements VisitorInterface {
   async setDataObject(
     dataObject: object | null | undefined,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];
@@ -425,6 +427,8 @@ export class Visitor extends User implements VisitorInterface {
   async updateDataObject(
     dataObject: object,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];
@@ -458,6 +462,8 @@ export class Visitor extends User implements VisitorInterface {
     path: string,
     amount: number,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];

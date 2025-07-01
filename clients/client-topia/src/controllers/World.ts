@@ -660,6 +660,8 @@ export class World extends SDKController implements WorldInterface {
   setDataObject = async (
     dataObject: object | null | undefined,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];
@@ -695,6 +697,8 @@ export class World extends SDKController implements WorldInterface {
   updateDataObject = async (
     dataObject: object,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];
@@ -728,6 +732,8 @@ export class World extends SDKController implements WorldInterface {
     path: string,
     amount: number,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];

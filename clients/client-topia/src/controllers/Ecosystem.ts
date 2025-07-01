@@ -71,6 +71,8 @@ export class Ecosystem extends SDKController {
   async setDataObject(
     dataObject: object | null | undefined,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];
@@ -107,6 +109,8 @@ export class Ecosystem extends SDKController {
   async updateDataObject(
     dataObject: object,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];
@@ -143,6 +147,8 @@ export class Ecosystem extends SDKController {
     path: string,
     amount: number,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
       sharedAppPublicKey?: string;
       sharedAppJWT?: string;
       analytics?: AnalyticType[];
