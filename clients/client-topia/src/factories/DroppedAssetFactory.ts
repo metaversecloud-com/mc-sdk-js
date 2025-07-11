@@ -51,6 +51,9 @@ export class DroppedAssetFactory extends SDKController {
    * ```
    * const droppedAssetInstance = await DroppedAsset.getWithUniqueName("exampleUniqueName", urlSlug, interactiveSecret, credentials);
    * ```
+   *
+   * @notes
+   * This method leverages the handleGetDroppedAssetByUniqueName endpoint in the Public API and assumes there is exactly one dropped asset with matching uniqueName for the given urlSlug.
    */
   async getWithUniqueName(
     uniqueName: string,

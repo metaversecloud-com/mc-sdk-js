@@ -157,7 +157,9 @@ export interface UpdateDroppedAssetInterface {
   clickableDisplayTextDescription?: string;
   clickableDisplayTextHeadline?: string;
   flipped?: boolean;
+  isInteractive?: boolean;
   isTextTopLayer?: boolean;
+  interactivePublicKey?: string;
   layer0?: string;
   layer1?: string;
   position?: { x: number; y: number };
