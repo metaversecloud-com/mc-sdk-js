@@ -1,4 +1,10 @@
-import { DroppedAssetClickType, DroppedAssetMediaType, InteractiveCredentials, ResponseType } from "types";
+import {
+  DroppedAssetClickType,
+  DroppedAssetLinkType,
+  DroppedAssetMediaType,
+  InteractiveCredentials,
+  ResponseType,
+} from "types";
 import { AssetInterface } from "interfaces";
 import { AxiosResponse } from "axios";
 
@@ -183,6 +189,23 @@ export interface UpdateClickTypeInterface {
   isOpenLinkInDrawer?: boolean;
   portalName?: string;
   position?: { x: number; y: number };
+}
+
+export interface SetClickableLinkMultiInterface {
+  clickableLinks: DroppedAssetLinkType[];
+}
+
+export interface UpdateClickableLinkMultiInterface {
+  clickableLink: string;
+  clickableLinkTitle?: string;
+  isForceLinkInIframe?: boolean;
+  isOpenLinkInDrawer?: boolean;
+  existingLinkId?: string;
+  linkSamlQueryParams?: string;
+}
+
+export interface RemoveClickableLinkInterface {
+  linkId: string;
 }
 
 export interface UpdateMediaTypeInterface {
