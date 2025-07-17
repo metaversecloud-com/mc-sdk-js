@@ -205,8 +205,7 @@ export class World extends SDKController implements WorldInterface {
    *
    * @usage
    * ```ts
-   * await world.fetchDroppedAssetsWithUniqueName();
-   * const assets = world.droppedAssets;
+   * const droppedAssets = await world.fetchDroppedAssetsWithUniqueName({u niqueName: "exampleUniqueName", isPartial: true });
    * ```
    */
   async fetchDroppedAssetsWithUniqueName({

@@ -266,7 +266,6 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * });
    * ```
    */
-  // get dropped asset
   async updateDataObject(
     dataObject: object,
     options: {
