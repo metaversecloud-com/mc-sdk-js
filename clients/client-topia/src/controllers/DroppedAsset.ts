@@ -8,7 +8,10 @@ import { Topia } from "controllers/Topia";
 import {
   DroppedAssetInterface,
   DroppedAssetOptionalInterface,
+  RemoveClickableLinkInterface,
+  SetClickableLinkMultiInterface,
   UpdateBroadcastInterface,
+  UpdateClickableLinkMultiInterface,
   UpdateClickTypeInterface,
   UpdateDroppedAssetInterface,
   UpdateMediaTypeInterface,
@@ -399,6 +402,102 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       return this.#updateDroppedAsset(params, "change-click-type");
     } catch (error) {
       throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.updateClickType" });
+    }
+  }
+
+  /**
+   * @summary
+   * Adds an array of links to an asset. Maximum is 20 links.
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.setClickableLinkMulti({
+   *   clickableLinks: [
+   *     {
+   *       clickableLink: "https://example_one.com",
+   *       clickableLinkTitle: "Example One Link",
+   *       isForceLinkInIframe: true,
+   *       isOpenLinkInDrawer: false,
+   *     },
+   *     {
+   *       clickableLink: "https://example two.com",
+   *       clickableLinkTitle: "Example Two Link",
+   *       isForceLinkInIframe: false,
+   *       isOpenLinkInDrawer: false,
+   *     },
+   *   ],
+   * });
+   * ```
+   */
+  setClickableLinkMulti({ clickableLinks }: SetClickableLinkMultiInterface): Promise<void | ResponseType> {
+    const params = {
+      clickType: DroppedAssetClickType.LINK,
+      clickableLinks,
+    };
+    try {
+      return this.#updateDroppedAsset(params, "set-clickable-link-multi");
+    } catch (error) {
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.setClickableLinkMulti" });
+    }
+  }
+
+  /**
+   * @summary
+   * Updates multiple clickable links for a dropped asset.
+   * Pass in an 'existingLinkId' to edit an existing link.
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.updateClickableLinkMulti({
+   *   clickableLink: "https://example.com",
+   *   clickableLinkTitle: "Example Link",
+   *   isForceLinkInIframe: true,
+   *   isOpenLinkInDrawer: false,
+   *   existingLinkId: "abcd"
+   * });
+   * ```
+   */
+  updateClickableLinkMulti({
+    clickableLink,
+    clickableLinkTitle,
+    isForceLinkInIframe,
+    isOpenLinkInDrawer,
+    existingLinkId,
+    linkSamlQueryParams,
+  }: UpdateClickableLinkMultiInterface): Promise<void | ResponseType> {
+    const params = {
+      clickType: DroppedAssetClickType.LINK,
+      clickableLink,
+      clickableLinkTitle,
+      isForceLinkInIframe,
+      isOpenLinkInDrawer,
+      existingLinkId,
+      linkSamlQueryParams,
+    };
+    try {
+      return this.#updateDroppedAsset(params, "update-clickable-link-multi");
+    } catch (error) {
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.updateClickableLinkMulti" });
+    }
+  }
+
+  /**
+   * @summary
+   * Removes a clickable link from a dropped asset.
+   *
+   * @usage
+   * ```ts
+   * await droppedAsset.removeClickableLink({ linkId: "link-id" });
+   * ```
+   */
+  removeClickableLink({ linkId }: RemoveClickableLinkInterface): Promise<void | ResponseType> {
+    const params = {
+      linkId,
+    };
+    try {
+      return this.#updateDroppedAsset(params, "remove-clickable-link");
+    } catch (error) {
+      throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.removeClickableLink" });
     }
   }
 
