@@ -5,7 +5,7 @@ import { AxiosResponse } from "axios";
 export interface DroppedAssetInterface extends AssetInterface {
   fetchDroppedAssetById(): Promise<void | ResponseType>;
   deleteDroppedAsset(): Promise<void | ResponseType>;
-  fetchDataObject(): Promise<void | ResponseType>;
+  fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType>;
   setDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
   updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
   incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
@@ -157,7 +157,9 @@ export interface UpdateDroppedAssetInterface {
   clickableDisplayTextDescription?: string;
   clickableDisplayTextHeadline?: string;
   flipped?: boolean;
+  isInteractive?: boolean;
   isTextTopLayer?: boolean;
+  interactivePublicKey?: string;
   layer0?: string;
   layer1?: string;
   position?: { x: number; y: number };

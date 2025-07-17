@@ -1,6 +1,7 @@
 export {
   AssetFactory,
   DroppedAssetFactory,
+  EcosystemFactory,
   SceneFactory,
   UserFactory,
   VisitorFactory,
@@ -12,6 +13,7 @@ export {
 export {
   Asset,
   DroppedAsset,
+  Ecosystem,
   SDKController,
   World,
   User,

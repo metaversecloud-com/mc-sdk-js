@@ -118,7 +118,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     clickableDisplayTextDescription,
     clickableDisplayTextHeadline,
     flipped,
+    isInteractive,
     isTextTopLayer,
+    interactivePublicKey,
     layer0,
     layer1,
     position,
@@ -139,7 +141,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
       clickableDisplayTextDescription,
       clickableDisplayTextHeadline,
       flipped,
+      isInteractive,
       isTextTopLayer,
+      interactivePublicKey,
       layer0,
       layer1,
       position,
@@ -194,10 +198,12 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * const dataObject = await droppedAsset.fetchDataObject();
    * ```
    */
-  async fetchDataObject(): Promise<void | ResponseType> {
+  async fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> {
     try {
+      let query = "";
+      if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appJWT=${appJWT}`;
       const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/assets/${this.id}/data-object`,
+        `/world/${this.urlSlug}/assets/${this.id}/data-object${query}`,
         this.requestOptions,
       );
       this.dataObject = response.data;
@@ -223,6 +229,10 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   async setDataObject(
     dataObject: object,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
@@ -257,6 +267,10 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   async updateDataObject(
     dataObject: object,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
@@ -289,6 +303,10 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     path: string,
     amount: number,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},

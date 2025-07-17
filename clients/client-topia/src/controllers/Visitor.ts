@@ -359,10 +359,13 @@ export class Visitor extends User implements VisitorInterface {
    * const dataObject = await visitor.fetchDataObject();
    * ```
    */
-  async fetchDataObject(): Promise<void | ResponseType> {
+  async fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> {
     try {
+      let query = "";
+      if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appJWT=${appJWT}`;
+
       const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/visitors/${this.id}/get-data-object`,
+        `/world/${this.urlSlug}/visitors/${this.id}/get-data-object${query}`,
         this.requestOptions,
       );
       this.dataObject = response.data;
@@ -388,6 +391,10 @@ export class Visitor extends User implements VisitorInterface {
   async setDataObject(
     dataObject: object | null | undefined,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
@@ -420,6 +427,10 @@ export class Visitor extends User implements VisitorInterface {
   async updateDataObject(
     dataObject: object,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
@@ -451,6 +462,10 @@ export class Visitor extends User implements VisitorInterface {
     path: string,
     amount: number,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},

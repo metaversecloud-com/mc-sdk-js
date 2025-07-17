@@ -586,6 +586,7 @@ export class World extends SDKController implements WorldInterface {
       );
       return result.data;
     } catch (error) {
+      // TODO: don't throw error if status 409
       throw this.errorHandler({ error, params: { type }, sdkMethod: "World.triggerActivity" });
     }
   }
@@ -627,10 +628,12 @@ export class World extends SDKController implements WorldInterface {
    * const { dataObject } = world;
    * ```
    */
-  fetchDataObject = async (): Promise<void | ResponseType> => {
+  fetchDataObject = async (appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> => {
     try {
+      let query = "";
+      if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appJWT=${appJWT}`;
       const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/get-data-object`,
+        `/world/${this.urlSlug}/get-data-object${query}`,
         this.requestOptions,
       );
       this.dataObject = response.data;
@@ -657,6 +660,10 @@ export class World extends SDKController implements WorldInterface {
   setDataObject = async (
     dataObject: object | null | undefined,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
@@ -690,6 +697,10 @@ export class World extends SDKController implements WorldInterface {
   updateDataObject = async (
     dataObject: object,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},
@@ -721,6 +732,10 @@ export class World extends SDKController implements WorldInterface {
     path: string,
     amount: number,
     options: {
+      appPublicKey?: string;
+      appJWT?: string;
+      sharedAppPublicKey?: string;
+      sharedAppJWT?: string;
       analytics?: AnalyticType[];
       lock?: { lockId: string; releaseLock?: boolean };
     } = {},

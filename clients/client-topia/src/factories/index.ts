@@ -1,5 +1,6 @@
 export { AssetFactory } from "./AssetFactory";
 export { DroppedAssetFactory } from "./DroppedAssetFactory";
+export { EcosystemFactory } from "./EcosystemFactory";
 export { SceneFactory } from "./SceneFactory";
 export { UserFactory } from "./UserFactory";
 export { VisitorFactory } from "./VisitorFactory";
