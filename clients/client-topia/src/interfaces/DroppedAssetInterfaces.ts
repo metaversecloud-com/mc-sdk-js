@@ -2,6 +2,7 @@ import {
   DroppedAssetClickType,
   DroppedAssetLinkType,
   DroppedAssetMediaType,
+  DroppedAssetMediaVolumeRadius,
   InteractiveCredentials,
   ResponseType,
 } from "types";
@@ -82,7 +83,7 @@ export interface DroppedAssetInterface extends AssetInterface {
   assetId?: string;
   assetScale?: number | null;
   assetPodium?: boolean | null;
-  audioRadius?: number | null;
+  audioRadius?: DroppedAssetMediaVolumeRadius | number | null;
   assetBroadcastAll?: boolean | null;
   assetPrivateConversation?: boolean | null;
   assetPrivateZoneChannelDisabled?: boolean | null;
@@ -90,6 +91,7 @@ export interface DroppedAssetInterface extends AssetInterface {
   audioSliderVolume?: number | null;
   bottomLayerURL?: string | null;
   broadcasterEmail?: string | null;
+  clickableLinks?: Array<DroppedAssetClickType> | null;
   clickType?: string | null;
   clickableLink?: string | null;
   clickableLinkTitle?: string | null;
@@ -157,6 +159,8 @@ export interface UpdateBroadcastInterface {
 
 export interface UpdateDroppedAssetInterface {
   assetScale?: number;
+  audioRadius?: DroppedAssetMediaVolumeRadius | number;
+  audioSliderVolume?: number;
   clickType?: DroppedAssetClickType;
   clickableLink?: string;
   clickableLinkTitle?: string;
@@ -165,11 +169,17 @@ export interface UpdateDroppedAssetInterface {
   flipped?: boolean;
   isInteractive?: boolean;
   isTextTopLayer?: boolean;
+  isVideo?: boolean;
   interactivePublicKey?: string;
   layer0?: string;
   layer1?: string;
+  mediaLink?: string;
+  mediaName?: string;
+  mediaType?: DroppedAssetMediaType;
   position?: { x: number; y: number };
+  portalName?: string;
   specialType?: string;
+  syncUserMedia?: boolean;
   text?: string | null;
   textColor?: string | null;
   textSize?: number | null;
@@ -209,7 +219,7 @@ export interface RemoveClickableLinkInterface {
 }
 
 export interface UpdateMediaTypeInterface {
-  audioRadius: number;
+  audioRadius: DroppedAssetMediaVolumeRadius | number;
   audioSliderVolume: number;
   isVideo: boolean;
   mediaLink: string;

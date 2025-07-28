@@ -11,6 +11,13 @@ export enum DroppedAssetMediaType {
   LINK = "link",
 }
 
+export enum DroppedAssetMediaVolumeRadius {
+  CLOSE = 0,
+  MEDIUM = 1,
+  FAR = 2,
+  EVERYWHERE = 3,
+}
+
 export type DroppedAssetLinkType = {
   clickableLink: string;
   clickableLinkTitle?: string;

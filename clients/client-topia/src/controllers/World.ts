@@ -290,11 +290,10 @@ export class World extends SDKController implements WorldInterface {
    *
    * @usage
    * ```ts
-   * await world.fetchDroppedAssetsBySceneDropId({
+   * const droppedAssets = await world.fetchDroppedAssetsBySceneDropId({
    *   sceneDropId: "sceneDropIdExample",
    *   uniqueName: "optionalUniqueNameExample",
    * });
-   * const assets = world.droppedAssets;
    * ```
    */
   async fetchDroppedAssetsBySceneDropId({
