@@ -21,6 +21,8 @@ export class AssetFactory extends SDKController {
    * ```
    * const assetInstance = await Asset.create(id, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
+   *
+   * @returns {Asset} Returns a new Asset object with the asset id.
    */
   create(id: string, options?: AssetOptionalInterface): Asset {
     return new Asset(this.topia, id, options);
@@ -41,6 +43,8 @@ export class AssetFactory extends SDKController {
    * }
    * const asset = await Asset.upload(assetPayload, apiKey);
    * ```
+   *
+   * @returns {AssetType} Returns a new Asset object with the asset details.
    */
   async upload(assetPayload: AssetType, apiKey: string): Promise<Asset> {
     try {

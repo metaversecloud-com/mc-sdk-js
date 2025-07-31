@@ -21,6 +21,8 @@ export class VisitorFactory {
    * ```
    * const visitorInstance = await Visitor.create(id, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
+   *
+   * @returns {Visitor} Returns a new Visitor object.
    */
   create(id: number, urlSlug: string, options?: VisitorOptionalInterface): Visitor {
     return new Visitor(this.topia, id, urlSlug, options);
@@ -33,6 +35,8 @@ export class VisitorFactory {
    * ```
    * const visitorInstance = await Visitor.get(id, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
+   *
+   * @returns {Promise<Visitor>} Returns a new Visitor object with all properties.
    */
   async get(id: number, urlSlug: string, options?: VisitorOptionalInterface): Promise<Visitor> {
     const visitor = new Visitor(this.topia, id, urlSlug, options);

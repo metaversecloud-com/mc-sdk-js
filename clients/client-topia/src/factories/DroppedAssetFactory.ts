@@ -22,6 +22,8 @@ export class DroppedAssetFactory extends SDKController {
    * ```
    * const droppedAssetInstance = await DroppedAsset.create(assetId, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
+   *
+   * @returns {DroppedAsset} Returns a new DroppedAsset object.
    */
   create(id: string, urlSlug: string, options?: DroppedAssetOptionalInterface): DroppedAsset {
     return new DroppedAsset(this.topia, id, urlSlug, options);
@@ -34,6 +36,8 @@ export class DroppedAssetFactory extends SDKController {
    * ```
    * const droppedAssetInstance = await DroppedAsset.get(assetId, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
+   *
+   * @returns {Promise<DroppedAsset>} Returns a new DroppedAsset object with all properties.
    */
   async get(id: string, urlSlug: string, options?: DroppedAssetOptionalInterface): Promise<DroppedAsset> {
     const droppedAsset = new DroppedAsset(this.topia, id, urlSlug, options);
@@ -44,12 +48,15 @@ export class DroppedAssetFactory extends SDKController {
   /**
    * Searches dropped assets within a world by a provide `uniqueName`. If a single match is found, a new instance of DroppedAsset class is returned all properties.
    *
+   * @remarks
    * This method leverages the handleGetDroppedAssetByUniqueName endpoint in the Public API and assumes there is exactly one dropped asset with matching uniqueName for the given urlSlug.
    *
    * @example
    * ```
    * const droppedAssetInstance = await DroppedAsset.getWithUniqueName("exampleUniqueName", urlSlug, interactiveSecret, credentials);
    * ```
+   *
+   * @returns {Promise<DroppedAsset>} Returns a new DroppedAsset object with all properties.
    */
   async getWithUniqueName(
     uniqueName: string,
@@ -96,6 +103,8 @@ export class DroppedAssetFactory extends SDKController {
         urlSlug,
       });
    * ```
+   *
+   * @returns {Promise<DroppedAsset>} Returns a new DroppedAsset object with all properties.
    */
   async drop(
     asset: Asset,

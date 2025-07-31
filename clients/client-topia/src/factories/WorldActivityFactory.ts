@@ -21,6 +21,8 @@ export class WorldActivityFactory {
    * ```
    * const worldActivityInstance = await WorldActivity.create(urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
+   *
+   * @returns {WorldActivity} Returns a new WorldActivity object.
    */
   create(urlSlug: string, options?: WorldOptionalInterface): WorldActivity {
     return new WorldActivity(this.topia, urlSlug, options);

@@ -21,6 +21,8 @@ export class UserFactory {
    * ```
    * const userInstance = await User.create({ credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
+   *
+   * @returns {User} Returns a new User object.
    */
   create(options?: UserOptionalInterface): User {
     return new User(this.topia, options);

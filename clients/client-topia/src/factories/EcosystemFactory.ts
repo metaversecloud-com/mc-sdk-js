@@ -21,6 +21,8 @@ export class EcosystemFactory {
    * ```
    * const ecosystemInstance = await Ecosystem.create({ credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId }});
    * ```
+   *
+   * @returns {Ecosystem} Returns a new Ecosystem object.
    */
   create(options?: EcosystemOptionalInterface): Ecosystem {
     return new Ecosystem(this.topia, options);

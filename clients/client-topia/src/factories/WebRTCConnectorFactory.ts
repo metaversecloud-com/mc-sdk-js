@@ -21,6 +21,8 @@ export class WebRTCConnectorFactory {
    * ```
    * const webRTCInstance = await WebRTCConnector.create({ credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId }, twilioConfig: {} });
    * ```
+   *
+   * @returns {WebRTCConnector} Returns a new WebRTCConnector object.
    */
   create(urlSlug: string, options?: WebRTCConnectorOptionalInterface): WebRTCConnector {
     return new WebRTCConnector(this.topia, urlSlug, options);

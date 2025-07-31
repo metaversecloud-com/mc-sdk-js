@@ -20,6 +20,8 @@ export class WorldFactory extends SDKController {
    * ```
    * const worldInstance = await World.create(urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
+   *
+   * @returns {World} Returns a new World object.
    */
   create(urlSlug: string, options?: WorldOptionalInterface): World {
     return new World(this.topia, urlSlug, options);
@@ -32,6 +34,8 @@ export class WorldFactory extends SDKController {
    * ```
    * await World.deleteDroppedAssets(urlSlug, ["exampleDroppedAssetId1", "exampleDroppedAssetId2"], interactiveSecret, credentials);
    * ```
+   *
+   * @returns {Promise<{ success: boolean }>} Returns `{ success: true }` or an error.
    */
   async deleteDroppedAssets(
     urlSlug: string,
