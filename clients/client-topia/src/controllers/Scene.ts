@@ -11,12 +11,11 @@ import { SceneInterface, SceneOptionalInterface } from "interfaces";
 import { ResponseType } from "types";
 
 /**
- * @summary
  * Create an instance of Scene class with a given scene id and optional attributes and session credentials.
  *
- * @usage
+ * @example
  * ```ts
- * await new Scene(topia, "sceneId", {
+ * const scene = await new Scene(topia, "sceneId", {
  *   attributes: { name: "My Scene" },
  *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
@@ -32,10 +31,9 @@ export class Scene extends SDKController implements SceneInterface {
   }
 
   /**
-   * @summary
-   * Retrieves scene details.
+   * Retrieves scene details and assigns response data to the instance.
    *
-   * @usage
+   * @example
    * ```ts
    * await scene.fetchSceneById();
    * const { name } = scene;

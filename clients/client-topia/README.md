@@ -81,13 +81,52 @@ Make an asset “interactive” by adding your PUBLIC key to the integrations pa
 - Once you have the above values you can pass them as credentials into the factory classes when creating class instances.
 
 ```ts
-await DroppedAsset.get(assetId, urlSlug, {
-  credentials: {
-    interactivePublicKey,
-    interactiveNonce,
-    visitorId,
-  },
-});
+// Set up the SDK a separate util file
+import dotenv from "dotenv";
+dotenv.config({ path: "../.env" });
+
+import { Topia, AssetFactory, DroppedAssetFactory, UserFactory, VisitorFactory, WorldFactory } from "@rtsdk/topia";
+
+const config = {
+  apiDomain: process.env.INSTANCE_DOMAIN || "api.topia.io",
+  apiProtocol: process.env.INSTANCE_PROTOCOL || "https",
+  interactiveKey: process.env.INTERACTIVE_KEY,
+  interactiveSecret: process.env.INTERACTIVE_SECRET,
+};
+
+const myTopiaInstance = new Topia(config);
+
+const Asset = new AssetFactory(myTopiaInstance);
+const DroppedAsset = new DroppedAssetFactory(myTopiaInstance);
+const User = new UserFactory(myTopiaInstance);
+const Visitor = new VisitorFactory(myTopiaInstance);
+const World = new WorldFactory(myTopiaInstance);
+
+export { Asset, DroppedAsset, User, Visitor, World };
+
+// Use the SDK in your controllers
+import { Request, Response } from "express";
+import { World } from "../utils/index.js";
+
+export const handleFireToast = async (req: Request, res: Response) => {
+  try {
+    const { assetId, interactiveNonce, interactivePublicKey, urlSlug, visitorId } = req.query;
+    const { title, text } = req.body;
+
+    const world = World.create(urlSlug, {
+      credentials: { assetId, interactiveNonce, interactivePublicKey, urlSlug, visitorId },
+    });
+
+    await world.fireToast({
+      title,
+      text,
+    });
+
+    return res.json({ world, success: true });
+  } catch (error) {
+    return res.status(error.status || 500).send({ error, message, success: false });
+  }
+};
 ```
 
 ![Interactive Application Development Diagram](https://raw.githubusercontent.com/metaversecloud-com/mc-sdk-js/main/clients/client-topia/InteractiveApplicationDevelopment.png)
@@ -109,18 +148,21 @@ A Topia provided API Key can be included with every object initialization as a p
 Topia has developed a powerful new Experience Engine that enables extremely low-latency, interactive in-canvas multiplayer experiences. This engine is purpose-built for real-time interaction and supports a wide range of dynamic behaviors, making it ideal for collaborative activities, games, and social experiences within Topia worlds.
 
 ## Key Features
--	Ultra Low Latency: Real-time feedback for seamless multi-user interaction and state synchronization.
--	Physics & Collision: Includes a robust physics and collision system to support realistic and responsive behaviors.
--	Real-Time Interactivity: Supports dynamic responses to user input and environmental changes inside the canvas.
--	Optimized for the Web: Engineered to perform smoothly across browser-based environments with minimal resource impact.
+
+- Ultra Low Latency: Real-time feedback for seamless multi-user interaction and state synchronization.
+- Physics & Collision: Includes a robust physics and collision system to support realistic and responsive behaviors.
+- Real-Time Interactivity: Supports dynamic responses to user input and environmental changes inside the canvas.
+- Optimized for the Web: Engineered to perform smoothly across browser-based environments with minimal resource impact.
 
 ## SDK Integration: Leverage the SDK inside the Experience Engine to:
--	Trigger visual/audio effects based on real-time interactions
--	Save and persist spatial data, such as object positions or interaction states
+
+- Trigger visual/audio effects based on real-time interactions
+- Save and persist spatial data, such as object positions or interaction states
 
 This engine unlocks a whole new layer of interactivity, paving the way for creative, immersive experiences including educational tools, multiplayer games, or collaborative activities.
 
 ## Get In Touch
+
 To sign up for the experience engine private beta, visit https://topia.io/p/game-engine.
 
 # Developers

@@ -3,7 +3,7 @@ import { WorldOptionalInterface } from "interfaces";
 import jwt from "jsonwebtoken";
 
 /**
- * @usage
+ * @example
  * ```ts
  * const World = new WorldFactory(myTopiaInstance);
  * ```
@@ -14,10 +14,9 @@ export class WorldFactory extends SDKController {
   }
 
   /**
-   * @summary
    * Instantiate a new instance of World class.
    *
-   * @usage
+   * @example
    * ```
    * const worldInstance = await World.create(urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
@@ -27,10 +26,9 @@ export class WorldFactory extends SDKController {
   }
 
   /**
-   * @summary
    * Deletes an array of Dropped Assets from within a world and returns success: true
    *
-   * @usage
+   * @example
    * ```
    * await World.deleteDroppedAssets(urlSlug, ["exampleDroppedAssetId1", "exampleDroppedAssetId2"], interactiveSecret, credentials);
    * ```

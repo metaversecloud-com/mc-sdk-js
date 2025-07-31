@@ -18,12 +18,11 @@ import { ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
 
 /**
- * @summary
  * Create an instance of Visitor class with a given id and optional attributes and session credentials.
  *
- * @usage
+ * @example
  * ```ts
- * await new Visitor(topia, id, urlSlug, { attributes: { moveTo: { x: 0, y: 0 } }, credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" } });
+ * const visitor = await new Visitor(topia, id, urlSlug, { attributes: { moveTo: { x: 0, y: 0 } }, credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" } });
  * ```
  */
 export class Visitor extends User implements VisitorInterface {
@@ -44,15 +43,14 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * @summary
    * Get a single visitor from a world
    *
-   * @usage
+   * @example
    * ```ts
    * await visitor.fetchVisitor();
    * ```
    *
-   * @result
+   * @returns
    * Returns details for a visitor in a world by id and urlSlug
    */
   async fetchVisitor(): Promise<void | ResponseType> {
@@ -75,10 +73,9 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * @summary
    * Teleport or walk a visitor currently in a world to a single set of coordinates.
    *
-   * @usage
+   * @example
    * ```ts
    * await visitor.moveVisitor({
    *   shouldTeleportVisitor: true,
@@ -87,12 +84,12 @@ export class Visitor extends User implements VisitorInterface {
    * });
    * ```
    *
-   * @result
-   * Updates each Visitor instance and world.visitors map.
+   * @returns
+   * Returns `{ success: true }` if the visitor was moved successfully.
    */
   async moveVisitor({ shouldTeleportVisitor, x, y }: MoveVisitorInterface): Promise<void | ResponseType> {
     try {
-      await this.topiaPublicApi().put(
+      const response = await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/move`,
         {
           moveTo: {
@@ -103,16 +100,16 @@ export class Visitor extends User implements VisitorInterface {
         },
         this.requestOptions,
       );
+      return response.data;
     } catch (error) {
       throw this.errorHandler({ error, params: { shouldTeleportVisitor, x, y }, sdkMethod: "Visitor.moveVisitor" });
     }
   }
 
   /**
-   * @summary
    * Display a message via a toast to a visitor currently in a world.
    *
-   * @usage
+   * @example
    * ```ts
    * await visitor.fireToast({
    *   groupId: "custom-message",
@@ -120,6 +117,8 @@ export class Visitor extends User implements VisitorInterface {
    *   text: "Thank you for participating!",
    * });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns `{ success: true }` or an error.
    */
   async fireToast({ groupId, title, text }: FireToastInterface): Promise<void | ResponseType> {
     const params = {
@@ -128,21 +127,23 @@ export class Visitor extends User implements VisitorInterface {
       text,
     };
     try {
-      await this.topiaPublicApi().put(
+      const response = await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/fire-toast`,
         params,
         this.requestOptions,
       );
+      return response.data;
     } catch (error) {
       throw this.errorHandler({ error, params, sdkMethod: "Visitor.fireToast" });
     }
   }
 
   /**
-   * @summary
    * Open an iframe in a drawer or modal for a visitor currently in a world.
    *
-   * @usage
+   * @category iframes
+   *
+   * @example
    * ```ts
    * await visitor.openIframe({
    *   droppedAssetId: "droppedAssetId",
@@ -151,6 +152,8 @@ export class Visitor extends User implements VisitorInterface {
    *   title: "Hello World",
    * });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns `{ success: true }` or an error.
    */
   async openIframe({
     droppedAssetId,
@@ -165,87 +168,100 @@ export class Visitor extends User implements VisitorInterface {
       title,
     };
     try {
-      await this.topiaPublicApi().put(
+      const response = await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/open-iframe`,
         params,
         this.requestOptions,
       );
+      return response.data;
     } catch (error) {
       throw this.errorHandler({ error, params, sdkMethod: "Visitor.openIframe" });
     }
   }
 
   /**
-   * @summary
    * Reload an iframe for a visitor currently in a world.
    *
-   * @usage
+   * @category iframes
+   *
+   * @example
    * ```ts
    * await visitor.reloadIframe("droppedAssetId");
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns `{ success: true }` or an error.
    */
   async reloadIframe(droppedAssetId: string): Promise<void | ResponseType> {
     try {
-      await this.topiaPublicApi().put(
+      const response = await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/reload-iframe`,
         { droppedAssetId },
         this.requestOptions,
       );
+      return response.data;
     } catch (error) {
       throw this.errorHandler({ error, params: { droppedAssetId }, sdkMethod: "Visitor.reloadIframe" });
     }
   }
 
   /**
-   * @summary
    * Close an iframe for a visitor currently in a world.
    *
-   * @usage
+   * @category iframes
+   *
+   * @example
    * ```ts
    * await visitor.closeIframe("droppedAssetId");
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns `{ success: true }` or an error.
    */
   async closeIframe(droppedAssetId: string): Promise<void | ResponseType> {
     try {
-      await this.topiaPublicApi().put(
+      const response = await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/close-iframe`,
         { droppedAssetId },
         this.requestOptions,
       );
+      return response.data;
     } catch (error) {
       throw this.errorHandler({ error, params: { droppedAssetId }, sdkMethod: "Visitor.closeIframe" });
     }
   }
 
   /**
-   * @summary
    * Mute and turn video off for a visitor currently in a world.
    *
-   * @usage
+   * @example
    * ```ts
    * await visitor.turnAVOff();
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns `{ success: true }` or an error.
    */
   async turnAVOff(): Promise<void | ResponseType> {
     try {
-      await this.topiaPublicApi().put(
+      const response = await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/turn-av-off`,
         {},
         this.requestOptions,
       );
+      return response.data;
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "Visitor.turnAVOff" });
     }
   }
 
   /**
-   * @summary
    * Get expressions
    *
-   * @usage
+   * @category Expressions
+   *
+   * @example
    * ```ts
    * await visitor.getExpressions({ getUnlockablesOnly: true, });
    * ```
+   * @returns {Promise<ResponseType>} Returns an array of expressions or an error response.
    */
   async getExpressions({
     name,
@@ -266,14 +282,17 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * @summary
    * Grant expression to a visitor by id or name.
    *
-   * @usage
+   * @category Expressions
+   *
+   * @example
    * ```ts
    * await visitor.grantExpression({ id: "exampleExpressionId" });
    * await visitor.grantExpression({ name: "exampleExpressionName" });
    * ```
+   *
+   * @returns {Promise<ResponseType>} Returns `{ success: true }` if the expression was granted successfully or an error response.
    */
   async grantExpression({ id, name }: { id?: string; name?: string }): Promise<ResponseType> {
     if (!id && !name) throw "An expression id or name is required.";
@@ -295,13 +314,16 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * @summary
    * Get all particles available
    *
-   * @usage
+   * @category Particle Effects
+   *
+   * @example
    * ```ts
    * await visitor.getAllParticles();
    * ```
+   *
+   * @returns {Promise<ResponseType>} Returns an array of particles or an error response.
    */
   async getAllParticles(): Promise<ResponseType> {
     try {
@@ -313,13 +335,16 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * @summary
    * Trigger a particle effect on a visitor
    *
-   * @usage
+   * @category Particle Effects
+   *
+   * @example
    * ```ts
    * await visitor.triggerParticle({ name: "Flame" });
    * ```
+   *
+   * @returns {Promise<ResponseType | string>} Returns `{ success: true }` or a message if no particleId is found.
    */
   async triggerParticle({
     id,
@@ -351,13 +376,16 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * @summary
    * Retrieves the data object for a visitor.
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
    * const dataObject = await visitor.fetchDataObject();
    * ```
+   *
+   * @returns {Promise<object | ResponseType>} Returns the data object or an error response.
    */
   async fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> {
     try {
@@ -376,16 +404,24 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * @summary
    * Sets the data object for a visitor.
    *
+   * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
-   * await visitor.setDataObject({
-   *   "exampleKey": "exampleValue",
-   * });
+   * await visitor.setDataObject(
+   *   { itemsCollected: 0 },
+   *   {
+   *     analytics: [{ analyticName: "resets"} ],
+   *     lock: { lockId: `${assetId}-${itemsCollected}-${new Date(Math.round(new Date().getTime() / 10000) * 10000)}` },
+   *   },
+   * );
+   *
+   * const { itemsCollected } = visitor.dataObject;
    * ```
    */
   async setDataObject(
@@ -412,16 +448,22 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * @summary
    * Updates the data object for a visitor.
    *
+   * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
+   * const theme = "exampleTheme";
+   *
    * await visitor.updateDataObject({
-   *   "exampleKey": "exampleValue",
+   *   [`${theme}.itemsCollectedByUser`]: { [dateKey]: { count: 1 }, total: 1 },
    * });
+   *
+   * const { exampleTheme } = visitor.dataObject;
    * ```
    */
   async updateDataObject(
@@ -448,12 +490,14 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * @summary
    * Increments a specific value in the data object for a visitor by the amount specified. Must have valid interactive credentials from a visitor in the world.
    *
+   * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
    * await visitor.incrementDataObjectValue("key", 1);
    * ```
@@ -486,10 +530,9 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * @summary
    * Update analytics for a given public key. Must have valid interactive credentials from a visitor in the world.
    *
-   * @usage
+   * @example
    * ```ts
    * await visitor.updatePublicKeyAnalytics([{ analyticName: "joins", profileId, uniqueKey: profileId, urlSlug }]);
    * ```
@@ -507,10 +550,9 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * @summary
    * Setup signal to visitor
    *
-   * @usage
+   * @example
    * ```ts
    * await visitor.sendSignalToVisitor(iceServers);
    * ```

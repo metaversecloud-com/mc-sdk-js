@@ -2,7 +2,7 @@ import { Topia, Ecosystem } from "controllers";
 import { EcosystemOptionalInterface } from "interfaces";
 
 /**
- * @usage
+ * @example
  * ```ts
  * const Ecosystem = new EcosystemFactory(myTopiaInstance);
  * ```
@@ -15,10 +15,9 @@ export class EcosystemFactory {
   }
 
   /**
-   * @summary
    * Instantiate a new instance of Ecosystem class.
    *
-   * @usage
+   * @example
    * ```
    * const ecosystemInstance = await Ecosystem.create({ credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId }});
    * ```

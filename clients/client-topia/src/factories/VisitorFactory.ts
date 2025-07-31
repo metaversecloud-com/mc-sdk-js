@@ -2,7 +2,7 @@ import { Topia, Visitor } from "controllers";
 import { VisitorOptionalInterface } from "interfaces";
 
 /**
- * @usage
+ * @example
  * ```ts
  * const Visitor = new VisitorFactory(myTopiaInstance);
  * ```
@@ -15,10 +15,9 @@ export class VisitorFactory {
   }
 
   /**
-   * @summary
    * Instantiate a new instance of Visitor class.
    *
-   * @usage
+   * @example
    * ```
    * const visitorInstance = await Visitor.create(id, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
@@ -28,10 +27,9 @@ export class VisitorFactory {
   }
 
   /**
-   * @summary
    * Instantiate a new instance of Visitor class and retrieve all properties.
    *
-   * @usage
+   * @example
    * ```
    * const visitorInstance = await Visitor.get(id, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```

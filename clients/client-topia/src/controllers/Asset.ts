@@ -11,12 +11,11 @@ import { AssetInterface, AssetOptionalInterface } from "interfaces";
 import { ResponseType } from "types";
 
 /**
- * @summary
  * Create an instance of Asset class with a given asset id and optional attributes and session credentials.
  *
- * @usage
+ * @example
  * ```ts
- * await new Asset(topia, "id", {
+ * const asset = await new Asset(topia, "id", {
  *   attributes: { assetName: "My Asset", isPublic: false },
  *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
@@ -33,14 +32,15 @@ export class Asset extends SDKController implements AssetInterface {
   }
 
   /**
-   * @summary
-   * Retrieves platform asset details.
+   * Retrieves platform asset details and assigns response data to the instance.
    *
-   * @usage
+   * @example
    * ```ts
    * await asset.fetchAssetById();
    * const { assetName } = asset;
    * ```
+   *
+   * @returns {Promise<object | ResponseType>} Returns the asset details or an error response.
    */
   async fetchAssetById(): Promise<object | ResponseType> {
     try {
@@ -53,10 +53,9 @@ export class Asset extends SDKController implements AssetInterface {
   }
 
   /**
-   * @summary
    * Updates platform asset details.
    *
-   * @usage
+   * @example
    * ```ts
    * await asset.updateAsset({
    *   assetName: "exampleAsset",

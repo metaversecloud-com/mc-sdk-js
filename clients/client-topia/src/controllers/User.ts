@@ -15,12 +15,11 @@ import { ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
 
 /**
- * @summary
  * Create an instance of User class with optional session credentials.
  *
- * @usage
+ * @example
  * ```ts
- * await new User(topia, {
+ * const user = await new User(topia, {
  *   profileId: 1,
  *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
@@ -65,14 +64,15 @@ export class User extends SDKController implements UserInterface {
     return this.#worldsMap;
   }
 
-  /**
-   * @summary
+  /*
    * Verify user has valid interactive credentials
    *
-   * @usage
+   * @example
    * ```ts
    * await user.checkInteractiveCredentials();
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns `{ success: true }` or an error.
    */
   async checkInteractiveCredentials(): Promise<void | ResponseType> {
     try {
@@ -87,13 +87,16 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
    * Returns all avatars owned by User
    *
-   * @usage
+   * @category Avatars
+   *
+   * @example
    * ```ts
    * const avatars = await user.fetchAvatars();
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the avatars or an error.
    */
   async fetchAvatars(): Promise<void | ResponseType> {
     try {
@@ -108,10 +111,11 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
    * Add a new avatar
    *
-   * @usage
+   * @category Avatars
+   *
+   * @example
    * ```ts
    * const animationMeta = {
    *   "emote": { "loop": false, "x": 0, "y": 0, "hideLoop": true }
@@ -191,10 +195,11 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
    * Update avatar and sprite sheet records and upload files to existing sprite sheet and avatar storage buckets
    *
-   * @usage
+   * @category Avatars
+   *
+   * @example
    * ```ts
    * const animationMeta = {
    *   "emote": { "loop": false, "x": 0, "y": 0, "hideLoop": true }
@@ -274,10 +279,11 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
    * Update avatar and sprite sheet records and upload files to existing sprite sheet and avatar storage buckets
    *
-   * @usage
+   * @category Avatars
+   *
+   * @example
    * ```ts
    * await user.deleteAvatar("exampleAvatarId");
    * ```
@@ -295,10 +301,11 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
    * Returns all assets owned by User when an email address is provided.
    *
-   * @usage
+   * @category Assets
+   *
+   * @example
    * ```ts
    * await user.fetchAssets();
    * const userAssets = user.assets;
@@ -322,13 +329,16 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
    * Returns all platform assets.
    *
-   * @usage
+   * @category Assets
+   *
+   * @example
    * ```ts
    * const assets = await user.fetchPlatformAssets();
    * ```
+   *
+   * @returns {Promise<object | ResponseType>} Returns the platform assets or an error response.
    */
   async fetchPlatformAssets(): Promise<object | ResponseType> {
     try {
@@ -340,10 +350,11 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
    * Returns all scenes owned by User.
    *
-   * @usage
+   * @category Scenes
+   *
+   * @example
    * ```ts
    * await user.fetchScenes();
    * const userScenes = user.scenes;
@@ -367,18 +378,17 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
-   * Retrieves all worlds owned by user with matching API Key,
-   * creates a new World object for each,
-   * and creates new map of Worlds accessible via user.worlds.
+   * Retrieves all worlds owned by user with matching API Key, creates a new World object for each, and creates new map of Worlds accessible via user.worlds.
    *
-   * @usage
+   * @category Worlds
+   *
+   * @example
    * ```ts
    * await user.fetchWorldsByKey();
    * const userWorlds = user.worlds;
    * ```
    *
-   * @result
+   * @returns
    * ```ts
    * { urlSlug: new World({ apiKey, worldArgs, urlSlug }) }
    * ```
@@ -401,12 +411,11 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
-   * Retrieves all worlds a user with matching API Key is an admin in,
-   * creates a new World object for each,
-   * and creates new map of Worlds accessible via user.adminWorlds.
+   * Retrieves all worlds a user with matching API Key is an admin in, creates a new World object for each, and creates new map of Worlds accessible via user.adminWorlds.
    *
-   * @usage
+   * @category Worlds
+   *
+   * @example
    * ```ts
    * await user.fetchAdminWorldsByKey();
    * const adminWorlds = user.adminWorlds;
@@ -429,14 +438,17 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
    * Retrieves ids of all dropped assets in all worlds with a matching interactivePublicKey.
    *
-   * @usage
+   * @category Dropped Assets
+   *
+   * @example
    * ```ts
    * await user.fetchInteractiveWorldsByKey("interactivePublicKeyExample");
    * const interactiveWorlds = user.interactiveWorlds;
    * ```
+   *
+   * @returns {Promise<object | ResponseType>} Returns the `urlSlugs` of worlds where the Public Key is found or an error response.
    */
   async fetchInteractiveWorldsByKey(interactivePublicKey: string): Promise<object | ResponseType> {
     try {
@@ -451,14 +463,15 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
    * Send an email
    *
-   * @usage
+   * @example
    * ```ts
    * const html = `<p><b>Hello World!</b></p><p>This email is being sent from via SDK.</p>`
    * await user.sendEmail({ html, subject: "Example", to: "example@email.io" });
    * ```
+   *
+   * @returns {Promise<object | ResponseType>} Returns `{ success: true }` if the email is sent successfully or an error response.
    */
   async sendEmail({
     html,
@@ -483,13 +496,16 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
    * Get expressions
    *
-   * @usage
+   * @category Expressions
+   *
+   * @example
    * ```ts
    * await user.getExpressions({ getUnlockablesOnly: true, });
    * ```
+   *
+   * @returns {Promise<ResponseType>} Returns an array of expressions or an error response.
    */
   async getExpressions({
     name,
@@ -510,13 +526,16 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
    * Retrieves the data object for a user.
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
    * const dataObject = await user.fetchDataObject();
    * ```
+   *
+   * @returns {Promise<object | ResponseType>} Returns the data object or an error response.
    */
   async fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> {
     try {
@@ -536,16 +555,24 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
    * Sets the data object for a user.
    *
+   * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
-   * await user.setDataObject({
-   *   "exampleKey": "exampleValue",
-   * });
+   * await user.setDataObject(
+   *   { itemsCollected: 0 },
+   *   {
+   *     analytics: [{ analyticName: "resets"} ],
+   *     lock: { lockId: `${assetId}-${itemsCollected}-${new Date(Math.round(new Date().getTime() / 10000) * 10000)}` },
+   *   },
+   * );
+   *
+   * const { itemsCollected } = user.dataObject;
    * ```
    */
   async setDataObject(
@@ -575,16 +602,22 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
    * Updates the data object for a user.
    *
+   * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
+   * const theme = "exampleTheme";
+   *
    * await user.updateDataObject({
-   *   "exampleKey": "exampleValue",
+   *   [`${theme}.itemsCollectedByUser`]: { [dateKey]: { count: 1 }, total: 1 },
    * });
+   *
+   * const { exampleTheme } = user.dataObject;
    * ```
    */
   async updateDataObject(
@@ -613,12 +646,14 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * @summary
    * Increments a specific value in the data object for a user by the amount specified. Must have valid interactive credentials from a visitor in the world.
    *
+   * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
    * await user.incrementDataObjectValue("key", 1);
    * ```

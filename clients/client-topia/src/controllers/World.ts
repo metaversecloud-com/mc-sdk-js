@@ -22,12 +22,11 @@ import { AnalyticType } from "types/AnalyticTypes";
 import { removeUndefined } from "utils";
 
 /**
- * @summary
  * Create an instance of World class with a given url slug and optional attributes and session credentials.
  *
- * @usage
+ * @example
  * ```ts
- * await new World(topia, "exampleWorld", {
+ * const world = await new World(topia, "exampleWorld", {
  *   attributes: { name: "Example World" },
  *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
@@ -54,10 +53,9 @@ export class World extends SDKController implements WorldInterface {
 
   //////// world details
   /**
-   * @summary
    * Retrieves details of a world.
    *
-   * @usage
+   * @example
    * ```ts
    * await world.fetchDetails();
    * const { name } = world;
@@ -76,10 +74,9 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
-   * @summary
    * Update details of a world.
    *
-   * @usage
+   * @example
    * ```ts
    * await world.updateDetails({
    *   controls: {
@@ -95,6 +92,8 @@ export class World extends SDKController implements WorldInterface {
    *   spawnPosition: { x: 100, y: 100 },
    *   width: 2000
    * });
+   *
+   * const { name, description } = world;
    * ```
    */
   async updateDetails({
@@ -125,10 +124,9 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
-   * @summary
    * Set close world settings
    *
-   * @usage
+   * @example
    * ```ts
    * await world.updateCloseWorldSettings({
    *   controls: {
@@ -145,6 +143,8 @@ export class World extends SDKController implements WorldInterface {
    *   width: 2000
    * });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns `{ success: true }` or an error.
    */
   async updateCloseWorldSettings({
     closeWorldDescription,
@@ -158,11 +158,12 @@ export class World extends SDKController implements WorldInterface {
       isWorldClosed,
     };
     try {
-      return await this.topiaPublicApi().put(
+      const response = await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/set-close-world-settings`,
         params,
         this.requestOptions,
       );
+      return response.data;
     } catch (error) {
       throw this.errorHandler({ error, params, sdkMethod: "World.updateCloseWorldSettings" });
     }
@@ -170,10 +171,11 @@ export class World extends SDKController implements WorldInterface {
 
   ////////// dropped assets
   /**
-   * @summary
    * Retrieve all assets dropped in a world.
    *
-   * @usage
+   * @category Dropped Assets
+   *
+   * @example
    * ```ts
    * await world.fetchDroppedAssets();
    * const assets = world.droppedAssets;
@@ -200,13 +202,16 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
-   * @summary
    * Retrieve all assets dropped in a world matching uniqueName.
    *
-   * @usage
+   * @category Dropped Assets
+   *
+   * @example
    * ```ts
-   * const droppedAssets = await world.fetchDroppedAssetsWithUniqueName({u niqueName: "exampleUniqueName", isPartial: true });
+   * const droppedAssets = await world.fetchDroppedAssetsWithUniqueName({ uniqueName: "exampleUniqueName", isPartial: true });
    * ```
+   *
+   * @returns {Promise<DroppedAsset[]>} Returns an array of DroppedAsset instances.
    */
   async fetchDroppedAssetsWithUniqueName({
     uniqueName,
@@ -244,57 +249,19 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
-   * @summary
-   * Retrieve all landmark zone assets dropped in a world.
-   *
-   * @usage
-   * ```ts
-   * const zones = await world.fetchLandmarkZones("optionalLandmarkZoneName", "optionalSceneDropIdExample");
-   * ```
-   */
-  async fetchLandmarkZones(landmarkZoneName?: string, sceneDropId?: string): Promise<DroppedAsset[]> {
-    try {
-      let queryParams = "";
-      if (landmarkZoneName) {
-        queryParams = `?landmarkZoneName=${landmarkZoneName}`;
-        if (sceneDropId) queryParams += `&sceneDropId=${sceneDropId}`;
-      } else if (sceneDropId) {
-        queryParams = `?sceneDropId=${sceneDropId}`;
-      }
-      const response: AxiosResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/landmark-zones${queryParams}`,
-        this.requestOptions,
-      );
-      const droppedAssets: DroppedAsset[] = [];
-      for (const asset of response.data.assets) {
-        droppedAssets.push(
-          new DroppedAsset(this.topia, asset.id, this.urlSlug, {
-            attributes: asset,
-            credentials: this.credentials,
-          }),
-        );
-      }
-      return droppedAssets;
-    } catch (error) {
-      throw this.errorHandler({
-        error,
-        params: { landmarkZoneName, sceneDropId },
-        sdkMethod: "World.fetchLandmarkZones",
-      });
-    }
-  }
-
-  /**
-   * @summary
    * Retrieve all assets dropped in a world matching sceneDropId.
    *
-   * @usage
+   * @category Dropped Assets
+   *
+   * @example
    * ```ts
    * const droppedAssets = await world.fetchDroppedAssetsBySceneDropId({
    *   sceneDropId: "sceneDropIdExample",
    *   uniqueName: "optionalUniqueNameExample",
    * });
    * ```
+   *
+   * @returns {Promise<DroppedAsset[]>} Returns an array of DroppedAsset instances.
    */
   async fetchDroppedAssetsBySceneDropId({
     sceneDropId,
@@ -332,10 +299,11 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
-   * @summary
    * Update multiple custom text dropped assets with a single style while preserving text for specified dropped assets only.
    *
-   * @usage
+   * @category Dropped Assets
+   *
+   * @example
    * ```ts
    * const droppedAssetsToUpdate = [world.droppedAssets["6"], world.droppedAssets["12"]];
    * const style = {
@@ -348,7 +316,7 @@ export class World extends SDKController implements WorldInterface {
    * await world.updateCustomText(droppedAssetsToUpdate, style);
    * ```
    *
-   * @result
+   * @returns
    * Updates each DroppedAsset instance and world.droppedAssets map.
    */
   async updateCustomTextDroppedAssets(droppedAssetsToUpdate: Array<DroppedAsset>, style: object): Promise<object> {
@@ -360,19 +328,62 @@ export class World extends SDKController implements WorldInterface {
     return outcomes;
   }
 
+  /**
+   * Retrieve all landmark zone assets dropped in a world.
+   *
+   * @category Dropped Assets
+   *
+   * @example
+   * ```ts
+   * const zones = await world.fetchLandmarkZones("optionalLandmarkZoneName", "optionalSceneDropIdExample");
+   * ```
+   *
+   * @returns {Promise<DroppedAsset[]>} Returns an array of DroppedAsset instances.
+   */
+  async fetchLandmarkZones(landmarkZoneName?: string, sceneDropId?: string): Promise<DroppedAsset[]> {
+    try {
+      let queryParams = "";
+      if (landmarkZoneName) {
+        queryParams = `?landmarkZoneName=${landmarkZoneName}`;
+        if (sceneDropId) queryParams += `&sceneDropId=${sceneDropId}`;
+      } else if (sceneDropId) {
+        queryParams = `?sceneDropId=${sceneDropId}`;
+      }
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/landmark-zones${queryParams}`,
+        this.requestOptions,
+      );
+      const droppedAssets: DroppedAsset[] = [];
+      for (const asset of response.data.assets) {
+        droppedAssets.push(
+          new DroppedAsset(this.topia, asset.id, this.urlSlug, {
+            attributes: asset,
+            credentials: this.credentials,
+          }),
+        );
+      }
+      return droppedAssets;
+    } catch (error) {
+      throw this.errorHandler({
+        error,
+        params: { landmarkZoneName, sceneDropId },
+        sdkMethod: "World.fetchLandmarkZones",
+      });
+    }
+  }
+
   // scenes
   /**
    * @deprecated Use {@link fetchScenes} instead.
    *
-   * @summary
    * Fetch a list of all scene drop ids in a world that include at least one asset with an interactivePublicKey
    *
-   * @usage
+   * @example
    * ```ts
    * await world.fetchSceneDropIds();
    * ```
    *
-   * @result
+   * @returns
    * ```ts
    * { sceneDropIds: [] }
    * ```
@@ -391,15 +402,16 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
-   * @summary
    * Fetch a list of all scene drop ids and dropped assets in a world
    *
-   * @usage
+   * @category Scenes
+   *
+   * @example
    * ```ts
    * await world.fetchScenes();
    * ```
    *
-   * @result
+   * @returns
    * ```ts
    * { "scenes": {
    *     "sceneDropId_1": {
@@ -432,10 +444,11 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
-   * @summary
    * Drops a scene in a world and returns sceneDropId.
    *
-   * @usage
+   * @category Scenes
+   *
+   * @example
    * ```ts
    * await world.dropScene({
    *   "sceneId": "string",
@@ -447,7 +460,7 @@ export class World extends SDKController implements WorldInterface {
    * });
    * ```
    *
-   * @result
+   * @returns
    * ```ts
    * { sceneDropId: sceneId-timestamp, success: true }
    * ```
@@ -475,10 +488,11 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
-   * @summary
    * Replace the current scene of a world.
    *
-   * @usage
+   * @category Scenes
+   *
+   * @example
    * ```ts
    * const droppedAssetsToUpdate = [world.droppedAssets["6"], world.droppedAssets["12"]]
    * const style = {
@@ -490,6 +504,8 @@ export class World extends SDKController implements WorldInterface {
    * }
    * await world.replaceScene(SCENE_ID);
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns `{ success: true }` or an error.
    */
   async replaceScene(sceneId: string): Promise<void | ResponseType> {
     try {
@@ -500,12 +516,15 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
-   * @summary
    * Get all particles available
    *
-   * @usage
+   * @category Particles
+   *
+   * @example
    * ```ts
    * await world.getAllParticles();
+   *
+   * @returns {Promise<ResponseType>} Returns an array of particles or an error response.
    * ```
    */
   async getAllParticles(): Promise<object | ResponseType> {
@@ -518,13 +537,16 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
-   * @summary
    * Trigger a particle effect at a position in the world
    *
-   * @usage
+   * @category Particles
+   *
+   * @example
    * ```ts
    * await world.triggerParticle({ name: "Flame" });
    * ```
+   *
+   * @returns {Promise<ResponseType | string>} Returns `{ success: true }` or a message if no particleId is found.
    */
   async triggerParticle({
     id,
@@ -558,14 +580,15 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
-   * @summary
    * Add an activity to a world
    * excludeFromNotification is an array of visitorIds to exclude from the notification
    *
-   * @usage
+   * @example
    * ```ts
    * await world.triggerActivity({ type: "GAME_ON", assetId: "abc123" });
    * ```
+   *
+   * @returns {Promise<ResponseType | string>} Returns the `activityId` or an error response.
    */
   async triggerActivity({
     type,
@@ -590,10 +613,9 @@ export class World extends SDKController implements WorldInterface {
   }
 
   /**
-   * @summary
    * Display a message via a toast to all visitors currently in a world.
    *
-   * @usage
+   * @example
    * ```ts
    * await world.fireToast({
    *   groupId: "custom-message",
@@ -601,6 +623,8 @@ export class World extends SDKController implements WorldInterface {
    *   text: "Thank you for participating!",
    * });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns `{ success: true }` or an error.
    */
   async fireToast({ groupId, title, text }: FireToastInterface): Promise<void | ResponseType> {
     const params = {
@@ -609,7 +633,12 @@ export class World extends SDKController implements WorldInterface {
       text,
     };
     try {
-      await this.topiaPublicApi().put(`/world/${this.urlSlug}/fire-toast`, params, this.requestOptions);
+      const response = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/fire-toast`,
+        params,
+        this.requestOptions,
+      );
+      return response.data;
     } catch (error) {
       throw this.errorHandler({ error, params, sdkMethod: "Visitor.fireToast" });
     }
@@ -617,10 +646,11 @@ export class World extends SDKController implements WorldInterface {
 
   ////////// data objects
   /**
-   * @summary
    * Retrieves the data object for a world. Must have valid interactive credentials from a visitor in the world.
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
    * await world.fetchDataObject();
    * const { dataObject } = world;
@@ -642,17 +672,23 @@ export class World extends SDKController implements WorldInterface {
   };
 
   /**
-   * @summary
    * Sets the data object for a user. Must have valid interactive credentials from a visitor in the world.
    *
+   * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   * 
+   * @example
    * ```ts
-   * await world.setDataObject({
-   *   "exampleKey": "exampleValue",
-   * });
-   * const { dataObject } = world;
+    await world.setDataObject(
+      {
+        ...defaultGameData,
+        keyAssetId: droppedAsset.id,
+      },
+      { lock: { lock: { lockId: `${keyAssetId}-${new Date(Math.round(new Date().getTime() / 10000) * 10000)}` }, releaseLock: true } },
+    );
+   * const { profileMapper } = world.dataObject;
    * ```
    */
   setDataObject = async (
@@ -679,17 +715,20 @@ export class World extends SDKController implements WorldInterface {
   };
 
   /**
-   * @summary
    * Updates the data object for a world. Must have valid interactive credentials from a visitor in the world.
    *
+   * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
    * await world.updateDataObject({
-   *   "exampleKey": "exampleValue",
+   *   [`keyAssets.${keyAssetId}.itemsCollectedByUser.${profileId}`]: { [dateKey]: { count: 1 }, total: 1 },
+   *   [`profileMapper.${profileId}`]: username,
    * });
-   * const { dataObject } = world;
+   * const { profileMapper } = world.dataObject;
    * ```
    */
   updateDataObject = async (
@@ -716,14 +755,16 @@ export class World extends SDKController implements WorldInterface {
   };
 
   /**
-   * @summary
    * Increments a specific value in the data object for a world by the amount specified. Must have valid interactive credentials from a visitor in the world.
    *
+   * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
-   * await world.incrementDataObjectValue("key", 1);
+   * await world.incrementDataObjectValue([`keyAssets.${keyAssetId}.totalItemsCollected.count`], 1);
    * ```
    */
   async incrementDataObjectValue(
@@ -755,10 +796,11 @@ export class World extends SDKController implements WorldInterface {
 
   ////////// webhooks
   /**
-   * @summary
    * Retrieve all webhooks in a world.
    *
-   * @usage
+   * @category Webhooks
+   *
+   * @example
    * ```ts
    * await world.fetchWebhooks();
    * const webhooks = world.webhooks;
@@ -778,10 +820,11 @@ export class World extends SDKController implements WorldInterface {
 
   ////////// analytics
   /**
-   * @summary
    * Retrieve world analytics by day, week, month, quarter, or year
    *
-   * @usage
+   * @category Analytics
+   *
+   * @example
    * ```ts
    * const analytics = await world.fetchWorldAnalytics({
    *   periodType: "week",

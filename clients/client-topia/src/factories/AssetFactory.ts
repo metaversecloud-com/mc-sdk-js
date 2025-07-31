@@ -4,7 +4,7 @@ import { AssetOptionalInterface } from "interfaces";
 import { AssetType } from "types";
 
 /**
- * @usage
+ * @example
  * ```ts
  * const Asset = new AssetFactory(myTopiaInstance);
  * ```
@@ -15,10 +15,9 @@ export class AssetFactory extends SDKController {
   }
 
   /**
-   * @summary
    * Instantiate a new instance of Asset class.
    *
-   * @usage
+   * @example
    * ```
    * const assetInstance = await Asset.create(id, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
@@ -28,10 +27,9 @@ export class AssetFactory extends SDKController {
   }
 
   /**
-   * @summary
    * Upload a new Asset and return a new instance of Asset class.
    *
-   * @usage
+   * @example
    * ```
    * const assetPayload = {
    *   assetName: "exampleAssetName"

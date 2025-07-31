@@ -2,7 +2,7 @@ import { Topia, WebRTCConnector } from "controllers";
 import { WebRTCConnectorOptionalInterface } from "interfaces";
 
 /**
- * @usage
+ * @example
  * ```ts
  * const WebRTCConnector = new WebRTCConnectorFactory(myTopiaInstance);
  * ```
@@ -15,10 +15,9 @@ export class WebRTCConnectorFactory {
   }
 
   /**
-   * @summary
    * Instantiate a new instance of WebRTCConnector class.
    *
-   * @usage
+   * @example
    * ```
    * const webRTCInstance = await WebRTCConnector.create({ credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId }, twilioConfig: {} });
    * ```

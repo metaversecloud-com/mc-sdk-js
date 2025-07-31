@@ -12,12 +12,11 @@ import { ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
 
 /**
- * @summary
  * Create an instance of Ecosystem class with optional session credentials
  *
- * @usage
+ * @example
  * ```ts
- * await new Ecosystem(topia, {
+ * const ecosystem =await new Ecosystem(topia, {
  *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
  * ```
@@ -31,13 +30,16 @@ export class Ecosystem extends SDKController {
   }
 
   /**
-   * @summary
    * Retrieves the data object for a Topia ecosystem. Requires canUpdateEcosystemDataObjects permission to be set to true for the public key.
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
    * const dataObject = await ecosystem.fetchDataObject("exampleAppPublicKey", "exampleAppPublicKeyJWT");
    * ```
+   *
+   * @returns {Promise<object | ResponseType>} Returns the data object or an error response.
    */
   async fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> {
     try {
@@ -55,17 +57,22 @@ export class Ecosystem extends SDKController {
   }
 
   /**
-   * @summary
    * Sets the data object for a Topia ecosystem.
+   *
+   * @remarks
+   * This method also allows you to set a data object on behalf of another Public Key. It requires `canUpdateEcosystemDataObjects` permission to be set to true for the Public Key.
    *
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
    * await ecosystem.setDataObject({ "exampleKey": "exampleValue" }, {
    *   sharedAppPublicKey: "exampleAppPublicKey",
    *   sharedAppJWT: "exampleAppPublicKeyJWT",}
    * });
+   * const { exampleKey } = ecosystem.dataObject;
    * ```
    */
   async setDataObject(
@@ -93,17 +100,28 @@ export class Ecosystem extends SDKController {
   }
 
   /**
-   * @summary
    * Updates the data object for a Topia ecosystem.
+   *
+   * @remarks
+   * This method also allows you to update a data object on behalf of another Public Key. It requires `canUpdateEcosystemDataObjects` permission to be set to true for the Public Key.
    *
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
-   * await ecosystem.updateDataObject({ "exampleKey": "exampleValue" }, {
-   *   sharedAppPublicKey: "exampleAppPublicKey",
-   *   sharedAppJWT: "exampleAppPublicKeyJWT",}
+   * await ecosystem.updateDataObject({
+   *    [`profiles.${profileId}.itemsCollectedByUser`]: { [dateKey]: { count: 1 }, total: 1 },
+   *    [`profileMapper.${profileId}`]: username,
+   *  }, {
+   *    sharedAppPublicKey: "exampleAppPublicKey",
+   *    sharedAppJWT: "exampleAppPublicKeyJWT",
+   *    analytics: [{ analyticName: "itemCollected", profileId, uniqueKey: profileId, urlSlug } ],
+   *    lock: { lockId: `${assetId}-${resetCount}-${new Date(Math.round(new Date().getTime() / 10000) * 10000)}` },
+   *  }
    * });
+   * const { exampleKey } = ecosystem.dataObject;
    * ```
    */
   async updateDataObject(
@@ -130,12 +148,16 @@ export class Ecosystem extends SDKController {
   }
 
   /**
-   * @summary
    * Increments a specific value in the data object for a Topia ecosystem by the amount specified. Must have valid interactive credentials from a visitor in the world.
+   *
+   * @remarks
+   * This method also allows you to increment a data object value on behalf of another Public Key. It requires `canUpdateEcosystemDataObjects` permission to be set to true for the Public Key.
    *
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
    * await ecosystem.incrementDataObjectValue("key", 1, {
    *   sharedAppPublicKey: "exampleAppPublicKey",

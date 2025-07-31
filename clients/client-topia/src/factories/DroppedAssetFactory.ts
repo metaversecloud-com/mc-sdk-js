@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { InteractiveCredentials } from "types";
 
 /**
- * @usage
+ * @example
  * ```ts
  * const DroppedAsset = new DroppedAssetFactory(myTopiaInstance);
  * ```
@@ -16,10 +16,9 @@ export class DroppedAssetFactory extends SDKController {
   }
 
   /**
-   * @summary
    * Instantiate a new instance of DroppedAsset class.
    *
-   * @usage
+   * @example
    * ```
    * const droppedAssetInstance = await DroppedAsset.create(assetId, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
@@ -29,10 +28,9 @@ export class DroppedAssetFactory extends SDKController {
   }
 
   /**
-   * @summary
    * Instantiate a new instance of DroppedAsset class and retrieve all properties.
    *
-   * @usage
+   * @example
    * ```
    * const droppedAssetInstance = await DroppedAsset.get(assetId, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
@@ -44,16 +42,14 @@ export class DroppedAssetFactory extends SDKController {
   }
 
   /**
-   * @summary
    * Searches dropped assets within a world by a provide `uniqueName`. If a single match is found, a new instance of DroppedAsset class is returned all properties.
    *
-   * @usage
+   * This method leverages the handleGetDroppedAssetByUniqueName endpoint in the Public API and assumes there is exactly one dropped asset with matching uniqueName for the given urlSlug.
+   *
+   * @example
    * ```
    * const droppedAssetInstance = await DroppedAsset.getWithUniqueName("exampleUniqueName", urlSlug, interactiveSecret, credentials);
    * ```
-   *
-   * @notes
-   * This method leverages the handleGetDroppedAssetByUniqueName endpoint in the Public API and assumes there is exactly one dropped asset with matching uniqueName for the given urlSlug.
    */
   async getWithUniqueName(
     uniqueName: string,
@@ -83,10 +79,9 @@ export class DroppedAssetFactory extends SDKController {
   }
 
   /**
-   * @summary
    * Drops an asset in a world and returns a new instance of DroppedAsset class with all properties.
    *
-   * @usage
+   * @example
    * ```
    * const assetInstance = await Asset.create(id, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * const droppedAssetInstance = await DroppedAsset.get(assetInstance, {
