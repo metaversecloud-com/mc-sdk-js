@@ -2,7 +2,7 @@ import { Scene, Topia } from "controllers";
 import { SceneOptionalInterface } from "interfaces";
 
 /**
- * @usage
+ * @example
  * ```ts
  * const Scene = new SceneFactory(myTopiaInstance);
  * ```
@@ -16,26 +16,28 @@ export class SceneFactory {
   }
 
   /**
-   * @summary
    * Instantiate a new instance of Scene class.
    *
-   * @usage
+   * @example
    * ```
    * const sceneInstance = await Scene.create(id, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
+   *
+   * @returns {Scene} Returns a new Scene object.
    */
   create(id: string, options?: SceneOptionalInterface): Scene {
     return new Scene(this.topia, id, options);
   }
 
   /**
-   * @summary
    * Instantiate a new instance of Scene class and retrieve all properties.
    *
-   * @usage
+   * @example
    * ```
    * const sceneInstance = await Scene.get(id, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
+   *
+   * @returns {Promise<Scene>} Returns a new Scene object with all properties.
    */
   async get(id: string, options?: SceneOptionalInterface): Promise<Scene> {
     const scene = await new Scene(this.topia, id, options);

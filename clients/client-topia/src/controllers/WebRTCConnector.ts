@@ -11,12 +11,11 @@ import { WebRTCConnectorInterface, WebRTCConnectorOptionalInterface } from "inte
 import { ResponseType } from "types";
 
 /**
- * @summary
  * Create an instance of WebRTCConnector class with optional session credentials.
  *
- * @usage
+ * @example
  * ```ts
- * await new WebRTCConnector(topia, {
+ * const webRTC = await new WebRTCConnector(topia, {
  *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
  * ```
@@ -36,10 +35,9 @@ export class WebRTCConnector extends SDKController implements WebRTCConnectorInt
   }
 
   /**
-   * @summary
    * Get twilio
    *
-   * @usage
+   * @example
    * ```ts
    * await webRTCConnector.getTwilioConfig();
    * ```

@@ -2,7 +2,7 @@ import { Topia, WorldActivity } from "controllers";
 import { WorldOptionalInterface } from "interfaces";
 
 /**
- * @usage
+ * @example
  * ```ts
  * const WorldActivity = new WorldActivityFactory(myTopiaInstance);
  * ```
@@ -15,13 +15,14 @@ export class WorldActivityFactory {
   }
 
   /**
-   * @summary
    * Instantiate a new instance of WorldActivity class.
    *
-   * @usage
+   * @example
    * ```
    * const worldActivityInstance = await WorldActivity.create(urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
    * ```
+   *
+   * @returns {WorldActivity} Returns a new WorldActivity object.
    */
   create(urlSlug: string, options?: WorldOptionalInterface): WorldActivity {
     return new WorldActivity(this.topia, urlSlug, options);

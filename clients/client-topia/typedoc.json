@@ -14,7 +14,12 @@
     "NPM Package": "https://www.npmjs.com/package/@rtsdk/topia",
     "Demo": "https://topia.io/sdk-demos"
   },
+  "options": {
+    "navigation": {
+      "includeCategories": true
+    }
+  },
   "out": "../../docs",
-  "readme": "https://www.npmjs.com/package/@rtsdk/topia",
+  "readme": "./README.md",
   "tsconfig": "./tsconfig.json"
 }

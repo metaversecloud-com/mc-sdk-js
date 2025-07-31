@@ -26,7 +26,7 @@
     "rollup-plugin-license": "^3.0.1",
     "rollup-plugin-typescript2": "^0.34.1",
     "ts-jest": "^29.0.3",
-    "typedoc": "^0.23.23",
+    "typedoc": "^0.28.8",
     "typescript": "^5.0.4",
     "yalc": "^1.0.0-pre.53"
   },
@@ -60,5 +60,5 @@
     "yalc-push": "yarn build && yalc publish --push --dev --no-scripts"
   },
   "type": "module",
-  "version": "0.17.01"
+  "version": "0.17.02"
 }

@@ -24,12 +24,11 @@ import { AnalyticType } from "types/AnalyticTypes";
 import { removeUndefined } from "utils";
 
 /**
- * @summary
  * Create an instance of Dropped Asset class with a given dropped asset id, url slug, and optional attributes and session credentials.
  *
- * @usage
+ * @example
  * ```ts
- * await new DroppedAsset(topia, "1giFZb0sQ3X27L7uGyQX", "example", {
+ * const droppedAsset = await new DroppedAsset(topia, "1giFZb0sQ3X27L7uGyQX", "example", {
  *   attributes: { text: "My Dropped Asset" },
  *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
@@ -59,10 +58,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
-   * Retrieves dropped asset details.
+   * Retrieves dropped asset details and assigns response data to the instance.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.fetchDroppedAssetById();
    * const { assetName } = droppedAsset;
@@ -83,10 +81,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
-   * Updates dropped asset details.
+   * Updates dropped asset details and assigns the response data to the instance. Requires Public Key to have the `canUpdateDroppedAssets` permission.
    *
-   * @usage
+   * @example
    * ```ts
    * const payload = {
    * assetScale: 1,
@@ -192,10 +189,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
-   * Delete dropped asset.
+   * Deletes the dropped asset (removes it from the world).
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.deleteDroppedAsset();
    * ```
@@ -209,13 +205,16 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Retrieves the data object for a dropped asset.
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
    * const dataObject = await droppedAsset.fetchDataObject();
    * ```
+   *
+   * @returns {Promise<object | ResponseType>} Returns the data object or an error response.
    */
   async fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> {
     try {
@@ -233,16 +232,24 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
-   * Sets the data object for a dropped asset.
+   * Sets the data object for a dropped asset and assigns the response data to the instance.
    *
+   * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
-   * await droppedAsset.setDataObject({
-   *   "exampleKey": "exampleValue",
-   * });
+   * await droppedAsset.setDataObject(
+   *   { resetCount: 0 },
+   *   {
+   *     analytics: [{ analyticName: "resets"} ],
+   *     lock: { lockId: `${assetId}-${resetCount}-${new Date(Math.round(new Date().getTime() / 10000) * 10000)}` },
+   *   },
+   * );
+   *
+   * const { resetCount } = droppedAsset.dataObject;
    * ```
    */
   async setDataObject(
@@ -270,16 +277,21 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
-   * Updates the data object for a dropped asset.
+   * Updates the data object for a dropped asset and assigns the response data to the instance.
    *
+   * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
    * await droppedAsset.updateDataObject({
-   *   "exampleKey": "exampleValue",
+   *   [`profiles.${profileId}.itemsCollectedByUser`]: { [dateKey]: { count: 1 }, total: 1 },
+   *   [`profileMapper.${profileId}`]: username,
    * });
+   *
+   * const { profiles } = droppedAsset.dataObject;
    * ```
    */
   async updateDataObject(
@@ -307,12 +319,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Increments a specific value in the data object for a dropped asset by the amount specified. Must have valid interactive credentials from a visitor in the world.
    *
+   * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @usage
+   * @category Data Objects
+   *
+   * @example
    * ```ts
    * await droppedAsset.incrementDataObjectValue("key", 1);
    * ```
@@ -344,12 +358,10 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     }
   }
 
-  // update dropped assets
   /**
-   * @summary
    * Updates broadcast options for a dropped asset.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.updateBroadcast({
    *   assetBroadcast: true,
@@ -357,6 +369,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *   broadcasterEmail: "example@email.com"
    * });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   updateBroadcast({
     assetBroadcast,
@@ -372,10 +386,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Updates click options for a dropped asset.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.updateClickType({
    *   "clickType": "portal",
@@ -390,6 +403,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *   "portalName": "community"
    * });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   updateClickType({
     clickType = DroppedAssetClickType.LINK,
@@ -421,10 +436,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Adds an array of links to an asset. Maximum is 20 links.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.setClickableLinkMulti({
    *   clickableLinks: [
@@ -443,6 +457,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *   ],
    * });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   setClickableLinkMulti({ clickableLinks }: SetClickableLinkMultiInterface): Promise<void | ResponseType> {
     const params = {
@@ -457,11 +473,12 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Updates multiple clickable links for a dropped asset.
+   *
+   * @remarks
    * Pass in an 'existingLinkId' to edit an existing link.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.updateClickableLinkMulti({
    *   clickableLink: "https://example.com",
@@ -471,6 +488,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *   existingLinkId: "abcd"
    * });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   updateClickableLinkMulti({
     clickableLink,
@@ -497,13 +516,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Removes a clickable link from a dropped asset.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.removeClickableLink({ linkId: "link-id" });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   removeClickableLink({ linkId }: RemoveClickableLinkInterface): Promise<void | ResponseType> {
     const params = {
@@ -517,10 +537,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Updates text and style of a dropped asset.
    *
-   * @usage
+   * @example
    * ```ts
    * const style = {
    *   "textColor": "#abc123",
@@ -531,6 +550,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * };
    * await droppedAsset.updateCustomTextAsset(style, "hello world");
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   updateCustomTextAsset(
     style: object | undefined | null,
@@ -545,10 +566,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Updates media options for a dropped asset.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.updateMediaType({
    *   "mediaType": "link",
@@ -561,6 +581,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *   "mediaName": "string"
    * });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   updateMediaType({
     audioRadius,
@@ -590,13 +612,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Updates mute zone options for a dropped asset.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.updateMuteZone(true);
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   updateMuteZone(isMutezone: boolean): Promise<void | ResponseType> {
     try {
@@ -607,10 +630,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Updates landmark zone options for a dropped asset.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.updateLandmarkZone({
    *  isLandmarkZoneEnabled: true,
@@ -618,6 +640,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *  landmarkZoneIsVisible: true,
    *});
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   updateLandmarkZone({
     isLandmarkZoneEnabled,
@@ -637,13 +661,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Updates webhook zone options for a dropped asset.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.updateWebhookZone(true);
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   updateWebhookZone(isWebhookZoneEnabled: boolean): Promise<void | ResponseType> {
     try {
@@ -654,13 +679,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Moves a dropped asset to specified coordinates.
    *
-   * @usage
+   * @example
    * ```ts
-   * await droppedAsset.updatePosition(100,200);
+   * await droppedAsset.updatePosition(100, 200, 100);
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   updatePosition(x: number, y: number, yOrderAdjust?: number): Promise<void | ResponseType> {
     const params = { x, y, yOrderAdjust };
@@ -672,10 +698,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Updates private zone options for a dropped asset.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.updatePrivateZone({
    *   "isPrivateZone": false,
@@ -683,6 +708,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *   "privateZoneUserCap": 10
    * });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   updatePrivateZone({
     isPrivateZone,
@@ -698,13 +725,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Updates the size of a dropped asset.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.assetScale(.5);
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   updateScale(assetScale: number): Promise<void | ResponseType> {
     try {
@@ -715,13 +743,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Flip an dropped asset.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.flip(.5);
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   flip(): Promise<void | ResponseType> {
     try {
@@ -732,13 +761,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Change or remove media embedded in a dropped asset.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.updateUploadedMediaSelected("LVWyxwNxI96eLjnXWwYO");
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   updateUploadedMediaSelected(mediaId: string): Promise<void | ResponseType> {
     try {
@@ -749,13 +779,14 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Change or remove top and bottom layers of a dropped asset.
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.updateWebImageLayers("","https://www.shutterstock.com/image-vector/colorful-illustration-test-word-260nw-1438324490.jpg");
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the updated dropped asset or an error.
    */
   updateWebImageLayers(bottom: string, top: string): Promise<void | ResponseType> {
     const params = { bottom, top };
@@ -767,10 +798,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Add a webhook to a dropped asset
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.addWebhook({
    *   dataObject: {},
@@ -782,6 +812,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *   url: "https://url.com",
    * });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the new `webhookId` or an error.
    */
   async addWebhook({
     dataObject,
@@ -831,10 +863,9 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
-   * @summary
    * Set the interactive settings on a dropped asset
    *
-   * @usage
+   * @example
    * ```ts
    * await droppedAsset.setInteractiveSettings({
    *   isInteractive: true,
@@ -866,12 +897,10 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
     }
   }
 
-  ////////// analytics
   /**
-   * @summary
    * Retrieve analytics for a dropped asset by day, week, month, quarter, or year
    *
-   * @usage
+   * @example
    * ```ts
    * const analytics = await droppedAsset.fetchDroppedAssetAnalytics({
    *   periodType: "quarter",
@@ -879,6 +908,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *   year: 2023,
    * });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the analytics data or an error.
    */
   async fetchDroppedAssetAnalytics({
     periodType,
@@ -921,13 +952,15 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   // private methods
   #updateDroppedAsset = async (payload: object, updateType: string): Promise<void | ResponseType> => {
     try {
-      await this.topiaPublicApi().put(
+      const response = await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/assets/${this.id}/${updateType}`,
         {
           ...payload,
         },
         this.requestOptions,
       );
+      Object.assign(this, response.data);
+      return response.data;
     } catch (error) {
       throw this.errorHandler({ error, params: { payload, updateType }, sdkMethod: "DroppedAsset.updateDroppedAsset" });
     }

@@ -15,14 +15,14 @@ import { ResponseType, VisitorsToMoveArrayType } from "types";
 import { scatterVisitors } from "utils";
 
 /**
- * @summary
  * Create an instance of WorldActivity class with a given url slug and optional attributes and session credentials.
  *
+ * @remarks
  * This class is responsible for all activity of a specified world including editing dropped assets, moving current visitors, etc.
  *
- * @usage
+ * @example
  * ```ts
- * await new WorldActivity(topia, "exampleWorld", {
+ * const activity = await new WorldActivity(topia, "exampleWorld", {
  *   attributes: { name: "Example World" },
  *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
  * });
@@ -78,13 +78,16 @@ export class WorldActivity extends SDKController {
   }
 
   /**
-   * @summary
    * Retrieve all visitors currently in a world.
    *
-   * @usage
+   * @category Visitors
+   *
+   * @example
    * ```ts
    * const visitors = await worldActivity.currentVisitors("exampleLandmarkZoneId", true);
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the an object containing current visitors keyed by visitorId or an error.
    */
   async currentVisitors(shouldIncludeAdminPermissions?: boolean) {
     try {
@@ -96,13 +99,16 @@ export class WorldActivity extends SDKController {
   }
 
   /**
-   * @summary
    * Retrieve all visitors currently in a Landmark Zone.
    *
-   * @usage
+   * @category Visitors
+   *
+   * @example
    * ```ts
    * const visitors = await worldActivity.fetchVisitorsInZone({ droppedAssetId: "exampleDroppedAssetId" });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns the an object containing current visitors keyed by visitorId or an error.
    */
   async fetchVisitorsInZone({
     droppedAssetId,
@@ -121,12 +127,15 @@ export class WorldActivity extends SDKController {
   }
 
   /**
-   * @summary
    * Move all visitors currently in a world to a single set of coordinates.
+   *
+   * @remarks
    * Optionally refetch visitors, teleport or walk visitors to new location,
    * and scatter visitors by any number so that they don't all move to the exact same location.
    *
-   * @usage
+   * @category Visitors
+   *
+   * @example
    * ```ts
    * await worldActivity.moveAllVisitors({
    *   shouldFetchVisitors: true,
@@ -137,7 +146,7 @@ export class WorldActivity extends SDKController {
    * });
    * ```
    *
-   * @result
+   * @returns
    * Updates each Visitor instance and worldActivity.visitors map.
    */
   async moveAllVisitors({
@@ -165,10 +174,11 @@ export class WorldActivity extends SDKController {
   }
 
   /**
-   * @summary
    * Teleport or walk a list of visitors currently in a world to various coordinates.
    *
-   * @usage
+   * @category Visitors
+   *
+   * @example
    * ```ts
    * const visitorsToMove = [
    *   {
@@ -186,7 +196,7 @@ export class WorldActivity extends SDKController {
    * await worldActivity.moveVisitors(visitorsToMove);
    * ```
    *
-   * @result
+   * @returns
    * Updates each Visitor instance and worldActivity.visitors map.
    */
   async moveVisitors(visitorsToMove: VisitorsToMoveArrayType) {
