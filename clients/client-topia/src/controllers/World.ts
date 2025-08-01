@@ -543,7 +543,9 @@ export class World extends SDKController implements WorldInterface {
    *
    * @example
    * ```ts
-   * await world.triggerParticle({ name: "Flame" });
+   * const droppedAsset = await DroppedAsset.get(assetId, urlSlug, { credentials });
+   *
+   * await world.triggerParticle({ name: "Flame", duration: 5, position: droppedAsset.position });
    * ```
    *
    * @returns {Promise<ResponseType | string>} Returns `{ success: true }` or a message if no particleId is found.
@@ -656,10 +658,17 @@ export class World extends SDKController implements WorldInterface {
    * const { dataObject } = world;
    * ```
    */
-  fetchDataObject = async (appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> => {
+  fetchDataObject = async (
+    appPublicKey?: string,
+    appJWT?: string,
+    sharedAppPublicKey?: string,
+    sharedAppJWT?: string,
+  ): Promise<void | ResponseType> => {
     try {
       let query = "";
       if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appJWT=${appJWT}`;
+      else if (sharedAppPublicKey) query = `?sharedAppPublicKey=${sharedAppPublicKey}&sharedAppJWT=${sharedAppJWT}`;
+
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/get-data-object${query}`,
         this.requestOptions,

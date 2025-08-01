@@ -216,10 +216,16 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *
    * @returns {Promise<object | ResponseType>} Returns the data object or an error response.
    */
-  async fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> {
+  async fetchDataObject(
+    appPublicKey?: string,
+    appJWT?: string,
+    sharedAppPublicKey?: string,
+    sharedAppJWT?: string,
+  ): Promise<void | ResponseType> {
     try {
       let query = "";
       if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appJWT=${appJWT}`;
+      else if (sharedAppPublicKey) query = `?sharedAppPublicKey=${sharedAppPublicKey}&sharedAppJWT=${sharedAppJWT}`;
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/assets/${this.id}/data-object${query}`,
         this.requestOptions,

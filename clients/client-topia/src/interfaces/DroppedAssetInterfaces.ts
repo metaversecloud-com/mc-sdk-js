@@ -12,7 +12,12 @@ import { AxiosResponse } from "axios";
 export interface DroppedAssetInterface extends AssetInterface {
   fetchDroppedAssetById(): Promise<void | ResponseType>;
   deleteDroppedAsset(): Promise<void | ResponseType>;
-  fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType>;
+  fetchDataObject(
+    appPublicKey?: string,
+    appJWT?: string,
+    sharedAppPublicKey?: string,
+    sharedAppJWT?: string,
+  ): Promise<void | ResponseType>;
   setDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
   updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
   incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
