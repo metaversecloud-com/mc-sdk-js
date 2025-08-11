@@ -84,6 +84,16 @@ export interface DroppedAssetInterface extends AssetInterface {
     isInteractive?: boolean;
     interactivePublicKey: string;
   }): Promise<void | ResponseType>;
+  setClickableLinkMulti({ clickableLinks }: SetClickableLinkMultiInterface): Promise<void | ResponseType>;
+  updateClickableLinkMulti({
+    clickableLink,
+    clickableLinkTitle,
+    isForceLinkInIframe,
+    isOpenLinkInDrawer,
+    existingLinkId,
+    linkSamlQueryParams,
+  }: UpdateClickableLinkMultiInterface): Promise<void | ResponseType>;
+  removeClickableLink({ linkId }: RemoveClickableLinkInterface): Promise<void | ResponseType>;
   id?: string;
   assetId?: string;
   assetScale?: number | null;
