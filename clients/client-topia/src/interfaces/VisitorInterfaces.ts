@@ -7,6 +7,7 @@ export interface VisitorInterface extends SDKInterface {
   moveVisitor({ shouldTeleportVisitor, x, y }: MoveVisitorInterface): Promise<void | ResponseType>;
   fireToast({ groupId, title, text }: FireToastInterface): Promise<void | ResponseType>;
   openIframe({ link, shouldOpenInDrawer, title }: OpenIframeInterface): Promise<void | ResponseType>;
+  closeIframe(droppedAssetId: string): Promise<void | ResponseType>;
   fetchDataObject(
     appPublicKey?: string,
     appJWT?: string,
@@ -27,6 +28,7 @@ export interface VisitorInterface extends SDKInterface {
   isMobile?: boolean;
   isRecording?: boolean;
   isRecordingBot?: boolean;
+  landmarkZonesString?: string;
   lastUpdate?: number | undefined;
   moveFrom?: object;
   movedOn?: number | undefined;
@@ -34,6 +36,7 @@ export interface VisitorInterface extends SDKInterface {
   muted?: boolean;
   performer?: boolean;
   performerNear?: boolean;
+  privateZoneId?: string;
   id?: number | undefined;
   shareScreen?: boolean;
   sitting?: boolean;
