@@ -52,6 +52,15 @@ export interface DroppedAssetInterface extends AssetInterface {
     syncUserMedia,
   }: UpdateMediaTypeInterface): Promise<void | ResponseType>;
   updateMuteZone(isMutezone: boolean): Promise<void | ResponseType>;
+  updateLandmarkZone({
+    isLandmarkZoneEnabled,
+    landmarkZoneName,
+    landmarkZoneIsVisible,
+  }: {
+    isLandmarkZoneEnabled: boolean;
+    landmarkZoneName?: string;
+    landmarkZoneIsVisible?: boolean;
+  }): Promise<void | ResponseType>;
   updateWebhookZone(isWebhookZoneEnabled: boolean): Promise<void | ResponseType>;
   updatePosition(x: number, y: number, yOrderAdjust?: number): Promise<void | ResponseType>;
   updatePrivateZone({
@@ -60,6 +69,7 @@ export interface DroppedAssetInterface extends AssetInterface {
     privateZoneUserCap,
   }: UpdatePrivateZoneInterface): Promise<void | ResponseType>;
   updateScale(assetScale: number): Promise<void | ResponseType>;
+  flip(): Promise<void | ResponseType>;
   updateUploadedMediaSelected(mediaId: string): Promise<void | ResponseType>;
   updateWebImageLayers(bottom: string, top: string): Promise<void | ResponseType>;
   addWebhook({
@@ -94,6 +104,16 @@ export interface DroppedAssetInterface extends AssetInterface {
     linkSamlQueryParams,
   }: UpdateClickableLinkMultiInterface): Promise<void | ResponseType>;
   removeClickableLink({ linkId }: RemoveClickableLinkInterface): Promise<void | ResponseType>;
+  fetchDroppedAssetAnalytics({
+    periodType,
+    dateValue,
+    year,
+  }: {
+    periodType: "week" | "month" | "quarter" | "year";
+    dateValue: number;
+    year: number;
+  }): Promise<void | ResponseType>;
+
   id?: string;
   assetId?: string;
   assetScale?: number | null;

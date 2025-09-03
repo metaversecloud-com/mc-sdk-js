@@ -1,4 +1,4 @@
-import { InteractiveCredentials, ResponseType } from "types";
+import { InteractiveCredentials, ResponseType, WorldActivityType } from "types";
 import { FireToastInterface, SDKInterface, WebhookInterface } from "interfaces";
 import { DroppedAsset } from "controllers/DroppedAsset";
 
@@ -40,6 +40,13 @@ export interface WorldInterface extends SDKInterface, WorldDetailsInterface {
     spawnPosition,
     width,
   }: WorldDetailsInterface): Promise<void | ResponseType>;
+  updateCloseWorldSettings({
+    closeWorldDescription,
+    isWorldClosed,
+  }: {
+    closeWorldDescription: string;
+    isWorldClosed: boolean;
+  }): Promise<void | ResponseType>;
   fetchDroppedAssets(): Promise<void | ResponseType>;
   fetchDroppedAssetsWithUniqueName({
     uniqueName,
@@ -58,6 +65,9 @@ export interface WorldInterface extends SDKInterface, WorldDetailsInterface {
     uniqueName?: string;
   }): Promise<DroppedAsset[]>;
   updateCustomTextDroppedAssets(droppedAssetsToUpdate: Array<DroppedAsset>, style: object): Promise<object>;
+  fetchLandmarkZones(landmarkZoneName?: string, sceneDropId?: string): Promise<DroppedAsset[]>;
+  fetchSceneDropIds(): Promise<object | ResponseType>;
+  fetchScenes(): Promise<object | ResponseType>;
   dropScene({
     assetSuffix,
     position,
@@ -68,6 +78,27 @@ export interface WorldInterface extends SDKInterface, WorldDetailsInterface {
     sceneId: string;
   }): Promise<object | ResponseType>;
   replaceScene(sceneId: string): Promise<void | ResponseType>;
+  getAllParticles(): Promise<ResponseType>;
+  triggerParticle({
+    id,
+    name,
+    duration,
+    position,
+  }: {
+    id?: string;
+    name?: string;
+    duration?: number;
+    position?: object;
+  }): Promise<ResponseType | string>;
+  triggerActivity({
+    type,
+    assetId,
+    excludeFromNotification,
+  }: {
+    type: WorldActivityType;
+    assetId: string;
+    excludeFromNotification?: (string | number)[];
+  }): Promise<ResponseType | string>;
   fireToast({ groupId, title, text }: FireToastInterface): Promise<void | ResponseType>;
   fetchDataObject(
     appPublicKey?: string,
@@ -78,6 +109,17 @@ export interface WorldInterface extends SDKInterface, WorldDetailsInterface {
   setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
   updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
   incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
+  fetchWebhooks(): Promise<void | ResponseType>;
+  fetchWorldAnalytics({
+    periodType,
+    dateValue,
+    year,
+  }: {
+    periodType: "week" | "month" | "quarter" | "year";
+    dateValue: number;
+    year: number;
+  }): Promise<void | ResponseType>;
+
   dataObject?: object | null;
 }
 

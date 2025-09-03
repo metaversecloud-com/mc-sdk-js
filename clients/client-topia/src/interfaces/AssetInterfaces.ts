@@ -3,6 +3,24 @@ import { SDKInterface } from "interfaces/SDKInterfaces";
 
 export interface AssetInterface extends SDKInterface {
   fetchAssetById(): Promise<object | ResponseType>;
+  updateAsset({
+    assetName,
+    bottomLayerURL,
+    creatorTags,
+    isPublic,
+    shouldUploadImages,
+    tagJson,
+    topLayerURL,
+  }: {
+    assetName: string;
+    bottomLayerURL?: string;
+    creatorTags: object;
+    isPublic: boolean;
+    shouldUploadImages?: boolean;
+    tagJson: string;
+    topLayerURL?: string;
+  }): Promise<object | ResponseType>;
+
   addedOn?: string;
   assetName?: string;
   creatorTags?: object;

@@ -85,7 +85,7 @@ export class Asset extends SDKController implements AssetInterface {
     shouldUploadImages?: boolean;
     tagJson: string;
     topLayerURL?: string;
-  }): Promise<void | ResponseType> {
+  }): Promise<object | ResponseType> {
     const params = {
       assetName,
       bottomLayerURL,
@@ -102,6 +102,7 @@ export class Asset extends SDKController implements AssetInterface {
         this.requestOptions,
       );
       Object.assign(this, response.data);
+      return response.data;
     } catch (error) {
       throw this.errorHandler({ error, params, sdkMethod: "Asset.updateAsset" });
     }

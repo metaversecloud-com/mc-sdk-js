@@ -1,4 +1,4 @@
-import { InteractiveCredentials, ResponseType } from "types";
+import { AnalyticType, InteractiveCredentials, ResponseType } from "types";
 import { SDKInterface } from "interfaces/SDKInterfaces";
 import { FireToastInterface } from "./SharedInterfaces";
 
@@ -7,16 +7,32 @@ export interface VisitorInterface extends SDKInterface {
   moveVisitor({ shouldTeleportVisitor, x, y }: MoveVisitorInterface): Promise<void | ResponseType>;
   fireToast({ groupId, title, text }: FireToastInterface): Promise<void | ResponseType>;
   openIframe({ link, shouldOpenInDrawer, title }: OpenIframeInterface): Promise<void | ResponseType>;
+  reloadIframe(droppedAssetId: string): Promise<void | ResponseType>;
   closeIframe(droppedAssetId: string): Promise<void | ResponseType>;
-  fetchDataObject(
-    appPublicKey?: string,
-    appJWT?: string,
-    sharedAppPublicKey?: string,
-    sharedAppJWT?: string,
-  ): Promise<void | ResponseType>;
-  setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
-  updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
-  incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
+  turnAVOff(): Promise<void | ResponseType>;
+  getExpressions({ name, getUnlockablesOnly }: { name?: string; getUnlockablesOnly?: boolean }): Promise<ResponseType>;
+  grantExpression({ id, name }: { id?: string; name?: string }): Promise<ResponseType>;
+  getAllParticles(): Promise<ResponseType>;
+  triggerParticle({
+    id,
+    name,
+    duration,
+  }: {
+    id?: string;
+    name?: string;
+    duration?: number;
+    fetchDataObject(
+      appPublicKey?: string,
+      appJWT?: string,
+      sharedAppPublicKey?: string,
+      sharedAppJWT?: string,
+    ): Promise<void | ResponseType>;
+    setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
+    updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
+    incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
+    updatePublicKeyAnalytics(analytics?: AnalyticType[]): Promise<void | ResponseType>;
+    sendSignalToVisitor(signal: any): Promise<void | (ResponseType & { answerSignal: any })>;
+  }): Promise<ResponseType | string>;
 
   color?: string;
   dataObject?: object | null | undefined;

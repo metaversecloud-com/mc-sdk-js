@@ -2,6 +2,7 @@ import { InteractiveCredentials, ResponseType } from "types";
 
 export interface SceneInterface {
   fetchSceneById(): Promise<void | ResponseType>;
+
   id: string;
   background?: null;
   description?: string;
