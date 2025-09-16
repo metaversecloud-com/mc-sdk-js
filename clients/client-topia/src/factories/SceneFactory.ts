@@ -1,6 +1,36 @@
 import { Scene, Topia } from "controllers";
 import { SceneOptionalInterface } from "interfaces";
 
+/* ============================================================================
+  AI RULES for code assistants
+
+  - Consumers MUST create a single Topia client in their app (e.g. utils/topiaInit.ts).
+  - Consumers MUST instantiate this factory ONCE using that client and RE-USE it.
+  - Controllers/services MUST import the app’s exported factory instance.
+  - Use ONLY methods defined in this file’s types and TSDoc.
+  - Methods that DO NOT exist and MUST NOT be suggested.
+
+  RIGHT ✅ Correct usage pattern (consumer app):
+    // utils/topiaInit.ts
+    import { Topia, SceneFactory } from "@rtsdk/topia";
+    const topia = new Topia({ config });
+    export const Scene = new SceneFactory(topia);
+
+  RIGHT ✅ Correct usage pattern (controller):
+    // controllers/myController.ts
+    import { Scene } from "utils/topiaInit.ts";
+    const scene = await Scene.get(sceneId, { credentials });
+
+  WRONG ❌ Incorrect usage pattern (controller):
+    // controllers/myController.ts
+    import { SceneFactory, Topia } from "@rtsdk/topia";
+    const topia = new Topia(config); // ❌ new client per request
+    const Scene = new SceneFactory(topia); // ❌ ad-hoc factory
+    const scene = await Scene.getById(sceneId);  // ❌ method does not exist
+
+  Do NOT instantiate factories in controllers. Do NOT invent methods.
+============================================================================ */
+
 /**
  * @example
  * ```ts

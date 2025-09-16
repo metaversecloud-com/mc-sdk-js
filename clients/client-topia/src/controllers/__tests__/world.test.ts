@@ -25,7 +25,7 @@ describe("World Class", () => {
   });
 
   it("should return details of a world", async () => {
-    expect(testWorld.urlSlug).toEqual("exampleWorld");
+    expect(testWorld.urlSlug).toEqual("exampleUrlSlug");
     testWorld.fetchDetails = jest.fn().mockReturnValue(worlds[1]);
     const mockDetails = await testWorld.fetchDetails();
     expect(testWorld.fetchDetails).toHaveBeenCalled();
@@ -43,6 +43,6 @@ describe("World Class", () => {
   //   };
   //   await testWorld.updateDetails(worldArgs);
   //   expect(mock.history.put.length).toBe(1);
-  //   expect(testWorld.urlSlug).toEqual("exampleWorld");
+  //   expect(testWorld.urlSlug).toEqual("exampleUrlSlug");
   // });
 });

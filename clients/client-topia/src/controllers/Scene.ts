@@ -10,14 +10,44 @@ import { SceneInterface, SceneOptionalInterface } from "interfaces";
 // types
 import { ResponseType } from "types";
 
+/* ============================================================================
+AI RULES for code assistants
+
+  CONTEXT
+    - "Controllers" expose operations on domain objects (e.g., Scene).
+    - Consumers obtain controller instances via factory methods (e.g., SceneFactory.get).
+
+  DO
+    - Expect consumers to import a pre-instantiated factory from their app (e.g., utils/topiaInit.ts).
+    - Use ONLY the methods defined & documented in this file's types/TSDoc.
+
+  DO NOT
+    - Do NOT suggest creating Topia clients or factories inside controllers.
+    - Do NOT suggest non-existent methods: getById, fetch, find
+    - Do NOT mutate controller shape or return ad-hoc fields.
+
+  CANONICAL USAGE (consumer app):
+    // utils/topiaInit.ts
+    import { Topia, SceneFactory } from "@rtsdk/topia";
+    const topia = new Topia({ config });
+    export const Scene = new SceneFactory(topia);
+
+    // controllers/myController.ts (consumer app)
+    import { Scene } from "utils/topiaInit.ts";
+    const scene = await Scene.get(sceneId, { credentials });
+
+============================================================================ */
+
 /**
  * Create an instance of Scene class with a given scene id and optional attributes and session credentials.
  *
  * @example
  * ```ts
- * const scene = await new Scene(topia, "sceneId", {
+ * import { Scene } from "utils/topiaInit.ts";
+ *
+ * const scene = await Scene.get(exampleSceneId, {
  *   attributes: { name: "My Scene" },
- *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
+ *   credentials: { interactivePublicKey: "examplePublicKey", interactiveNonce: "exampleNonce", assetId: "exampleDroppedAssetId", visitorId: 1, urlSlug: "exampleUrlSlug" }
  * });
  * ```
  */

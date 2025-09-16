@@ -41,7 +41,7 @@ export const worlds = [
     },
     tileBackgroundEverywhere: null,
     useTopiaPassword: false,
-    urlSlug: "exampleWorld",
+    urlSlug: "exampleUrlSlug",
     width: 4096,
   },
   {

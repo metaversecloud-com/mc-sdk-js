@@ -17,12 +17,43 @@ import {
 import { ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
 
+/* ============================================================================
+AI RULES for code assistants
+
+  CONTEXT
+    - "Controllers" expose operations on domain objects (e.g., Visitor).
+    - Consumers obtain controller instances via factory methods (e.g., VisitorFactory.get).
+
+  DO
+    - Expect consumers to import a pre-instantiated factory from their app (e.g., utils/topiaInit.ts).
+    - Use ONLY the methods defined & documented in this file's types/TSDoc.
+
+  DO NOT
+    - Do NOT suggest creating Topia clients or factories inside controllers.
+    - Do NOT suggest non-existent methods: getById, fetch, find
+    - Do NOT mutate controller shape or return ad-hoc fields.
+
+  CANONICAL USAGE (consumer app):
+    // utils/topiaInit.ts
+    import { Topia, VisitorFactory } from "@rtsdk/topia";
+    const topia = new Topia({ config });
+    export const Visitor = new VisitorFactory(topia);
+
+    // controllers/myController.ts (consumer app)
+    import { Visitor } from "utils/topiaInit.ts";
+    const visitor = await Visitor.get(visitorId, urlSlug, { credentials });
+    await visitor.fetchDataObject();
+
+============================================================================ */
+
 /**
  * Create an instance of Visitor class with a given id and optional attributes and session credentials.
  *
  * @example
  * ```ts
- * const visitor = await new Visitor(topia, id, urlSlug, { attributes: { moveTo: { x: 0, y: 0 } }, credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" } });
+ * import { Visitor } from "utils/topiaInit.ts";
+ *
+ * const visitor = await Visitor.get(visitorId, urlSlug, { attributes: { moveTo: { x: 0, y: 0 } }, credentials: { interactivePublicKey: "examplePublicKey", interactiveNonce: "exampleNonce", assetId: "exampleDroppedAssetId", profileId: "exampleProfileId", visitorId: 1, urlSlug: "exampleUrlSlug" } });
  * ```
  */
 export class Visitor extends User implements VisitorInterface {

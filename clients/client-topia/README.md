@@ -183,11 +183,11 @@ Run `yarn add @rtsdk/topia` or `npm install @rtsdk/topia`
 
 Create your instance of Topia and instantiate the factories you need:
 
-```js
+```ts
 dotenv.config();
 import dotenv from "dotenv";
 
-import { AssetFactory, Topia, DroppedAssetFactory, UserFactory, WorldFactory } from "@rtsdk/topia";
+import { AssetFactory, Topia, DroppedAssetFactory, UserFactory, VisitorFactory, WorldFactory } from "@rtsdk/topia";
 
 const config = {
   apiDomain: process.env.INSTANCE_DOMAIN || "https://api.topia.io/",
@@ -200,31 +200,43 @@ const myTopiaInstance = new Topia(config);
 const Asset = new AssetFactory(myTopiaInstance);
 const DroppedAsset = new DroppedAssetFactory(myTopiaInstance);
 const User = new UserFactory(myTopiaInstance);
+const Visitor = new VisitorFactory(myTopiaInstance);
 const World = new WorldFactory(myTopiaInstance);
 
-export { Asset, DroppedAsset, myTopiaInstance, User, World };
+export { Asset, DroppedAsset, User, Visitor, World };
 ```
 
 <br/>
 
-Put it to use:
+Put it to use in your controller:
 
-```js
-import { DroppedAsset } from "./pathToAboveCode";
+```ts
+import { Request, Response } from "express";
+import { DroppedAsset } from "utils/topiaInit.ts";
+import { VisitorInterface } from "@rtsdk/topia";
 
-export const getAssetAndDataObject = async (req) => {
-  const { assetId, interactiveNonce, interactivePublicKey, urlSlug, visitorId } = req.query;
+export const getDroppedAssetAndVisitor = async (req: Request, res: Response) => {
+  try {
+    const { assetId, interactiveNonce, interactivePublicKey, urlSlug, visitorId } = req.query;
 
-  const droppedAsset = await DroppedAsset.get(assetId, urlSlug, {
-    credentials: {
+    const credentials = {
       interactiveNonce,
       interactivePublicKey,
+      assetId,
+      urlSlug,
       visitorId,
-    },
-  });
+    };
 
-  await droppedAsset.fetchDroppedAssetDataObject();
-  return droppedAsset;
+    const droppedAsset = await DroppedAsset.get(assetId, urlSlug, { credentials });
+
+    await droppedAsset.fetchDroppedAssetDataObject();
+
+    const visitor: VisitorInterface = await Visitor.get(visitorId, urlSlug, { credentials });
+
+    return { droppedAsset, isAdmin: visitor.isAdmin };
+  } catch (error) {
+    return res.status(error.status || 500).send({ error, success: false });
+  }
 };
 ```
 
@@ -237,19 +249,19 @@ There are three types of Data Objects:
 
 - **World:** The World data object should be used to store information unique to your app in a given world but not necessarily specific details about an instance or an active game. This information would persist even if the app was removed from the world.
   - **Example - Update two specific data points:**
-    ```js
+    ```ts
     await world.updateDataObject({
       [`keyAssets.${keyAssetId}.itemsCollectedByUser.${profileId}`]: { [dateKey]: { count: 1 }, total: 1 },
       [`profileMapper.${profileId}`]: username,
     });
     ```
   - **Example - Increment a specific value within the data object by 1:**
-    ```js
+    ```ts
     await world.incrementDataObjectValue([`keyAssets.${keyAssetId}.totalItemsCollected.count`], 1);
     ```
 - **Dropped Asset:** The Dropped Asset data object should only store what is unique to the specific instance of the app in the world such as game state. If the Dropped Asset is deleted, the data object would be lost as well so be sure to only store information here the doesn't need to persist!
   - **Example - Initialize data object with default data and keyAssetId:**
-    ```js
+    ```ts
     await droppedAsset.setDataObject(
       {
         ...defaultGameData,
@@ -259,7 +271,7 @@ There are three types of Data Objects:
     );
     ```
   - **Example - Update lastInteraction date and playerCount:**
-    ```js
+    ```ts
     await droppedAsset.updateDataObject({ lastInteraction: new Date(), playerCount: playerCount + 1 });
     ```
 - **User:** The User data object should be used to store information unique to a user that is NOT unique to a world or instance (dropped asset) of an app.
@@ -271,7 +283,7 @@ There are three types of Data Objects:
 
 All of our data object set, update, and increment methods have an optional lock argument. You can create a lock id using that parameters specific to the action you are taking plus a timestamp so that the lock will expire after a certain amount of time has passed. As an example, TicTacToe allows users to Reset the game board so that they can start a new game but we'd only want the reset to happen once even if the user(s) press the button multiple times. To prevent multiple resets from happening within a 10 second window (stopping the calls from going through and preventing the race condition), we'd lock the object by doing the following:
 
-```js
+```ts
 try {
   await droppedAsset.updateDataObject(
     { isResetInProgress: true },
@@ -289,7 +301,7 @@ Using the code above would also allow us to check if `isResetInProgress === true
 **Turn based locking**
 Locking data object updates can also be extremely helpful when building a turn based game. As an example, TicTacToe should only allow one user to take a turn at a time. To prevent multiple moves at once we could use the following:
 
-```js
+```ts
 try {
   const timestamp = new Date(Math.round(new Date().getTime() / 5000) * 5000);
   const lockId = `${keyAssetId}-${resetCount}-${turnCount}-${timestamp}`;
@@ -308,7 +320,7 @@ You can leverage the data object methods for all types to track analytics unique
 
 Examples leveraging World data objects calls:
 
-```js
+```ts
 await world.setDataObject({ hello: "world" }, { analytics: [{ analyticName: "resets"} ], lock: { lockId, releaseLock: true });
 
 await world.updateDataObject({}, { analytics: [ {analyticName: "matches", uniqueKey: `${playerOneProfileId}-${playerTwoProfileId}`, urlSlug }], });
@@ -320,7 +332,7 @@ await world.incrementDataObjectValue(`keyAssets.${assetId}.completions`, 1, { an
 
 Examples leveraging Visitor data objects calls:
 
-```js
+```ts
 await visitor.setDataObject(
   { hello: "world" },
   { analytics: [{ analyticName: "starts" }], lock: { lockId, releaseLock: true } },
@@ -370,6 +382,10 @@ We've added a Pull Request template to help make it easier for developers to cla
 
 The SDK Stylesheet is already added to every boilerplate. To view documentation and examples please [click here](https://sdk-style.s3.amazonaws.com/example.html).
 
+### AI Rules for @rtsdk/topia
+
+Always follow the rules outlined in ./ai/rules.md.
+
 ### Developer Documentation
 
 We use [TypeDoc](https://typedoc.org/guides/overview) to convert comments in TypeScript source code into rendered HTML documentation. Comments should be simple and concise and include examples where applicable. Please be sure to add or update comments accordingly!
@@ -382,12 +398,15 @@ Example of Class comments:
 
 ````ts
 /**
- * @summary
  * Create an instance of Dropped Asset class with a given dropped asset id, url slug, and optional attributes and session credentials.
  *
- * @usage
+ * @example
  * ```ts
- * await new DroppedAsset(topia, "1giFZb0sQ3X27L7uGyQX", "example", { attributes: { text: "" }, credentials: { assetId: "1giFZb0sQ3X27L7uGyQX" } } });
+ * import { DroppedAsset } from "utils/topiaInit.ts";
+ *
+ * const droppedAsset = await DroppedAsset.get(exampleDroppedAssetId, exampleUrlSlug, {
+ *   credentials: { interactivePublicKey: "examplePublicKey", interactiveNonce: "exampleNonce", assetId: "exampleDroppedAssetId", visitorId: 1, urlSlug: "exampleUrlSlug" }
+ * });
  * ```
  */
 ````
@@ -396,17 +415,24 @@ Example of method comments
 
 ````ts
 /**
- * @summary
- * Sets the data object for a dropped asset.
+ * Sets the data object for a dropped asset and assigns the response data to the instance.
  *
+ * @remarks
  * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
  *
- * @usage
+ * @category Data Objects
+ *
+ * @example
  * ```ts
- * await droppedAsset.setDroppedAssetDataObject({
- *   "exampleKey": "exampleValue",
- * });
- * const { dataObject } = droppedAsset;
+ * await droppedAsset.setDataObject(
+ *   { resetCount: 0 },
+ *   {
+ *     analytics: [{ analyticName: "resets"} ],
+ *     lock: { lockId: `${droppedAssetId}-${resetCount}-${new Date(Math.round(new Date().getTime() / 10000) * 10000)}` },
+ *   },
+ * );
+ *
+ * const { resetCount } = droppedAsset.dataObject;
  * ```
  */
 ````

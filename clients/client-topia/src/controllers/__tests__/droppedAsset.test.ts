@@ -20,7 +20,7 @@ describe("DroppedAsset Class", () => {
     });
     mock = new MockAdapter(topia.axios);
     DroppedAsset = new DroppedAssetFactory(topia);
-    testDroppedAsset = await DroppedAsset.create(id, "exampleWorld");
+    testDroppedAsset = await DroppedAsset.create(id, "exampleUrlSlug");
   });
 
   afterEach(() => {

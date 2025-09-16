@@ -11,13 +11,44 @@ import { EcosystemOptionalInterface } from "interfaces";
 import { ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
 
+/* ============================================================================
+AI RULES for code assistants
+
+  CONTEXT
+    - "Controllers" expose operations on domain objects (e.g., Ecosystem).
+    - Consumers obtain controller instances via factory methods (e.g., EcosystemFactory.get).
+
+  DO
+    - Expect consumers to import a pre-instantiated factory from their app (e.g., utils/topiaInit.ts).
+    - Use ONLY the methods defined & documented in this file's types/TSDoc.
+
+  DO NOT
+    - Do NOT suggest creating Topia clients or factories inside controllers.
+    - Do NOT suggest non-existent methods: getById, fetch, find
+    - Do NOT mutate controller shape or return ad-hoc fields.
+
+  CANONICAL USAGE (consumer app):
+    // utils/topiaInit.ts
+    import { Topia, Ecosystem } from "@rtsdk/topia";
+    const topia = new Topia({ config });
+    export const Ecosystem = new EcosystemFactory(topia);
+
+    // controllers/myController.ts (consumer app)
+    import { Ecosystem } from "utils/topiaInit.ts";
+    const ecosystem = await Ecosystem.create({ credentials });
+    await ecosystem.fetchDataObject();
+
+============================================================================ */
+
 /**
  * Create an instance of Ecosystem class with optional session credentials
  *
  * @example
  * ```ts
- * const ecosystem =await new Ecosystem(topia, {
- *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
+ * import { Ecosystem } from "utils/topiaInit.ts";
+ *
+ * const ecosystem = await Ecosystem.create({
+ *   credentials: { interactivePublicKey: "examplePublicKey", interactiveNonce: "exampleNonce", assetId: "exampleDroppedAssetId", visitorId: 1, urlSlug: "exampleUrlSlug" }
  * });
  * ```
  */

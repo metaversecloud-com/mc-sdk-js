@@ -16,7 +16,7 @@ import { ResponseType } from "types";
  * @example
  * ```ts
  * const webRTC = await new WebRTCConnector(topia, {
- *   credentials: { interactiveNonce: "exampleNonce", assetId: "droppedAssetId", visitorId: 1, urlSlug: "exampleWorld" }
+ *   credentials: { interactivePublicKey: "examplePublicKey", interactiveNonce: "exampleNonce", assetId: "exampleDroppedAssetId", profileId: "exampleProfileId", visitorId: 1, urlSlug: "exampleUrlSlug" }
  * });
  * ```
  */

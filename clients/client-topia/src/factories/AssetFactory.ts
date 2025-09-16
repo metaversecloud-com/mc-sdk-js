@@ -3,6 +3,37 @@ import { Asset, SDKController, Topia } from "controllers";
 import { AssetOptionalInterface } from "interfaces";
 import { AssetType } from "types";
 
+/* ============================================================================
+  AI RULES for code assistants
+
+  - Consumers MUST create a single Topia client in their app (e.g. utils/topiaInit.ts).
+  - Consumers MUST instantiate this factory ONCE using that client and RE-USE it.
+  - Controllers/services MUST import the app’s exported factory instance.
+  - Use ONLY methods defined in this file’s types and TSDoc.
+  - Methods that DO NOT exist and MUST NOT be suggested.
+
+  RIGHT ✅ Correct usage pattern (consumer app):
+    // utils/topiaInit.ts
+    import { Topia, AssetFactory } from "@rtsdk/topia";
+    const topia = new Topia({ config });
+    export const Asset = new AssetFactory(topia);
+
+  RIGHT ✅ Correct usage pattern (controller):
+    // controllers/myController.ts
+    import { Asset } from "utils/topiaInit.ts";
+    const asset = await Asset.create(assetId, { credentials });
+    await asset.fetchAssetById();
+
+  WRONG ❌ Incorrect usage pattern (controller):
+    // controllers/myController.ts
+    import { AssetFactory, Topia } from "@rtsdk/topia";
+    const topia = new Topia(config); // ❌ new client per request
+    const Asset = new AssetFactory(topia); // ❌ ad-hoc factory
+    const asset = await Asset.getById(assetId); // ❌ method does not exist
+
+  Do NOT instantiate factories in controllers. Do NOT invent methods.
+============================================================================ */
+
 /**
  * @example
  * ```ts

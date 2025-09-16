@@ -5,7 +5,7 @@ import { VisitorFactory } from "factories";
 
 const apiDomain = "api.topia.io";
 const id = visitor.visitorId;
-const urlSlug = "exampleWorld";
+const urlSlug = "exampleUrlSlug";
 
 describe("Visitor Class", () => {
   let mock: MockAdapter, testVisitor: VisitorClass, topia: Topia, Visitor: VisitorFactory;

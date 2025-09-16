@@ -4,6 +4,37 @@ import { AxiosResponse } from "axios";
 import jwt from "jsonwebtoken";
 import { InteractiveCredentials } from "types";
 
+/* ============================================================================
+  AI RULES for code assistants
+
+  - Consumers MUST create a single Topia client in their app (e.g. utils/topiaInit.ts).
+  - Consumers MUST instantiate this factory ONCE using that client and RE-USE it.
+  - Controllers/services MUST import the app’s exported factory instance.
+  - Use ONLY methods defined in this file’s types and TSDoc.
+  - Methods that DO NOT exist and MUST NOT be suggested.
+
+  RIGHT ✅ Correct usage pattern (consumer app):
+    // utils/topiaInit.ts
+    import { Topia, DroppedAssetFactory } from "@rtsdk/topia";
+    const topia = new Topia({ config });
+    export const DroppedAsset = new DroppedAssetFactory(topia);
+
+  RIGHT ✅ Correct usage pattern (controller):
+    // controllers/myController.ts
+    import { DroppedAsset } from "utils/topiaInit.ts";
+    const da = await DroppedAsset.get(droppedAssetId, urlSlug, { credentials });
+    await da.fetchDataObject();
+
+  WRONG ❌ Incorrect usage pattern (controller):
+    // controllers/myController.ts
+    import { DroppedAssetFactory, Topia } from "@rtsdk/topia";
+    const topia = new Topia(config); // ❌ new client per request
+    const DroppedAsset = new DroppedAssetFactory(topia); // ❌ ad-hoc factory
+    const da = await DroppedAsset.getById(droppedAssetId); // ❌ method does not exist
+
+  Do NOT instantiate factories in controllers. Do NOT invent methods.
+============================================================================ */
+
 /**
  * @example
  * ```ts
