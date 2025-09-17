@@ -64,7 +64,7 @@ export const getDroppedAssetAndVisitor = async (req: Request, res: Response) => 
 
     const droppedAsset = await DroppedAsset.get(assetId, urlSlug, { credentials });
 
-    await droppedAsset.fetchDroppedAssetDataObject();
+    await droppedAsset.fetchDataObject();
 
     const visitor: VisitorInterface = await Visitor.get(visitorId, urlSlug, { credentials });
 

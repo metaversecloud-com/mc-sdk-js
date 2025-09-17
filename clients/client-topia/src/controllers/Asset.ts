@@ -65,6 +65,8 @@ export class Asset extends SDKController implements AssetInterface {
   /**
    * Retrieves platform asset details and assigns response data to the instance.
    *
+   * @keywords get, fetch, retrieve, load, details, info, information
+   *
    * @example
    * ```ts
    * await asset.fetchAssetById();
@@ -85,6 +87,8 @@ export class Asset extends SDKController implements AssetInterface {
 
   /**
    * Updates platform asset details.
+   *
+   * @keywords update, modify, change, edit, alter, transform
    *
    * @example
    * ```ts

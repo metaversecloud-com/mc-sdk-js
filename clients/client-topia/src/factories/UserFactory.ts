@@ -33,9 +33,20 @@ import { UserOptionalInterface } from "interfaces";
 ============================================================================ */
 
 /**
+ * Factory for creating User instances. Use this factory to work with user data in the Topia platform.
+ *
+ * @remarks
+ * This factory should be instantiated once per application and reused across your codebase.
+ * The User controller allows you to interact with user-specific information and operations.
+ *
+ * @keywords user, factory, create, account, profile, member, visitor
+ *
  * @example
  * ```ts
- * const User = new UserFactory(myTopiaInstance);
+ * // In your initialization file (e.g., utils/topiaInit.ts)
+ * import { Topia, UserFactory } from "@rtsdk/topia";
+ * const topia = new Topia({ config });
+ * export const User = new UserFactory(topia);
  * ```
  */
 export class UserFactory {
@@ -46,14 +57,36 @@ export class UserFactory {
   }
 
   /**
-   * Instantiate a new instance of User class.
+   * Instantiate a new instance of User class for working with user data.
+   *
+   * @remarks
+   * This method creates a controller instance for interacting with user-specific operations.
+   * The User controller doesn't require an ID since it represents the currently authenticated user.
+   *
+   * @keywords create, instantiate, user, initialize, account, profile, member
    *
    * @example
-   * ```
-   * const userInstance = await User.create({ credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
+   * ```ts
+   * // Import the pre-initialized factory from your app's initialization file
+   * import { User } from "utils/topiaInit.ts";
+   *
+   * // Create a User instance with credentials
+   * const userInstance = User.create({
+   *   credentials: {
+   *     interactiveNonce,
+   *     interactivePublicKey,
+   *     assetId,
+   *     urlSlug,
+   *     visitorId
+   *   }
+   * });
+   *
+   * // Use methods on the user instance
+   * await userInstance.checkInteractiveCredentials();
+   * const avatars = await userInstance.fetchAvatars();
    * ```
    *
-   * @returns {User} Returns a new User object.
+   * @returns {User} Returns a new User object for interacting with user data.
    */
   create(options?: UserOptionalInterface): User {
     return new User(this.topia, options);

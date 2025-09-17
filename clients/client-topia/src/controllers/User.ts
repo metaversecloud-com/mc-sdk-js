@@ -98,6 +98,8 @@ export class User extends SDKController implements UserInterface {
   /*
    * Verify user has valid interactive credentials
    *
+   * @keywords check, verify, validate, credentials, authentication, authorization, interactive
+   *
    * @example
    * ```ts
    * await user.checkInteractiveCredentials();
@@ -119,6 +121,8 @@ export class User extends SDKController implements UserInterface {
 
   /**
    * Returns all avatars owned by User
+   *
+   * @keywords get, fetch, retrieve, list, avatars, characters
    *
    * @category Avatars
    *
@@ -143,6 +147,8 @@ export class User extends SDKController implements UserInterface {
 
   /**
    * Add a new avatar
+   *
+   * @keywords add, create, upload, avatar, character
    *
    * @category Avatars
    *
@@ -228,6 +234,8 @@ export class User extends SDKController implements UserInterface {
   /**
    * Update avatar and sprite sheet records and upload files to existing sprite sheet and avatar storage buckets
    *
+   * @keywords update, modify, change, edit, avatar, character
+   *
    * @category Avatars
    *
    * @example
@@ -312,6 +320,8 @@ export class User extends SDKController implements UserInterface {
   /**
    * Update avatar and sprite sheet records and upload files to existing sprite sheet and avatar storage buckets
    *
+   * @keywords delete, remove, erase, destroy, eliminate, avatar
+   *
    * @category Avatars
    *
    * @example
@@ -333,6 +343,8 @@ export class User extends SDKController implements UserInterface {
 
   /**
    * Returns all assets owned by User when an email address is provided.
+   *
+   * @keywords get, fetch, retrieve, list, user assets, objects
    *
    * @category Assets
    *
@@ -362,6 +374,8 @@ export class User extends SDKController implements UserInterface {
   /**
    * Returns all platform assets.
    *
+   * @keywords get, fetch, retrieve, list, platform assets, objects
+   *
    * @category Assets
    *
    * @example
@@ -382,6 +396,8 @@ export class User extends SDKController implements UserInterface {
 
   /**
    * Returns all scenes owned by User.
+   *
+   * @keywords get, fetch, retrieve, list, user scenes
    *
    * @category Scenes
    *
@@ -410,6 +426,8 @@ export class User extends SDKController implements UserInterface {
 
   /**
    * Retrieves all worlds owned by user with matching API Key, creates a new World object for each, and creates new map of Worlds accessible via user.worlds.
+   *
+   * @keywords get, fetch, retrieve, list, user worlds
    *
    * @category Worlds
    *
@@ -444,6 +462,8 @@ export class User extends SDKController implements UserInterface {
   /**
    * Retrieves all worlds a user with matching API Key is an admin in, creates a new World object for each, and creates new map of Worlds accessible via user.adminWorlds.
    *
+   * @keywords get, fetch, retrieve, list, admin worlds, user worlds
+   *
    * @category Worlds
    *
    * @example
@@ -471,6 +491,8 @@ export class User extends SDKController implements UserInterface {
   /**
    * Retrieves ids of all dropped assets in all worlds with a matching interactivePublicKey.
    *
+   * @keywords get, fetch, retrieve, list, interactive worlds, public key
+   *
    * @category Dropped Assets
    *
    * @example
@@ -495,6 +517,8 @@ export class User extends SDKController implements UserInterface {
 
   /**
    * Send an email
+   *
+   * @keywords send, email, message, notify
    *
    * @example
    * ```ts
@@ -529,6 +553,8 @@ export class User extends SDKController implements UserInterface {
   /**
    * Get expressions
    *
+   * @keywords get, fetch, retrieve, list, expressions, emotes
+   *
    * @category Expressions
    *
    * @example
@@ -559,6 +585,8 @@ export class User extends SDKController implements UserInterface {
   /**
    * Retrieves the data object for a user.
    *
+   * @keywords get, fetch, retrieve, load, data, object, state
+   *
    * @category Data Objects
    *
    * @example
@@ -587,6 +615,8 @@ export class User extends SDKController implements UserInterface {
 
   /**
    * Sets the data object for a user.
+   *
+   * @keywords set, assign, store, save, data, object, state
    *
    * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
@@ -635,6 +665,8 @@ export class User extends SDKController implements UserInterface {
   /**
    * Updates the data object for a user.
    *
+   * @keywords update, modify, change, edit, alter, data, object, state
+   *
    * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
@@ -678,6 +710,8 @@ export class User extends SDKController implements UserInterface {
 
   /**
    * Increments a specific value in the data object for a user by the amount specified. Must have valid interactive credentials from a visitor in the world.
+   *
+   * @keywords increment, increase, add, count, data, object, state
    *
    * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id

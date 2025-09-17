@@ -90,6 +90,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   /**
    * Retrieves dropped asset details and assigns response data to the instance.
    *
+   * @keywords get, fetch, retrieve, load, details, info, information
+   *
    * @example
    * ```ts
    * await droppedAsset.fetchDroppedAssetById();
@@ -112,6 +114,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * Updates dropped asset details and assigns the response data to the instance. Requires Public Key to have the `canUpdateDroppedAssets` permission.
+   *
+   * @keywords update, modify, change, edit, alter, transform
    *
    * @example
    * ```ts
@@ -221,6 +225,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   /**
    * Deletes the dropped asset (removes it from the world).
    *
+   * @keywords remove, delete, erase, destroy, eliminate
+   *
    * @example
    * ```ts
    * await droppedAsset.deleteDroppedAsset();
@@ -236,6 +242,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * Retrieves the data object for a dropped asset.
+   *
+   * @keywords get, fetch, retrieve, load, data, object, state
    *
    * @category Data Objects
    *
@@ -272,6 +280,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *
    * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
+   *
+   * @keywords set, assign, store, save, data, object, state
    *
    * @category Data Objects
    *
@@ -318,6 +328,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
+   * @keywords update, modify, change, edit, alter, data, object, state
+   *
    * @category Data Objects
    *
    * @example
@@ -360,6 +372,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
+   * @keywords increment, increase, add, count, data, object, state
+   *
    * @category Data Objects
    *
    * @example
@@ -397,6 +411,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   /**
    * Updates broadcast options for a dropped asset.
    *
+   * @keywords broadcast, dropped asset settings
+   *
    * @example
    * ```ts
    * await droppedAsset.updateBroadcast({
@@ -423,6 +439,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * Updates click options for a dropped asset.
+   *
+   * @keywords click, link, interaction, url, dropped asset settings
    *
    * @example
    * ```ts
@@ -474,6 +492,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   /**
    * Adds an array of links to an asset. Maximum is 20 links.
    *
+   * @keywords links, multiple, clickable, urls, hyperlinks, dropped asset settings
+   *
    * @example
    * ```ts
    * await droppedAsset.setClickableLinkMulti({
@@ -513,6 +533,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
    *
    * @remarks
    * Pass in an 'existingLinkId' to edit an existing link.
+   *
+   * @keywords links, multiple, clickable, urls, dropped asset settings
    *
    * @example
    * ```ts
@@ -554,6 +576,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   /**
    * Removes a clickable link from a dropped asset.
    *
+   * @keywords remove, delete, link, clickable, url, erase, dropped asset settings
+   *
    * @example
    * ```ts
    * await droppedAsset.removeClickableLink({ linkId: "link-id" });
@@ -574,6 +598,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * Updates text and style of a dropped asset.
+   *
+   * @keywords text, style, dropped asset settings
    *
    * @example
    * ```ts
@@ -603,6 +629,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * Updates media options for a dropped asset.
+   *
+   * @keywords media, video, audio, dropped asset settings
    *
    * @example
    * ```ts
@@ -650,6 +678,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   /**
    * Updates mute zone options for a dropped asset.
    *
+   * @keywords mute, zone, dropped asset settings
+   *
    * @example
    * ```ts
    * await droppedAsset.updateMuteZone(true);
@@ -667,6 +697,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * Updates landmark zone options for a dropped asset.
+   *
+   * @keywords landmark, zone, dropped asset settings
    *
    * @example
    * ```ts
@@ -699,6 +731,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   /**
    * Updates webhook zone options for a dropped asset.
    *
+   * @keywords webhook, zone, dropped asset settings
+   *
    * @example
    * ```ts
    * await droppedAsset.updateWebhookZone(true);
@@ -716,6 +750,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * Moves a dropped asset to specified coordinates.
+   *
+   * @keywords position, dropped asset settings
    *
    * @example
    * ```ts
@@ -735,6 +771,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * Updates private zone options for a dropped asset.
+   *
+   * @keywords private, zone, dropped asset settings
    *
    * @example
    * ```ts
@@ -763,6 +801,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   /**
    * Updates the size of a dropped asset.
    *
+   * @keywords size, scale, dropped asset settings
+   *
    * @example
    * ```ts
    * await droppedAsset.assetScale(.5);
@@ -780,6 +820,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * Flip an dropped asset.
+   *
+   * @keywords flip, layout, dropped asset settings
    *
    * @example
    * ```ts
@@ -799,6 +841,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   /**
    * Change or remove media embedded in a dropped asset.
    *
+   * @keywords media, update, dropped asset settings
+   *
    * @example
    * ```ts
    * await droppedAsset.updateUploadedMediaSelected("LVWyxwNxI96eLjnXWwYO");
@@ -816,6 +860,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * Change or remove top and bottom layers of a dropped asset.
+   *
+   * @keywords layers, images, urls, dropped asset settings
    *
    * @example
    * ```ts
@@ -835,6 +881,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * Add a webhook to a dropped asset
+   *
+   * @keywords webhook, dropped asset settings
    *
    * @example
    * ```ts
@@ -901,6 +949,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   /**
    * Set the interactive settings on a dropped asset
    *
+   * @keywords interactive, dropped asset settings
+   *
    * @example
    * ```ts
    * await droppedAsset.setInteractiveSettings({
@@ -935,6 +985,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
 
   /**
    * Retrieve analytics for a dropped asset by day, week, month, quarter, or year
+   *
+   * @keywords get, fetch, retrieve, load, analytics
    *
    * @example
    * ```ts

@@ -63,6 +63,8 @@ export class Scene extends SDKController implements SceneInterface {
   /**
    * Retrieves scene details and assigns response data to the instance.
    *
+   * @keywords get, fetch, retrieve, load, details, info, information, scene
+   *
    * @example
    * ```ts
    * await scene.fetchSceneById();

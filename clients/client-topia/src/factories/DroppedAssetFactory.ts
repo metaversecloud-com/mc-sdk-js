@@ -36,9 +36,19 @@ import { InteractiveCredentials } from "types";
 ============================================================================ */
 
 /**
+ * Factory for creating and retrieving DroppedAsset instances. Use this factory to work with assets that have been placed in a Topia world.
+ *
+ * @remarks
+ * This factory should be instantiated once per application and reused across your codebase.
+ *
+ * @keywords dropped asset, factory, create, get, retrieve, instantiate, topia
+ *
  * @example
  * ```ts
- * const DroppedAsset = new DroppedAssetFactory(myTopiaInstance);
+ * // In your initialization file (e.g., utils/topiaInit.ts)
+ * import { Topia, DroppedAssetFactory } from "@rtsdk/topia";
+ * const topia = new Topia({ config });
+ * export const DroppedAsset = new DroppedAssetFactory(topia);
  * ```
  */
 export class DroppedAssetFactory extends SDKController {
@@ -47,28 +57,78 @@ export class DroppedAssetFactory extends SDKController {
   }
 
   /**
-   * Instantiate a new instance of DroppedAsset class.
+   * Instantiate a new instance of DroppedAsset class for an existing dropped asset in a world.
+   *
+   * @remarks
+   * This method creates a controller instance for an existing dropped asset but does not fetch its properties.
+   * Use this when you need a lightweight instance and will fetch properties separately if needed or when you already have the properties.
+   *
+   * @keywords create, instantiate, dropped asset, initialize, instance
    *
    * @example
-   * ```
-   * const droppedAssetInstance = await DroppedAsset.create(assetId, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
+   * ```ts
+   * // Import the pre-initialized factory from your app's initialization file
+   * import { DroppedAsset } from "utils/topiaInit.ts";
+   *
+   * // Create a DroppedAsset instance with credentials
+   * const droppedAssetInstance = DroppedAsset.create(
+   *   assetId,
+   *   urlSlug,
+   *   {
+   *     credentials: {
+   *       interactiveNonce,
+   *       interactivePublicKey,
+   *       assetId,
+   *       urlSlug,
+   *       visitorId
+   *     }
+   *   }
+   * );
+   *
+   * // Later fetch its properties if needed
+   * await droppedAssetInstance.fetchDroppedAssetById();
    * ```
    *
-   * @returns {DroppedAsset} Returns a new DroppedAsset object.
+   * @returns {DroppedAsset} Returns a new DroppedAsset object without fetching its properties.
    */
   create(id: string, urlSlug: string, options?: DroppedAssetOptionalInterface): DroppedAsset {
     return new DroppedAsset(this.topia, id, urlSlug, options);
   }
 
   /**
-   * Instantiate a new instance of DroppedAsset class and retrieve all properties.
+   * Instantiate a new instance of DroppedAsset class and automatically fetch all its properties.
+   *
+   * @remarks
+   * This method creates a controller instance and immediately fetches all properties of the dropped asset.
+   * It's a convenience method that combines creating an instance and calling fetchDroppedAssetById().
+   *
+   * @keywords get, fetch, retrieve, dropped asset, load, instance
    *
    * @example
-   * ```
-   * const droppedAssetInstance = await DroppedAsset.get(assetId, urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
+   * ```ts
+   * // Import the pre-initialized factory from your app's initialization file
+   * import { DroppedAsset } from "utils/topiaInit.ts";
+   *
+   * // Get a fully populated DroppedAsset instance
+   * const droppedAssetInstance = await DroppedAsset.get(
+   *   assetId,
+   *   urlSlug,
+   *   {
+   *     credentials: {
+   *       interactiveNonce,
+   *       interactivePublicKey,
+   *       assetId,
+   *       urlSlug,
+   *       visitorId
+   *     }
+   *   }
+   * );
+   *
+   * // The properties are already loaded, so you can use them immediately
+   * console.log(droppedAssetInstance.position);
    * ```
    *
-   * @returns {Promise<DroppedAsset>} Returns a new DroppedAsset object with all properties.
+   * @returns {Promise<DroppedAsset>} Returns a new DroppedAsset object with all properties already fetched.
    */
   async get(id: string, urlSlug: string, options?: DroppedAssetOptionalInterface): Promise<DroppedAsset> {
     const droppedAsset = new DroppedAsset(this.topia, id, urlSlug, options);
@@ -77,17 +137,36 @@ export class DroppedAssetFactory extends SDKController {
   }
 
   /**
-   * Searches dropped assets within a world by a provide `uniqueName`. If a single match is found, a new instance of DroppedAsset class is returned all properties.
+   * Searches for and retrieves a dropped asset by its unique name within a world.
    *
    * @remarks
-   * This method leverages the handleGetDroppedAssetByUniqueName endpoint in the Public API and assumes there is exactly one dropped asset with matching uniqueName for the given urlSlug.
+   * This method leverages the handleGetDroppedAssetByUniqueName endpoint in the Public API and assumes there is exactly one dropped asset with the matching uniqueName for the given urlSlug.
+   * Use this when you need to find a dropped asset by its uniqueName rather than its ID.
+   *
+   * @keywords find, search, unique name, retrieve, locate, lookup, dropped asset
    *
    * @example
-   * ```
-   * const droppedAssetInstance = await DroppedAsset.getWithUniqueName("exampleUniqueName", urlSlug, interactiveSecret, credentials);
+   * ```ts
+   * // Import the pre-initialized factory from your app's initialization file
+   * import { DroppedAsset } from "utils/topiaInit.ts";
+   *
+   * // Find and retrieve a dropped asset by its unique name
+   * const droppedAssetInstance = await DroppedAsset.getWithUniqueName(
+   *   "banner-sign-northeast",
+   *   "my-world-slug",
+   *   "your-interactive-secret",
+   *   {
+   *     apiKey: "your-api-key",
+   *     interactivePublicKey: "your-public-key",
+   *     // other credentials...
+   *   }
+   * );
+   *
+   * // The properties are already loaded, so you can use them immediately
+   * console.log(droppedAssetInstance.position);
    * ```
    *
-   * @returns {Promise<DroppedAsset>} Returns a new DroppedAsset object with all properties.
+   * @returns {Promise<DroppedAsset>} Returns a new DroppedAsset object with all properties already fetched.
    */
   async getWithUniqueName(
     uniqueName: string,
@@ -119,23 +198,59 @@ export class DroppedAssetFactory extends SDKController {
   /**
    * Drops an asset in a world and returns a new instance of DroppedAsset class with all properties.
    *
+   * @remarks
+   * This method places an existing Asset into a world at specified coordinates, effectively "dropping" it into the environment.
+   * You can customize various properties of the dropped asset during placement, such as scale, position, interactive settings, and visual layers.
+   *
+   * @keywords drop, place, add, create, position, asset, deploy
+   *
    * @example
-   * ```
-   * const assetInstance = await Asset.create(id, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
-   * const droppedAssetInstance = await DroppedAsset.get(assetInstance, {
-        assetScale: 1.5,
-        flipped: true,
-        layer0: "",
-        layer1: "https://pathtoimage.png",
-        interactivePublicKey,
-        isInteractive: true,
-        position: { x: 0, y: 0 },
-        uniqueName: "exampleUniqueName",
-        urlSlug,
-      });
+   * ```ts
+   * // Import the pre-initialized factories from your app's initialization file
+   * import { Asset, DroppedAsset } from "utils/topiaInit.ts";
+   *
+   * // First get an asset instance
+   * const assetInstance = Asset.create("asset-id-123", {
+   *   credentials: {
+   *     interactiveNonce,
+   *     interactivePublicKey,
+   *     assetId,
+   *     urlSlug,
+   *     visitorId
+   *   }
+   * });
+   *
+   * // Then drop (place) the asset in a world
+   * const droppedAssetInstance = await DroppedAsset.drop(
+   *   assetInstance,
+   *   {
+   *     // Basic positioning and appearance
+   *     position: { x: 250, y: 350 },
+   *     assetScale: 1.5,
+   *     flipped: true,
+   *     uniqueName: "welcome-sign",
+   *     urlSlug: "my-world-slug",
+   *
+   *     // For web images (optional)
+   *     layer0: "https://example.com/background.png",
+   *     layer1: "https://example.com/foreground.png",
+   *
+   *     // For interactive assets (optional)
+   *     interactivePublicKey: "your-public-key",
+   *     isInteractive: true,
+   *
+   *     // For clickable assets (optional)
+   *     clickType: "link",
+   *     clickableLink: "https://example.com",
+   *     clickableLinkTitle: "Visit Example"
+   *   }
+   * );
+   *
+   * // The dropped asset is ready to use
+   * console.log(droppedAssetInstance.id);
    * ```
    *
-   * @returns {Promise<DroppedAsset>} Returns a new DroppedAsset object with all properties.
+   * @returns {Promise<DroppedAsset>} Returns a new DroppedAsset object representing the placed asset in the world.
    */
   async drop(
     asset: Asset,

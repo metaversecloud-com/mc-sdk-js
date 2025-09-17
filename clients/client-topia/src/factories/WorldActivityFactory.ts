@@ -33,9 +33,20 @@ import { WorldOptionalInterface } from "interfaces";
 ============================================================================ */
 
 /**
+ * Factory for creating WorldActivity instances. Use this factory to monitor and manage visitor activity in Topia worlds.
+ *
+ * @remarks
+ * This factory should be instantiated once per application and reused across your codebase.
+ * The WorldActivity controller provides methods to interact with real-time visitor activities and movements.
+ *
+ * @keywords world activity, factory, create, visitors, movement, tracking, presence, real-time
+ *
  * @example
  * ```ts
- * const WorldActivity = new WorldActivityFactory(myTopiaInstance);
+ * // In your initialization file (e.g., utils/topiaInit.ts)
+ * import { Topia, WorldActivityFactory } from "@rtsdk/topia";
+ * const topia = new Topia({ config });
+ * export const WorldActivity = new WorldActivityFactory(topia);
  * ```
  */
 export class WorldActivityFactory {
@@ -46,14 +57,42 @@ export class WorldActivityFactory {
   }
 
   /**
-   * Instantiate a new instance of WorldActivity class.
+   * Instantiate a new instance of WorldActivity class for monitoring visitor activity in a specific world.
+   *
+   * @remarks
+   * This method creates a controller instance for tracking and managing visitor activity in a world.
+   * Use this to fetch current visitors, move visitors, or monitor specific zones within a world.
+   *
+   * @keywords create, instantiate, world activity, initialize, visitors, tracking, presence
    *
    * @example
-   * ```
-   * const worldActivityInstance = await WorldActivity.create(urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
+   * ```ts
+   * // Import the pre-initialized factory from your app's initialization file
+   * import { WorldActivity } from "utils/topiaInit.ts";
+   *
+   * // Create a WorldActivity instance with credentials
+   * const worldActivityInstance = WorldActivity.create(
+   *   "my-world-slug",
+   *   {
+   *     credentials: {
+   *       interactiveNonce,
+   *       interactivePublicKey,
+   *       assetId,
+   *       urlSlug,
+   *       visitorId
+   *     }
+   *   }
+   * );
+   *
+   * // Get current visitors in the world
+   * const visitors = await worldActivityInstance.currentVisitors();
+   * console.log(`There are ${visitors.length} visitors in the world`);
+   *
+   * // Check visitors in a specific zone
+   * const zoneVisitors = await worldActivityInstance.fetchVisitorsInZone("stage-area");
    * ```
    *
-   * @returns {WorldActivity} Returns a new WorldActivity object.
+   * @returns {WorldActivity} Returns a new WorldActivity object for tracking and managing visitor activity.
    */
   create(urlSlug: string, options?: WorldOptionalInterface): WorldActivity {
     return new WorldActivity(this.topia, urlSlug, options);

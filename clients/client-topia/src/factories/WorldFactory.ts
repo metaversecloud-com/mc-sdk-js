@@ -34,9 +34,20 @@ import jwt from "jsonwebtoken";
 ============================================================================ */
 
 /**
+ * Factory for creating World instances. Use this factory to interact with Topia worlds.
+ *
+ * @remarks
+ * This factory should be instantiated once per application and reused across your codebase.
+ * The World controller provides methods to manage world settings, retrieve world details, and perform world-level operations.
+ *
+ * @keywords world, factory, create, virtual space, environment, room, topia
+ *
  * @example
  * ```ts
- * const World = new WorldFactory(myTopiaInstance);
+ * // In your initialization file (e.g., utils/topiaInit.ts)
+ * import { Topia, WorldFactory } from "@rtsdk/topia";
+ * const topia = new Topia({ config });
+ * export const World = new WorldFactory(topia);
  * ```
  */
 export class WorldFactory extends SDKController {
@@ -45,28 +56,76 @@ export class WorldFactory extends SDKController {
   }
 
   /**
-   * Instantiate a new instance of World class.
+   * Instantiate a new instance of World class for interacting with a specific Topia world.
+   *
+   * @remarks
+   * This method creates a controller instance for a world identified by its URL slug.
+   * The world controller can be used to fetch details, update world settings, and perform other world-level operations.
+   *
+   * @keywords create, instantiate, world, initialize, virtual space, environment, room
    *
    * @example
-   * ```
-   * const worldInstance = await World.create(urlSlug, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
+   * ```ts
+   * // Import the pre-initialized factory from your app's initialization file
+   * import { World } from "utils/topiaInit.ts";
+   *
+   * // Create a World instance with credentials
+   * const worldInstance = World.create(
+   *   "my-world-slug",
+   *   {
+   *     credentials: {
+   *       interactiveNonce,
+   *       interactivePublicKey,
+   *       assetId,
+   *       urlSlug,
+   *       visitorId
+   *     }
+   *   }
+   * );
+   *
+   * // Fetch world details
+   * await worldInstance.fetchDetails();
+   * console.log(worldInstance.name);
    * ```
    *
-   * @returns {World} Returns a new World object.
+   * @returns {World} Returns a new World object for interacting with the specified world.
    */
   create(urlSlug: string, options?: WorldOptionalInterface): World {
     return new World(this.topia, urlSlug, options);
   }
 
   /**
-   * Deletes an array of Dropped Assets from within a world and returns success: true
+   * Deletes multiple dropped assets from a world in a single operation.
+   *
+   * @remarks
+   * This method provides a convenient way to delete multiple dropped assets at once rather than
+   * deleting them one by one. Requires appropriate permissions via interactive credentials.
+   *
+   * @keywords delete, remove, dropped assets, multiple, batch, cleanup, world
    *
    * @example
-   * ```
-   * await World.deleteDroppedAssets(urlSlug, ["exampleDroppedAssetId1", "exampleDroppedAssetId2"], interactiveSecret, credentials);
+   * ```ts
+   * // Import the pre-initialized factory from your app's initialization file
+   * import { World } from "utils/topiaInit.ts";
+   *
+   * // Delete multiple dropped assets from a world
+   * const result = await World.deleteDroppedAssets(
+   *   "my-world-slug",
+   *   ["asset-id-123", "asset-id-456", "asset-id-789"],
+   *   "your-interactive-secret",
+   *   {
+   *     apiKey: "your-api-key",
+   *     interactivePublicKey: "your-public-key",
+   *     visitorId: 12345
+   *   }
+   * );
+   *
+   * if (result.success) {
+   *   console.log("Assets successfully deleted");
+   * }
    * ```
    *
-   * @returns {Promise<{ success: boolean }>} Returns `{ success: true }` or an error.
+   * @returns {Promise<{ success: boolean }>} Returns `{ success: true }` if all assets were deleted successfully.
    */
   async deleteDroppedAssets(
     urlSlug: string,

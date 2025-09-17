@@ -63,6 +63,8 @@ export class Ecosystem extends SDKController {
   /**
    * Retrieves the data object for a Topia ecosystem. Requires canUpdateEcosystemDataObjects permission to be set to true for the public key.
    *
+   * @keywords get, fetch, retrieve, load, data, object, state
+   *
    * @category Data Objects
    *
    * @example
@@ -100,6 +102,8 @@ export class Ecosystem extends SDKController {
    * This method also allows you to set a data object on behalf of another Public Key. It requires `canUpdateEcosystemDataObjects` permission to be set to true for the Public Key.
    *
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
+   *
+   * @keywords set, assign, store, save, data, object, state
    *
    * @category Data Objects
    *
@@ -143,6 +147,8 @@ export class Ecosystem extends SDKController {
    * This method also allows you to update a data object on behalf of another Public Key. It requires `canUpdateEcosystemDataObjects` permission to be set to true for the Public Key.
    *
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
+   *
+   * @keywords update, modify, change, edit, alter, data, object, state
    *
    * @category Data Objects
    *
@@ -191,6 +197,8 @@ export class Ecosystem extends SDKController {
    * This method also allows you to increment a data object value on behalf of another Public Key. It requires `canUpdateEcosystemDataObjects` permission to be set to true for the Public Key.
    *
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
+   *
+   * @keywords increment, increase, add, count, data, object, state
    *
    * @category Data Objects
    *

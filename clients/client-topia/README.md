@@ -229,7 +229,7 @@ export const getDroppedAssetAndVisitor = async (req: Request, res: Response) => 
 
     const droppedAsset = await DroppedAsset.get(assetId, urlSlug, { credentials });
 
-    await droppedAsset.fetchDroppedAssetDataObject();
+    await droppedAsset.fetchDataObject();
 
     const visitor: VisitorInterface = await Visitor.get(visitorId, urlSlug, { credentials });
 
@@ -313,7 +313,8 @@ try {
 
 Once complete be sure to also call `await keyAsset.updateDataObject({ turnCount: turnCount + 1 });` so that the next player is free to take their turn!
 
-**Custom analytics**
+### Custom Analytics
+
 You can leverage the data object methods for all types to track analytics unique to your Public Key by passing `analytics` as an optional array along with `profileId`, `urlSlug`, and/or `uniqueKey` to all calls that set, update, or increment data objects!
 
 **World** and **Dropped Asset** classes will automatically include `urlSlug`. In addition to `analytics` you can also pass `profileId` if you want to track event per user and/or a `uniqueKey` to additionally track uniqueness of the event for all time, per user (if `profileId` is included), and per world.

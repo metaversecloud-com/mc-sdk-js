@@ -32,9 +32,20 @@ import { SceneOptionalInterface } from "interfaces";
 ============================================================================ */
 
 /**
+ * Factory for creating Scene instances. Use this factory to work with scenes in the Topia platform.
+ *
+ * @remarks
+ * This factory should be instantiated once per application and reused across your codebase.
+ * Scenes represent the template or blueprint for a world's design and layout.
+ *
+ * @keywords scene, factory, create, template, blueprint, layout, design
+ *
  * @example
  * ```ts
- * const Scene = new SceneFactory(myTopiaInstance);
+ * // In your initialization file (e.g., utils/topiaInit.ts)
+ * import { Topia, SceneFactory } from "@rtsdk/topia";
+ * const topia = new Topia({ config });
+ * export const Scene = new SceneFactory(topia);
  * ```
  */
 export class SceneFactory {
@@ -46,14 +57,38 @@ export class SceneFactory {
   }
 
   /**
-   * Instantiate a new instance of Scene class.
+   * Instantiate a new instance of Scene class for an existing scene in the platform.
+   *
+   * @remarks
+   * This method creates a controller instance for working with a scene but does not fetch its properties.
+   * Use this when you need to interact with a specific scene by its ID.
+   *
+   * @keywords create, instantiate, scene, initialize, instance, template
    *
    * @example
-   * ```
-   * const sceneInstance = await Scene.create(id, { credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId } });
+   * ```ts
+   * // Import the pre-initialized factory from your app's initialization file
+   * import { Scene } from "utils/topiaInit.ts";
+   *
+   * // Create a Scene instance with credentials
+   * const sceneInstance = Scene.create(
+   *   "scene-id-123",
+   *   {
+   *     credentials: {
+   *       interactiveNonce,
+   *       interactivePublicKey,
+   *       assetId,
+   *       urlSlug,
+   *       visitorId
+   *     }
+   *   }
+   * );
+   *
+   * // Fetch scene details if needed
+   * await sceneInstance.fetchSceneById();
    * ```
    *
-   * @returns {Scene} Returns a new Scene object.
+   * @returns {Scene} Returns a new Scene object for interacting with the specified scene.
    */
   create(id: string, options?: SceneOptionalInterface): Scene {
     return new Scene(this.topia, id, options);

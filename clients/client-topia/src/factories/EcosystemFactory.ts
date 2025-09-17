@@ -33,9 +33,20 @@ import { EcosystemOptionalInterface } from "interfaces";
 ============================================================================ */
 
 /**
+ * Factory for creating Ecosystem instances. Use this factory to work with ecosystem-wide data and operations.
+ *
+ * @remarks
+ * This factory should be instantiated once per application and reused across your codebase.
+ * The Ecosystem controller provides methods to interact with data shared across multiple worlds.
+ *
+ * @keywords ecosystem, factory, create, multi-world, global, shared data, platform
+ *
  * @example
  * ```ts
- * const Ecosystem = new EcosystemFactory(myTopiaInstance);
+ * // In your initialization file (e.g., utils/topiaInit.ts)
+ * import { Topia, EcosystemFactory } from "@rtsdk/topia";
+ * const topia = new Topia({ config });
+ * export const Ecosystem = new EcosystemFactory(topia);
  * ```
  */
 export class EcosystemFactory {
@@ -46,14 +57,36 @@ export class EcosystemFactory {
   }
 
   /**
-   * Instantiate a new instance of Ecosystem class.
+   * Instantiate a new instance of Ecosystem class for interacting with ecosystem-wide data.
+   *
+   * @remarks
+   * This method creates a controller instance for accessing and managing data that spans multiple worlds.
+   * Use this for cross-world data sharing, global data objects, and ecosystem-wide operations.
+   *
+   * @keywords create, instantiate, ecosystem, initialize, global, shared data, platform
    *
    * @example
-   * ```
-   * const ecosystemInstance = await Ecosystem.create({ credentials: { interactiveNonce, interactivePublicKey, assetId, urlSlug, visitorId }});
+   * ```ts
+   * // Import the pre-initialized factory from your app's initialization file
+   * import { Ecosystem } from "utils/topiaInit.ts";
+   *
+   * // Create an Ecosystem instance with credentials
+   * const ecosystemInstance = Ecosystem.create({
+   *   credentials: {
+   *     interactiveNonce,
+   *     interactivePublicKey,
+   *     assetId,
+   *     urlSlug,
+   *     visitorId
+   *   }
+   * });
+   *
+   * // Work with ecosystem-wide data objects
+   * await ecosystemInstance.fetchDataObject("global-leaderboard");
+   * await ecosystemInstance.setDataObject("global-leaderboard", { scores: [...] });
    * ```
    *
-   * @returns {Ecosystem} Returns a new Ecosystem object.
+   * @returns {Ecosystem} Returns a new Ecosystem object for interacting with ecosystem-wide data.
    */
   create(options?: EcosystemOptionalInterface): Ecosystem {
     return new Ecosystem(this.topia, options);

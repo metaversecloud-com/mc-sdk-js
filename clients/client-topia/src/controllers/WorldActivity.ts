@@ -111,6 +111,8 @@ export class WorldActivity extends SDKController {
   /**
    * Retrieve all visitors currently in a world.
    *
+   * @keywords get, fetch, retrieve, list, current, visitors, users, players
+   *
    * @category Visitors
    *
    * @example
@@ -131,6 +133,8 @@ export class WorldActivity extends SDKController {
 
   /**
    * Retrieve all visitors currently in a Landmark Zone.
+   *
+   * @keywords get, fetch, retrieve, list, zone, area, landmark, visitors, users
    *
    * @category Visitors
    *
@@ -163,6 +167,8 @@ export class WorldActivity extends SDKController {
    * @remarks
    * Optionally refetch visitors, teleport or walk visitors to new location,
    * and scatter visitors by any number so that they don't all move to the exact same location.
+   *
+   * @keywords move, teleport, position, coordinate, visitors, users, relocate
    *
    * @category Visitors
    *
@@ -206,6 +212,8 @@ export class WorldActivity extends SDKController {
 
   /**
    * Teleport or walk a list of visitors currently in a world to various coordinates.
+   *
+   * @keywords move, teleport, position, coordinate, visitor, user, relocate
    *
    * @category Visitors
    *

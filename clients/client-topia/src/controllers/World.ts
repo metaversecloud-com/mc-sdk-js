@@ -86,6 +86,8 @@ export class World extends SDKController implements WorldInterface {
   /**
    * Retrieves details of a world.
    *
+   * @keywords get, fetch, retrieve, details, info, information, world
+   *
    * @example
    * ```ts
    * await world.fetchDetails();
@@ -106,6 +108,8 @@ export class World extends SDKController implements WorldInterface {
 
   /**
    * Update details of a world.
+   *
+   * @keywords update, modify, change, edit, world, settings, details
    *
    * @example
    * ```ts
@@ -157,6 +161,8 @@ export class World extends SDKController implements WorldInterface {
   /**
    * Set close world settings
    *
+   * @keywords update, modify, change, edit, world, settings, details, close, closed
+   *
    * @example
    * ```ts
    * await world.updateCloseWorldSettings({
@@ -204,6 +210,8 @@ export class World extends SDKController implements WorldInterface {
   /**
    * Retrieve all assets dropped in a world.
    *
+   * @keywords get, fetch, retrieve, list, current, dropped assets
+   *
    * @category Dropped Assets
    *
    * @example
@@ -234,6 +242,8 @@ export class World extends SDKController implements WorldInterface {
 
   /**
    * Retrieve all assets dropped in a world matching uniqueName.
+   *
+   * @keywords get, fetch, retrieve, list, current, dropped assets, uniqueName
    *
    * @category Dropped Assets
    *
@@ -281,6 +291,8 @@ export class World extends SDKController implements WorldInterface {
 
   /**
    * Retrieve all assets dropped in a world matching sceneDropId.
+   *
+   * @keywords get, fetch, retrieve, list, current, dropped assets, sceneDropId
    *
    * @category Dropped Assets
    *
@@ -332,6 +344,8 @@ export class World extends SDKController implements WorldInterface {
   /**
    * Update multiple custom text dropped assets with a single style while preserving text for specified dropped assets only.
    *
+   * @keywords update, modify, change, edit, dropped assets, custom text, style, text
+   *
    * @category Dropped Assets
    *
    * @example
@@ -361,6 +375,8 @@ export class World extends SDKController implements WorldInterface {
 
   /**
    * Retrieve all landmark zone assets dropped in a world.
+   *
+   * @keywords get, fetch, retrieve, list, landmark, zones, dropped assets
    *
    * @category Dropped Assets
    *
@@ -435,6 +451,8 @@ export class World extends SDKController implements WorldInterface {
   /**
    * Fetch a list of all scene drop ids and dropped assets in a world
    *
+   * @keywords get, fetch, retrieve, list, scenes
+   *
    * @category Scenes
    *
    * @example
@@ -476,6 +494,8 @@ export class World extends SDKController implements WorldInterface {
 
   /**
    * Drops a scene in a world and returns sceneDropId.
+   *
+   * @keywords drop, add, place, scene
    *
    * @category Scenes
    *
@@ -521,6 +541,8 @@ export class World extends SDKController implements WorldInterface {
   /**
    * Replace the current scene of a world.
    *
+   * @keywords replace, change, scene
+   *
    * @category Scenes
    *
    * @example
@@ -549,6 +571,8 @@ export class World extends SDKController implements WorldInterface {
   /**
    * Get all particles available
    *
+   * @keywords get, fetch, retrieve, list, particles
+   *
    * @category Particles
    *
    * @example
@@ -569,6 +593,8 @@ export class World extends SDKController implements WorldInterface {
 
   /**
    * Trigger a particle effect at a position in the world
+   *
+   * @keywords trigger, start, play, particle, effect
    *
    * @category Particles
    *
@@ -616,6 +642,8 @@ export class World extends SDKController implements WorldInterface {
    * Add an activity to a world
    * excludeFromNotification is an array of visitorIds to exclude from the notification
    *
+   * @keywords start, trigger, activity
+   *
    * @example
    * ```ts
    * await world.triggerActivity({ type: "GAME_ON", assetId: "abc123" });
@@ -647,6 +675,8 @@ export class World extends SDKController implements WorldInterface {
 
   /**
    * Display a message via a toast to all visitors currently in a world.
+   *
+   * @keywords send, display, show, toast, message, notification
    *
    * @example
    * ```ts
@@ -680,6 +710,8 @@ export class World extends SDKController implements WorldInterface {
   ////////// data objects
   /**
    * Retrieves the data object for a world. Must have valid interactive credentials from a visitor in the world.
+   *
+   * @keywords get, fetch, retrieve, load, data, object, state
    *
    * @category Data Objects
    *
@@ -717,6 +749,8 @@ export class World extends SDKController implements WorldInterface {
    * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
+   * @keywords set, assign, store, save, data, object, state
+   * 
    * @category Data Objects
    * 
    * @example
@@ -760,6 +794,8 @@ export class World extends SDKController implements WorldInterface {
    * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
+   * @keywords update, modify, change, edit, alter, data, object, state
+   *
    * @category Data Objects
    *
    * @example
@@ -800,6 +836,8 @@ export class World extends SDKController implements WorldInterface {
    * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
+   * @keywords increment, increase, add, count, data, object, state
+   *
    * @category Data Objects
    *
    * @example
@@ -838,6 +876,8 @@ export class World extends SDKController implements WorldInterface {
   /**
    * Retrieve all webhooks in a world.
    *
+   * @keywords get, fetch, retrieve, list, current, webhooks
+   *
    * @category Webhooks
    *
    * @example
@@ -861,6 +901,8 @@ export class World extends SDKController implements WorldInterface {
   ////////// analytics
   /**
    * Retrieve world analytics by day, week, month, quarter, or year
+   *
+   * @keywords get, fetch, retrieve, analytics, stats, statistics, data, metrics
    *
    * @category Analytics
    *

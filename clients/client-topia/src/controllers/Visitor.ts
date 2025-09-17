@@ -76,6 +76,8 @@ export class Visitor extends User implements VisitorInterface {
   /**
    * Get a single visitor from a world
    *
+   * @keywords get, fetch, retrieve, load, visitor, details
+   *
    * @example
    * ```ts
    * await visitor.fetchVisitor();
@@ -105,6 +107,8 @@ export class Visitor extends User implements VisitorInterface {
 
   /**
    * Teleport or walk a visitor currently in a world to a single set of coordinates.
+   *
+   * @keywords move, teleport, walk, position, coordinate, location, place
    *
    * @example
    * ```ts
@@ -140,6 +144,8 @@ export class Visitor extends User implements VisitorInterface {
   /**
    * Display a message via a toast to a visitor currently in a world.
    *
+   * @keywords toast, message, notification, alert, display, show, popup
+   *
    * @example
    * ```ts
    * await visitor.fireToast({
@@ -171,6 +177,8 @@ export class Visitor extends User implements VisitorInterface {
 
   /**
    * Open an iframe in a drawer or modal for a visitor currently in a world.
+   *
+   * @keywords open, iframe, drawer, modal, link, url, website, web page
    *
    * @category iframes
    *
@@ -213,6 +221,8 @@ export class Visitor extends User implements VisitorInterface {
   /**
    * Reload an iframe for a visitor currently in a world.
    *
+   * @keywords reload, iframe, drawer, modal, link, url, website, web page
+   *
    * @category iframes
    *
    * @example
@@ -237,6 +247,8 @@ export class Visitor extends User implements VisitorInterface {
 
   /**
    * Close an iframe for a visitor currently in a world.
+   *
+   * @keywords close, iframe, drawer, modal
    *
    * @category iframes
    *
@@ -263,6 +275,8 @@ export class Visitor extends User implements VisitorInterface {
   /**
    * Mute and turn video off for a visitor currently in a world.
    *
+   * @keywords mute, video, av, turn off, disable
+   *
    * @example
    * ```ts
    * await visitor.turnAVOff();
@@ -285,6 +299,8 @@ export class Visitor extends User implements VisitorInterface {
 
   /**
    * Get expressions
+   *
+   * @keywords get, fetch, retrieve, list, expressions, emotes
    *
    * @category Expressions
    *
@@ -314,6 +330,8 @@ export class Visitor extends User implements VisitorInterface {
 
   /**
    * Grant expression to a visitor by id or name.
+   *
+   * @keywords grant, give, add, expression, emote
    *
    * @category Expressions
    *
@@ -347,6 +365,8 @@ export class Visitor extends User implements VisitorInterface {
   /**
    * Get all particles available
    *
+   * @keywords get, fetch, retrieve, list, particles, effects
+   *
    * @category Particle Effects
    *
    * @example
@@ -367,6 +387,8 @@ export class Visitor extends User implements VisitorInterface {
 
   /**
    * Trigger a particle effect on a visitor
+   *
+   * @keywords trigger, particle, effect, spawn, start, play
    *
    * @category Particle Effects
    *
@@ -409,6 +431,8 @@ export class Visitor extends User implements VisitorInterface {
   /**
    * Retrieves the data object for a visitor.
    *
+   * @keywords get, fetch, retrieve, load, data, object, state
+   *
    * @category Data Objects
    *
    * @example
@@ -442,6 +466,8 @@ export class Visitor extends User implements VisitorInterface {
 
   /**
    * Sets the data object for a visitor.
+   *
+   * @keywords set, assign, store, save, data, object, state
    *
    * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
@@ -490,6 +516,8 @@ export class Visitor extends User implements VisitorInterface {
    * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
+   * @keywords update, modify, change, edit, alter, data, object, state
+   *
    * @category Data Objects
    *
    * @example
@@ -532,6 +560,8 @@ export class Visitor extends User implements VisitorInterface {
    * @remarks
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
+   * @keywords increment, increase, add, count, data, object, state
+   *
    * @category Data Objects
    *
    * @example
@@ -569,6 +599,8 @@ export class Visitor extends User implements VisitorInterface {
   /**
    * Update analytics for a given public key. Must have valid interactive credentials from a visitor in the world.
    *
+   * @keywords update, modify, change, edit, analytics, analytic, stats, statistics, data
+   *
    * @example
    * ```ts
    * await visitor.updatePublicKeyAnalytics([{ analyticName: "joins", profileId, uniqueKey: profileId, urlSlug }]);
@@ -588,6 +620,8 @@ export class Visitor extends User implements VisitorInterface {
 
   /**
    * Setup signal to visitor
+   *
+   * @keywords signal, webrtc, answer, connect, p2p
    *
    * @example
    * ```ts
