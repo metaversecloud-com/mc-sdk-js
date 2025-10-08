@@ -11,3 +11,5 @@ export * from "./WebhookInterfaces";
 export * from "./WebRTCConnectorInterfaces";
 export * from "./WorldActivityInterfaces";
 export * from "./WorldInterfaces";
+export * from "./InventoryItemInterfaces";
+export * from "./UserInventoryItemInterfaces";

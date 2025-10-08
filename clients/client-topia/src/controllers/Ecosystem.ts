@@ -10,6 +10,7 @@ import { EcosystemOptionalInterface } from "interfaces";
 // types
 import { ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
+import InventoryItem from "./InventoryItem";
 
 /* ============================================================================
 AI RULES for code assistants
@@ -55,9 +56,12 @@ AI RULES for code assistants
 export class Ecosystem extends SDKController {
   dataObject?: object | null | undefined;
 
+  #inventoryItems: InventoryItem[];
+
   constructor(topia: Topia, options: EcosystemOptionalInterface = { credentials: {} }) {
     super(topia, options.credentials);
     this.dataObject = {};
+    this.#inventoryItems = [];
   }
 
   /**
@@ -235,6 +239,43 @@ export class Ecosystem extends SDKController {
         sdkMethod: "Ecosystem.incrementDataObjectValue",
       });
     }
+  }
+
+  /**
+   * Retrieves all inventory items for a given keyholder (app public key).
+   *
+   * @keywords get, fetch, retrieve, list, inventory, items, keyholder
+   *
+   * @example
+   * ```ts
+   * const items = await ecosystem.fetchKeyholderInventoryItems("appPublicKey", "appJWT");
+   * ```
+   *
+   * @returns {Promise<object[]>} Returns an array of InventoryItem objects.
+   */
+  async fetchInventoryItems(): Promise<void> {
+    try {
+      // const query = appJWT ? `?appPublicKey=${appPublicKey}&appJWT=${appJWT}` : `?appPublicKey=${appPublicKey}`;
+      const response = await this.topiaPublicApi().get(`/inventory/`, this.requestOptions);
+      // TODO: Replace 'object' with InventoryItem and instantiate InventoryItem objects if needed
+      // create temp map and then update private property only once
+      const tempItems: InventoryItem[] = [];
+      for (const index in response.data) {
+        tempItems.push(
+          new InventoryItem(this.topia, response.data[index].id, {
+            attributes: response.data[index],
+            credentials: this.credentials,
+          }),
+        );
+      }
+      this.#inventoryItems = tempItems;
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Ecosystem.fetchKeyholderInventoryItems" });
+    }
+  }
+
+  get inventoryItems() {
+    return this.#inventoryItems;
   }
 }
 
