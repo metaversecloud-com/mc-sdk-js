@@ -7,3 +7,5 @@ export { VisitorFactory } from "./VisitorFactory";
 export { WebRTCConnectorFactory } from "./WebRTCConnectorFactory";
 export { WorldActivityFactory } from "./WorldActivityFactory";
 export { WorldFactory } from "./WorldFactory";
+export { InventoryItemFactory } from "./InventoryItemFactory";
+export { UserInventoryItemFactory } from "./UserInventoryItemFactory";

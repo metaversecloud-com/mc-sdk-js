@@ -1,6 +1,7 @@
 import { AnalyticType, InteractiveCredentials, ResponseType } from "types";
 import { SDKInterface } from "interfaces/SDKInterfaces";
 import { FireToastInterface } from "./SharedInterfaces";
+import { InventoryItem, UserInventoryItem } from "controllers";
 
 export interface VisitorInterface extends SDKInterface {
   fetchVisitor(): Promise<void | ResponseType>;
@@ -13,6 +14,12 @@ export interface VisitorInterface extends SDKInterface {
   getExpressions({ name, getUnlockablesOnly }: { name?: string; getUnlockablesOnly?: boolean }): Promise<ResponseType>;
   grantExpression({ id, name }: { id?: string; name?: string }): Promise<ResponseType>;
   getAllParticles(): Promise<ResponseType>;
+  fetchInventoryItems(): Promise<void>;
+  inventoryItems: UserInventoryItem[];
+  grantInventoryItem(item: InventoryItem, quantity: number): Promise<UserInventoryItem>;
+  modifyInventoryItemQuantity(item: UserInventoryItem, quantity: number): Promise<UserInventoryItem>;
+  fetchInventoryItem(item: InventoryItem): Promise<UserInventoryItem>;
+
   triggerParticle({
     id,
     name,
@@ -21,18 +28,18 @@ export interface VisitorInterface extends SDKInterface {
     id?: string;
     name?: string;
     duration?: number;
-    fetchDataObject(
-      appPublicKey?: string,
-      appJWT?: string,
-      sharedAppPublicKey?: string,
-      sharedAppJWT?: string,
-    ): Promise<void | ResponseType>;
-    setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
-    updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
-    incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
-    updatePublicKeyAnalytics(analytics?: AnalyticType[]): Promise<void | ResponseType>;
-    sendSignalToVisitor(signal: any): Promise<void | (ResponseType & { answerSignal: any })>;
   }): Promise<ResponseType | string>;
+  fetchDataObject(
+    appPublicKey?: string,
+    appJWT?: string,
+    sharedAppPublicKey?: string,
+    sharedAppJWT?: string,
+  ): Promise<void | ResponseType>;
+  setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
+  updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
+  incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
+  updatePublicKeyAnalytics(analytics?: AnalyticType[]): Promise<void | ResponseType>;
+  sendSignalToVisitor(signal: any): Promise<void | (ResponseType & { answerSignal: any })>;
 
   color?: string;
   dataObject?: object | null | undefined;

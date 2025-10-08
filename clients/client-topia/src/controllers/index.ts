@@ -1,6 +1,8 @@
 export { Asset } from "./Asset";
 export { DroppedAsset } from "./DroppedAsset";
 export { Ecosystem } from "./Ecosystem";
+export { InventoryItem } from "./InventoryItem";
+export { UserInventoryItem } from "./UserInventoryItem";
 export { Scene } from "./Scene";
 export { SDKController } from "./SDKController";
 export { Topia } from "./Topia";

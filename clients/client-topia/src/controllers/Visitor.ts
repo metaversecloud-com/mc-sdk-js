@@ -16,6 +16,9 @@ import {
 // types
 import { ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
+import InventoryItem from "./InventoryItem";
+import UserInventoryItem from "./UserInventoryItem";
+import { UserInventoryItemFactory } from "factories";
 
 /* ============================================================================
 AI RULES for code assistants
@@ -60,6 +63,7 @@ export class Visitor extends User implements VisitorInterface {
   readonly id: number;
   urlSlug: string;
   user?: User;
+  #visitorInventoryItems: UserInventoryItem[];
 
   constructor(
     topia: Topia,
@@ -71,6 +75,7 @@ export class Visitor extends User implements VisitorInterface {
     Object.assign(this, options.attributes);
     this.id = id;
     this.urlSlug = urlSlug;
+    this.#visitorInventoryItems = [];
   }
 
   /**
@@ -642,6 +647,144 @@ export class Visitor extends User implements VisitorInterface {
         params: { signal },
         sdkMethod: "Visitor.sendSignalToVisitor",
       });
+    }
+  }
+
+  /**
+   * Retrieves all inventory items owned by this visitor and app's key.
+   *
+   * @keywords get, fetch, retrieve, list, inventory, items, visitor
+   *
+   * @example
+   * ```ts
+   * const items = await visitor.fetchInventoryItems();
+   * ```
+   *
+   * @returns {Promise<void>} Returns an array of InventoryItem objects.
+   */
+  async fetchInventoryItem(item: InventoryItem): Promise<UserInventoryItem> {
+    try {
+      const response = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/visitors/${this.id}/get-visitor-inventory-items/${item.id}`,
+        this.requestOptions,
+      );
+
+      return new UserInventoryItem(this.topia, response.data.id, {
+        attributes: response.data,
+        credentials: this.credentials,
+      });
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.fetchInventoryItems" });
+    }
+  }
+
+  /**
+   * Retrieves all inventory items owned by this visitor and app's key.
+   *
+   * @keywords get, fetch, retrieve, list, inventory, items, visitor
+   *
+   * @example
+   * ```ts
+   * const items = await visitor.fetchInventoryItems();
+   * ```
+   *
+   * @returns {Promise<void>} Returns an array of InventoryItem objects.
+   */
+  async fetchInventoryItems(): Promise<void> {
+    try {
+      const response = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/visitors/${this.id}/get-visitor-inventory-items`,
+        this.requestOptions,
+      );
+      // TODO: Replace 'object' with InventoryItem and instantiate InventoryItem objects if needed
+      const tempItems: UserInventoryItem[] = [];
+      for (const index in response.data) {
+        tempItems.push(
+          new UserInventoryItem(this.topia, response.data[index].id, {
+            attributes: response.data[index],
+            credentials: this.credentials,
+          }),
+        );
+      }
+      this.#visitorInventoryItems = tempItems;
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.fetchInventoryItems" });
+    }
+  }
+
+  get inventoryItems() {
+    return this.#visitorInventoryItems;
+  }
+
+  /**
+   * Grants an inventory item to this visitor.
+   *
+   * @param itemId The ID of the inventory item to grant.
+   * @param quantity The quantity to grant (default 1).
+   *
+   * @example
+   * ```ts
+   * await visitor.grantInventoryItem("item-id-123", 2);
+   * ```
+   *
+   * @returns {Promise<UserInventoryItem>} Returns the updated inventory or a response object.
+   */
+  async grantInventoryItem(item: InventoryItem, quantity = 1): Promise<UserInventoryItem> {
+    // Error if item already exists in #visitorInventoryItems
+    const exists = this.#visitorInventoryItems?.some((visitorItem) => visitorItem.id === item.id);
+    if (exists) {
+      throw new Error(`Inventory item with id '${item.id}' already exists in visitorInventoryItems.`);
+    }
+    try {
+      const response = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/grant-visitor-inventory-item`,
+        { itemId: item.id, quantity },
+        this.requestOptions,
+      );
+      const userInventoryItemFactory = new UserInventoryItemFactory(this.topia);
+      const { inventoryItem, user_id, quantity: newQuantity } = response.data;
+      return userInventoryItemFactory.create(inventoryItem, user_id, newQuantity as number, {
+        attributes: response.data,
+        credentials: this.credentials,
+      });
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.grantInventoryItem" });
+    }
+  }
+
+  /**
+   * Modifies the quantity of an inventory item in this visitor's inventory.
+   *
+   * @param itemId The ID of the inventory item to modify.
+   * @param quantity The new quantity to set.
+   *
+   * @example
+   * ```ts
+   * await visitor.modifyInventoryItemQuantity("item-id-123", 5);
+   * ```
+   *
+   * @returns {Promise<UserInventoryItem>} Returns the updated inventory or a response object.
+   */
+  async modifyInventoryItemQuantity(item: UserInventoryItem, quantity: number): Promise<UserInventoryItem> {
+    // Check for existence in #visitorInventoryItems
+    const found = this.#visitorInventoryItems?.some((visitorItem) => visitorItem.id === item.userItemId);
+    if (!found) {
+      throw new Error(`Inventory item with id '${item.userItemId}' does not exist in visitorInventoryItems.`);
+    }
+    try {
+      const response = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/update-visitor-inventory-item-quantity`,
+        { userItemId: item.id, itemId: item.item_id, quantity },
+        this.requestOptions,
+      );
+      const userInventoryItemFactory = new UserInventoryItemFactory(this.topia);
+      const { inventoryItem, user_id, quantity: newQuantity } = response.data;
+      return userInventoryItemFactory.create(inventoryItem, user_id, newQuantity as number, {
+        attributes: response.data,
+        credentials: this.credentials,
+      });
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.modifyInventoryItemQuantity" });
     }
   }
 }

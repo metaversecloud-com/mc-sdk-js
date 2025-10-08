@@ -13,6 +13,7 @@ import { UserInterface, UserOptionalInterface } from "interfaces";
 // types
 import { ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
+import UserInventoryItem from "./UserInventoryItem";
 
 /* ============================================================================
 AI RULES for code assistants
@@ -60,6 +61,7 @@ export class User extends SDKController implements UserInterface {
   profileId?: string | null;
   dataObject?: object | null | undefined;
   profile?: Record<string, any>;
+  #userInventoryItems: UserInventoryItem[];
 
   #adminWorldsMap: { [key: string]: World };
   #assetsMap: { [key: string]: Asset };
@@ -77,6 +79,7 @@ export class User extends SDKController implements UserInterface {
     this.#assetsMap = {};
     this.#scenesMap = {};
     this.#worldsMap = {};
+    this.#userInventoryItems = [];
   }
 
   get adminWorlds() {
@@ -744,6 +747,46 @@ export class User extends SDKController implements UserInterface {
     } catch (error) {
       throw this.errorHandler({ error, params: { path, amount, options }, sdkMethod: "User.incrementDataObjectValue" });
     }
+  }
+
+  /**
+   * Retrieves all inventory items owned by this visitor and app's key.
+   *
+   * @keywords get, fetch, retrieve, list, inventory, items, visitor
+   *
+   * @example
+   * ```ts
+   * const items = await visitor.fetchInventoryItems();
+   * ```
+   *
+   * @returns {Promise<void>} Returns an array of InventoryItem objects.
+   */
+  async fetchInventoryItems(): Promise<void> {
+    try {
+      if (!this.profileId) throw "This method requires the use of a profileId";
+
+      const response = await this.topiaPublicApi().get(
+        `/user/${this.profileId}/get-user-inventory-items`,
+        this.requestOptions,
+      );
+      // TODO: Replace 'object' with InventoryItem and instantiate InventoryItem objects if needed
+      const tempItems: UserInventoryItem[] = [];
+      for (const index in response.data) {
+        tempItems.push(
+          new UserInventoryItem(this.topia, response.data[index].id, {
+            attributes: response.data[index],
+            credentials: this.credentials,
+          }),
+        );
+      }
+      this.#userInventoryItems = tempItems;
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.fetchInventoryItems" });
+    }
+  }
+
+  get inventoryItems() {
+    return this.#userInventoryItems;
   }
 }
 
