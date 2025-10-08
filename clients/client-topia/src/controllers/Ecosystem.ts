@@ -248,7 +248,7 @@ export class Ecosystem extends SDKController {
    *
    * @example
    * ```ts
-   * const items = await ecosystem.fetchKeyholderInventoryItems("appPublicKey", "appJWT");
+   * const items = await ecosystem.fetchInventoryItems("appPublicKey", "appJWT");
    * ```
    *
    * @returns {Promise<object[]>} Returns an array of InventoryItem objects.
@@ -270,7 +270,7 @@ export class Ecosystem extends SDKController {
       }
       this.#inventoryItems = tempItems;
     } catch (error) {
-      throw this.errorHandler({ error, sdkMethod: "Ecosystem.fetchKeyholderInventoryItems" });
+      throw this.errorHandler({ error, sdkMethod: "Ecosystem.fetchInventoryItems" });
     }
   }
 
