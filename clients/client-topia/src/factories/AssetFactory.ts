@@ -56,7 +56,7 @@ export class AssetFactory extends SDKController {
   }
 
   /**
-   * Instantiate a new instance of Asset class with the specified asset ID.
+   * Instantiate a new instance of Asset class with the specified asset id.
    *
    * @remarks
    * This method creates a new Asset controller instance that can be used to interact with an existing asset.

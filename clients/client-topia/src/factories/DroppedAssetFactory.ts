@@ -141,7 +141,7 @@ export class DroppedAssetFactory extends SDKController {
    *
    * @remarks
    * This method leverages the handleGetDroppedAssetByUniqueName endpoint in the Public API and assumes there is exactly one dropped asset with the matching uniqueName for the given urlSlug.
-   * Use this when you need to find a dropped asset by its uniqueName rather than its ID.
+   * Use this when you need to find a dropped asset by its uniqueName rather than its id.
    *
    * @keywords find, search, unique name, retrieve, locate, lookup, dropped asset
    *

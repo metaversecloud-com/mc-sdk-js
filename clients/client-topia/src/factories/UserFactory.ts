@@ -61,7 +61,7 @@ export class UserFactory {
    *
    * @remarks
    * This method creates a controller instance for interacting with user-specific operations.
-   * The User controller doesn't require an ID since it represents the currently authenticated user.
+   * The User controller doesn't require an id since it represents the currently authenticated user.
    *
    * @keywords create, instantiate, user, initialize, account, profile, member
    *

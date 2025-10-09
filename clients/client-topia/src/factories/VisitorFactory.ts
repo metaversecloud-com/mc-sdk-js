@@ -72,7 +72,7 @@ export class VisitorFactory {
    *
    * // Create a Visitor instance with credentials
    * const visitorInstance = Visitor.create(
-   *   12345, // visitor ID
+   *   12345, // visitor id
    *   "my-world-slug",
    *   {
    *     credentials: {
@@ -111,7 +111,7 @@ export class VisitorFactory {
    *
    * // Get a fully populated Visitor instance
    * const visitorInstance = await Visitor.get(
-   *   12345, // visitor ID
+   *   12345, // visitor id
    *   "my-world-slug",
    *   {
    *     credentials: {

@@ -61,7 +61,7 @@ export class SceneFactory {
    *
    * @remarks
    * This method creates a controller instance for working with a scene but does not fetch its properties.
-   * Use this when you need to interact with a specific scene by its ID.
+   * Use this when you need to interact with a specific scene by its id.
    *
    * @keywords create, instantiate, scene, initialize, instance, template
    *
