@@ -1,3 +1,4 @@
+import { InventoryItem, UserInventoryItem } from "controllers";
 import { InteractiveCredentials, ResponseType } from "types";
 
 export interface UserInterface {
@@ -15,6 +16,10 @@ export interface UserInterface {
   fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType>;
   setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
   incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
+  fetchInventoryItems(): Promise<void>;
+  inventoryItems: UserInventoryItem[];
+  grantInventoryItem(item: InventoryItem, quantity: number): Promise<UserInventoryItem>;
+  modifyInventoryItemQuantity(item: UserInventoryItem, quantity: number): Promise<UserInventoryItem>;
 
   dataObject?: object | null;
 }
