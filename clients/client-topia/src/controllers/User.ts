@@ -14,6 +14,8 @@ import { UserInterface, UserOptionalInterface } from "interfaces";
 import { ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
 import UserInventoryItem from "./UserInventoryItem";
+import InventoryItem from "./InventoryItem";
+import { UserInventoryItemFactory } from "factories";
 
 /* ============================================================================
 AI RULES for code assistants
@@ -750,13 +752,13 @@ export class User extends SDKController implements UserInterface {
   }
 
   /**
-   * Retrieves all inventory items owned by this visitor and app's key.
+   * Retrieves all inventory items owned by this user and app's key.
    *
-   * @keywords get, fetch, retrieve, list, inventory, items, visitor
+   * @keywords get, fetch, retrieve, list, inventory, items, user
    *
    * @example
    * ```ts
-   * const items = await visitor.fetchInventoryItems();
+   * const items = await user.fetchInventoryItems();
    * ```
    *
    * @returns {Promise<void>} Returns an array of InventoryItem objects.
@@ -766,7 +768,7 @@ export class User extends SDKController implements UserInterface {
       if (!this.profileId) throw "This method requires the use of a profileId";
 
       const response = await this.topiaPublicApi().get(
-        `/user/${this.profileId}/get-user-inventory-items`,
+        `/user/inventory/${this.profileId}/get-user-inventory-items`,
         this.requestOptions,
       );
       // TODO: Replace 'object' with InventoryItem and instantiate InventoryItem objects if needed
@@ -787,6 +789,72 @@ export class User extends SDKController implements UserInterface {
 
   get inventoryItems() {
     return this.#userInventoryItems;
+  }
+
+  /**
+   * Grants an inventory item to this user.
+   *
+   * @param item The InventoryItem to modify.
+   * @param quantity The new quantity to set.
+   *
+   * @example
+   * ```ts
+   * const items = await user.grantInventoryItem("item-id-123", 2);
+   * ```
+   *
+   * @returns {Promise<UserInventoryItem>} Returns the UserInventoryItem granted.
+   */
+  async grantInventoryItem(item: InventoryItem, quantity = 1): Promise<UserInventoryItem> {
+    try {
+      if (!this.profileId) throw "This method requires the use of a profileId";
+
+      const response = await this.topiaPublicApi().put(
+        `/user/inventory/${this.profileId}/grant-user-inventory-item`,
+        { itemId: item.id, quantity },
+        this.requestOptions,
+      );
+      const userInventoryItemFactory = new UserInventoryItemFactory(this.topia);
+      const { inventoryItem, user_id, quantity: newQuantity } = response.data;
+      return userInventoryItemFactory.create(inventoryItem, user_id, newQuantity as number, {
+        attributes: response.data,
+        credentials: this.credentials,
+      });
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.grantInventoryItem" });
+    }
+  }
+
+  /**
+   * Modifies the quantity of an inventory item in this user's inventory.
+   *
+   * @param item The UserInventoryItem to modify.
+   * @param quantity The new quantity to set.
+   *
+   * @example
+   * ```ts
+   * await user.modifyInventoryItemQuantity("item-id-123", 5);
+   * ```
+   *
+   * @returns {Promise<UserInventoryItem>} Returns the updated inventory or a response object.
+   */
+  async modifyInventoryItemQuantity(item: UserInventoryItem, quantity: number): Promise<UserInventoryItem> {
+    try {
+      if (!this.profileId) throw "This method requires the use of a profileId";
+
+      const response = await this.topiaPublicApi().put(
+        `/user/inventory/${this.profileId}/update-user-inventory-item-quantity`,
+        { userItemId: item.id, itemId: item.item_id, quantity },
+        this.requestOptions,
+      );
+      const userInventoryItemFactory = new UserInventoryItemFactory(this.topia);
+      const { inventoryItem, user_id, quantity: newQuantity } = response.data;
+      return userInventoryItemFactory.create(inventoryItem, user_id, newQuantity as number, {
+        attributes: response.data,
+        credentials: this.credentials,
+      });
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.modifyInventoryItemQuantity" });
+    }
   }
 }
 
