@@ -17,7 +17,8 @@
   "options": {
     "navigation": {
       "includeCategories": true
-    }
+    },
+    "plugin": ["typedoc-plugin-frontmatter"]
   },
   "out": "../../docs",
   "readme": "./README.md",
