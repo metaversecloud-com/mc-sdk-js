@@ -800,8 +800,8 @@ export class Visitor extends User implements VisitorInterface {
   /**
    * Grants an inventory item to this visitor.
    *
-   * @param itemId The ID of the inventory item to grant.
-   * @param quantity The quantity to grant (default 1).
+   * @param item The InventoryItem to modify.
+   * @param quantity The new quantity to set.
    *
    * @example
    * ```ts
@@ -836,7 +836,7 @@ export class Visitor extends User implements VisitorInterface {
   /**
    * Modifies the quantity of an inventory item in this visitor's inventory.
    *
-   * @param itemId The ID of the inventory item to modify.
+   * @param item The UserInventoryItem to modify.
    * @param quantity The new quantity to set.
    *
    * @example
