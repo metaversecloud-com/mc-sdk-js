@@ -679,6 +679,87 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
+   * Get's a following avatar for this visitor, if one exists.
+   *
+   * @example
+   * ```ts
+   * await visitor.getFollowingAvatar();
+   * ```
+   *
+   * @returns {Promise<Visitor | null>} Returns a Visitor object representing the following avatar.
+   */
+  async getFollowingAvatar(): Promise<Visitor | null> {
+    // Check for existence in #visitorInventoryItems
+    try {
+      const visitorResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/visitors/${this.id}/get-following-avatar`,
+        this.requestOptions,
+      );
+      if (visitorResponse.data)
+        return new Visitor(this.topia, visitorResponse.data.playerId, this.urlSlug, {
+          attributes: visitorResponse.data,
+          credentials: this.credentials,
+        });
+      return null;
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.getFollowingAvatar" });
+    }
+  }
+
+  /**
+   * Gives this visitor a following avatar. One following avatar is allowed per visitor, per application public key.
+   *
+   * @param name The ID of the inventory item to modify.
+   * @param avatarImageUrl The new quantity to set.
+   *
+   * @example
+   * ```ts
+   * await visitor.addFollowingAvatar("george", "https://example.com/avatar-george.png");
+   * ```
+   *
+   * @returns {Promise<Visitor>} Returns nothing if successful.
+   */
+  async addFollowingAvatar(name: string, avatarImageUrl: string, height: number, width: number): Promise<Visitor> {
+    // Check for existence in #visitorInventoryItems
+    try {
+      const response = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/add-following-avatar`,
+        { avatarImageUrl, name, height, width },
+        this.requestOptions,
+      );
+      return new Visitor(this.topia, response.data.player.playerId, this.urlSlug, {
+        attributes: response.data,
+        credentials: this.credentials,
+      });
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.addFollowingAvatar" });
+    }
+  }
+
+  /**
+   * Deletes whichever following avatar this app has assigned to this visitor.
+   *
+   * @example
+   * ```ts
+   * await visitor.deleteFollowingAvatar();
+   * ```
+   *
+   * @returns {Promise<void>} Returns nothing if successful.
+   */
+  async deleteFollowingAvatar(): Promise<void> {
+    // Check for existence in #visitorInventoryItems
+    try {
+      await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/delete-following-avatar`,
+        {},
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.deleteFollowingAvatar" });
+    }
+  }
+
+  /**
    * Retrieves all inventory items owned by this visitor and app's key.
    *
    * @keywords get, fetch, retrieve, list, inventory, items, visitor
