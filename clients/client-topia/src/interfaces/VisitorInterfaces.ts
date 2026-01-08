@@ -19,9 +19,9 @@ export interface VisitorInterface extends SDKInterface {
   grantInventoryItem(item: InventoryItem, quantity: number): Promise<UserInventoryItem>;
   modifyInventoryItemQuantity(item: UserInventoryItem, quantity: number): Promise<UserInventoryItem>;
   fetchInventoryItem(item: InventoryItem): Promise<UserInventoryItem>;
-  addFollowingAvatar(name: string, avatarImageUrl: string, height: number, width: number): Promise<Visitor>;
-  deleteFollowingAvatar(): Promise<void>;
-  getFollowingAvatar(): Promise<Visitor | null>;
+  createNpc(name: string, avatarImageUrl: string, height: number, width: number): Promise<Visitor>;
+  deleteNpc(): Promise<void>;
+  getNpc(): Promise<Visitor | null>;
 
   triggerParticle({
     id,

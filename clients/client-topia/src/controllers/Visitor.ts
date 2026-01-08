@@ -679,20 +679,19 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * Get's a following avatar for this visitor, if one exists.
+   * Gets an NPC for this visitor, if one exists.
    *
    * @example
    * ```ts
-   * await visitor.getFollowingAvatar();
+   * await visitor.getNpc();
    * ```
    *
-   * @returns {Promise<Visitor | null>} Returns a Visitor object representing the following avatar.
+   * @returns {Promise<Visitor | null>} Returns a Visitor object representing the NPC.
    */
-  async getFollowingAvatar(): Promise<Visitor | null> {
-    // Check for existence in #visitorInventoryItems
+  async getNpc(): Promise<Visitor | null> {
     try {
       const visitorResponse = await this.topiaPublicApi().get(
-        `/world/${this.urlSlug}/visitors/${this.id}/get-following-avatar`,
+        `/world/${this.urlSlug}/visitors/${this.id}/get-npc`,
         this.requestOptions,
       );
       if (visitorResponse.data)
@@ -702,28 +701,29 @@ export class Visitor extends User implements VisitorInterface {
         });
       return null;
     } catch (error) {
-      throw this.errorHandler({ error, sdkMethod: "Visitor.getFollowingAvatar" });
+      throw this.errorHandler({ error, sdkMethod: "Visitor.getNpc" });
     }
   }
 
   /**
-   * Gives this visitor a following avatar. One following avatar is allowed per visitor, per application public key.
+   * Creates an NPC that follows this visitor. One NPC is allowed per visitor, per application public key.
    *
-   * @param name The ID of the inventory item to modify.
-   * @param avatarImageUrl The new quantity to set.
+   * @param name The display name for the NPC.
+   * @param avatarImageUrl The image URL for the NPC sprite.
+   * @param height The height of the NPC sprite.
+   * @param width The width of the NPC sprite.
    *
    * @example
    * ```ts
-   * await visitor.addFollowingAvatar("george", "https://example.com/avatar-george.png");
+   * await visitor.createNpc("George", "https://example.com/npc-george.png", 100, 100);
    * ```
    *
-   * @returns {Promise<Visitor>} Returns nothing if successful.
+   * @returns {Promise<Visitor>} Returns a Visitor object representing the created NPC.
    */
-  async addFollowingAvatar(name: string, avatarImageUrl: string, height: number, width: number): Promise<Visitor> {
-    // Check for existence in #visitorInventoryItems
+  async createNpc(name: string, avatarImageUrl: string, height: number, width: number): Promise<Visitor> {
     try {
-      const response = await this.topiaPublicApi().put(
-        `/world/${this.urlSlug}/visitors/${this.id}/add-following-avatar`,
+      const response = await this.topiaPublicApi().post(
+        `/world/${this.urlSlug}/visitors/${this.id}/create-npc`,
         { avatarImageUrl, name, height, width },
         this.requestOptions,
       );
@@ -732,30 +732,28 @@ export class Visitor extends User implements VisitorInterface {
         credentials: this.credentials,
       });
     } catch (error) {
-      throw this.errorHandler({ error, sdkMethod: "Visitor.addFollowingAvatar" });
+      throw this.errorHandler({ error, sdkMethod: "Visitor.createNpc" });
     }
   }
 
   /**
-   * Deletes whichever following avatar this app has assigned to this visitor.
+   * Deletes the NPC this app has assigned to this visitor.
    *
    * @example
    * ```ts
-   * await visitor.deleteFollowingAvatar();
+   * await visitor.deleteNpc();
    * ```
    *
    * @returns {Promise<void>} Returns nothing if successful.
    */
-  async deleteFollowingAvatar(): Promise<void> {
-    // Check for existence in #visitorInventoryItems
+  async deleteNpc(): Promise<void> {
     try {
-      await this.topiaPublicApi().put(
-        `/world/${this.urlSlug}/visitors/${this.id}/delete-following-avatar`,
-        {},
+      await this.topiaPublicApi().delete(
+        `/world/${this.urlSlug}/visitors/${this.id}/delete-npc`,
         this.requestOptions,
       );
     } catch (error) {
-      throw this.errorHandler({ error, sdkMethod: "Visitor.deleteFollowingAvatar" });
+      throw this.errorHandler({ error, sdkMethod: "Visitor.deleteNpc" });
     }
   }
 
