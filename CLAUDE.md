@@ -49,13 +49,44 @@ yarn lint
 
 # Generate documentation
 cd clients/client-topia && yarn docs
-
-# Local development (yalc)
-cd clients/client-topia && yarn yalc-publish
-
-# Publish to npm
-cd clients/client-topia && yarn pkg
 ```
+
+---
+
+## Local Development with Yalc
+
+When developing SDK changes, use yalc to test locally with SDK apps before publishing.
+
+### Step 1: Build and Push SDK to Yalc
+
+```bash
+# From mc-sdk-js/clients/client-topia directory
+cd clients/client-topia
+npm run yalc-push
+```
+
+This builds the SDK and pushes it to your local yalc store.
+
+### Step 2: Link SDK in Consumer App
+
+In each SDK app that needs the updated SDK:
+
+```bash
+# Example: virtual-pet app
+cd /path/to/topia-sdk-apps/virtual-pet/server
+npm run link-sdk
+cd ..
+```
+
+This links the local yalc version to the app's server workspace.
+
+### Workflow
+
+1. Make changes to SDK source files
+2. Run `npm run yalc-push` from `mc-sdk-js/clients/client-topia`
+3. Run `npm run link-sdk` in each consuming app's server directory
+4. Test your changes
+5. Repeat as needed
 
 ---
 
@@ -486,6 +517,14 @@ describe("MyController", () => {
 
 ## Publishing
 
+**DO NOT PUBLISH TO NPM WITHOUT EXPLICIT APPROVAL.**
+
+Publishing breaking changes to npm will break all existing SDK apps in production. Always:
+1. Test changes locally using yalc (see "Local Development with Yalc" above)
+2. Get explicit approval from the team lead before publishing
+3. Coordinate with all SDK app maintainers for breaking changes
+4. Consider backwards compatibility and migration paths
+
 ```bash
 cd clients/client-topia
 
@@ -497,7 +536,7 @@ yarn test
 # 3. Generate docs
 yarn docs
 
-# 4. Publish to npm
+# 4. Publish to npm (ONLY WITH APPROVAL)
 yarn pkg  # Runs: yarn && yarn build && yarn docs && npm publish
 ```
 

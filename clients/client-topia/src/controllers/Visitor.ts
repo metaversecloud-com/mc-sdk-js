@@ -706,25 +706,27 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * Creates an NPC that follows this visitor. One NPC is allowed per visitor, per application public key.
+   * Creates an NPC that follows this visitor using an inventory item the visitor owns.
+   * One NPC is allowed per visitor, per application public key.
    *
-   * @param name The display name for the NPC.
-   * @param avatarImageUrl The image URL for the NPC sprite.
-   * @param height The height of the NPC sprite.
-   * @param width The width of the NPC sprite.
+   * @param userInventoryItemId The ID of the user's inventory item (must be an NPC type item owned by this visitor).
    *
    * @example
    * ```ts
-   * await visitor.createNpc("George", "https://example.com/npc-george.png", 100, 100);
+   * // First, grant the NPC item to the visitor
+   * const userItem = await visitor.grantInventoryItem(npcInventoryItem, 1);
+   *
+   * // Then create the NPC using the granted item
+   * const npc = await visitor.createNpc(userItem.id);
    * ```
    *
    * @returns {Promise<Visitor>} Returns a Visitor object representing the created NPC.
    */
-  async createNpc(name: string, avatarImageUrl: string, height: number, width: number): Promise<Visitor> {
+  async createNpc(userInventoryItemId: string): Promise<Visitor> {
     try {
       const response = await this.topiaPublicApi().post(
         `/world/${this.urlSlug}/visitors/${this.id}/create-npc`,
-        { avatarImageUrl, name, height, width },
+        { userInventoryItemId },
         this.requestOptions,
       );
       return new Visitor(this.topia, response.data.player.playerId, this.urlSlug, {
