@@ -217,6 +217,11 @@ await visitor.updateDataObject(partialData);
 await visitor.fetchInventoryItems();
 await visitor.grantInventoryItem(itemId, quantity);
 await visitor.modifyInventoryItemQuantity(itemId, delta);
+
+// NPCs (following avatars)
+const npc = await visitor.createNpc(userInventoryItemId);  // Spawn NPC from inventory item
+const existingNpc = await visitor.getNpc();                 // Get existing NPC
+await visitor.deleteNpc();                                  // Remove NPC
 ```
 
 ### DroppedAsset
@@ -328,6 +333,82 @@ await visitor.updateDataObject(
   }
 );
 ```
+
+---
+
+## NPC System (Following Avatars)
+
+NPCs are non-player characters that follow visitors around the world. They're spawned from inventory items and managed per-visitor, per-app.
+
+### Overview
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         NPC FLOW                                 │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  1. SETUP (topia-gateway)                                       │
+│     Developer creates inventory item with type "NPC"            │
+│     - avatarUrl: URL to avatar spritesheet                      │
+│     - name: Display name for the NPC                            │
+│                                                                 │
+│  2. GRANT (SDK app grants item to visitor)                      │
+│     const item = await visitor.grantInventoryItem(itemId, 1);   │
+│                                                                 │
+│  3. SPAWN (SDK app creates NPC from inventory item)             │
+│     const npc = await visitor.createNpc(item.id);               │
+│                                                                 │
+│  4. FOLLOW (backend handles automatically)                      │
+│     NPC follows visitor's position updates                      │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### NPC Methods
+
+| Method | Description | Returns |
+|--------|-------------|---------|
+| `visitor.createNpc(userInventoryItemId)` | Spawn NPC from an NPC-type inventory item | `Promise<Visitor>` |
+| `visitor.getNpc()` | Get existing NPC for this visitor/app | `Promise<Visitor \| null>` |
+| `visitor.deleteNpc()` | Remove the NPC | `Promise<void>` |
+
+### Usage Example
+
+```typescript
+// 1. Grant an NPC inventory item to the visitor
+const npcItem = await visitor.grantInventoryItem(petInventoryItemId, 1);
+
+// 2. Spawn the NPC using the granted item's ID
+const npc = await visitor.createNpc(npcItem.id);
+
+// 3. Later, get the existing NPC
+const existingNpc = await visitor.getNpc();
+
+// 4. Delete the NPC when done
+await visitor.deleteNpc();
+```
+
+### NPC Behavior
+
+- **One NPC per visitor per app**: Each interactive key can have one NPC per visitor
+- **Automatic following**: NPCs follow their owner's position (handled by backend)
+- **No proximity/WebRTC**: NPCs don't participate in audio/video connections
+- **Clickable**: NPCs appear in spatial hashing and can be clicked
+- **Inventory-linked**: NPC appearance comes from the inventory item's `avatarUrl`
+
+### NPC Identification
+
+NPCs are identified by the `isNPCFromKey` field:
+
+```
+Format: {publicKey}|{inventoryItemId}|{userInventoryItemId}
+```
+
+This allows the frontend to route NPCs to `NpcSystem` instead of `PlayerSpriteSystem`.
+
+### Related Documentation
+
+See `npcs.md` in the topia-stack root for full NPC architecture documentation.
 
 ---
 
