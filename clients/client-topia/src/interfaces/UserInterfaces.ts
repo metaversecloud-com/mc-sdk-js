@@ -15,6 +15,7 @@ export interface UserInterface {
   getExpressions({ name, getUnlockablesOnly }: { name?: string; getUnlockablesOnly?: boolean }): Promise<ResponseType>;
   fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType>;
   setDataObject(dataObject: object | null | undefined, options: object): Promise<void | ResponseType>;
+  updateDataObject(dataObject: object, options: object): Promise<void | ResponseType>;
   incrementDataObjectValue(path: string, amount: number, options: object): Promise<void | ResponseType>;
   fetchInventoryItems(): Promise<void>;
   inventoryItems: UserInventoryItem[];

@@ -660,7 +660,7 @@ export class Visitor extends User implements VisitorInterface {
    * const items = await visitor.fetchInventoryItems();
    * ```
    *
-   * @returns {Promise<void>} Returns an array of InventoryItem objects.
+   * @returns {Promise<void>} Returns a new instance of InventoryItem.
    */
   async fetchInventoryItem(item: InventoryItem): Promise<UserInventoryItem> {
     try {
@@ -755,10 +755,7 @@ export class Visitor extends User implements VisitorInterface {
    */
   async deleteNpc(): Promise<void> {
     try {
-      await this.topiaPublicApi().delete(
-        `/world/${this.urlSlug}/visitors/${this.id}/delete-npc`,
-        this.requestOptions,
-      );
+      await this.topiaPublicApi().delete(`/world/${this.urlSlug}/visitors/${this.id}/delete-npc`, this.requestOptions);
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "Visitor.deleteNpc" });
     }
@@ -813,7 +810,7 @@ export class Visitor extends User implements VisitorInterface {
    * await visitor.grantInventoryItem("item-id-123", 2);
    * ```
    *
-   * @returns {Promise<UserInventoryItem>} Returns the updated inventory or a response object.
+   * @returns {Promise<UserInventoryItem>} Returns the updated inventory item or a response object.
    */
   async grantInventoryItem(item: InventoryItem, quantity = 1): Promise<UserInventoryItem> {
     // Error if item already exists in #visitorInventoryItems
@@ -849,7 +846,7 @@ export class Visitor extends User implements VisitorInterface {
    * await visitor.modifyInventoryItemQuantity("item-id-123", 5);
    * ```
    *
-   * @returns {Promise<UserInventoryItem>} Returns the updated inventory or a response object.
+   * @returns {Promise<UserInventoryItem>} Returns the updated inventory item or a response object.
    */
   async modifyInventoryItemQuantity(item: UserInventoryItem, quantity: number): Promise<UserInventoryItem> {
     // Check for existence in #visitorInventoryItems

@@ -157,7 +157,7 @@ export class WorldFactory extends SDKController {
           }),
         );
       }
-      await Promise.all(promiseArray);
+      await Promise.allSettled(promiseArray);
 
       return { success: true };
     } catch (error) {

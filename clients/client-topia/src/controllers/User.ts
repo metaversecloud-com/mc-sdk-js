@@ -835,7 +835,7 @@ export class User extends SDKController implements UserInterface {
    * await user.modifyInventoryItemQuantity("item-id-123", 5);
    * ```
    *
-   * @returns {Promise<UserInventoryItem>} Returns the updated inventory or a response object.
+   * @returns {Promise<UserInventoryItem>} Returns the updated inventory item or a response object.
    */
   async modifyInventoryItemQuantity(item: UserInventoryItem, quantity: number): Promise<UserInventoryItem> {
     try {
