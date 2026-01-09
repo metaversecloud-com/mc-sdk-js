@@ -679,6 +679,92 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
+   * Gets an NPC for this visitor, if one exists.
+   *
+   * @example
+   * ```ts
+   * await visitor.getNpc();
+   * ```
+   *
+   * @returns {Promise<Visitor | null>} Returns a Visitor object representing the NPC.
+   */
+  async getNpc(): Promise<Visitor | null> {
+    try {
+      const visitorResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/visitors/${this.id}/get-npc`,
+        this.requestOptions,
+      );
+      if (visitorResponse.data)
+        return new Visitor(this.topia, visitorResponse.data.playerId, this.urlSlug, {
+          attributes: visitorResponse.data,
+          credentials: this.credentials,
+        });
+      return null;
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.getNpc" });
+    }
+  }
+
+  /**
+   * Creates an NPC that follows this visitor using an inventory item the visitor owns.
+   * One NPC is allowed per visitor, per application public key.
+   *
+   * @param userInventoryItemId The ID of the user's inventory item (must be an NPC type item owned by this visitor).
+   * @param options Optional configuration for the NPC.
+   * @param options.showNameplate Whether to display a nameplate above the NPC (default: true).
+   *
+   * @example
+   * ```ts
+   * // First, grant the NPC item to the visitor
+   * const userItem = await visitor.grantInventoryItem(npcInventoryItem, 1);
+   *
+   * // Then create the NPC using the granted item
+   * const npc = await visitor.createNpc(userItem.id);
+   *
+   * // Or create without a nameplate
+   * const npc = await visitor.createNpc(userItem.id, { showNameplate: false });
+   * ```
+   *
+   * @returns {Promise<Visitor>} Returns a Visitor object representing the created NPC.
+   */
+  async createNpc(userInventoryItemId: string, options?: { showNameplate?: boolean }): Promise<Visitor> {
+    try {
+      const response = await this.topiaPublicApi().post(
+        `/world/${this.urlSlug}/visitors/${this.id}/create-npc`,
+        { userInventoryItemId, showNameplate: options?.showNameplate },
+        this.requestOptions,
+      );
+      return new Visitor(this.topia, response.data.player.playerId, this.urlSlug, {
+        attributes: response.data,
+        credentials: this.credentials,
+      });
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.createNpc" });
+    }
+  }
+
+  /**
+   * Deletes the NPC this app has assigned to this visitor.
+   *
+   * @example
+   * ```ts
+   * await visitor.deleteNpc();
+   * ```
+   *
+   * @returns {Promise<void>} Returns nothing if successful.
+   */
+  async deleteNpc(): Promise<void> {
+    try {
+      await this.topiaPublicApi().delete(
+        `/world/${this.urlSlug}/visitors/${this.id}/delete-npc`,
+        this.requestOptions,
+      );
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.deleteNpc" });
+    }
+  }
+
+  /**
    * Retrieves all inventory items owned by this visitor and app's key.
    *
    * @keywords get, fetch, retrieve, list, inventory, items, visitor
