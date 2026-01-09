@@ -710,6 +710,8 @@ export class Visitor extends User implements VisitorInterface {
    * One NPC is allowed per visitor, per application public key.
    *
    * @param userInventoryItemId The ID of the user's inventory item (must be an NPC type item owned by this visitor).
+   * @param options Optional configuration for the NPC.
+   * @param options.showNameplate Whether to display a nameplate above the NPC (default: true).
    *
    * @example
    * ```ts
@@ -718,15 +720,18 @@ export class Visitor extends User implements VisitorInterface {
    *
    * // Then create the NPC using the granted item
    * const npc = await visitor.createNpc(userItem.id);
+   *
+   * // Or create without a nameplate
+   * const npc = await visitor.createNpc(userItem.id, { showNameplate: false });
    * ```
    *
    * @returns {Promise<Visitor>} Returns a Visitor object representing the created NPC.
    */
-  async createNpc(userInventoryItemId: string): Promise<Visitor> {
+  async createNpc(userInventoryItemId: string, options?: { showNameplate?: boolean }): Promise<Visitor> {
     try {
       const response = await this.topiaPublicApi().post(
         `/world/${this.urlSlug}/visitors/${this.id}/create-npc`,
-        { userInventoryItemId },
+        { userInventoryItemId, showNameplate: options?.showNameplate },
         this.requestOptions,
       );
       return new Visitor(this.topia, response.data.player.playerId, this.urlSlug, {

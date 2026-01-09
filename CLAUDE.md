@@ -368,9 +368,15 @@ NPCs are non-player characters that follow visitors around the world. They're sp
 
 | Method | Description | Returns |
 |--------|-------------|---------|
-| `visitor.createNpc(userInventoryItemId)` | Spawn NPC from an NPC-type inventory item | `Promise<Visitor>` |
+| `visitor.createNpc(userInventoryItemId, options?)` | Spawn NPC from an NPC-type inventory item | `Promise<Visitor>` |
 | `visitor.getNpc()` | Get existing NPC for this visitor/app | `Promise<Visitor \| null>` |
 | `visitor.deleteNpc()` | Remove the NPC | `Promise<void>` |
+
+**`createNpc` Options:**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `showNameplate` | `boolean` | `true` | Whether to display a nameplate above the NPC |
 
 ### Usage Example
 
@@ -381,10 +387,13 @@ const npcItem = await visitor.grantInventoryItem(petInventoryItemId, 1);
 // 2. Spawn the NPC using the granted item's ID
 const npc = await visitor.createNpc(npcItem.id);
 
-// 3. Later, get the existing NPC
+// 3. Or spawn without a nameplate (e.g., for pets)
+const npc = await visitor.createNpc(npcItem.id, { showNameplate: false });
+
+// 4. Later, get the existing NPC
 const existingNpc = await visitor.getNpc();
 
-// 4. Delete the NPC when done
+// 5. Delete the NPC when done
 await visitor.deleteNpc();
 ```
 
@@ -395,6 +404,7 @@ await visitor.deleteNpc();
 - **No proximity/WebRTC**: NPCs don't participate in audio/video connections
 - **Clickable**: NPCs appear in spatial hashing and can be clicked
 - **Inventory-linked**: NPC appearance comes from the inventory item's `avatarUrl`
+- **Optional nameplate**: Use `showNameplate: false` to hide the nameplate (sets empty username)
 
 ### NPC Identification
 
