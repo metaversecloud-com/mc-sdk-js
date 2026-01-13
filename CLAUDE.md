@@ -463,6 +463,72 @@ enum WorldActivityType {
 
 ---
 
+## Backend Authentication: interactiveKeyValidator
+
+All SDK requests to `topia-public-api` are authenticated via `interactiveKeyValidator` middleware. This ensures the request comes from a legitimate app with an active user session.
+
+### What It Validates
+
+1. **JWT Signature**: The request includes a JWT signed with the app's `interactiveSecret`. The backend verifies this signature using the secret stored in Firestore for that `publicKey`.
+
+2. **Active Player Session**: The JWT payload contains `visitorId`, `urlSlug`, and `interactiveNonce`. The backend checks Redis (`playersNonce:{urlSlug}:{visitorId}`) to verify the nonce matches - proving there's a real player currently in that world interacting with the app.
+
+3. **Asset Ownership**: The JWT's `assetId` is verified against Firebase RTDB to ensure the dropped asset has the requesting `interactivePublicKey` installed.
+
+### JWT Payload Structure
+
+```typescript
+{
+  visitorId: number;       // The player's visitor ID in this world
+  urlSlug: string;         // The world the player is in
+  assetId: string;         // The dropped asset they clicked
+  interactiveNonce: string; // One-time token proving active session
+  profileId?: string;      // Player's global profile ID
+  date: Date;              // Timestamp
+}
+```
+
+### How It Works
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    Request Validation Flow                       │
+├─────────────────────────────────────────────────────────────────┤
+│ 1. Extract JWT from header (interactivejwt) or query param      │
+│ 2. Extract publicKey from header (publickey) or query param     │
+│ 3. Fetch secretKey from Firestore (publicKeys/{publicKey})      │
+│ 4. jwt.verify(jwt, secretKey) ← Validate signature              │
+│ 5. Decode JWT: { visitorId, nonce, assetId, urlSlug }           │
+│ 6. Redis: HGET playersNonce:{urlSlug}:{visitorId}               │
+│ 7. Compare nonce from JWT vs Redis ← Prevent replay attacks     │
+│ 8. Validate droppedAsset.interactivePublicKey === publicKey     │
+│ 9. ✓ Request authorized                                         │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Key Points
+
+- **Nonce validation** ensures requests can only be made when a player is actively in the world
+- **JWT signing** proves the request comes from an app that has the secret key
+- **Asset validation** ensures the app can only interact with assets it owns
+- The SDK handles JWT signing automatically in `SDKController.ts`
+
+### Credentials Flow
+
+```
+User clicks asset → Topia passes credentials to iframe/webhook
+                           ↓
+        { visitorId, interactiveNonce, assetId, urlSlug, profileId }
+                           ↓
+SDK app extracts credentials → passes to SDK methods
+                           ↓
+SDK signs JWT with interactiveSecret → sends to public-api
+                           ↓
+interactiveKeyValidator verifies → request proceeds or fails
+```
+
+---
+
 ## Error Handling
 
 All SDK methods throw structured errors:
