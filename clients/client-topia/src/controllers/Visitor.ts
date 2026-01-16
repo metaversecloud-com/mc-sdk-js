@@ -837,27 +837,37 @@ export class Visitor extends User implements VisitorInterface {
 
   /**
    * Modifies the quantity of an inventory item in this visitor's inventory.
+   * Supports upsert behavior - if the visitor doesn't own the item yet, it will be granted first.
    *
-   * @param item The UserInventoryItem to modify.
-   * @param quantity The new quantity to set.
+   * @param item Either a UserInventoryItem (for owned items) or an InventoryItem (for upsert).
+   * @param quantity The quantity delta to apply (positive to add, negative to subtract).
    *
    * @example
    * ```ts
-   * await visitor.modifyInventoryItemQuantity("item-id-123", 5);
+   * // Modify an existing user inventory item
+   * await visitor.modifyInventoryItemQuantity(userItem, 5);
+   *
+   * // Upsert: grant if not owned, or modify if already owned
+   * await visitor.modifyInventoryItemQuantity(inventoryItem, 1);
    * ```
    *
    * @returns {Promise<UserInventoryItem>} Returns the updated inventory item or a response object.
    */
-  async modifyInventoryItemQuantity(item: UserInventoryItem, quantity: number): Promise<UserInventoryItem> {
-    // Check for existence in #visitorInventoryItems
-    const found = this.#visitorInventoryItems?.some((visitorItem) => visitorItem.id === item.userItemId);
-    if (!found) {
-      throw new Error(`Inventory item with id '${item.userItemId}' does not exist in visitorInventoryItems.`);
-    }
+  async modifyInventoryItemQuantity(
+    item: UserInventoryItem | InventoryItem,
+    quantity: number,
+  ): Promise<UserInventoryItem> {
     try {
+      // Determine if item is a UserInventoryItem (has userItemId) or InventoryItem (only has id)
+      const isUserItem = "userItemId" in item && item.userItemId;
+
+      const body = isUserItem
+        ? { userItemId: (item as UserInventoryItem).userItemId, itemId: (item as UserInventoryItem).item_id, quantity }
+        : { itemId: item.id, quantity };
+
       const response = await this.topiaPublicApi().put(
         `/world/${this.urlSlug}/visitors/${this.id}/update-visitor-inventory-item-quantity`,
-        { userItemId: item.id, itemId: item.item_id, quantity },
+        body,
         this.requestOptions,
       );
       const userInventoryItemFactory = new UserInventoryItemFactory(this.topia);

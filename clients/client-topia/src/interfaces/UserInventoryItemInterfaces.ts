@@ -13,6 +13,7 @@ export interface UserInventoryItemInterface extends InventoryItemInterface {
   updated_at?: Date;
   metadata?: object | null;
   grant_source: string;
+  profile_id?: string | null;
 }
 
 export type UserInventoryItemOptionalInterface = {

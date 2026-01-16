@@ -19,6 +19,7 @@ export class UserInventoryItem extends InventoryItem implements UserInventoryIte
   metadata?: object | null;
   grant_source: string;
   type: string;
+  profile_id?: string | null;
 
   constructor(
     topia: Topia,
@@ -40,6 +41,7 @@ export class UserInventoryItem extends InventoryItem implements UserInventoryIte
       metadata = {},
       created_at = new Date(),
       updated_at = new Date(),
+      profile_id = null,
     } = options.attributes as UserInventoryItemInterface;
     this.item_id = item_id;
     this.quantity = quantity;
@@ -49,6 +51,7 @@ export class UserInventoryItem extends InventoryItem implements UserInventoryIte
     this.metadata = metadata;
     this.created_at = created_at;
     this.updated_at = updated_at;
+    this.profile_id = profile_id;
   }
 
   /**

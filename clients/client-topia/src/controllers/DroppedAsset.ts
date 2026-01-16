@@ -984,6 +984,33 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
   }
 
   /**
+   * Checks if this dropped asset exists with the current app's public key installed.
+   *
+   * @keywords check, exists, verify, validate, lookup
+   *
+   * @example
+   * ```ts
+   * const { exists } = await droppedAsset.checkExists();
+   * ```
+   *
+   * @returns {Promise<{ exists: boolean }>} Returns whether the asset exists with the app's public key.
+   */
+  async checkExists(): Promise<{ exists: boolean }> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/dropped-asset/${this.id}/exists`,
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({
+        error,
+        sdkMethod: "DroppedAsset.checkExists",
+      });
+    }
+  }
+
+  /**
    * Retrieve analytics for a dropped asset by day, week, month, quarter, or year
    *
    * @keywords get, fetch, retrieve, load, analytics
