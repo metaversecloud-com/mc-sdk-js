@@ -314,7 +314,19 @@ export class World extends SDKController implements WorldInterface {
     uniqueName?: string;
   }): Promise<DroppedAsset[]> {
     try {
-      if (!sceneDropId) throw this.errorHandler({ message: "A sceneDropId is required." });
+      // Validate sceneDropId to prevent dangerous queries that could match unintended assets
+      if (
+        !sceneDropId ||
+        typeof sceneDropId !== "string" ||
+        sceneDropId.trim() === "" ||
+        sceneDropId === "undefined" ||
+        sceneDropId === "null"
+      ) {
+        throw this.errorHandler({
+          message:
+            "A valid sceneDropId is required. Received an empty, undefined, or invalid sceneDropId which could match unintended assets.",
+        });
+      }
       const response: AxiosResponse = await this.topiaPublicApi().get(
         `/world/${this.urlSlug}/assets-with-scene-drop-id/${sceneDropId}${
           uniqueName ? `?uniqueName=${uniqueName}` : ""
