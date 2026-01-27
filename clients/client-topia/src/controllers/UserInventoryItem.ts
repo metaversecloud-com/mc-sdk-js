@@ -1,5 +1,10 @@
 import { InventoryItem, Topia } from "controllers";
-import { InventoryItemInterface, UserInventoryItemInterface, UserInventoryItemOptionalInterface } from "interfaces";
+import {
+  InventoryItemInterface,
+  UserInventoryItemInterface,
+  UserInventoryItemMetadataType,
+  UserInventoryItemOptionalInterface,
+} from "interfaces";
 
 /**
  * Controller for a user's owned inventory item.
@@ -20,6 +25,7 @@ export class UserInventoryItem extends InventoryItem implements UserInventoryIte
   grant_source: string;
   type: string;
   profile_id?: string | null;
+  item: UserInventoryItemMetadataType;
 
   constructor(
     topia: Topia,
@@ -42,6 +48,7 @@ export class UserInventoryItem extends InventoryItem implements UserInventoryIte
       created_at = new Date(),
       updated_at = new Date(),
       profile_id = null,
+      item = { id: "", name: "", description: "", type: "", metadata: null, image_url: "" },
     } = options.attributes as UserInventoryItemInterface;
     this.item_id = item_id;
     this.quantity = quantity;
@@ -52,6 +59,7 @@ export class UserInventoryItem extends InventoryItem implements UserInventoryIte
     this.created_at = created_at;
     this.updated_at = updated_at;
     this.profile_id = profile_id;
+    this.item = item;
   }
 
   /**
