@@ -11,25 +11,54 @@ import { InteractiveCredentials } from "types";
 import jwt from "jsonwebtoken";
 import { AxiosError } from "axios";
 
+/* ============================================================================
+AI RULES for code assistants
+
+  CONTEXT
+    - SDKController is the abstract base class for all SDK controllers.
+    - All controllers (World, Visitor, User, etc.) extend this class.
+    - This class provides common functionality: authentication, API access, and error handling.
+    - This SDK is installed as an NPM package (@rtsdk/topia) in consumer applications.
+
+  DO
+    - Understand that all controllers inherit these base methods and properties.
+    - Use the error handling pattern defined in errorHandler() for all SDK errors.
+    - Access the Topia Public API through topiaPublicApi() method.
+
+  DO NOT
+    - Do NOT instantiate SDKController directly; it's an abstract class.
+    - Do NOT bypass the error handler; all errors should flow through errorHandler().
+    - Do NOT access this.topia.axios directly; use topiaPublicApi() instead.
+
+  AVAILABLE METHODS:
+    - topiaPublicApi(): Returns configured Axios instance for API calls
+    - errorHandler(options): Standardized error handling for all SDK operations
+
+  INHERITED BY:
+    All controllers inherit from this base class, including:
+    - World, Visitor, User, Asset, DroppedAsset, Scene, WorldActivity, Ecosystem
+
+============================================================================ */
+
 /**
- * Create an instance of SDKController class with credentials.
+ * Abstract base controller that provides common functionality for all SDK controllers.
+ *
+ * @remarks
+ * This class should NOT be instantiated directly. It serves as the base class for all
+ * SDK controllers (World, Visitor, User, etc.) and provides:
+ * - Authentication and credential management
+ * - Axios instance configuration for API calls
+ * - Standardized error handling
+ * - JWT token generation for interactive credentials
+ *
+ * @keywords base, controller, sdk, authentication, api, abstract
  *
  * @example
  * ```ts
- * const credentials = {
- *   assetId: "exampleAsset",
- *   interactiveNonce: "exampleNonce"
- *   interactivePublicKey: "examplePublicKey",
- *   visitorId: 1,
- *   url: "https://topia.io",
+ * // This class is extended by all controllers
+ * export class World extends SDKController implements WorldInterface {
+ *   // World-specific implementation
  * }
- * const topia = await new Topia({
- *   apiDomain: "api.topia.io",
- *   apiKey: "exampleKey",
- *   interactiveKey: "key",
- *   interactiveSecret: "secret",
- * }
- * await new SDKController({ credentials, topia });
  * ```
  */
 export abstract class SDKController implements SDKInterface {
@@ -90,10 +119,43 @@ export abstract class SDKController implements SDKInterface {
     }
   }
 
+  /**
+   * Returns the configured Axios instance for making API calls to Topia's Public API.
+   *
+   * @remarks
+   * All HTTP requests to the Topia API should use this method to ensure proper
+   * authentication headers and base URL configuration are applied.
+   *
+   * @keywords api, axios, http, request, client, public api
+   *
+   * @returns {AxiosInstance} The configured Axios client instance with authentication headers.
+   */
   topiaPublicApi() {
     return this.topia.axios;
   }
 
+  /**
+   * Standardized error handler for all SDK operations.
+   *
+   * @remarks
+   * This method processes errors from API calls and formats them consistently across the SDK.
+   * It extracts relevant error information including:
+   * - HTTP status codes and response data
+   * - Error messages from API responses
+   * - Stack traces for debugging
+   * - Request details (URL, method, parameters)
+   *
+   * All errors thrown by SDK methods flow through this handler to ensure consistent error format.
+   *
+   * @keywords error, exception, handler, debugging, api error, http error
+   *
+   * @param error - The error object from the failed operation (AxiosError, Error, or unknown)
+   * @param message - Optional custom error message (defaults to generic message)
+   * @param params - Optional parameters that were passed to the failed method
+   * @param sdkMethod - Optional name of the SDK method that failed (e.g., "World.fetchDetails")
+   *
+   * @returns {object} Standardized error object with properties: data, message, method, params, sdkMethod, stack, status, success, url
+   */
   errorHandler({
     error,
     message = "Something went wrong. Please try again or contact support.",

@@ -1,6 +1,7 @@
 import { InteractiveCredentials, ResponseType } from "types";
+import { SDKInterface } from "interfaces/SDKInterfaces";
 
-export interface EcosystemInterface {
+export interface EcosystemInterface extends SDKInterface {
   fetchDataObject(
     appPublicKey?: string,
     appJWT?: string,

@@ -1,4 +1,4 @@
-import { InteractiveCredentials } from "types";
+import { InteractiveCredentials, ResponseType } from "types";
 import { SDKInterface } from "interfaces/SDKInterfaces";
 
 export interface AssetInterface extends SDKInterface {

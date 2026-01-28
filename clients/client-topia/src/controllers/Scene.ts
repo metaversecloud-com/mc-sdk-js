@@ -16,6 +16,7 @@ AI RULES for code assistants
   CONTEXT
     - "Controllers" expose operations on domain objects (e.g., Scene).
     - Consumers obtain controller instances via factory methods (e.g., SceneFactory.get).
+    - This SDK is installed as an NPM package (@rtsdk/topia) in consumer applications.
 
   DO
     - Expect consumers to import a pre-instantiated factory from their app (e.g., utils/topiaInit.ts).
@@ -26,6 +27,9 @@ AI RULES for code assistants
     - Do NOT suggest non-existent methods: getById, fetch, find
     - Do NOT mutate controller shape or return ad-hoc fields.
 
+  AVAILABLE METHODS:
+    - fetchSceneById(): Retrieves scene details and configuration
+
   CANONICAL USAGE (consumer app):
     // utils/topiaInit.ts
     import { Topia, SceneFactory } from "@rtsdk/topia";
@@ -35,6 +39,7 @@ AI RULES for code assistants
     // controllers/myController.ts (consumer app)
     import { Scene } from "utils/topiaInit.ts";
     const scene = await Scene.get(sceneId, { credentials });
+    await scene.fetchSceneById();
 
 ============================================================================ */
 

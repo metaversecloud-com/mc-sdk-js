@@ -1,7 +1,6 @@
 import { AnalyticType, InteractiveCredentials, ResponseType } from "types";
-import { SDKInterface } from "interfaces/SDKInterfaces";
-import { FireToastInterface } from "./SharedInterfaces";
-import { InventoryItem, UserInventoryItem, Visitor } from "controllers";
+import { SDKInterface, FireToastInterface, UserInventoryItemInterface, InventoryItemInterface } from "./index.js";
+import { UserInventoryItem, Visitor } from "controllers";
 
 export interface VisitorInterface extends SDKInterface {
   fetchVisitor(): Promise<void | ResponseType>;
@@ -16,9 +15,12 @@ export interface VisitorInterface extends SDKInterface {
   getAllParticles(): Promise<ResponseType>;
   fetchInventoryItems(): Promise<void>;
   inventoryItems: UserInventoryItem[];
-  grantInventoryItem(item: InventoryItem, quantity: number): Promise<UserInventoryItem>;
-  modifyInventoryItemQuantity(item: UserInventoryItem, quantity: number): Promise<UserInventoryItem>;
-  fetchInventoryItem(item: InventoryItem): Promise<UserInventoryItem>;
+  grantInventoryItem(item: InventoryItemInterface, quantity: number): Promise<UserInventoryItem>;
+  modifyInventoryItemQuantity(
+    item: UserInventoryItemInterface | InventoryItemInterface,
+    quantity: number,
+  ): Promise<UserInventoryItem>;
+  fetchInventoryItem(item: InventoryItemInterface): Promise<UserInventoryItem>;
   createNpc(userInventoryItemId: string, options?: { showNameplate?: boolean }): Promise<Visitor>;
   deleteNpc(): Promise<void>;
   getNpc(): Promise<Visitor | null>;

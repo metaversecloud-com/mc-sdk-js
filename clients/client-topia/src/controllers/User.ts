@@ -8,13 +8,12 @@ import { Topia } from "controllers/Topia";
 import { World } from "controllers/World";
 
 // interfaces
-import { UserInterface, UserOptionalInterface } from "interfaces";
+import { InventoryItemInterface, UserInterface, UserInventoryItemInterface, UserOptionalInterface } from "interfaces";
 
 // types
 import { ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
 import UserInventoryItem from "./UserInventoryItem";
-import InventoryItem from "./InventoryItem";
 import { UserInventoryItemFactory } from "factories";
 
 /* ============================================================================
@@ -23,6 +22,7 @@ AI RULES for code assistants
   CONTEXT
     - "Controllers" expose operations on domain objects (e.g., User).
     - Consumers obtain controller instances via factory methods (e.g., UserFactory.get).
+    - This SDK is installed as an NPM package (@rtsdk/topia) in consumer applications.
 
   DO
     - Expect consumers to import a pre-instantiated factory from their app (e.g., utils/topiaInit.ts).
@@ -32,6 +32,28 @@ AI RULES for code assistants
     - Do NOT suggest creating Topia clients or factories inside controllers.
     - Do NOT suggest non-existent methods: getById, fetch, find
     - Do NOT mutate controller shape or return ad-hoc fields.
+
+  AVAILABLE METHODS:
+    - checkInteractiveCredentials(): Validates interactive credentials
+    - fetchAvatars(): Gets all avatars owned by the user
+    - addAvatar(formData): Uploads and creates a new avatar
+    - updateAvatar(avatarId, formData): Updates an existing avatar
+    - deleteAvatar(avatarId): Deletes an avatar
+    - fetchAssets(): Gets all assets owned by the user
+    - fetchPlatformAssets(): Gets platform-provided assets
+    - fetchScenes(): Gets all scenes owned by the user
+    - fetchWorldsByKey(): Gets worlds owned by the user
+    - fetchAdminWorldsByKey(): Gets worlds where user has admin access
+    - fetchInteractiveWorldsByKey(interactivePublicKey): Gets worlds with specific interactive key
+    - sendEmail(options): Sends an email through Topia's email service
+    - getExpressions(options): Gets avatar expressions/emotes
+    - fetchDataObject(appPublicKey?, appJWT?): Gets user's data object
+    - setDataObject(dataObject, options?): Sets user's entire data object
+    - updateDataObject(dataObject, options?): Updates specific fields in user data
+    - incrementDataObjectValue(path, amount, options?): Increments numeric value
+    - fetchInventoryItems(): Gets all inventory items owned by user
+    - grantInventoryItem(item, quantity?): Grants inventory item to user
+    - modifyInventoryItemQuantity(item, quantity): Updates inventory item quantity
 
   CANONICAL USAGE (consumer app):
     // utils/topiaInit.ts
@@ -804,7 +826,7 @@ export class User extends SDKController implements UserInterface {
    *
    * @returns {Promise<UserInventoryItem>} Returns the UserInventoryItem granted.
    */
-  async grantInventoryItem(item: InventoryItem, quantity = 1): Promise<UserInventoryItem> {
+  async grantInventoryItem(item: InventoryItemInterface, quantity = 1): Promise<UserInventoryItem> {
     try {
       if (!this.profileId) throw "This method requires the use of a profileId";
 
@@ -837,7 +859,7 @@ export class User extends SDKController implements UserInterface {
    *
    * @returns {Promise<UserInventoryItem>} Returns the updated inventory item or a response object.
    */
-  async modifyInventoryItemQuantity(item: UserInventoryItem, quantity: number): Promise<UserInventoryItem> {
+  async modifyInventoryItemQuantity(item: UserInventoryItemInterface, quantity: number): Promise<UserInventoryItem> {
     try {
       if (!this.profileId) throw "This method requires the use of a profileId";
 

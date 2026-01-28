@@ -20,6 +20,7 @@ AI RULES for code assistants
   CONTEXT
     - "Controllers" expose operations on domain objects (e.g., WorldActivity).
     - Consumers obtain controller instances via factory methods (e.g., WorldActivityFactory.get).
+    - This SDK is installed as an NPM package (@rtsdk/topia) in consumer applications.
 
   DO
     - Expect consumers to import a pre-instantiated factory from their app (e.g., utils/topiaInit.ts).
@@ -29,6 +30,12 @@ AI RULES for code assistants
     - Do NOT suggest creating Topia clients or factories inside controllers.
     - Do NOT suggest non-existent methods: getById, fetch, find
     - Do NOT mutate controller shape or return ad-hoc fields.
+
+  AVAILABLE METHODS:
+    - currentVisitors(shouldIncludeAdminPermissions?): Retrieves all visitors currently in the world
+    - fetchVisitorsInZone(options): Gets visitors in a specific landmark zone
+    - moveAllVisitors(options): Moves all visitors to specified coordinates
+    - moveVisitors(visitorsToMove): Moves specific visitors to various coordinates
 
   CANONICAL USAGE (consumer app):
     // utils/topiaInit.ts

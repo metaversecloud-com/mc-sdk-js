@@ -1,4 +1,5 @@
 import { Topia, UserInventoryItem } from "controllers";
+import { UserInventoryItemOptionalInterface } from "interfaces";
 // import { UserInventoryItem } from "controllers";
 
 /**
@@ -32,7 +33,12 @@ export class UserInventoryItemFactory {
    *
    * @returns {UserInventoryItem} Returns a new UserInventoryItem object for interacting with the specified item.
    */
-  create(inventoryItemId: string, userId: number, quantity: number, options?: object): UserInventoryItem {
+  create(
+    inventoryItemId: string,
+    userId: number,
+    quantity: number,
+    options?: UserInventoryItemOptionalInterface,
+  ): UserInventoryItem {
     return new UserInventoryItem(this.topia, inventoryItemId, options);
   }
 
@@ -46,7 +52,7 @@ export class UserInventoryItemFactory {
    *
    * @returns {Promise<UserInventoryItem>} Returns a new UserInventoryItem object with all properties.
    */
-  async get(inventoryItemId: string, options?: object): Promise<UserInventoryItem> {
+  async get(inventoryItemId: string, options?: UserInventoryItemOptionalInterface): Promise<UserInventoryItem> {
     const userItem = new UserInventoryItem(this.topia, inventoryItemId, options);
     await userItem.fetchUserInventoryItemById();
     return userItem;

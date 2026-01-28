@@ -16,6 +16,7 @@ export interface InventoryItemInterface extends SDKInterface {
   updated_at?: Date;
   metadata?: object | null;
   image_path?: string;
+  image_url?: string;
   interactive_key_id?: string;
   status?: string;
 }

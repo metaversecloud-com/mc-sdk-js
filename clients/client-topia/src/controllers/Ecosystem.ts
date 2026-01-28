@@ -28,6 +28,13 @@ AI RULES for code assistants
     - Do NOT suggest non-existent methods: getById, fetch, find
     - Do NOT mutate controller shape or return ad-hoc fields.
 
+  AVAILABLE METHODS:
+    - fetchDataObject(appPublicKey?, appJWT?, sharedAppPublicKey?, sharedAppJWT?): Retrieves ecosystem-wide data object
+    - setDataObject(dataObject, options?): Sets entire ecosystem data object
+    - updateDataObject(dataObject, options?): Updates specific fields in ecosystem data object
+    - incrementDataObjectValue(path, amount, options?): Increments a numeric value in ecosystem data
+    - fetchInventoryItems(): Retrieves all inventory items for the app's keyholder
+
   CANONICAL USAGE (consumer app):
     // utils/topiaInit.ts
     import { Topia, Ecosystem } from "@rtsdk/topia";
@@ -67,7 +74,7 @@ export class Ecosystem extends SDKController {
   /**
    * Retrieves the data object for a Topia ecosystem. Requires canUpdateEcosystemDataObjects permission to be set to true for the public key.
    *
-   * @keywords get, fetch, retrieve, load, data, object, state
+   * @keywords get, fetch, retrieve, load, ecosystem, data, object, state, global, platform
    *
    * @category Data Objects
    *
@@ -76,7 +83,7 @@ export class Ecosystem extends SDKController {
    * const dataObject = await ecosystem.fetchDataObject("exampleAppPublicKey", "exampleAppPublicKeyJWT");
    * ```
    *
-   * @returns {Promise<object | ResponseType>} Returns the data object or an error response.
+   * @returns {Promise<void | ResponseType>} Populates the dataObject property with ecosystem-wide data, or returns an error response.
    */
   async fetchDataObject(
     appPublicKey?: string,
@@ -107,7 +114,7 @@ export class Ecosystem extends SDKController {
    *
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @keywords set, assign, store, save, data, object, state
+   * @keywords set, assign, store, save, ecosystem, data, object, state, global, platform
    *
    * @category Data Objects
    *
@@ -119,6 +126,8 @@ export class Ecosystem extends SDKController {
    * });
    * const { exampleKey } = ecosystem.dataObject;
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns success or an error response.
    */
   async setDataObject(
     dataObject: object | null | undefined,
@@ -152,7 +161,7 @@ export class Ecosystem extends SDKController {
    *
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @keywords update, modify, change, edit, alter, data, object, state
+   * @keywords update, modify, change, edit, alter, ecosystem, data, object, state, global, platform
    *
    * @category Data Objects
    *
@@ -170,6 +179,8 @@ export class Ecosystem extends SDKController {
    * });
    * const { exampleKey } = ecosystem.dataObject;
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns success or an error response.
    */
   async updateDataObject(
     dataObject: object,
@@ -202,7 +213,7 @@ export class Ecosystem extends SDKController {
    *
    * Optionally, a lock can be provided with this request to ensure only one update happens at a time between all updates that share the same lock id
    *
-   * @keywords increment, increase, add, count, data, object, state
+   * @keywords increment, increase, add, count, ecosystem, data, object, state, global, platform
    *
    * @category Data Objects
    *
@@ -213,6 +224,8 @@ export class Ecosystem extends SDKController {
    *   sharedAppJWT: "exampleAppPublicKeyJWT",}
    * });
    * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns success or an error response.
    */
   async incrementDataObjectValue(
     path: string,
@@ -244,14 +257,17 @@ export class Ecosystem extends SDKController {
   /**
    * Retrieves all inventory items for a given keyholder (app public key).
    *
-   * @keywords get, fetch, retrieve, list, inventory, items, keyholder
+   * @keywords get, fetch, retrieve, list, inventory, items, keyholder, ecosystem, catalog
+   *
+   * @category Inventory
    *
    * @example
    * ```ts
-   * const items = await ecosystem.fetchInventoryItems("appPublicKey", "appJWT");
+   * await ecosystem.fetchInventoryItems();
+   * const items = ecosystem.inventoryItems;
    * ```
    *
-   * @returns {Promise<object[]>} Returns an array of InventoryItem objects.
+   * @returns {Promise<void>} Populates the inventoryItems property with an array of InventoryItem objects.
    */
   async fetchInventoryItems(): Promise<void> {
     try {

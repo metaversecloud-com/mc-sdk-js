@@ -16,6 +16,7 @@ AI RULES for code assistants
   CONTEXT
     - "Controllers" expose operations on domain objects (e.g., Asset).
     - Consumers obtain controller instances via factory methods (e.g., AssetFactory.get).
+    - This SDK is installed as an NPM package (@rtsdk/topia) in consumer applications.
 
   DO
     - Expect consumers to import a pre-instantiated factory from their app (e.g., utils/topiaInit.ts).
@@ -25,6 +26,10 @@ AI RULES for code assistants
     - Do NOT suggest creating Topia clients or factories inside controllers.
     - Do NOT suggest non-existent methods: getById, fetch, find
     - Do NOT mutate controller shape or return ad-hoc fields.
+
+  AVAILABLE METHODS:
+    - fetchAssetById(): Retrieves platform asset details
+    - updateAsset(options): Updates asset properties (name, layers, tags, visibility)
 
   CANONICAL USAGE (consumer app):
     // utils/topiaInit.ts

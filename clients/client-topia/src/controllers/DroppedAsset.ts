@@ -29,6 +29,7 @@ AI RULES for code assistants
   CONTEXT
     - "Controllers" expose operations on domain objects (e.g., DroppedAsset).
     - Consumers obtain controller instances via factory methods (e.g., DroppedAssetFactory.get).
+    - This SDK is installed as an NPM package (@rtsdk/topia) in consumer applications.
 
   DO
     - Expect consumers to import a pre-instantiated factory from their app (e.g., utils/topiaInit.ts).
@@ -38,6 +39,35 @@ AI RULES for code assistants
     - Do NOT suggest creating Topia clients or factories inside controllers.
     - Do NOT suggest non-existent methods: getById, fetch, find
     - Do NOT mutate controller shape or return ad-hoc fields.
+
+  AVAILABLE METHODS:
+    - fetchDroppedAssetById(): Retrieves dropped asset details
+    - updateDroppedAsset(options): Updates dropped asset properties
+    - deleteDroppedAsset(): Removes the dropped asset from the world
+    - fetchDataObject(appPublicKey?, appJWT?, sharedAppPublicKey?, sharedAppJWT?): Gets asset's data object
+    - setDataObject(dataObject, options?): Sets asset's entire data object
+    - updateDataObject(dataObject, options?): Updates specific fields in data object
+    - incrementDataObjectValue(path, amount, options?): Increments numeric value
+    - updateBroadcast(options): Updates broadcast settings
+    - updateClickType(options): Updates click behavior and link settings
+    - setClickableLinkMulti(options): Adds multiple links to asset
+    - updateClickableLinkMulti(options): Updates specific clickable link
+    - removeClickableLink(options): Removes a clickable link
+    - updateCustomTextAsset(style, text): Updates text and styling
+    - updateMediaType(options): Updates media (video/audio) settings
+    - updateMuteZone(isMutezone): Toggles mute zone
+    - updateLandmarkZone(options): Updates landmark zone settings
+    - updateWebhookZone(isEnabled): Toggles webhook zone
+    - updatePosition(x, y, yOrderAdjust?): Moves the asset
+    - updatePrivateZone(options): Updates private zone settings
+    - updateScale(assetScale): Changes asset size
+    - flip(): Flips the asset horizontally
+    - updateUploadedMediaSelected(mediaId): Changes embedded media
+    - updateWebImageLayers(bottom, top): Updates image layers
+    - addWebhook(options): Adds a webhook to the asset
+    - setInteractiveSettings(options): Configures interactive settings
+    - checkExists(): Verifies asset exists with app's public key
+    - fetchDroppedAssetAnalytics(options): Gets analytics data for the asset
 
   CANONICAL USAGE (consumer app):
     // utils/topiaInit.ts

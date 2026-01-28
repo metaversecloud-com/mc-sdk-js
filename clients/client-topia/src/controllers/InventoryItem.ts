@@ -53,12 +53,17 @@ export class InventoryItem extends SDKController implements InventoryItemInterfa
   /**
    * Fetches the inventory item details from the platform and assigns them to this instance.
    *
+   * @keywords get, fetch, retrieve, load, inventory, item, details
+   *
+   * @category Inventory
+   *
    * @example
    * ```ts
    * await item.fetchInventoryItemById();
+   * const { name, description, type } = item;
    * ```
    *
-   * @returns {Promise<InventoryItem>} Returns when the item has been fetched and assigned.
+   * @returns {Promise<InventoryItem>} Returns this InventoryItem instance with all properties populated from the platform.
    */
   async fetchInventoryItemById(): Promise<InventoryItem> {
     const response = await this.topiaPublicApi().get(`/inventory/${this.id}`, this.requestOptions);

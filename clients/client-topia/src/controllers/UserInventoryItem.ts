@@ -11,6 +11,10 @@ import {
  *
  * @remarks
  * This class should be instantiated via UserInventoryItemFactory only.
+ * UserInventoryItem represents an instance of an InventoryItem owned by a specific user or visitor.
+ * It includes ownership details like quantity, grant_source, and user-specific metadata.
+ *
+ * @keywords inventory, item, user, visitor, owned, granted
  *
  * @property inventoryItemId - The root inventory item's id
  */
@@ -24,6 +28,7 @@ export class UserInventoryItem extends InventoryItem implements UserInventoryIte
   metadata?: object | null;
   grant_source: string;
   type: string;
+  image_url: string;
   profile_id?: string | null;
   item: UserInventoryItemMetadataType;
 
@@ -44,6 +49,7 @@ export class UserInventoryItem extends InventoryItem implements UserInventoryIte
       quantity = 0,
       grant_source = "unknown",
       type = "unknown",
+      image_url = "",
       metadata = {},
       created_at = new Date(),
       updated_at = new Date(),
@@ -55,6 +61,7 @@ export class UserInventoryItem extends InventoryItem implements UserInventoryIte
     this.grant_source = grant_source;
     this.user_id = user_id;
     this.type = type;
+    this.image_url = image_url;
     this.metadata = metadata;
     this.created_at = created_at;
     this.updated_at = updated_at;
@@ -65,12 +72,17 @@ export class UserInventoryItem extends InventoryItem implements UserInventoryIte
   /**
    * Fetches the user inventory item details from the platform and assigns them to this instance.
    *
+   * @keywords get, fetch, retrieve, load, user, inventory, item, details, owned
+   *
+   * @category Inventory
+   *
    * @example
    * ```ts
    * await userInventoryItem.fetchUserInventoryItemById();
+   * const { quantity, grant_source, item } = userInventoryItem;
    * ```
    *
-   * @returns {Promise<void>} Returns when the item has been fetched and assigned.
+   * @returns {Promise<void>} Populates this UserInventoryItem instance with all properties from the platform.
    */
   async fetchUserInventoryItemById(): Promise<void> {
     // TODO: Implement API call to fetch user inventory item details

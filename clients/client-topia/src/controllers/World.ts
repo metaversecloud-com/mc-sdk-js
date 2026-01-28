@@ -27,6 +27,7 @@ AI RULES for code assistants
   CONTEXT
     - "Controllers" expose operations on domain objects (e.g., World).
     - Consumers obtain controller instances via factory methods (e.g., WorldFactory.get).
+    - This SDK is installed as an NPM package (@rtsdk/topia) in consumer applications.
 
   DO
     - Expect consumers to import a pre-instantiated factory from their app (e.g., utils/topiaInit.ts).
@@ -36,6 +37,30 @@ AI RULES for code assistants
     - Do NOT suggest creating Topia clients or factories inside controllers.
     - Do NOT suggest non-existent methods: getById, fetch, find
     - Do NOT mutate controller shape or return ad-hoc fields.
+
+  AVAILABLE METHODS:
+    - fetchDetails(): Retrieves world details and settings
+    - updateDetails(options): Updates world settings (name, description, size, spawn position, controls)
+    - updateCloseWorldSettings(options): Updates world close/open settings
+    - fetchDroppedAssets(): Gets all dropped assets in the world
+    - fetchDroppedAssetsWithUniqueName(uniqueName): Gets dropped assets by unique name
+    - fetchDroppedAssetsBySceneDropId(sceneDropId): Gets dropped assets by scene drop ID
+    - updateCustomTextDroppedAssets(assets, style): Bulk updates text styling for assets
+    - fetchLandmarkZones(landmarkZoneName?, sceneDropId?): Gets landmark zones in the world
+    - fetchSceneDropIds(): Retrieves all scene drop IDs in the world
+    - fetchScenes(): Gets all scenes used in the world
+    - dropScene(options): Drops a scene into the world
+    - replaceScene(sceneId): Replaces entire world with a scene
+    - getAllParticles(): Gets all particle effects in the world
+    - triggerParticle(options): Triggers a particle effect
+    - triggerActivity(options): Triggers a world activity event
+    - fireToast(options): Shows toast notification to all visitors
+    - fetchDataObject(): Gets world's data object
+    - setDataObject(dataObject, options?): Sets world's entire data object
+    - updateDataObject(dataObject, options?): Updates specific fields in world data
+    - incrementDataObjectValue(path, amount, options?): Increments numeric value
+    - fetchWebhooks(): Gets all webhooks configured for the world
+    - fetchWorldAnalytics(options): Retrieves analytics data for the world
 
   CANONICAL USAGE (consumer app):
     // utils/topiaInit.ts

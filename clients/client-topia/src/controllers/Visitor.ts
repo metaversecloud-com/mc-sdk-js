@@ -7,8 +7,10 @@ import { User } from "controllers/User";
 // interfaces
 import {
   FireToastInterface,
+  InventoryItemInterface,
   MoveVisitorInterface,
   OpenIframeInterface,
+  UserInventoryItemInterface,
   VisitorInterface,
   VisitorOptionalInterface,
 } from "interfaces";
@@ -26,6 +28,7 @@ AI RULES for code assistants
   CONTEXT
     - "Controllers" expose operations on domain objects (e.g., Visitor).
     - Consumers obtain controller instances via factory methods (e.g., VisitorFactory.get).
+    - This SDK is installed as an NPM package (@rtsdk/topia) in consumer applications.
 
   DO
     - Expect consumers to import a pre-instantiated factory from their app (e.g., utils/topiaInit.ts).
@@ -34,7 +37,25 @@ AI RULES for code assistants
   DO NOT
     - Do NOT suggest creating Topia clients or factories inside controllers.
     - Do NOT suggest non-existent methods: getById, fetch, find
-    - Do NOT mutate controller shape or return ad-hoc fields.
+    - DO NOT mutate controller shape or return ad-hoc fields.
+
+  AVAILABLE METHODS:
+    - fetchVisitor(): Retrieves visitor details from the world
+    - fetchDataObject(): Gets visitor's data object
+    - setDataObject(dataObject, options?): Sets visitor's entire data object
+    - updateDataObject(dataObject, options?): Updates specific fields in visitor data
+    - incrementDataObjectValue(path, amount, options?): Increments numeric value
+    - moveVisitor(options): Moves or teleports visitor to coordinates
+    - sendMessage(message): Sends chat message as the visitor
+    - openIframe(options): Opens iframe for this visitor
+    - closeIframe(): Closes visitor's open iframe
+    - fireToast(options): Shows toast notification to visitor
+    - getNpc(): Gets visitor's NPC if one exists
+    - createNpc(userInventoryItemId, options?): Creates NPC follower
+    - deleteNpc(): Removes visitor's NPC
+    - fetchInventoryItems(): Gets all inventory items owned by visitor
+    - grantInventoryItem(item, quantity?): Grants inventory item to visitor
+    - modifyInventoryItemQuantity(item, quantity): Updates inventory item quantity
 
   CANONICAL USAGE (consumer app):
     // utils/topiaInit.ts
@@ -679,14 +700,30 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * Gets an NPC for this visitor, if one exists.
+   * Retrieves the NPC (Non-Player Character) associated with this visitor, if one exists.
+   *
+   * @remarks
+   * Each visitor can have one NPC per application public key. NPCs are AI-controlled
+   * characters that follow the visitor around the world. They are created using inventory
+   * items of type "npc" and appear as additional avatars that track the visitor's position.
+   * If no NPC exists for this visitor and app, returns null.
+   *
+   * @keywords get, fetch, retrieve, npc, bot, follower, character, assistant, companion
+   *
+   * @category NPCs
    *
    * @example
    * ```ts
-   * await visitor.getNpc();
+   * const npc = await visitor.getNpc();
+   * if (npc) {
+   *   console.log(`NPC position: ${npc.position}`);
+   *   console.log(`NPC ID: ${npc.id}`);
+   * } else {
+   *   console.log('No NPC found for this visitor');
+   * }
    * ```
    *
-   * @returns {Promise<Visitor | null>} Returns a Visitor object representing the NPC.
+   * @returns {Promise<Visitor | null>} Returns a Visitor object representing the NPC, or null if none exists.
    */
   async getNpc(): Promise<Visitor | null> {
     try {
@@ -706,12 +743,25 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * Creates an NPC that follows this visitor using an inventory item the visitor owns.
-   * One NPC is allowed per visitor, per application public key.
+   * Creates an NPC (Non-Player Character) that follows this visitor using an inventory item the visitor owns.
    *
-   * @param userInventoryItemId The ID of the user's inventory item (must be an NPC type item owned by this visitor).
-   * @param options Optional configuration for the NPC.
-   * @param options.showNameplate Whether to display a nameplate above the NPC (default: true).
+   * @remarks
+   * One NPC is allowed per visitor, per application public key. NPCs are AI-controlled
+   * characters that automatically follow the visitor around the world. They appear as
+   * additional avatars and can be useful for companions, guides, or assistant characters.
+   *
+   * Requirements:
+   * - The visitor must own a user inventory item of type "npc"
+   * - The item must have been granted to the visitor before calling this method
+   * - Only one NPC can exist per visitor per app at a time
+   *
+   * @keywords create, spawn, add, npc, bot, follower, character, assistant, companion
+   *
+   * @category NPCs
+   *
+   * @param userInventoryItemId - The ID of the user's inventory item (must be an NPC type item owned by this visitor)
+   * @param options - Optional configuration for the NPC
+   * @param options.showNameplate - Whether to display a nameplate above the NPC (default: true)
    *
    * @example
    * ```ts
@@ -725,7 +775,7 @@ export class Visitor extends User implements VisitorInterface {
    * const npc = await visitor.createNpc(userItem.id, { showNameplate: false });
    * ```
    *
-   * @returns {Promise<Visitor>} Returns a Visitor object representing the created NPC.
+   * @returns {Promise<Visitor>} Returns a Visitor object representing the created NPC. The NPC will automatically follow the visitor.
    */
   async createNpc(userInventoryItemId: string, options?: { showNameplate?: boolean }): Promise<Visitor> {
     try {
@@ -744,11 +794,25 @@ export class Visitor extends User implements VisitorInterface {
   }
 
   /**
-   * Deletes the NPC this app has assigned to this visitor.
+   * Deletes the NPC (Non-Player Character) this app has assigned to this visitor.
+   *
+   * @remarks
+   * This method removes the NPC associated with this visitor for the current application.
+   * The NPC will immediately disappear from the world. The underlying inventory item
+   * is not consumed and can be used to create a new NPC later.
+   *
+   * @keywords delete, remove, destroy, dismiss, despawn, npc, bot, follower, character
+   *
+   * @category NPCs
    *
    * @example
    * ```ts
-   * await visitor.deleteNpc();
+   * // Check if NPC exists before deleting
+   * const npc = await visitor.getNpc();
+   * if (npc) {
+   *   await visitor.deleteNpc();
+   *   console.log('NPC removed successfully');
+   * }
    * ```
    *
    * @returns {Promise<void>} Returns nothing if successful.
@@ -802,17 +866,34 @@ export class Visitor extends User implements VisitorInterface {
   /**
    * Grants an inventory item to this visitor.
    *
-   * @param item The InventoryItem to modify.
-   * @param quantity The new quantity to set.
+   * @remarks
+   * This method requires that the inventory item is already defined in your application's inventory system.
+   * Each visitor can only be granted an item once. Use modifyInventoryItemQuantity() to adjust quantities
+   * for items the visitor already owns. The grant_source will be set to track where the item came from.
+   *
+   * Important: This method will throw an error if the visitor already owns this inventory item.
+   * Check visitorInventoryItems first or use modifyInventoryItemQuantity() to update existing items.
+   *
+   * @keywords grant, give, add, inventory, item, visitor, award, reward
+   *
+   * @category Inventory
+   *
+   * @param item - The InventoryItem to grant to the visitor
+   * @param quantity - The quantity to grant (default: 1)
    *
    * @example
    * ```ts
-   * await visitor.grantInventoryItem("item-id-123", 2);
+   * // First create or fetch the inventory item
+   * const item = await InventoryItem.get("item-id-123");
+   *
+   * // Grant it to the visitor
+   * const userItem = await visitor.grantInventoryItem(item, 2);
+   * console.log(`Granted ${userItem.quantity} items to visitor`);
    * ```
    *
-   * @returns {Promise<UserInventoryItem>} Returns the updated inventory item or a response object.
+   * @returns {Promise<UserInventoryItem>} Returns the granted UserInventoryItem with quantity and metadata.
    */
-  async grantInventoryItem(item: InventoryItem, quantity = 1): Promise<UserInventoryItem> {
+  async grantInventoryItem(item: InventoryItemInterface, quantity = 1): Promise<UserInventoryItem> {
     // Error if item already exists in #visitorInventoryItems
     const exists = this.#visitorInventoryItems?.some((visitorItem) => visitorItem.id === item.id);
     if (exists) {
@@ -854,7 +935,7 @@ export class Visitor extends User implements VisitorInterface {
    * @returns {Promise<UserInventoryItem>} Returns the updated inventory item or a response object.
    */
   async modifyInventoryItemQuantity(
-    item: UserInventoryItem | InventoryItem,
+    item: UserInventoryItemInterface | InventoryItemInterface,
     quantity: number,
   ): Promise<UserInventoryItem> {
     try {
