@@ -240,44 +240,70 @@ export const getDroppedAssetAndVisitor = async (req: Request, res: Response) => 
 };
 ```
 
-<br/><br/>
-
 ## Data Objects
 
 Data Objects can be used to store information such as game state, configurations, themes, and analytics.
 There are three types of Data Objects:
 
-- **World:** The World data object should be used to store information unique to your app in a given world but not necessarily specific details about an instance or an active game. This information would persist even if the app was removed from the world.
-  - **Example - Update two specific data points:**
-    ```ts
-    await world.updateDataObject({
-      [`keyAssets.${keyAssetId}.itemsCollectedByUser.${profileId}`]: { [dateKey]: { count: 1 }, total: 1 },
-      [`profileMapper.${profileId}`]: username,
-    });
-    ```
-  - **Example - Increment a specific value within the data object by 1:**
-    ```ts
-    await world.incrementDataObjectValue([`keyAssets.${keyAssetId}.totalItemsCollected.count`], 1);
-    ```
-- **Dropped Asset:** The Dropped Asset data object should only store what is unique to the specific instance of the app in the world such as game state. If the Dropped Asset is deleted, the data object would be lost as well so be sure to only store information here the doesn't need to persist!
-  - **Example - Initialize data object with default data and keyAssetId:**
-    ```ts
-    await droppedAsset.setDataObject(
-      {
-        ...defaultGameData,
-        keyAssetId: droppedAsset.id,
-      },
-      { lock: { lockId, releaseLock: true } },
-    );
-    ```
-  - **Example - Update lastInteraction date and playerCount:**
-    ```ts
-    await droppedAsset.updateDataObject({ lastInteraction: new Date(), playerCount: playerCount + 1 });
-    ```
-- **User:** The User data object should be used to store information unique to a user that is NOT unique to a world or instance (dropped asset) of an app.
-  - **Example - Update totalMessagesSentCount by a user across all worlds:**
-    `` js await world.incrementDataObjectValue([`totalMessagesSentCount`], 1);  ``
-    <br/>
+### World:
+
+The data object attached to the world will store information for every instance of the app in a given world by keyAssetId or sceneDropId and will persist even if a specific instance is removed from world. Data stored in the World data object should be minimal to avoid running into limits.
+
+#### Example - Update two specific data points:
+
+```ts
+await world.updateDataObject({
+  [sceneDropId]: { keyAssetId: droppedAsset.id, themeId: "custom", totalInteractions: 1 },
+});
+```
+
+#### Example - Increment a specific value within the data object by 1:
+
+```ts
+await world.incrementDataObjectValue([`${sceneDropId}.totalInteractions`], 1);
+```
+
+### Dropped Asset:
+
+The Dropped Asset data object should only store what is unique to the specific instance of the app in the world such as game state. If the Dropped Asset is deleted, the data object would be lost as well so be sure to only store information here the doesn't need to persist!
+
+#### Example - Initialize data object with default data and keyAssetId:
+
+```ts
+await droppedAsset.setDataObject(
+  {
+    ...defaultGameData,
+    keyAssetId: droppedAsset.id,
+  },
+  { lock: { lockId, releaseLock: true } },
+);
+```
+
+#### Example - Update lastInteraction date and playerCount:
+
+```ts
+await droppedAsset.updateDataObject({ lastInteraction: new Date(), playerCount: playerCount + 1 });
+```
+
+### User:
+
+The data object attached to the visitor should store information related specifically to the visitor i.e. progress. For tracking across multiple world/instances use `${urlSlug}_${sceneDropId}` as a unique key.
+
+#### Example - Initialize data object with default data and keyAssetId:
+
+```ts
+await visitor.setDataObject(
+  {
+    [`${urlSlug}_${sceneDropId}`]: {
+      currentStreak: 0,
+      lastCollectedDate: null,
+      longestStreak: 0,
+      totalCollected: 0,
+    },
+  },
+  { lock: { lockId, releaseLock: true } },
+);
+```
 
 ### Data Object Locking
 
@@ -324,7 +350,7 @@ await world.setDataObject({ hello: "world" }, { analytics: [{ analyticName: "res
 
 await world.updateDataObject({}, { analytics: [ {analyticName: "matches", uniqueKey: `${playerOneProfileId}-${playerTwoProfileId}`, urlSlug }], });
 
-await world.incrementDataObjectValue(`keyAssets.${assetId}.completions`, 1, { analytics: [{ analyticName:"completions", incrementBy: 2, profileId, uniqueKey: profileId, urlSlug }] });
+await world.incrementDataObjectValue(`${sceneDropId}.completions`, 1, { analytics: [{ analyticName:"completions", incrementBy: 2, profileId, uniqueKey: profileId, urlSlug }] });
 ```
 
 Examples leveraging Visitor data objects calls:
@@ -345,7 +371,7 @@ await visitor.incrementDataObjectValue(`completions`, 1, {
 });
 ```
 
-Note: passing an empty object does NOT impact the data objects themselves but rather allows you to track custom analytics (incremented by 1) across all instances of your application with a given Public Key.
+Note: passing an empty object does NOT impact the data objects themselves but rather allows you to track custom analytics across all instances of your application with a given Public Key.
 
 <br>
 
@@ -353,25 +379,17 @@ Note: passing an empty object does NOT impact the data objects themselves but ra
 
 <hr/>
 
-<br>
-
 ## Get Started
 
 Run `gh repo clone metaversecloud-com/mc-sdk-js`
-
-<br>
 
 ## Issues
 
 We've added an Issue template to help standardize Issues and ensure they have enough detail for a developer to start work and help prevent contributors from forgetting to add an important piece of information.
 
-<br>
-
 ## Pull Requests
 
 We've added a Pull Request template to help make it easier for developers to clarify what the proposed changes will do. This helps facilitate clear communication between all contributors of the SDK and ensures that we are all on the same page!
-
-<br>
 
 ## Documentation
 

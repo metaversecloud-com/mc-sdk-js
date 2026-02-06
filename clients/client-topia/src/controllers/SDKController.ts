@@ -149,11 +149,6 @@ export abstract class SDKController implements SDKInterface {
    *
    * @keywords error, exception, handler, debugging, api error, http error
    *
-   * @param error - The error object from the failed operation (AxiosError, Error, or unknown)
-   * @param message - Optional custom error message (defaults to generic message)
-   * @param params - Optional parameters that were passed to the failed method
-   * @param sdkMethod - Optional name of the SDK method that failed (e.g., "World.fetchDetails")
-   *
    * @returns {object} Standardized error object with properties: data, message, method, params, sdkMethod, stack, status, success, url
    */
   errorHandler({
