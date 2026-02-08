@@ -24,6 +24,8 @@ export interface VisitorInterface extends SDKInterface {
   createNpc(userInventoryItemId: string, options?: { showNameplate?: boolean }): Promise<Visitor>;
   deleteNpc(): Promise<void>;
   getNpc(): Promise<Visitor | null>;
+  startNpcVoiceSession(config: NpcVoiceConfigInterface): Promise<void | ResponseType>;
+  stopNpcVoiceSession(): Promise<void | ResponseType>;
 
   triggerParticle({
     id,
@@ -88,4 +90,22 @@ export interface OpenIframeInterface {
   link: string;
   shouldOpenInDrawer?: boolean;
   title?: string;
+}
+
+export interface NpcVoiceConfigInterface {
+  /** OpenAI ephemeral key (ek_*). Generated server-side, used once to establish WebRTC connection. */
+  ephemeralKey: string;
+  /** OpenAI voice ID (e.g., "alloy", "echo", "shimmer"). */
+  voice: string;
+  /** System prompt including curriculum context and behavioral instructions. */
+  instructions: string;
+  /** OpenAI model ID. Defaults to "gpt-4o-realtime-preview". */
+  model?: string;
+  /** Voice activity detection configuration. */
+  turnDetection?: {
+    type: "server_vad";
+    threshold?: number;
+    prefix_padding_ms?: number;
+    silence_duration_ms?: number;
+  };
 }

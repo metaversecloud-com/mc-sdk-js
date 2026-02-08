@@ -9,6 +9,7 @@ import {
   FireToastInterface,
   InventoryItemInterface,
   MoveVisitorInterface,
+  NpcVoiceConfigInterface,
   OpenIframeInterface,
   UserInventoryItemInterface,
   VisitorInterface,
@@ -822,6 +823,88 @@ export class Visitor extends User implements VisitorInterface {
       await this.topiaPublicApi().delete(`/world/${this.urlSlug}/visitors/${this.id}/delete-npc`, this.requestOptions);
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "Visitor.deleteNpc" });
+    }
+  }
+
+  /**
+   * Start an AI-powered voice session for this visitor's NPC.
+   *
+   * @remarks
+   * Establishes a real-time voice connection between the visitor and an AI backend
+   * (currently OpenAI Realtime API) through the NPC. The NPC must already be spawned
+   * via `createNpc()` before calling this method.
+   *
+   * The voice session occupies a video slot in the visitor's peer video grid, showing
+   * the NPC's avatar image. Audio streams bidirectionally between the visitor's microphone
+   * and the AI. The session is private — only the NPC's owner hears the AI.
+   *
+   * Only one AI voice session is allowed per visitor per world (across all apps).
+   *
+   * @keywords voice, ai, npc, chat, audio, realtime, speech, assistant, tutor
+   *
+   * @category NPCs
+   *
+   * @param config - Voice session configuration including ephemeral key and instructions.
+   *
+   * @example
+   * ```ts
+   * // Generate ephemeral key on your backend first
+   * const ephemeralKey = await generateOpenAIEphemeralKey();
+   *
+   * await visitor.startNpcVoiceSession({
+   *   ephemeralKey,
+   *   voice: "alloy",
+   *   instructions: "You are a friendly science tutor helping with photosynthesis.",
+   * });
+   * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns `{ success: true }` or an error.
+   */
+  async startNpcVoiceSession(config: NpcVoiceConfigInterface): Promise<void | ResponseType> {
+    const params = { voiceConfig: config };
+    try {
+      const response = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/start-npc-voice-session`,
+        params,
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error, params, sdkMethod: "Visitor.startNpcVoiceSession" });
+    }
+  }
+
+  /**
+   * Stop the active AI voice session for this visitor's NPC.
+   *
+   * @remarks
+   * Tears down the real-time voice connection. The NPC remains in the world
+   * but no longer has voice capabilities. The video slot is released.
+   *
+   * This is idempotent — calling it when no voice session is active succeeds silently.
+   * Note: Deleting the NPC via `deleteNpc()` also stops the voice session automatically.
+   *
+   * @keywords stop, end, voice, ai, npc, disconnect, hangup
+   *
+   * @category NPCs
+   *
+   * @example
+   * ```ts
+   * await visitor.stopNpcVoiceSession();
+   * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns `{ success: true }` or an error.
+   */
+  async stopNpcVoiceSession(): Promise<void | ResponseType> {
+    try {
+      const response = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/stop-npc-voice-session`,
+        {},
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.stopNpcVoiceSession" });
     }
   }
 
