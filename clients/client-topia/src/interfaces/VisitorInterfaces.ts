@@ -21,7 +21,7 @@ export interface VisitorInterface extends SDKInterface {
     quantity: number,
   ): Promise<UserInventoryItem>;
   fetchInventoryItem(item: InventoryItemInterface): Promise<UserInventoryItem>;
-  createNpc(userInventoryItemId: string, options?: { showNameplate?: boolean }): Promise<Visitor>;
+  createNpc(userInventoryItemId: string, options?: CreateNpcOptions): Promise<Visitor>;
   deleteNpc(): Promise<void>;
   getNpc(): Promise<Visitor | null>;
   startNpcVoiceSession(config: NpcVoiceConfigInterface): Promise<void | ResponseType>;
@@ -90,6 +90,24 @@ export interface OpenIframeInterface {
   link: string;
   shouldOpenInDrawer?: boolean;
   title?: string;
+}
+
+export interface SpawnEffectConfig {
+  type?: "portal" | "none";
+  colors?: number[];
+  glowColor?: number;
+  glowOpacity?: number;
+  centerColor?: number;
+  duration?: number;
+  sectorCount?: number;
+  gridSize?: number;
+}
+
+export interface CreateNpcOptions {
+  showNameplate?: boolean;
+  stationary?: boolean;
+  replace?: boolean;
+  spawnEffect?: SpawnEffectConfig;
 }
 
 export interface NpcVoiceConfigInterface {
