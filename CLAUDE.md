@@ -416,9 +416,52 @@ Format: {publicKey}|{inventoryItemId}|{userInventoryItemId}
 
 This allows the frontend to route NPCs to `NpcSystem` instead of `PlayerSpriteSystem`.
 
+### NPC Spawn Effects
+
+`createNpc` accepts a `spawnEffect` config for custom portal animations:
+
+```typescript
+interface SpawnEffectConfig {
+  type?: "portal" | "none";   // "portal" = animated vortex (default), "none" = instant
+  colors?: number[];           // Sector colors (cycles if fewer than sectorCount)
+  glowColor?: number;          // Outer glow hex
+  glowOpacity?: number;        // 0-1
+  centerColor?: number;        // Center dot hex
+  duration?: number;           // Total ms (100-10000)
+  sectorCount?: number;        // Pie slices (2-32)
+  gridSize?: number;           // Dissolve grid NxN (2-50)
+}
+
+const npc = await visitor.createNpc(itemId, {
+  stationary: true,
+  replace: true,
+  spawnEffect: { type: "portal", colors: [0x8b00ff, 0x1a0029] },
+});
+```
+
+### AI NPC Voice Sessions
+
+SDK apps can attach AI-powered voice chat to NPCs:
+
+```typescript
+// Start voice session
+await visitor.startNpcVoiceSession({
+  ephemeralKey: "ek_...",      // From OpenAI Realtime Sessions API
+  voice: "alloy",              // OpenAI voice ID
+  instructions: "...",         // System prompt + curriculum
+  model: "gpt-4o-realtime-preview",
+});
+
+// Stop voice session
+await visitor.stopNpcVoiceSession();
+```
+
+**Key interfaces:** `NpcVoiceConfigInterface`, `SpawnEffectConfig`, `CreateNpcOptions` in `interfaces/VisitorInterfaces.ts`
+
 ### Related Documentation
 
-See `npcs.md` in the topia-stack root for full NPC architecture documentation.
+See `docs/claude/npc-voice-chat.md` in topia-stack for full feature documentation.
+See `docs/claude/npcs.md` in topia-stack for NPC architecture.
 
 ---
 

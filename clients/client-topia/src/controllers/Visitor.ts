@@ -6,9 +6,11 @@ import { User } from "controllers/User";
 
 // interfaces
 import {
+  CreateNpcOptions,
   FireToastInterface,
   InventoryItemInterface,
   MoveVisitorInterface,
+  NpcVoiceConfigInterface,
   OpenIframeInterface,
   UserInventoryItemInterface,
   VisitorInterface,
@@ -777,11 +779,17 @@ export class Visitor extends User implements VisitorInterface {
    *
    * @returns {Promise<Visitor>} Returns a Visitor object representing the created NPC. The NPC will automatically follow the visitor.
    */
-  async createNpc(userInventoryItemId: string, options?: { showNameplate?: boolean }): Promise<Visitor> {
+  async createNpc(userInventoryItemId: string, options?: CreateNpcOptions): Promise<Visitor> {
     try {
       const response = await this.topiaPublicApi().post(
         `/world/${this.urlSlug}/visitors/${this.id}/create-npc`,
-        { userInventoryItemId, showNameplate: options?.showNameplate },
+        {
+          userInventoryItemId,
+          showNameplate: options?.showNameplate,
+          stationary: options?.stationary,
+          replace: options?.replace,
+          spawnEffect: options?.spawnEffect,
+        },
         this.requestOptions,
       );
       return new Visitor(this.topia, response.data.player.playerId, this.urlSlug, {
@@ -822,6 +830,81 @@ export class Visitor extends User implements VisitorInterface {
       await this.topiaPublicApi().delete(`/world/${this.urlSlug}/visitors/${this.id}/delete-npc`, this.requestOptions);
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "Visitor.deleteNpc" });
+    }
+  }
+
+  /**
+   * Start an AI voice session for this visitor's NPC.
+   *
+   * @remarks
+   * Establishes a real-time voice connection between the visitor and an AI backend
+   * (currently OpenAI Realtime API) through the NPC. The NPC must already be spawned
+   * via `createNpc()` before calling this method.
+   *
+   * The voice session occupies a video slot in the visitor's peer video grid, showing
+   * the NPC's avatar image. Audio streams bidirectionally between the visitor's microphone
+   * and the AI model. Only the NPC's owner hears the AI audio.
+   *
+   * Topia automatically prepends non-removable child safety guardrails to the instructions.
+   * Only one voice session is allowed per visitor per world at a time.
+   *
+   * @keywords voice, npc, ai, chat, audio, realtime, session, start, speech
+   *
+   * @category NPCs
+   *
+   * @param config - Voice session configuration including ephemeral key and AI instructions
+   *
+   * @example
+   * ```ts
+   * const ephemeralKey = await generateOpenAIEphemeralKey();
+   *
+   * await visitor.startNpcVoiceSession({
+   *   ephemeralKey,
+   *   voice: "alloy",
+   *   instructions: "You are a friendly science tutor helping with photosynthesis.",
+   *   model: "gpt-4o-realtime-preview",
+   * });
+   * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns `{ success: true }` or an error.
+   */
+  async startNpcVoiceSession(config: NpcVoiceConfigInterface): Promise<void | ResponseType> {
+    try {
+      const response = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/start-npc-voice-session`,
+        { voiceConfig: config },
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error, params: config, sdkMethod: "Visitor.startNpcVoiceSession" });
+    }
+  }
+
+  /**
+   * Stop the active AI voice session for this visitor's NPC.
+   *
+   * @keywords voice, npc, ai, chat, audio, realtime, session, stop, end
+   *
+   * @category NPCs
+   *
+   * @example
+   * ```ts
+   * await visitor.stopNpcVoiceSession();
+   * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns `{ success: true }` or an error.
+   */
+  async stopNpcVoiceSession(): Promise<void | ResponseType> {
+    try {
+      const response = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/stop-npc-voice-session`,
+        {},
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.stopNpcVoiceSession" });
     }
   }
 
