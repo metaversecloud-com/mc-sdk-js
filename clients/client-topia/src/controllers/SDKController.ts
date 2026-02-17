@@ -183,6 +183,10 @@ export abstract class SDKController implements SDKInterface {
     } else if (error instanceof Error) {
       errorMessage = error?.message || message;
       stack = `${error.stack}\n${stackTrace.stack}`;
+    } else if (error !== undefined && error !== null) {
+      // Handle bare string throws and other non-Error types
+      errorMessage = typeof error === "string" ? error : JSON.stringify(error);
+      stack = stackTrace.stack || "empty";
     }
 
     return {
