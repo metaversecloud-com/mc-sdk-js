@@ -635,7 +635,10 @@ export class User extends SDKController implements UserInterface {
    */
   async fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> {
     try {
-      if (!this.profileId) throw new Error("This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })");
+      if (!this.profileId)
+        throw new Error(
+          "This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })",
+        );
 
       let query = "";
       if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appJWT=${appJWT}`;
@@ -685,7 +688,10 @@ export class User extends SDKController implements UserInterface {
     } = {},
   ): Promise<void | ResponseType> {
     try {
-      if (!this.profileId) throw new Error("This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })");
+      if (!this.profileId)
+        throw new Error(
+          "This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })",
+        );
 
       await this.topiaPublicApi().put(
         `/user/dataObjects/${this.profileId}/set-data-object`,
@@ -732,7 +738,10 @@ export class User extends SDKController implements UserInterface {
     } = {},
   ): Promise<void | ResponseType> {
     try {
-      if (!this.profileId) throw new Error("This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })");
+      if (!this.profileId)
+        throw new Error(
+          "This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })",
+        );
 
       await this.topiaPublicApi().put(
         `/user/dataObjects/${this.profileId}/update-data-object`,
@@ -797,7 +806,10 @@ export class User extends SDKController implements UserInterface {
    */
   async fetchInventoryItems(): Promise<void> {
     try {
-      if (!this.profileId) throw new Error("This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })");
+      if (!this.profileId)
+        throw new Error(
+          "This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })",
+        );
 
       const response = await this.topiaPublicApi().get(
         `/user/inventory/${this.profileId}/get-user-inventory-items`,
@@ -815,7 +827,7 @@ export class User extends SDKController implements UserInterface {
       }
       this.#userInventoryItems = tempItems;
     } catch (error) {
-      throw this.errorHandler({ error, sdkMethod: "Visitor.fetchInventoryItems" });
+      throw this.errorHandler({ error, sdkMethod: "User.fetchInventoryItems" });
     }
   }
 
@@ -838,7 +850,10 @@ export class User extends SDKController implements UserInterface {
    */
   async grantInventoryItem(item: InventoryItemInterface, quantity = 1): Promise<UserInventoryItem> {
     try {
-      if (!this.profileId) throw new Error("This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })");
+      if (!this.profileId)
+        throw new Error(
+          "This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })",
+        );
 
       const response = await this.topiaPublicApi().put(
         `/user/inventory/${this.profileId}/grant-user-inventory-item`,
@@ -852,7 +867,7 @@ export class User extends SDKController implements UserInterface {
         credentials: this.credentials,
       });
     } catch (error) {
-      throw this.errorHandler({ error, sdkMethod: "Visitor.grantInventoryItem" });
+      throw this.errorHandler({ error, sdkMethod: "User.grantInventoryItem" });
     }
   }
 
@@ -871,7 +886,10 @@ export class User extends SDKController implements UserInterface {
    */
   async modifyInventoryItemQuantity(item: UserInventoryItemInterface, quantity: number): Promise<UserInventoryItem> {
     try {
-      if (!this.profileId) throw new Error("This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })");
+      if (!this.profileId)
+        throw new Error(
+          "This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })",
+        );
 
       const response = await this.topiaPublicApi().put(
         `/user/inventory/${this.profileId}/update-user-inventory-item-quantity`,
@@ -885,7 +903,7 @@ export class User extends SDKController implements UserInterface {
         credentials: this.credentials,
       });
     } catch (error) {
-      throw this.errorHandler({ error, sdkMethod: "Visitor.modifyInventoryItemQuantity" });
+      throw this.errorHandler({ error, sdkMethod: "User.modifyInventoryItemQuantity" });
     }
   }
 }
