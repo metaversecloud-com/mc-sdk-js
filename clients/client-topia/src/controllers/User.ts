@@ -96,16 +96,6 @@ export class User extends SDKController implements UserInterface {
     super(topia, { profileId: options?.profileId, ...options.credentials });
 
     this.profileId = options?.profileId;
-
-    // Warn devs about common mistake: passing profileId only inside credentials
-    if (!this.profileId && options?.credentials?.profileId) {
-      console.warn(
-        `[@rtsdk/topia] User created without top-level profileId. ` +
-          `You passed profileId inside credentials but not in options. ` +
-          `Methods like grantInventoryItem will fail. ` +
-          `Fix: User.create({ profileId: "${options.credentials.profileId}", credentials: { ... } })`,
-      );
-    }
     this.dataObject = {};
     this.profile = {};
 
@@ -635,10 +625,11 @@ export class User extends SDKController implements UserInterface {
    */
   async fetchDataObject(appPublicKey?: string, appJWT?: string): Promise<void | ResponseType> {
     try {
-      if (!this.profileId)
+      if (!this.profileId) {
         throw new Error(
           "This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })",
         );
+      }
 
       let query = "";
       if (appPublicKey) query = `?appPublicKey=${appPublicKey}&appJWT=${appJWT}`;
@@ -688,10 +679,11 @@ export class User extends SDKController implements UserInterface {
     } = {},
   ): Promise<void | ResponseType> {
     try {
-      if (!this.profileId)
+      if (!this.profileId) {
         throw new Error(
           "This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })",
         );
+      }
 
       await this.topiaPublicApi().put(
         `/user/dataObjects/${this.profileId}/set-data-object`,
@@ -738,10 +730,11 @@ export class User extends SDKController implements UserInterface {
     } = {},
   ): Promise<void | ResponseType> {
     try {
-      if (!this.profileId)
+      if (!this.profileId) {
         throw new Error(
           "This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })",
         );
+      }
 
       await this.topiaPublicApi().put(
         `/user/dataObjects/${this.profileId}/update-data-object`,
@@ -806,10 +799,11 @@ export class User extends SDKController implements UserInterface {
    */
   async fetchInventoryItems(): Promise<void> {
     try {
-      if (!this.profileId)
+      if (!this.profileId) {
         throw new Error(
           "This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })",
         );
+      }
 
       const response = await this.topiaPublicApi().get(
         `/user/inventory/${this.profileId}/get-user-inventory-items`,
@@ -850,11 +844,11 @@ export class User extends SDKController implements UserInterface {
    */
   async grantInventoryItem(item: InventoryItemInterface, quantity = 1): Promise<UserInventoryItem> {
     try {
-      if (!this.profileId)
+      if (!this.profileId) {
         throw new Error(
           "This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })",
         );
-
+      }
       const response = await this.topiaPublicApi().put(
         `/user/inventory/${this.profileId}/grant-user-inventory-item`,
         { itemId: item.id, quantity },
@@ -886,10 +880,11 @@ export class User extends SDKController implements UserInterface {
    */
   async modifyInventoryItemQuantity(item: UserInventoryItemInterface, quantity: number): Promise<UserInventoryItem> {
     try {
-      if (!this.profileId)
+      if (!this.profileId) {
         throw new Error(
           "This method requires the use of a profileId. Pass profileId as a top-level option: User.create({ profileId, credentials: { ... } })",
         );
+      }
 
       const response = await this.topiaPublicApi().put(
         `/user/inventory/${this.profileId}/update-user-inventory-item-quantity`,
