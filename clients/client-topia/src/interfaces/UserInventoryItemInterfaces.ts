@@ -1,4 +1,4 @@
-import { InteractiveCredentials } from "../../dist";
+import { InteractiveCredentials } from "types";
 import { InventoryItemInterface } from "./InventoryItemInterfaces";
 
 /**

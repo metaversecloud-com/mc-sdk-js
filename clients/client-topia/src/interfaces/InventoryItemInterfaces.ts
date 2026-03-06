@@ -1,6 +1,6 @@
 import { InventoryItem } from "controllers";
-import { InteractiveCredentials } from "../../dist";
 import { SDKInterface } from "./SDKInterfaces";
+import { InteractiveCredentials } from "types";
 
 /**
  * Interface for an inventory item.
