@@ -134,8 +134,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         `/world/${this.urlSlug}/assets/${this.id}`,
         this.requestOptions,
       );
-      const droppedAssetDetails = response.data;
-      droppedAssetDetails.urlSlug = this.urlSlug;
+      const { urlSlug: _slug, id: _id, ...droppedAssetDetails } = response.data;
       Object.assign(this, droppedAssetDetails);
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "DroppedAsset.fetchDroppedAssetById" });
@@ -245,7 +244,7 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         filteredParams,
         this.requestOptions,
       );
-      const droppedAssetDetails = response.data;
+      const { urlSlug: _slug, id: _id, ...droppedAssetDetails } = response.data;
       Object.assign(this, droppedAssetDetails);
     } catch (error) {
       throw this.errorHandler({ error, params, sdkMethod: "DroppedAsset.updateDroppedAsset" });
@@ -1104,7 +1103,8 @@ export class DroppedAsset extends Asset implements DroppedAssetInterface {
         },
         this.requestOptions,
       );
-      Object.assign(this, response.data);
+      const { urlSlug: _slug, id: _id, ...data } = response.data;
+      Object.assign(this, data);
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error, params: { payload, updateType }, sdkMethod: "DroppedAsset.updateDroppedAsset" });
