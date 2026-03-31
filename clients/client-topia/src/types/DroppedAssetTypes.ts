@@ -18,6 +18,11 @@ export enum DroppedAssetMediaVolumeRadius {
   EVERYWHERE = 3,
 }
 
+export enum DroppedAssetClickableLayerType {
+  TOP = "top",
+  BOTTOM = "bottom",
+}
+
 export type DroppedAssetLinkType = {
   clickableLink: string;
   clickableLinkTitle?: string;

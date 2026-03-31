@@ -2,7 +2,7 @@ import { DroppedAsset, Topia, Asset, SDKController } from "controllers";
 import { DroppedAssetOptionalInterface } from "interfaces";
 import { AxiosResponse } from "axios";
 import jwt from "jsonwebtoken";
-import { InteractiveCredentials } from "types";
+import { DroppedAssetClickableLayerType, DroppedAssetClickType, InteractiveCredentials } from "types";
 
 /* ============================================================================
   AI RULES for code assistants
@@ -259,6 +259,7 @@ export class DroppedAssetFactory extends SDKController {
       clickType,
       clickableDisplayTextDescription,
       clickableDisplayTextHeadline,
+      clickableLayer,
       clickableLink,
       clickableLinkTitle,
       flipped,
@@ -283,9 +284,10 @@ export class DroppedAssetFactory extends SDKController {
     }: {
       assetScale?: number;
       flipped?: boolean;
-      clickType?: string;
+      clickType?: DroppedAssetClickType;
       clickableDisplayTextDescription?: string;
       clickableDisplayTextHeadline?: string;
+      clickableLayer?: DroppedAssetClickableLayerType;
       clickableLink?: string;
       clickableLinkTitle?: string;
       interactivePublicKey?: string;
@@ -320,6 +322,7 @@ export class DroppedAssetFactory extends SDKController {
       clickType,
       clickableDisplayTextDescription,
       clickableDisplayTextHeadline,
+      clickableLayer,
       clickableLink,
       clickableLinkTitle,
       flipped,
