@@ -32,6 +32,15 @@ describe("Visitor Class", () => {
     expect(mock.history.get.length).toBe(1);
   });
 
+  it("should fetch user group data objects", async () => {
+    mock
+      .onGet(`https://${apiDomain}/api/v1/world/${urlSlug}/visitors/${id}/user-group-data-object`)
+      .reply(200, { success: true, userGroupDataObjects: [{ foo: "bar" }] });
+    const result = await testVisitor.fetchUserGroupDataObject();
+    expect(mock.history.get.length).toBe(1);
+    expect(result).toEqual({ success: true, userGroupDataObjects: [{ foo: "bar" }] });
+  });
+
   it("should move a list of visitors to uniquely specified coordinates", async () => {
     mock.onPut(`https://${apiDomain}/api/v1/world/${urlSlug}/visitors/${id}/move`).reply(200);
     await testVisitor.moveVisitor({

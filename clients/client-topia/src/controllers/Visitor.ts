@@ -43,6 +43,7 @@ AI RULES for code assistants
 
   AVAILABLE METHODS:
     - fetchVisitor(): Retrieves visitor details from the world
+    - fetchUserGroupDataObject(): Gets the world's user group data objects (requires canReceiveUserGroupDataObjects on the public key)
     - fetchDataObject(): Gets visitor's data object
     - setDataObject(dataObject, options?): Sets visitor's entire data object
     - updateDataObject(dataObject, options?): Updates specific fields in visitor data
@@ -130,6 +131,37 @@ export class Visitor extends User implements VisitorInterface {
       if (this.profile?.profileId) this.profileId = this.profile.profileId;
     } catch (error) {
       throw this.errorHandler({ error, sdkMethod: "Visitor.fetchVisitor" });
+    }
+  }
+
+  /**
+   * Get the user group data objects available to this visitor's world.
+   *
+   * The interactive public key must have `canReceiveUserGroupDataObjects` set on it
+   * (granted by the Topia team to first-party SDK apps).
+   *
+   * Mirrors the array delivered as `userGroupDataObjects` in the asset-click webhook
+   * payload (worldUserGroups branch).
+   *
+   * @keywords get, fetch, user group, data object, group
+   *
+   * @example
+   * ```ts
+   * const { userGroupDataObjects } = await visitor.fetchUserGroupDataObject();
+   * ```
+   *
+   * @returns
+   * Returns `{ success: true, userGroupDataObjects: object[] }` or an error.
+   */
+  async fetchUserGroupDataObject(): Promise<void | ResponseType> {
+    try {
+      const response: AxiosResponse = await this.topiaPublicApi().get(
+        `/world/${this.urlSlug}/visitors/${this.id}/user-group-data-object`,
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error, sdkMethod: "Visitor.fetchUserGroupDataObject" });
     }
   }
 

@@ -4,6 +4,7 @@ import { UserInventoryItem, Visitor } from "controllers";
 
 export interface VisitorInterface extends SDKInterface {
   fetchVisitor(): Promise<void | ResponseType>;
+  fetchUserGroupDataObject(): Promise<void | ResponseType>;
   moveVisitor({ shouldTeleportVisitor, x, y }: MoveVisitorInterface): Promise<void | ResponseType>;
   fireToast({ groupId, title, text }: FireToastInterface): Promise<void | ResponseType>;
   openIframe({ link, shouldOpenInDrawer, title }: OpenIframeInterface): Promise<void | ResponseType>;
