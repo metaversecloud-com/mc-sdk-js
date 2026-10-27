@@ -2,7 +2,12 @@ import { DroppedAsset, Topia, Asset, SDKController } from "controllers";
 import { DroppedAssetOptionalInterface } from "interfaces";
 import { AxiosResponse } from "axios";
 import jwt from "jsonwebtoken";
-import { DroppedAssetClickableLayerType, DroppedAssetClickType, InteractiveCredentials } from "types";
+import {
+  AssetFilterConfig,
+  DroppedAssetClickableLayerType,
+  DroppedAssetClickType,
+  InteractiveCredentials,
+} from "types";
 
 /* ============================================================================
   AI RULES for code assistants
@@ -242,7 +247,13 @@ export class DroppedAssetFactory extends SDKController {
    *     // For clickable assets (optional)
    *     clickType: "link",
    *     clickableLink: "https://example.com",
-   *     clickableLinkTitle: "Visit Example"
+   *     clickableLinkTitle: "Visit Example",
+   *
+   *     // Highlight filters (optional) — the same glow/shimmer options the in-world
+   *     // editor offers, set at drop time so nobody has to style the asset by hand
+   *     filtersConfig: [
+   *       { type: "glow", strength: 0.8, settings: { color: "#ffcc00", pulseSpeed: 20 } },
+   *     ]
    *   }
    * );
    *
@@ -262,6 +273,7 @@ export class DroppedAssetFactory extends SDKController {
       clickableLayer,
       clickableLink,
       clickableLinkTitle,
+      filtersConfig,
       flipped,
       interactivePublicKey,
       isInteractive,
@@ -290,6 +302,7 @@ export class DroppedAssetFactory extends SDKController {
       clickableLayer?: DroppedAssetClickableLayerType;
       clickableLink?: string;
       clickableLinkTitle?: string;
+      filtersConfig?: AssetFilterConfig[];
       interactivePublicKey?: string;
       isInteractive?: boolean;
       isForceLinkInIframe?: boolean;
@@ -325,6 +338,7 @@ export class DroppedAssetFactory extends SDKController {
       clickableLayer,
       clickableLink,
       clickableLinkTitle,
+      filtersConfig,
       flipped,
       interactivePublicKey,
       isInteractive,

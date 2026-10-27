@@ -12,6 +12,17 @@ import { ResponseType } from "types";
 import { AnalyticType } from "types/AnalyticTypes";
 import InventoryItem from "./InventoryItem";
 
+// utils
+import { BannedStringMatcher, createBannedStringMatcher } from "utils";
+
+// The banned lists change rarely and the API already caches them for 24 hours, so a
+// cached matcher spares every check an HTTP round trip. Module level rather than per
+// instance because apps create an Ecosystem per request; keyed by API domain so an app
+// talking to more than one Topia instance never reads another instance's lists.
+const BANNED_STRINGS_CACHE_MS = 720 * 60 * 1000; // 12 hours
+const bannedStringsCache = new Map<string, { matcher: BannedStringMatcher; expiresAt: number }>();
+const bannedStringsRequests = new Map<string, Promise<BannedStringMatcher>>();
+
 /* ============================================================================
 AI RULES for code assistants
 
@@ -34,6 +45,7 @@ AI RULES for code assistants
     - updateDataObject(dataObject, options?): Updates specific fields in ecosystem data object
     - incrementDataObjectValue(path, amount, options?): Increments a numeric value in ecosystem data
     - fetchInventoryItems(): Retrieves all inventory items for the app's keyholder
+    - checkIsBannedString(text): Returns true when text matches a platform banned word, sentence or emoji
 
   CANONICAL USAGE (consumer app):
     // utils/topiaInit.ts
@@ -251,6 +263,65 @@ export class Ecosystem extends SDKController {
         params: { path, amount, options },
         sdkMethod: "Ecosystem.incrementDataObjectValue",
       });
+    }
+  }
+
+  // Returns a matcher built from the platform's banned lists, fetching them only when
+  // nothing valid is cached. Concurrent callers share one in-flight request instead of
+  // each firing their own.
+  async #fetchBannedStrings(): Promise<BannedStringMatcher> {
+    const key = this.topia.apiDomain || "";
+
+    const cached = bannedStringsCache.get(key);
+    if (cached && cached.expiresAt > Date.now()) return cached.matcher;
+
+    const inFlight = bannedStringsRequests.get(key);
+    if (inFlight) return inFlight;
+
+    const request = (async () => {
+      const response: AxiosResponse = await this.topiaPublicApi().get(`/ecosystem/banned-strings`, this.requestOptions);
+      const matcher = createBannedStringMatcher(response.data || {});
+      bannedStringsCache.set(key, { matcher, expiresAt: Date.now() + BANNED_STRINGS_CACHE_MS });
+      return matcher;
+    })().finally(() => bannedStringsRequests.delete(key));
+
+    bannedStringsRequests.set(key, request);
+    return request;
+  }
+
+  /**
+   * Checks a string against the platform's banned words, sentences and emojis.
+   *
+   * @remarks
+   * Use this to screen user generated content — a display name, a chat line, a submitted answer — before sending it on, so the app can give immediate feedback instead of having the platform reject it later.
+   *
+   * This applies the same matcher the server uses, so a result here should agree with the platform's own check. It is still a courtesy check, not a replacement: the server screens independently and remains the authority.
+   *
+   * Matching is by whole word, not substring, so `classic` is not flagged by a banned `ass`. Leetspeak (`d4rn`), spelled-out words (`d.a.r.n`) and padded endings (`go awayyy`) are all caught.
+   *
+   * The lists are fetched once and cached on first use, so calling this per keystroke costs nothing after the first call. The platform caches them for up to 24 hours, so a change made in HQ may take that long to appear.
+   *
+   * @keywords check, test, validate, screen, filter, banned, blocked, profanity, moderation, words, strings, ecosystem, platform
+   *
+   * @category Moderation
+   *
+   * @example
+   * ```ts
+   * if (await ecosystem.checkIsBannedString(displayName)) {
+   *   return res.status(400).json({ message: "Please choose a different name." });
+   * }
+   * ```
+   *
+   * @returns {Promise<boolean>} True when the text matches a banned word, sentence or emoji. Empty input is never banned.
+   */
+  async checkIsBannedString(text: string): Promise<boolean> {
+    try {
+      if (!text) return false;
+
+      const matcher = await this.#fetchBannedStrings();
+      return matcher.test(text);
+    } catch (error) {
+      throw this.errorHandler({ error, params: { text }, sdkMethod: "Ecosystem.checkIsBannedString" });
     }
   }
 
