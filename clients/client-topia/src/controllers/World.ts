@@ -819,7 +819,7 @@ export class World extends SDKController implements WorldInterface {
         { ...options, dataObject: dataObject || this.dataObject },
         this.requestOptions,
       );
-      this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
+      this.dataObject = dataObject || this.dataObject;
     } catch (error) {
       throw this.errorHandler({ error, params: { dataObject, options }, sdkMethod: "World.setDataObject" });
     }
@@ -861,7 +861,7 @@ export class World extends SDKController implements WorldInterface {
         { ...options, dataObject: dataObject || this.dataObject },
         this.requestOptions,
       );
-      this.dataObject = dataObject || this.dataObject;
+      this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
     } catch (error) {
       throw this.errorHandler({ error, params: { dataObject, options }, sdkMethod: "World.updateDataObject" });
     }
