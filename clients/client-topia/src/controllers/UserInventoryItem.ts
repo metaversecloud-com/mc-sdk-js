@@ -1,4 +1,5 @@
-import { InventoryItem, Topia } from "controllers";
+import { InventoryItem } from "controllers/InventoryItem";
+import { Topia } from "controllers/Topia";
 import {
   InventoryItemInterface,
   UserInventoryItemInterface,

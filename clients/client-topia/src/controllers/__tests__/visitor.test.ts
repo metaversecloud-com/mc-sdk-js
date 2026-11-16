@@ -27,7 +27,7 @@ describe("Visitor Class", () => {
   });
 
   it("should update visitor details", async () => {
-    mock.onGet(`https://${apiDomain}/api/v1/world/exampleWorld/visitors/1`).reply(200, visitor);
+    mock.onGet(`https://${apiDomain}/api/v1/world/${urlSlug}/visitors/${id}`).reply(200, visitor);
     await testVisitor.fetchVisitor();
     expect(mock.history.get.length).toBe(1);
   });

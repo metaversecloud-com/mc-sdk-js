@@ -6,7 +6,7 @@ import { DroppedAssetFactory } from "factories";
 
 const apiDomain = "api.topia.io";
 const attributes = droppedAssets[0];
-const BASE_URL = `https://api.topia.io/api/v1/world/exampleWorld/assets/${droppedAssets[0].id}`;
+const BASE_URL = `https://api.topia.io/api/v1/world/exampleUrlSlug/assets/${droppedAssets[0].id}`;
 const id = droppedAssets[0].id;
 
 describe("DroppedAsset Class", () => {
@@ -36,7 +36,7 @@ describe("DroppedAsset Class", () => {
   });
 
   it("should update dropped asset broadcast zone", async () => {
-    mock.onPut(`${BASE_URL}/set-asset-broadcast`).reply(200);
+    mock.onPut(`${BASE_URL}/set-asset-broadcast`).reply(200, attributes);
     const broadcastArgs = {
       ...attributes,
       assetBroadcast: true,
@@ -48,7 +48,7 @@ describe("DroppedAsset Class", () => {
   });
 
   it("should update dropped asset click type", async () => {
-    mock.onPut(`${BASE_URL}/change-click-type`).reply(200);
+    mock.onPut(`${BASE_URL}/change-click-type`).reply(200, attributes);
     const clickTypeArgs = {
       ...attributes,
       clickType: DroppedAssetClickType.LINK,
@@ -67,13 +67,13 @@ describe("DroppedAsset Class", () => {
   });
 
   it("should update dropped asset custom text", async () => {
-    mock.onPut(`${BASE_URL}/set-custom-text`).reply(200);
+    mock.onPut(`${BASE_URL}/set-custom-text`).reply(200, attributes);
     await testDroppedAsset.updateCustomTextAsset({ textColor: "#abc123" }, "hello world");
     expect(mock.history.put.length).toBe(1);
   });
 
   it("should update dropped asset media type", async () => {
-    mock.onPut(`${BASE_URL}/change-media-type`).reply(200);
+    mock.onPut(`${BASE_URL}/change-media-type`).reply(200, attributes);
     const mediaTypeArgs = {
       ...attributes,
       audioRadius: 0,
@@ -90,19 +90,19 @@ describe("DroppedAsset Class", () => {
   });
 
   it("should update dropped asset mute zone", async () => {
-    mock.onPut(`${BASE_URL}/set-mute-zone`).reply(200);
+    mock.onPut(`${BASE_URL}/set-mute-zone`).reply(200, attributes);
     await testDroppedAsset.updateMuteZone(true);
     expect(mock.history.put.length).toBe(1);
   });
 
   it("should update dropped asset position", async () => {
-    mock.onPut(`${BASE_URL}/set-position`).reply(200);
+    mock.onPut(`${BASE_URL}/set-position`).reply(200, attributes);
     await testDroppedAsset.updatePosition(100, 100, 0);
     expect(mock.history.put.length).toBe(1);
   });
 
   it("should update dropped asset private zone", async () => {
-    mock.onPut(`${BASE_URL}/set-private-zone`).reply(200);
+    mock.onPut(`${BASE_URL}/set-private-zone`).reply(200, attributes);
     const privateZoneArgs = {
       ...attributes,
       isPrivateZone: true,
@@ -114,19 +114,19 @@ describe("DroppedAsset Class", () => {
   });
 
   it("should update dropped asset scale", async () => {
-    mock.onPut(`${BASE_URL}/change-scale`).reply(200);
+    mock.onPut(`${BASE_URL}/change-scale`).reply(200, attributes);
     await testDroppedAsset.updateScale(75);
     expect(mock.history.put.length).toBe(1);
   });
 
   it("should update dropped asset uploaded media selected", async () => {
-    mock.onPut(`${BASE_URL}/change-uploaded-media-selected`).reply(200);
+    mock.onPut(`${BASE_URL}/change-uploaded-media-selected`).reply(200, attributes);
     await testDroppedAsset.updateUploadedMediaSelected("abc123");
     expect(mock.history.put.length).toBe(1);
   });
 
   it("should update dropped asset web image layers", async () => {
-    mock.onPut(`${BASE_URL}/set-webimage-layers`).reply(200);
+    mock.onPut(`${BASE_URL}/set-webimage-layers`).reply(200, attributes);
     await testDroppedAsset.updateWebImageLayers("test", "test");
     expect(mock.history.put.length).toBe(1);
   });
