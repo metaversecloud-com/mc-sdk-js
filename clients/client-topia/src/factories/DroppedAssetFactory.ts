@@ -179,7 +179,7 @@ export class DroppedAssetFactory extends SDKController {
     interactiveSecret: string,
     credentials: InteractiveCredentials,
   ): Promise<DroppedAsset> {
-    const params = { credentials, interactiveSecret, uniqueName, urlSlug };
+    const params = { credentials, uniqueName, urlSlug };
     try {
       const { apiKey, interactivePublicKey } = credentials;
       const headers: { Authorization?: string; interactiveJWT?: string; publickey?: string } = {};

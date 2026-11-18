@@ -117,6 +117,13 @@ export abstract class SDKController implements SDKInterface {
     } catch (error) {
       this.errorHandler({ error });
     }
+
+    // Non-enumerable, so JSON.stringify, spreading and Object.keys skip them: an app that sends an SDK object to
+    // the browser (e.g. res.json(droppedAsset)) would otherwise send topia.interactiveSecret, the session
+    // credentials and the signed InteractiveJWT with it. They stay readable and writable as before.
+    for (const key of ["topia", "credentials", "jwt", "requestOptions"]) {
+      Object.defineProperty(this, key, { value: (this as any)[key], enumerable: false, writable: true, configurable: true });
+    }
   }
 
   /**

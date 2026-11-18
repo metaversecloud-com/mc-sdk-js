@@ -1,4 +1,5 @@
-import { SDKController, Topia } from "controllers";
+import { SDKController } from "controllers/SDKController";
+import { Topia } from "controllers/Topia";
 import { InventoryItemInterface, InventoryItemOptionalInterface } from "interfaces";
 // TODO: Define InventoryItemInterface and InventoryItemOptionalInterface
 
