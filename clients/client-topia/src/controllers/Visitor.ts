@@ -12,6 +12,7 @@ import {
   MoveVisitorInterface,
   NpcVoiceConfigInterface,
   OpenIframeInterface,
+  SubmitGradeInterface,
   UserInventoryItemInterface,
   VisitorInterface,
   VisitorOptionalInterface,
@@ -232,6 +233,53 @@ export class Visitor extends User implements VisitorInterface {
       return response.data;
     } catch (error) {
       throw this.errorHandler({ error, params, sdkMethod: "Visitor.fireToast" });
+    }
+  }
+
+  /**
+   * Submit a grade for this visitor to the LMS gradebook (LTI grade passback).
+   *
+   * Requires: the world is an LTI course world, AND the world has explicitly
+   * allowed your app's public key to submit grades
+   * (`controls.gradeSubmissionPublicKeys` — configured per world by the world
+   * owner). Fails with 403 otherwise.
+   *
+   * If the visitor entered the world from a graded LMS assignment, the grade
+   * posts to that assignment's gradebook column. Otherwise a standalone
+   * column is created (once) per `gradeKey` and the grade posts there.
+   * Re-submitting overwrites the visitor's previous score in that column.
+   *
+   * @keywords grade, score, passback, gradebook, LMS, LTI, assignment, submit
+   *
+   * @example
+   * ```ts
+   * await visitor.submitGrade({
+   *   score: 8,
+   *   scoreMaximum: 10,
+   *   gradeKey: "quiz-1",
+   *   label: "Chapter 1 Quiz",
+   * });
+   * ```
+   *
+   * @returns {Promise<void | ResponseType>} Returns `{ success: true, lineitemUrl }` or an error.
+   */
+  async submitGrade({ score, scoreMaximum, gradeKey, label, comment }: SubmitGradeInterface): Promise<void | ResponseType> {
+    const params = {
+      score,
+      scoreMaximum,
+      gradeKey,
+      label,
+      comment,
+    };
+    try {
+      const response = await this.topiaPublicApi().put(
+        `/world/${this.urlSlug}/visitors/${this.id}/submit-grade`,
+        params,
+        this.requestOptions,
+      );
+      return response.data;
+    } catch (error) {
+      throw this.errorHandler({ error, params, sdkMethod: "Visitor.submitGrade" });
     }
   }
 
