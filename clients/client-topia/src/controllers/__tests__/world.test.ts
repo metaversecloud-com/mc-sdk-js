@@ -45,4 +45,18 @@ describe("World Class", () => {
   //   expect(mock.history.put.length).toBe(1);
   //   expect(testWorld.urlSlug).toEqual("exampleUrlSlug");
   // });
+
+  it("keeps the rest of the world data object after updateDataObject", async () => {
+    mock.onPut(`https://api.topia.io/api/v1/world/${urlSlug}/update-data-object`).reply(200);
+    testWorld.dataObject = { keep: "me", count: 1 };
+    await testWorld.updateDataObject({ count: 2 });
+    expect(testWorld.dataObject).toEqual({ keep: "me", count: 2 });
+  });
+
+  it("replaces the world data object after setDataObject", async () => {
+    mock.onPut(`https://api.topia.io/api/v1/world/${urlSlug}/set-data-object`).reply(200);
+    testWorld.dataObject = { stale: true };
+    await testWorld.setDataObject({ fresh: true });
+    expect(testWorld.dataObject).toEqual({ fresh: true });
+  });
 });

@@ -564,7 +564,7 @@ export class Visitor extends User implements VisitorInterface {
         { ...options, dataObject: dataObject || this.dataObject },
         this.requestOptions,
       );
-      this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
+      this.dataObject = dataObject || this.dataObject;
     } catch (error) {
       throw this.errorHandler({ error, params: { dataObject, options }, sdkMethod: "Visitor.setDataObject" });
     }
@@ -608,7 +608,7 @@ export class Visitor extends User implements VisitorInterface {
         { ...options, dataObject: dataObject || this.dataObject },
         this.requestOptions,
       );
-      this.dataObject = dataObject || this.dataObject;
+      this.dataObject = { ...(this.dataObject || {}), ...(dataObject || {}) };
     } catch (error) {
       throw this.errorHandler({ error, params: { dataObject, options }, sdkMethod: "Visitor.updateDataObject" });
     }

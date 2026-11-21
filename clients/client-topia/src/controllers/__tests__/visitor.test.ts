@@ -50,4 +50,18 @@ describe("Visitor Class", () => {
     });
     expect(mock.history.put.length).toBe(1);
   });
+
+  it("keeps the rest of the visitor data object after updateDataObject", async () => {
+    mock.onPut(`https://${apiDomain}/api/v1/world/${urlSlug}/visitors/${id}/update-data-object`).reply(200);
+    testVisitor.dataObject = { keep: "me", count: 1 };
+    await testVisitor.updateDataObject({ count: 2 });
+    expect(testVisitor.dataObject).toEqual({ keep: "me", count: 2 });
+  });
+
+  it("replaces the visitor data object after setDataObject", async () => {
+    mock.onPut(`https://${apiDomain}/api/v1/world/${urlSlug}/visitors/${id}/set-data-object`).reply(200);
+    testVisitor.dataObject = { stale: true };
+    await testVisitor.setDataObject({ fresh: true });
+    expect(testVisitor.dataObject).toEqual({ fresh: true });
+  });
 });
